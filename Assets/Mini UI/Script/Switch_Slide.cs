@@ -12,7 +12,7 @@ public class Switch_Slide : MonoBehaviour
     [SerializeField] private GameObject Background_Pixel_Dimension;
     [SerializeField] private GameObject Toggle_Pixel_Dimension;
     [SerializeField] private float Offset_Pixel;
-    
+
 
 
     public bool textIsOn;
@@ -23,7 +23,7 @@ public class Switch_Slide : MonoBehaviour
     private float BG_StartPosition;
     private float BG_Size;
     private float BG_Center;
-    
+
     Color currentcolor;
     Color newColor;
 
@@ -41,7 +41,7 @@ public class Switch_Slide : MonoBehaviour
     void Start()
     {
 
-        
+
 
         currentcolor = new Color(Handle_Image_Off.color.r, Handle_Image_Off.color.g, Handle_Image_Off.color.b, 1);
 
@@ -54,7 +54,7 @@ public class Switch_Slide : MonoBehaviour
         Handle_Image_On.color = newColor2;
 
         isoff = true; //Default state is off
-        
+
         Toggle_Size = Toggle_Pixel_Dimension.GetComponent<RectTransform>().rect.width; //Width of Toggle in pixels
 
         Toggle_Height = Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition.y;
@@ -82,7 +82,7 @@ public class Switch_Slide : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-  
+
     }
 
 
@@ -94,20 +94,20 @@ public class Switch_Slide : MonoBehaviour
 
 
 
-    
+
     //Base on the state of the switch we start a coroutine to handle the movement of the toggle handle
     public void Switching()
-    {         
-              
+    {
+
         if (isoff)
         {
             textIsOn = true;
             time = 0;
             StartCoroutine(SwitchCoroutineOn());
             btn1.interactable = false;
-            isoff = false;            
+            isoff = false;
         }
-        else  
+        else
         {
             textIsOn = false;
             time = 0;
@@ -137,7 +137,7 @@ public class Switch_Slide : MonoBehaviour
                 btn1.interactable = true;
                 StopCoroutine(SwitchCoroutineOn());
             }
-            yield return null;           
+            yield return null;
         }
     }
 

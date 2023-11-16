@@ -26,15 +26,15 @@ public class Map : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
 
     public void Awake()
     {
-        
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
+
     }
 
     public void OnDrag(PointerEventData eventData)
-    {       
+    {
         raycastTest = eventData.pointerCurrentRaycast.gameObject;
         try
         {
@@ -48,12 +48,13 @@ public class Map : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
         catch (NullReferenceException ex)
         {
             Debug.Log("out of bounds");
+            Debug.Log(ex);
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+
     }
 
     // Start is called before the first frame update
@@ -66,7 +67,7 @@ public class Map : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
     {
         Map_Background_Dimensions = MapObj.GetComponent<RectTransform>();
         Map_Background_Dimensions.anchoredPosition = new Vector2(0, 0);
-        Half_Map_Background_Dimensions = new Vector2 ((Map_Background_Dimensions.rect.width / 2) , (Map_Background_Dimensions.rect.height / 2));
+        Half_Map_Background_Dimensions = new Vector2((Map_Background_Dimensions.rect.width / 2), (Map_Background_Dimensions.rect.height / 2));
         Half_Viewport_Dimensions = new Vector2((Viewport_Dimensions.rect.width / 2), (Viewport_Dimensions.rect.height / 2));
         VerticalPixel = Half_Map_Background_Dimensions.y - Half_Viewport_Dimensions.y;
         HorizontalPixel = Half_Map_Background_Dimensions.x - Half_Viewport_Dimensions.x;
@@ -76,7 +77,7 @@ public class Map : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
     // Update is called once per frame
     void Update()
     {
-        Map_Background_Dimensions.anchoredPosition = new Vector2(Mathf.Clamp(Map_Background_Dimensions.anchoredPosition.x, -HorizontalPixel, HorizontalPixel), Mathf.Clamp(Map_Background_Dimensions.anchoredPosition.y,-VerticalPixel,VerticalPixel));
+        Map_Background_Dimensions.anchoredPosition = new Vector2(Mathf.Clamp(Map_Background_Dimensions.anchoredPosition.x, -HorizontalPixel, HorizontalPixel), Mathf.Clamp(Map_Background_Dimensions.anchoredPosition.y, -VerticalPixel, VerticalPixel));
     }
 }
 
