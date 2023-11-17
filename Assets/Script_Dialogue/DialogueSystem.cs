@@ -45,16 +45,15 @@ public class DialogueSystem : MonoBehaviour
         diaIndex = 0;
         left_buttons[0].gameObject.SetActive(false);
         left_buttons[1].gameObject.SetActive(false);
-        Speak(nowDialogueList[diaIndex].speaker, nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
     }
-
 
     public void NextSpeak()
     {
         left_buttons[0].gameObject.SetActive(true);
         left_buttons[1].gameObject.SetActive(true);
         diaIndex++;
-        Speak(nowDialogueList[diaIndex].speaker, nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
         if (diaIndex >= nowDialogueList.Length - 1) // if It is 0th dialogue, Not active Left arrow button 
         {
             right_buttons[0].gameObject.SetActive(false);
@@ -68,7 +67,7 @@ public class DialogueSystem : MonoBehaviour
         right_buttons[0].gameObject.SetActive(true);
         right_buttons[1].gameObject.SetActive(true);
         diaIndex--;
-        Speak(nowDialogueList[diaIndex].speaker, nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
         if(diaIndex == 0) // if It is 0th dialogue, Not active Left arrow button 
         {
             left_buttons[0].gameObject.SetActive(false);
@@ -77,15 +76,16 @@ public class DialogueSystem : MonoBehaviour
     }
 
 
-    void Speak(Speaker speaker, string dia, EachDialogue.Face face)
+    void Speak(Speaker speaker, string dia, Dialogue.Face face)
     {
         currentText = ""; // Empty text
         fullText = dia;
-        if (speaker.isPlayer) LeftSpeakerActive(speaker, dia, face);
+        if (speaker.isPlayer) 
+            LeftSpeakerActive(speaker, dia, face);
         else RightSpeakerActive(speaker, dia, face);
     }
 
-    void LeftSpeakerActive(Speaker speaker, string dia, EachDialogue.Face face)
+    void LeftSpeakerActive(Speaker speaker, string dia, Dialogue.Face face)
     {
         right_Panel.SetActive(false);
         left_Panel.SetActive(true);
@@ -95,7 +95,7 @@ public class DialogueSystem : MonoBehaviour
         left_standing_image.sprite = speaker.standing_sprites[(int)face];
     }
 
-     void RightSpeakerActive(Speaker speaker, string dia, EachDialogue.Face face)
+     void RightSpeakerActive(Speaker speaker, string dia, Dialogue.Face face)
     {
         left_Panel.SetActive(false);
         right_Panel.SetActive(true);
@@ -107,8 +107,16 @@ public class DialogueSystem : MonoBehaviour
 
     IEnumerator ShowText()
     {
+        int index = diaIndex;
+
         for (int i = 0; i <= fullText.Length; i++)
         {
+            // 코루틴이 시작될 때의 diaIndex 값과 현재 diaIndex 값이 다르면 중지
+            if (index != diaIndex)
+            {
+                yield break;
+            }
+
             currentText = fullText.Substring(0, i);
             typingText.text = currentText;
             if (audioSource.clip != null)

@@ -6,37 +6,68 @@ using UnityEngine;
 public class Dialogue : MonoBehaviour
 {
     [NonSerialized] public DialogueSystem dialogueSystem;
-    
+    public enum Face { Normal, Smile, Sad, Cry, Angry, Surprise }
+
     [Serializable]
     public class EachDialogue
     {
-        // public int diaNum;
-        // public int index;
-        public Speaker speaker;
-        public enum Face { Normal, Smile, Sad, Cry, Angry, Surprise }
+        public int diaID;
+        public int index;
+        public string speaker;
         public Face face;
         [TextArea()] public string dialogueText;
+        public Speaker GetSpeaker() {
+            // 문자열을 Speaker 객체로 매핑
+            return Resources.Load<Speaker>("Speaker/" + speaker);
+        }
     }
 
-    //public TextAsset dialogueJson;
-    //public int dialogueID;
+    public class DialogueContainer
+    {
+        public EachDialogue[] dialogueList;
+    }
+
+    public DialogueContainer dialogueContainer;
+    public EachDialogue[] thisIdDialogues;
+    public TextAsset dialogueJson;
+    public int dialogueID;
+
    
-    public EachDialogue[] dialogueList;
 
     void Start()
     {
         dialogueSystem = transform.parent.GetComponent<DialogueSystem>();
-        
-        //dialogueList = JsonUtility.FromJson<DialogueList>(dialogueJson.ToString());
-        //Debug.Log(dialogueList);
+        string jsonString = "{ \"dialogueList\": " + dialogueJson.text + "}";
+        dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
+        FindDialogueByID(dialogueID);
     }
 
 
+    // 대화 ID에 해당하는 대화를 찾는 함수
+    private void FindDialogueByID(int targetDiaID)
+    {
+        int i;
+        int j = 0;
+        for(i = 0; i<dialogueContainer.dialogueList.Length; i++)
+        {
+            if (dialogueContainer.dialogueList[i].diaID == targetDiaID)
+            {
+                break;
+            }
+        }
+        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID) j++;
+        thisIdDialogues = new EachDialogue[j];
+        for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
+        {
+            thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
+            thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", Resources.Load<Speaker>("Speaker/Player").speaker_name);
+        }
+    }
 
     // Dialogue
     public void DialogueStart()
     {
-        dialogueSystem.nowDialogueList = dialogueList;
+        dialogueSystem.nowDialogueList = thisIdDialogues;
         dialogueSystem.StartSpeak();
     }
 
