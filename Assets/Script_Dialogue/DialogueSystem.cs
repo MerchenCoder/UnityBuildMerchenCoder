@@ -11,20 +11,21 @@ public class DialogueSystem : MonoBehaviour
     [Header("Left Panel")]
     [SerializeField] private GameObject left_Panel;
     [SerializeField] private Text left_name_text;
-    [SerializeField] private Text left_dialogue_text;
     [SerializeField] private Image left_standing_image;
 
     [Header("Right Panel")]
     [SerializeField] private GameObject right_Panel;
     [SerializeField] private Text right_name_text;
-    [SerializeField] private Text right_dialogue_text;
     [SerializeField] private Image right_standing_image;
 
     [Header("ETC")]
+    [SerializeField] private GameObject etc;
     public Dialogue[] dialogues;
+    [SerializeField] private Text dialogue_text;
     [NonSerialized] public EachDialogue[] nowDialogueList;
-    public Button[] left_buttons = new Button[2];
-    public Button[] right_buttons = new Button[2];
+    public Button left_buttons;
+    public Button right_buttons;
+    public Button end_button;
 
     int diaIndex;
     private string fullText;
@@ -35,43 +36,43 @@ public class DialogueSystem : MonoBehaviour
 
     void Start()
     {
+        end_button.gameObject.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         left_Panel.gameObject.SetActive(false);
         right_Panel.gameObject.SetActive(false);
+        etc.SetActive(false);
     }
 
     public void StartSpeak()
     {
         diaIndex = 0;
-        left_buttons[0].gameObject.SetActive(false);
-        left_buttons[1].gameObject.SetActive(false);
+        left_buttons.gameObject.SetActive(false);
+        etc.SetActive(true);
         Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
     }
 
     public void NextSpeak()
     {
-        left_buttons[0].gameObject.SetActive(true);
-        left_buttons[1].gameObject.SetActive(true);
+        end_button.gameObject.SetActive(false);
+        left_buttons.gameObject.SetActive(true);
         diaIndex++;
         Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
         if (diaIndex >= nowDialogueList.Length - 1) // if It is 0th dialogue, Not active Left arrow button 
         {
-            right_buttons[0].gameObject.SetActive(false);
-            right_buttons[1].gameObject.SetActive(false);
+            right_buttons.gameObject.SetActive(false);
+            end_button.gameObject.SetActive(true);
         }
     }
 
 
     public void PrevSpeak()
     {
-        right_buttons[0].gameObject.SetActive(true);
-        right_buttons[1].gameObject.SetActive(true);
+        right_buttons.gameObject.SetActive(true);
         diaIndex--;
         Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
         if(diaIndex == 0) // if It is 0th dialogue, Not active Left arrow button 
         {
-            left_buttons[0].gameObject.SetActive(false);
-            left_buttons[1].gameObject.SetActive(false);
+            left_buttons.gameObject.SetActive(false);
         }
     }
 
@@ -90,7 +91,7 @@ public class DialogueSystem : MonoBehaviour
         right_Panel.SetActive(false);
         left_Panel.SetActive(true);
         left_name_text.text = speaker.speaker_name;
-        typingText = left_dialogue_text;
+        typingText = dialogue_text;
         StartCoroutine(ShowText());
         left_standing_image.sprite = speaker.standing_sprites[(int)face];
     }
@@ -100,9 +101,16 @@ public class DialogueSystem : MonoBehaviour
         left_Panel.SetActive(false);
         right_Panel.SetActive(true);
         right_name_text.text = speaker.speaker_name;
-        typingText = right_dialogue_text;
+        typingText = dialogue_text;
         StartCoroutine(ShowText());
         right_standing_image.sprite = speaker.standing_sprites[(int)face];
+    }
+
+    public void EndDialogue()
+    {
+        left_Panel.gameObject.SetActive(false);
+        right_Panel.gameObject.SetActive(false);
+        etc.SetActive(false);
     }
 
     IEnumerator ShowText()
