@@ -33,8 +33,31 @@ public class SceneChange : MonoBehaviour
         SceneManager.LoadScene("Ch3Stage");
     }
 
-
-
+    //각 스테이지 씬으로 전환
+    public void ChangetoCh1S1()
+    {
+        SceneManager.LoadScene("Ch1S1");
+    }
+    public void ChangetoCh1S2()
+    {
+        SceneManager.LoadScene("Ch1S2");
+    }
+    public void ChangetoCh1S3()
+    {
+        SceneManager.LoadScene("Ch1S3");
+    }
+    public void ChangetoCh1S4()
+    {
+        SceneManager.LoadScene("Ch1S4");
+    }
+    public void ChangetoCh1S5()
+    {
+        SceneManager.LoadScene("Ch1S5");
+    }
+    public void ChangetoCh1S6()
+    {
+        SceneManager.LoadScene("Ch1S6");
+    }
 
 
 }
