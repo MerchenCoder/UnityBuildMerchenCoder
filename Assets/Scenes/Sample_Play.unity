@@ -260,7 +260,7 @@ MonoBehaviour:
   right_standing_image: {fileID: 112592688}
   etc: {fileID: 1467822238}
   dialogues:
-  - {fileID: 0}
+  - {fileID: 1558965589}
   dialogue_text: {fileID: 1219417758}
   left_buttons: {fileID: 2061856765}
   right_buttons: {fileID: 426230476}
@@ -328,7 +328,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!224 &4605943
 RectTransform:
@@ -2287,6 +2287,8 @@ GameObject:
   - component: {fileID: 1558965591}
   - component: {fileID: 1558965590}
   - component: {fileID: 1558965589}
+  - component: {fileID: 1558965593}
+  - component: {fileID: 1558965594}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -2326,8 +2328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisIdDialogues: []
-  dialogueJson: {fileID: 0}
-  dialogueID: 0
+  dialogueJson: {fileID: 4900000, guid: a597e3bd462def4499b3da0f23f90ebc, type: 3}
+  dialogueID: 8
 --- !u!114 &1558965590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2371,7 +2373,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1558965591}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1558965593}
+        m_TargetAssemblyTypeName: DialogueBtn, Assembly-CSharp
+        m_MethodName: DialogueBtnDown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1558965591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,6 +2424,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558965587}
   m_CullTransparentMesh: 1
+--- !u!114 &1558965593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558965587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a501078055a6c46a8b637dedeffc36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1558965594
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558965587}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.06911516, y: -1.5619962}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.943879, y: 4.1239924}
+  m_EdgeRadius: 0
 --- !u!1 &1755758473
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
-        dialogueSystem = transform.parent.GetComponent<DialogueSystem>();
+        dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
         string jsonString = "{ \"dialogueList\": " + dialogueJson.text + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
         FindDialogueByID(dialogueID);
