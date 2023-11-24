@@ -7,7 +7,7 @@ public class CloseButton : MonoBehaviour
     public GameObject Panel;
     void Start()
     {
-        
+
     }
 
     public void Close()
