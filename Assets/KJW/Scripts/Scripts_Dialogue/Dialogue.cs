@@ -14,11 +14,15 @@ public class Dialogue : MonoBehaviour
         public int diaID;
         public int index;
         public string speaker;
-        public Face face;
+        public string face;
         [TextArea()] public string dialogueText;
         public Speaker GetSpeaker() {
             // 문자열을 Speaker 객체로 매핑
             return Resources.Load<Speaker>("Speaker/" + speaker);
+        }
+        public Face GetFace()
+        {
+            return (Face)System.Enum.Parse(typeof(Face), face);
         }
     }
 

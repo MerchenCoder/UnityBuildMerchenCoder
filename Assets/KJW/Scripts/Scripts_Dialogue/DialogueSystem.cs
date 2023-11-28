@@ -48,7 +48,7 @@ public class DialogueSystem : MonoBehaviour
         diaIndex = 0;
         left_buttons.gameObject.SetActive(false);
         etc.SetActive(true);
-        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
     }
 
     public void NextSpeak()
@@ -56,7 +56,7 @@ public class DialogueSystem : MonoBehaviour
         end_button.gameObject.SetActive(false);
         left_buttons.gameObject.SetActive(true);
         diaIndex++;
-        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
         if (diaIndex >= nowDialogueList.Length - 1) // if It is 0th dialogue, Not active Left arrow button 
         {
             right_buttons.gameObject.SetActive(false);
@@ -69,7 +69,7 @@ public class DialogueSystem : MonoBehaviour
     {
         right_buttons.gameObject.SetActive(true);
         diaIndex--;
-        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
         if(diaIndex == 0) // if It is 0th dialogue, Not active Left arrow button 
         {
             left_buttons.gameObject.SetActive(false);
@@ -94,6 +94,7 @@ public class DialogueSystem : MonoBehaviour
         typingText = dialogue_text;
         StartCoroutine(ShowText());
         left_standing_image.sprite = speaker.standing_sprites[(int)face];
+        left_standing_image.SetNativeSize();
     }
 
      void RightSpeakerActive(Speaker speaker, string dia, Dialogue.Face face)
@@ -104,6 +105,7 @@ public class DialogueSystem : MonoBehaviour
         typingText = dialogue_text;
         StartCoroutine(ShowText());
         right_standing_image.sprite = speaker.standing_sprites[(int)face];
+        right_standing_image.SetNativeSize();
     }
 
     public void EndDialogue()
