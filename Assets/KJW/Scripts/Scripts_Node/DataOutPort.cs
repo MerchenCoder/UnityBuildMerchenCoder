@@ -47,10 +47,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
         Vector2 nowPos = transform.position;
 
-
         float distance = Vector2.Distance(nowPos, originVector2);
-        Debug.Log("Distance: " + distance);
-
 
         arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector2), 1);
         arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, nowPos));
