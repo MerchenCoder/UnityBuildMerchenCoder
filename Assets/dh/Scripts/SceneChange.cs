@@ -5,6 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
+    static GameObject container;
+    //---싱글톤 선언----//
+    static SceneChange instance;
+    public static SceneChange Instance
+    {
+        get
+        {
+            if (!instance)
+            {
+                container = new GameObject();
+                container.name = "SceneManager";
+                instance = container.AddComponent(typeof(SceneChange)) as SceneChange;
+                DontDestroyOnLoad(container);
+
+            }
+            return instance;
+
+        }
+    }
+
+
+
+
+
+
     //홈으로 씬 전환
     public void ChangetoHome()
     {
