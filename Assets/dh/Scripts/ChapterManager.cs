@@ -31,11 +31,12 @@ public class ChapterManager : MonoBehaviour
         {
             if (DataManager.Instance.data.chapterIsUnlock[i] == true)
             {
-                chapterBooks[i].GetComponent<Image>().color = Color.white;
+                chapterBooks[i].GetComponent<Button>().interactable = true;//버튼 활성화
             }
             else
             {
-                chapterBooks[i].GetComponent<Image>().color = Color.black;
+                // chapterBooks[i].GetComponent<Image>().color = Color.black;
+                chapterBooks[i].GetComponent<Button>().interactable = false; //버튼 비활성화
             }
         }
 

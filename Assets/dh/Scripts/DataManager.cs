@@ -38,8 +38,8 @@ public class DataManager : MonoBehaviour
     //불러오기
     public void LoadGameData()
     {
-        Debug.Log(Application.dataPath);
-        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
+        Debug.Log("데이터 저장 위치 : " + Application.dataPath + "/Data/");
+        string filePath = Application.dataPath + "/Data/" + GameDataFileName;
         if (File.Exists(filePath)) //저장된 게임이 있다면
         {
             //저장된 파일을 읽어오고 Json을 클래스 형식으로 전환해서 할당
@@ -47,14 +47,42 @@ public class DataManager : MonoBehaviour
             data = JsonUtility.FromJson<Data>(FromJsonData);
             print("불러오기 완료");
         }
+        else
+        {
+            // 파일이 없을 경우 초기값 설정 후 저장
+            InitializeGameData();
+            SaveGameData();
+        }
 
     }
+
+
+    // 초기값 설정
+    private void InitializeGameData()
+    {
+        // chapterIsUnlock의 첫 인덱스는 true, 나머지는 false
+        data.chapterIsUnlock[0] = true;
+        for (int i = 1; i < data.chapterIsUnlock.Length; i++)
+        {
+            data.chapterIsUnlock[i] = false;
+        }
+
+        // ch1StageIsUnlock의 첫 인덱스는 true, 나머지는 false
+        data.ch1StageIsUnlock[0] = true;
+        for (int i = 1; i < data.ch1StageIsUnlock.Length; i++)
+        {
+            data.ch1StageIsUnlock[i] = false;
+        }
+    }
+
+
+
 
     //저장하기
     public void SaveGameData()
     {
         string ToJsonData = JsonUtility.ToJson(data, true);
-        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
+        string filePath = Application.dataPath + "/Data/" + GameDataFileName;
 
         File.WriteAllText(filePath, ToJsonData);
 
