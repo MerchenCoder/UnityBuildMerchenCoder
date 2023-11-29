@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Dialogue;
@@ -20,7 +21,7 @@ public class DialogueSystem : MonoBehaviour
 
     [Header("ETC")]
     [SerializeField] private GameObject etc;
-    public Dialogue[] dialogues;
+    public List<GameObject> dialogues;
     [SerializeField] private Text dialogue_text;
     [NonSerialized] public EachDialogue[] nowDialogueList;
     public Button left_buttons;
@@ -28,6 +29,7 @@ public class DialogueSystem : MonoBehaviour
     public Button end_button;
 
     int diaIndex;
+    int diaListIndex;
     private string fullText;
     private string currentText = "";
     private Text typingText;
@@ -36,6 +38,7 @@ public class DialogueSystem : MonoBehaviour
 
     void Start()
     {
+        diaListIndex = 0;
         end_button.gameObject.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         left_Panel.gameObject.SetActive(false);
@@ -46,9 +49,11 @@ public class DialogueSystem : MonoBehaviour
     public void StartSpeak()
     {
         diaIndex = 0;
+        diaListIndex++;
+        dialogues[diaListIndex-1].gameObject.SetActive(false);
         left_buttons.gameObject.SetActive(false);
         etc.SetActive(true);
-        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
     }
 
     public void NextSpeak()
@@ -56,7 +61,7 @@ public class DialogueSystem : MonoBehaviour
         end_button.gameObject.SetActive(false);
         left_buttons.gameObject.SetActive(true);
         diaIndex++;
-        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
         if (diaIndex >= nowDialogueList.Length - 1) // if It is 0th dialogue, Not active Left arrow button 
         {
             right_buttons.gameObject.SetActive(false);
@@ -69,7 +74,7 @@ public class DialogueSystem : MonoBehaviour
     {
         right_buttons.gameObject.SetActive(true);
         diaIndex--;
-        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].face);
+        Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
         if(diaIndex == 0) // if It is 0th dialogue, Not active Left arrow button 
         {
             left_buttons.gameObject.SetActive(false);
@@ -94,6 +99,7 @@ public class DialogueSystem : MonoBehaviour
         typingText = dialogue_text;
         StartCoroutine(ShowText());
         left_standing_image.sprite = speaker.standing_sprites[(int)face];
+        left_standing_image.SetNativeSize();
     }
 
      void RightSpeakerActive(Speaker speaker, string dia, Dialogue.Face face)
@@ -104,6 +110,7 @@ public class DialogueSystem : MonoBehaviour
         typingText = dialogue_text;
         StartCoroutine(ShowText());
         right_standing_image.sprite = speaker.standing_sprites[(int)face];
+        right_standing_image.SetNativeSize();
     }
 
     public void EndDialogue()
@@ -111,6 +118,7 @@ public class DialogueSystem : MonoBehaviour
         left_Panel.gameObject.SetActive(false);
         right_Panel.gameObject.SetActive(false);
         etc.SetActive(false);
+        dialogues[diaListIndex - 1].GetComponent<DiaEndInteraction>().EndDialogueInteraction();
     }
 
     IEnumerator ShowText()
