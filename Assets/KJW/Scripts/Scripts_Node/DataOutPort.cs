@@ -12,6 +12,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     private GameObject connectedPort;
     private Vector2 originVector2; // 원래 위치값
     private bool isConnected;
+    private Color originColor; // inPort 원래 컬러값
 
     void Start()
     {
@@ -28,12 +29,12 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         }
         else arrowObject.SetActive(true);
         arrowObject.transform.position = originVector2;
-
+        arrowObject.GetComponent<Image>().color = GetComponent<Image>().color;
         // 연결 상태에서 다시 드래그
         if (isConnected)
         {
             isConnected = false;
-            connectedPort.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            connectedPort.GetComponent<Image>().color = originColor;
             connectedPort.GetComponent<Image>().raycastTarget = true;
         }
     }
@@ -78,7 +79,8 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, connectedPort.transform.position));
         // out port 화살표 고정
         transform.position = connectedPort.transform.position;
-        connectedPort.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        originColor = connectedPort.GetComponent<Image>().color;
+        connectedPort.GetComponent<Image>().color = GetComponent<Image>().color;
         connectedPort.GetComponent<Image>().raycastTarget = false;
     }
 
