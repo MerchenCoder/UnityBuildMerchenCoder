@@ -120,45 +120,96 @@ public class Switch_Slide : MonoBehaviour
 
     private IEnumerator SwitchCoroutineOn()
     {
-        while (time < 1f)
+        // while (time < 1f)
+        // {
+        //     time += 0.02f;
+
+        //     Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(Start_Point, End_Point, time);
+
+        //     Handle_Image_Off.color = Color.Lerp(currentcolor, newColor, time);
+
+        //     Handle_Image_On.color = Color.Lerp(newColor2, currentcolor2, time);
+
+        //     if (Mathf.Round(Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition.x) == End_Point.x)
+        //     {
+        //         Execute1();
+        //         Debug.Log("From on");
+        //         btn1.interactable = true;
+        //         StopCoroutine(SwitchCoroutineOn());
+        //     }
+        //     yield return null;
+        // }
+        float duration = 0.1f; // Set the total duration of the animation
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
-            time += 0.02f;
+            elapsedTime += Time.deltaTime; // Use Time.deltaTime to make the animation frame-rate independent
 
-            Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(Start_Point, End_Point, time);
+            float t = Mathf.Clamp01(elapsedTime / duration);
 
-            Handle_Image_Off.color = Color.Lerp(currentcolor, newColor, time);
+            Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(Start_Point, End_Point, t);
 
-            Handle_Image_On.color = Color.Lerp(newColor2, currentcolor2, time);
+            Handle_Image_Off.color = Color.Lerp(currentcolor, newColor, t);
+
+            Handle_Image_On.color = Color.Lerp(newColor2, currentcolor2, t);
 
             if (Mathf.Round(Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition.x) == End_Point.x)
             {
                 Execute1();
                 Debug.Log("From on");
                 btn1.interactable = true;
-                StopCoroutine(SwitchCoroutineOn());
+                yield break; // StopCoroutine is not needed here
             }
+
             yield return null;
         }
+
+
     }
 
     private IEnumerator SwitchCoroutineOff()
     {
-        while (time < 1f)
+        // while (time < 1f)
+        // {
+        //     time += 0.02f;
+
+        //     Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(End_Point, Start_Point, time);
+
+        //     Handle_Image_Off.color = Color.Lerp(newColor, currentcolor, time);
+
+        //     Handle_Image_On.color = Color.Lerp(currentcolor2, newColor2, time);
+
+        //     if (Mathf.Round(Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition.x) == -End_Point.x)
+        //     {
+        //         btn1.interactable = true;
+        //         StopCoroutine(SwitchCoroutineOff());
+        //     }
+        //     yield return null;
+        // }
+        float duration = 0.1f; // Set the total duration of the animation
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
-            time += 0.02f;
+            elapsedTime += Time.deltaTime; // Use Time.deltaTime to make the animation frame-rate independent
 
-            Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(End_Point, Start_Point, time);
+            float t = Mathf.Clamp01(elapsedTime / duration);
 
-            Handle_Image_Off.color = Color.Lerp(newColor, currentcolor, time);
+            Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(End_Point, Start_Point, t);
 
-            Handle_Image_On.color = Color.Lerp(currentcolor2, newColor2, time);
+            Handle_Image_Off.color = Color.Lerp(newColor, currentcolor, t);
+
+            Handle_Image_On.color = Color.Lerp(currentcolor2, newColor2, t);
 
             if (Mathf.Round(Toggle_Pixel_Dimension.GetComponent<RectTransform>().anchoredPosition.x) == -End_Point.x)
             {
                 btn1.interactable = true;
-                StopCoroutine(SwitchCoroutineOff());
+                yield break; // StopCoroutine is not needed here
             }
+
             yield return null;
         }
+
     }
 }
