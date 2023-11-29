@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Dialogue : MonoBehaviour
@@ -14,11 +15,15 @@ public class Dialogue : MonoBehaviour
         public int diaID;
         public int index;
         public string speaker;
-        public Face face;
+        public string face;
         [TextArea()] public string dialogueText;
         public Speaker GetSpeaker() {
             // 문자열을 Speaker 객체로 매핑
             return Resources.Load<Speaker>("Speaker/" + speaker);
+        }
+        public Face GetFace()
+        {
+            return (Face)System.Enum.Parse(typeof(Face), face);
         }
     }
 
@@ -68,6 +73,7 @@ public class Dialogue : MonoBehaviour
     public void DialogueStart()
     {
         dialogueSystem.nowDialogueList = thisIdDialogues;
+        dialogueSystem.dialogues.Add(gameObject);
         dialogueSystem.StartSpeak();
     }
 
