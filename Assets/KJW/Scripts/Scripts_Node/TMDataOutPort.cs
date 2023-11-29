@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class TMDataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public GameObject arrowPrefab; // ȭ��ǥ UI ������
     private GameObject arrowObject;
@@ -28,7 +28,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     public void OnBeginDrag(PointerEventData eventData)
     {
         // prefab ���� 
-        if(arrowObject == null)
+        if (arrowObject == null)
         {
             arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);
         }
@@ -71,7 +71,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 result.gameObject.GetComponent<endNode>().isConnectedEnd();
             }
         }
-        if(!isConnected)
+        if (!isConnected)
         {
             transform.position = originVector2;
             arrowObject.SetActive(false);
@@ -98,6 +98,6 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     {
         return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
     }
-    
+
 
 }
