@@ -68,13 +68,21 @@ public class TMDataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
                 connectedPort = result.gameObject;
                 ConnectPort();
                 isConnected = true;
-                result.gameObject.GetComponent<endNode>().isConnectedEnd();
+                if (connectedPort.transform.parent.gameObject.tag == "flow_end")
+                {
+                    connectedPort.GetComponent<endNode>().IsConnected = true;
+                }
+                //result.gameObject.GetComponent<endNode>().isConnectedEnd();
             }
         }
         if (!isConnected)
         {
             transform.position = originVector2;
             arrowObject.SetActive(false);
+            if (connectedPort.transform.parent.gameObject.tag == "flow_end")
+            {
+                connectedPort.GetComponent<endNode>().IsConnected = false;
+            }
         }
     }
 
