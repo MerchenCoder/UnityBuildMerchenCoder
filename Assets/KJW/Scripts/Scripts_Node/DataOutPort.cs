@@ -7,17 +7,12 @@ using UnityEngine.UI;
 
 public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public GameObject arrowPrefab; // È­ï¿½ï¿½Ç¥ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject arrowPrefab; // È­»ìÇ¥ UI ÇÁ¸®ÆÕ
     private GameObject arrowObject;
     private GameObject connectedPort;
-    private Vector2 originVector2; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½
+    private Vector2 originVector2; // ¿ø·¡ À§Ä¡°ª
     private bool isConnected;
-
-    public bool IsConnected
-    {
-        get { return isConnected; }
-        set { isConnected = value; }
-    }
+    private Color originColor; // inPort ¿ø·¡ ÄÃ·¯°ª
 
     void Start()
     {
@@ -27,26 +22,26 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // prefab ï¿½ï¿½ï¿½ï¿½ 
+        // prefab »ı¼º 
         if(arrowObject == null)
         {
             arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);
         }
         else arrowObject.SetActive(true);
         arrowObject.transform.position = originVector2;
-
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½å·¡ï¿½ï¿½
+        arrowObject.GetComponent<Image>().color = GetComponent<Image>().color;
+        // ¿¬°á »óÅÂ¿¡¼­ ´Ù½Ã µå·¡±×
         if (isConnected)
         {
             isConnected = false;
-            connectedPort.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            connectedPort.GetComponent<Image>().color = originColor;
             connectedPort.GetComponent<Image>().raycastTarget = true;
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+        // ÀÌ¹ÌÁöÀÇ À§Ä¡ ¼³Á¤
         transform.position = eventData.position;
 
         Vector2 nowPos = transform.position;
@@ -59,16 +54,15 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
 
-        // UI ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        // UI ¿ä¼Ò¿ÍÀÇ Ãæµ¹ ¿©ºÎ È®ÀÎ
         foreach (RaycastResult result in results)
         {
             if (result.gameObject.GetComponent<BoxCollider2D>() != null && result.gameObject.CompareTag(this.gameObject.tag))
             {
-                Debug.Log("ì—°ê²°ë˜ì—ˆìŠµë‹ˆë‹¤.");
+                Debug.Log("¸ÂÀ½");
                 connectedPort = result.gameObject;
                 ConnectPort();
                 isConnected = true;
-                result.gameObject.GetComponent<endNode>().isConnectedEnd();
             }
         }
         if(!isConnected)
@@ -80,12 +74,13 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     void ConnectPort()
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ¶óÀÎ °íÁ¤
         arrowObject.transform.localScale = new Vector2(Vector2.Distance(connectedPort.transform.position, originVector2), 1);
         arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, connectedPort.transform.position));
-        // out port È­ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
+        // out port È­»ìÇ¥ °íÁ¤
         transform.position = connectedPort.transform.position;
-        connectedPort.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        originColor = connectedPort.GetComponent<Image>().color;
+        connectedPort.GetComponent<Image>().color = GetComponent<Image>().color;
         connectedPort.GetComponent<Image>().raycastTarget = false;
     }
 
