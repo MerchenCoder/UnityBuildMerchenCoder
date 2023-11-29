@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         walkAnim = GetComponent<Animator>();
         spriteWidth = spriteRenderer.bounds.size.x; //width 가져오기
-        Invoke("Think", 2); // 초기화 함수 안에 넣어서 실행될 때 마다(최초 1회) nextMove변수가 초기화 되도록
+        Invoke("Think", 0); // 초기화 함수 안에 넣어서 실행될 때 마다(최초 1회) nextMove변수가 초기화 되도록
     }
 
     private void Update()
