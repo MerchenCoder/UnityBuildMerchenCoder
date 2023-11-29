@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Dialogue : MonoBehaviour
@@ -72,6 +73,7 @@ public class Dialogue : MonoBehaviour
     public void DialogueStart()
     {
         dialogueSystem.nowDialogueList = thisIdDialogues;
+        dialogueSystem.dialogues.Add(gameObject);
         dialogueSystem.StartSpeak();
     }
 

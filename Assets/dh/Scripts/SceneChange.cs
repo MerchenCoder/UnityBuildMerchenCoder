@@ -59,5 +59,8 @@ public class SceneChange : MonoBehaviour
         SceneManager.LoadScene("Ch1S6");
     }
 
-
+    public void ChangeToThisScene(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
+    }
 }
