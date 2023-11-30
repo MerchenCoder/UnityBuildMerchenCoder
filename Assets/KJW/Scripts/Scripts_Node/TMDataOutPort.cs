@@ -12,6 +12,7 @@ public class TMDataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     private GameObject connectedPort;
     private Vector2 originVector2; // ���� ��ġ��
     private bool isConnected;
+    private Sprite nullImage;
 
     public bool IsConnected
     {
@@ -39,7 +40,7 @@ public class TMDataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         if (isConnected)
         {
             isConnected = false;
-            connectedPort.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            connectedPort.GetComponent<Image>().sprite = nullImage;
             connectedPort.GetComponent<Image>().raycastTarget = true;
         }
     }
@@ -62,7 +63,7 @@ public class TMDataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         // UI ��ҿ��� �浹 ���� Ȯ��
         foreach (RaycastResult result in results)
         {
-            if (result.gameObject.GetComponent<BoxCollider2D>() != null && result.gameObject.CompareTag(this.gameObject.tag))
+            if (result.gameObject.GetComponent<BoxCollider2D>() != null && (result.gameObject.CompareTag(this.gameObject.tag) || result.gameObject.CompareTag("flow_end")))
             {
                 Debug.Log("연결되었습니다.");
                 connectedPort = result.gameObject;
@@ -93,7 +94,8 @@ public class TMDataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, connectedPort.transform.position));
         // out port ȭ��ǥ ����
         transform.position = connectedPort.transform.position;
-        connectedPort.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        nullImage = connectedPort.GetComponent<Image>().sprite;
+        connectedPort.GetComponent<Image>().sprite = this.GetComponent<Image>().sprite;
         connectedPort.GetComponent<Image>().raycastTarget = false;
     }
 
