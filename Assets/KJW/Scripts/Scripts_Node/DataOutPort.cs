@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public GameObject arrowPrefab; // È­»ìÇ¥ UI ÇÁ¸®ÆÕ
+    public GameObject arrowPrefab; // È­ï¿½ï¿½Ç¥ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private GameObject arrowObject;
     private GameObject connectedPort;
-    private Vector2 originVector2; // ¿ø·¡ À§Ä¡°ª
+    private Vector2 originVector2; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½
     private bool isConnected;
-    private Color originColor; // inPort ¿ø·¡ ÄÃ·¯°ª
+    private Color originColor; // inPort ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½
 
     void Start()
     {
@@ -22,15 +22,16 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // prefab »ı¼º 
-        if(arrowObject == null)
+        // prefab ï¿½ï¿½ï¿½ï¿½ 
+        if (arrowObject == null)
         {
             arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);
         }
         else arrowObject.SetActive(true);
         arrowObject.transform.position = originVector2;
+        Debug.Log(originVector2);
         arrowObject.GetComponent<Image>().color = GetComponent<Image>().color;
-        // ¿¬°á »óÅÂ¿¡¼­ ´Ù½Ã µå·¡±×
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½å·¡ï¿½ï¿½
         if (isConnected)
         {
             isConnected = false;
@@ -41,12 +42,19 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void OnDrag(PointerEventData eventData)
     {
-        // ÀÌ¹ÌÁöÀÇ À§Ä¡ ¼³Á¤
+        // // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
         transform.position = eventData.position;
 
         Vector2 nowPos = transform.position;
+
+        float distance = Vector2.Distance(nowPos, originVector2);
+
         arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector2), 1);
         arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, nowPos));
+
+
+        // arrowObjectì˜ ìœ„ì¹˜ ì—…ë°ì´íŠ¸
+        arrowObject.transform.position = originVector2;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -54,30 +62,39 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
 
-        // UI ¿ä¼Ò¿ÍÀÇ Ãæµ¹ ¿©ºÎ È®ÀÎ
+        // UI ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         foreach (RaycastResult result in results)
         {
             if (result.gameObject.GetComponent<BoxCollider2D>() != null && result.gameObject.CompareTag(this.gameObject.tag))
             {
-                Debug.Log("¸ÂÀ½");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½");
                 connectedPort = result.gameObject;
                 ConnectPort();
                 isConnected = true;
+                connectedPort.GetComponent<DataInPort>().InputValue = this.transform.parent.GetComponent<NodeData>().data_int;
+                connectedPort.GetComponent<DataInPort>().IsConnected = true;
+
             }
         }
-        if(!isConnected)
+        if (!isConnected)
         {
             transform.position = originVector2;
             arrowObject.SetActive(false);
+            if (connectedPort != null)
+            {
+                connectedPort.GetComponent<DataInPort>().InputValue = 0;
+                connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                connectedPort = null;
+            }
         }
     }
 
     void ConnectPort()
     {
-        // ¶óÀÎ °íÁ¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         arrowObject.transform.localScale = new Vector2(Vector2.Distance(connectedPort.transform.position, originVector2), 1);
         arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, connectedPort.transform.position));
-        // out port È­»ìÇ¥ °íÁ¤
+        // out port È­ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
         transform.position = connectedPort.transform.position;
         originColor = connectedPort.GetComponent<Image>().color;
         connectedPort.GetComponent<Image>().color = GetComponent<Image>().color;
@@ -93,6 +110,6 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     {
         return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
     }
-    
+
 
 }

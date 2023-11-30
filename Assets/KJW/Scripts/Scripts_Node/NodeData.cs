@@ -14,7 +14,7 @@ public class NodeData : MonoBehaviour
     //{
     //    if (gameObject.CompareTag("data_int"))
     //    {
-            
+
     //    }
     //    else if (gameObject.CompareTag("data_string"))
     //    {

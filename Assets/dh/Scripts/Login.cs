@@ -130,7 +130,7 @@ public class Login : MonoBehaviour
         }));
     }
 
-    private string serverPath = "http://127.0.0.1:3000";
+    private string serverPath = "http://13.125.154.109";
 
     private IEnumerator Post(string uri, string data, Action<string> onResponse)
     {

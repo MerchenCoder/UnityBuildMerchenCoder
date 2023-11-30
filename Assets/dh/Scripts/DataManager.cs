@@ -38,8 +38,8 @@ public class DataManager : MonoBehaviour
     //불러오기
     public void LoadGameData()
     {
-        Debug.Log("데이터 저장 위치 : " + Application.dataPath + "/Data/");
-        string filePath = Application.dataPath + "/Data/" + GameDataFileName;
+        Debug.Log("데이터 저장 위치 : " + Application.persistentDataPath);
+        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
         if (File.Exists(filePath)) //저장된 게임이 있다면
         {
             //저장된 파일을 읽어오고 Json을 클래스 형식으로 전환해서 할당
@@ -82,7 +82,7 @@ public class DataManager : MonoBehaviour
     public void SaveGameData()
     {
         string ToJsonData = JsonUtility.ToJson(data, true);
-        string filePath = Application.dataPath + "/Data/" + GameDataFileName;
+        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
 
         File.WriteAllText(filePath, ToJsonData);
 
