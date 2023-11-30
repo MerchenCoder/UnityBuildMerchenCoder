@@ -65,16 +65,21 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         // UI ��ҿ��� �浹 ���� Ȯ��
         foreach (RaycastResult result in results)
         {
-            if (result.gameObject.GetComponent<BoxCollider2D>() != null && result.gameObject.CompareTag(this.gameObject.tag))
+            if (result.gameObject.GetComponent<BoxCollider2D>() != null)
             {
-                Debug.Log("����");
-                connectedPort = result.gameObject;
-                ConnectPort();
-                isConnected = true;
-                connectedPort.GetComponent<DataInPort>().InputValue = this.transform.parent.GetComponent<NodeData>().data_int;
-                connectedPort.GetComponent<DataInPort>().IsConnected = true;
-
-            }
+                if (result.gameObject.CompareTag(this.gameObject.tag) || (result.gameObject.CompareTag("data_all")))
+                {
+                    connectedPort = result.gameObject;
+                    ConnectPort();
+                    isConnected = true;
+                    if (this.gameObject.CompareTag("data_int"))
+                    {
+                        connectedPort.tag = "data_int";
+                        connectedPort.GetComponent<DataInPort>().InputValue = this.transform.parent.GetComponent<NodeData>().data_int;
+                        connectedPort.GetComponent<DataInPort>().IsConnected = true;
+                    }
+                }
+            }    
         }
         if (!isConnected)
         {
@@ -82,8 +87,12 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             arrowObject.SetActive(false);
             if (connectedPort != null)
             {
-                connectedPort.GetComponent<DataInPort>().InputValue = 0;
-                connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                if (this.gameObject.CompareTag("data_int"))
+                {
+                    connectedPort.GetComponent<DataInPort>().InputValue = 0;
+                    connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                }
+                connectedPort.tag = "data_all";
                 connectedPort = null;
             }
         }
