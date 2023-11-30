@@ -35,7 +35,7 @@ public class PrintNode : MonoBehaviour
         }
         else
         {
-            dataUIText.text = "╣╔юлем";
+            dataUIText.text = "О©╫О©╫О©╫О©╫О©╫О©╫";
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class CalcNode : MonoBehaviour
 {
@@ -13,13 +14,15 @@ public class CalcNode : MonoBehaviour
     //inPort
     private GameObject inPort1;
     private GameObject inPort2;
+    private GameObject outputData;
 
     //operand
-    private bool input1Conneted;
-    private bool input2Connected;
     private int input1;
     private int input2;
 
+    //operand gameobject
+    private GameObject input1Val;
+    private GameObject input2Val;
 
     //result
     [NonSerialized] public int result;
@@ -33,7 +36,12 @@ public class CalcNode : MonoBehaviour
     {
 
         inPort1 = transform.GetChild(1).gameObject;
+        input1Val = inPort1.transform.GetChild(0).gameObject;
         inPort2 = transform.GetChild(2).gameObject;
+        input2Val = inPort2.transform.GetChild(0).gameObject;
+
+        outputData = transform.GetChild(3).gameObject;
+
         dataInPort1 = inPort1.GetComponent<DataInPort>();
         dataInPort2 = inPort2.GetComponent<DataInPort>();
 
@@ -50,16 +58,44 @@ public class CalcNode : MonoBehaviour
         //가져온 값을 각각 input1, input2로 할당하고 CalcData 호출 예정
         if (e.IsConnected)
         {
-            if (inPort1.GetComponent<DataInPort>().IsConnected && inPort2.GetComponent<DataInPort>().IsConnected)
+            if (inPort1.GetComponent<DataInPort>().IsConnected)
             {
-
                 // inputPort1과 inputPort2가 연결되어 있을 때만 계산 수행
                 input1 = inPort1.GetComponent<DataInPort>().InputValue;
+                input1Val.GetComponent<TextMeshProUGUI>().text = input1.ToString();
+                outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = input1.ToString();
+            }
+            if (inPort2.GetComponent<DataInPort>().IsConnected)
+            {
                 input2 = inPort2.GetComponent<DataInPort>().InputValue;
-
+                input2Val.GetComponent<TextMeshProUGUI>().text = input2.ToString();
+                outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = input2.ToString();
+            }
+            if (inPort1.GetComponent<DataInPort>().IsConnected && inPort2.GetComponent<DataInPort>().IsConnected)
+            {
                 result = CalcData(method, input1, input2);
                 Debug.Log("계산결과 : " + result);
                 this.GetComponent<NodeData>().data_int = result;
+            }
+
+        }
+        else
+        {
+            if (!inPort1.GetComponent<DataInPort>().IsConnected)
+            {
+                outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "□";
+                input1Val.GetComponent<TextMeshProUGUI>().text = "□";
+                this.GetComponent<NodeData>().data_int = 0;
+            }
+            else if (!inPort2.GetComponent<DataInPort>().IsConnected)
+            {
+                outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "△";
+                input2Val.GetComponent<TextMeshProUGUI>().text = "△";
+                this.GetComponent<NodeData>().data_int = 0;
+            }
+            else
+            {
+                Debug.Log("오류 예외상황");
             }
         }
 
