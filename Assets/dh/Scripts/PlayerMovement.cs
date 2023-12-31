@@ -36,21 +36,6 @@ public class PlayerMovement : MonoBehaviour
             Turn();
         }
 
-
-
-        //카메라 밖을 나가지 않도록 조정.
-        // if (viewportPos.x - spriteHalfWidth < 0f)
-        // {
-        //     //화면 끝에 도달하면 현재 속도 0으로 변경 & 위치 조정
-        //     viewportPos.x = spriteHalfWidth;
-        //     rigid.velocity = new Vector2(0, rigid.velocity.y);
-        // }
-        // else if (viewportPos.x + spriteHalfWidth > 1f)
-        // {
-        //     viewportPos.x = 1f - spriteHalfWidth;
-        //     rigid.velocity = new Vector2(0, rigid.velocity.y);
-        // }
-
         transform.position = Camera.main.ViewportToWorldPoint(viewportPos);
     }
 
@@ -59,74 +44,6 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = new Vector2(nextMove * playerSpeed, rigid.velocity.y); //nextMove 에 0:멈춤 -1:왼쪽 1:오른쪽 으로 이동 
     }
 
-    // private void Update()
-    // {
-    //     화면 밖으로 나가는 것을 방지하는 코드
-    //     float spriteHalfWidth = spriteRenderer.bounds.size.x / 2f;
-    //     float positonX = transform.position.x;
-    //     float positionY = transform.position.y;
-
-    //     Vector3 viewportPosMin = Camera.main.WorldToViewportPoint(new Vector3(positonX - spriteHalfWidth, positionY, 0));
-    //     Vector3 viewportPosMax = Camera.main.WorldToViewportPoint(new Vector3(positonX + spriteHalfWidth, positionY, 0));
-
-    //     if (viewportPosMin.x < 0f || viewportPosMax.x > 1f)
-    //     {
-
-    //         Debug.Log(viewportPosMin.x);
-    //         if (!CollisionFlag)
-    //         {
-    //             CollisionFlag = true;
-    //             Turn();
-
-    //         }
-    //         transform.position = new Vector3(transform.position.x + spriteHalfWidth, positionY, 0);
-    //     }
-    //     else if ()
-    //     {
-    //         Debug.Log("충돌");
-    //         // transform.position = new Vector3(transform.position.x - spriteHalfWidth, positionY, 0);
-    //         Turn();
-    //     }
-    //     else
-    //     {
-
-    //     }
-
-    //     // Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-    //     if (viewportPos.x - spriteHalfWidth < 0f)
-    //     {
-    //         Debug.Log("충돌");
-    //         Turn();
-    //         // viewportPos.x = 0f;
-    //         // rigid.velocity = new Vector2(0, rigid.velocity.y);
-    //     }
-    //     else if (viewportPos.x + spriteHalfWidth > 1f)
-    //     {
-    //         Turn();
-    //         // viewportPos.x = 1f;
-    //         // rigid.velocity = new Vector2(0, rigid.velocity.y);
-    //     }
-
-    //     //조정된 좌표를 월드 공간 좌표로 변환하여 다시 오브젝트의 현재 위치에 넣어줍니다.
-    //     transform.position = Camera.main.ViewportToWorldPoint(viewportPos);
-    // }
-
-    // private void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     // Debug.Log("충돌발생");
-    //     // if (collision.gameObject.CompareTag("MainCamera"))
-    //     // {
-    //     //     Debug.Log("카메라와충돌발생");
-    //     //     Turn();
-    //     // }
-
-    //     Debug.Log("Collision Detected: " + collision.gameObject.name);
-    //     if (collision.gameObject.CompareTag("MainCamera"))
-    //     {
-    //         Debug.Log("Camera Collider Collision Detected");
-    //         Turn();
-    //     }
-    // }
 
 
 
