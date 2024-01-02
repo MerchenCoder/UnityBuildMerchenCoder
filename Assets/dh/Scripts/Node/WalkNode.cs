@@ -10,14 +10,7 @@ public class WalkNode : MonoBehaviour, INode, IFollowFlow
     private float startTime; // 이동 시작 시간
     private float moveSpeed = 10.0f; // 이동 속도를 조절할 변수
 
-
-    //INode interface
-    private string nodeName;
-    public string NodeName
-    {
-        get { return nodeName; }
-        set { nodeName = value; }
-    }
+    private NodeNameManager nameManager;
 
 
     //for execute
@@ -27,7 +20,8 @@ public class WalkNode : MonoBehaviour, INode, IFollowFlow
 
     private void Start()
     {
-        this.NodeName = "ActionNode";
+        nameManager = this.GetComponent<NodeNameManager>();
+        nameManager.NodeName = "ActionNode";
 
     }
 

@@ -10,6 +10,18 @@ public class NodeData : MonoBehaviour
     [NonSerialized] public bool data_bool;
 
 
+    //임시로 node name 관련 코드 여기에 추가합니다.
+    private NodeNameManager nameManager;
+
+    private void Start()
+    {
+        nameManager = this.GetComponent<NodeNameManager>();
+        nameManager.NodeName = "DataNode";
+
+    }
+
+
+
     //public void ReadNodeData()
     //{
     //    if (gameObject.CompareTag("data_int"))

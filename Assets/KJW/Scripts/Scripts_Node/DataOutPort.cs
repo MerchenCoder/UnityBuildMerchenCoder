@@ -10,8 +10,24 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     public GameObject arrowPrefab; // ȭ��ǥ UI ������
     private GameObject arrowObject;
     private GameObject connectedPort;
+    public GameObject ConnectedPort
+    {
+        get
+        {
+            return connectedPort;
+        }
+    }
     private Vector2 originVector2; // ���� ��ġ��
     private bool isConnected;
+    public bool IsConnected
+    {
+        get
+        {
+            return isConnected;
+        }
+    }
+
+
     private Color originColor; // inPort ���� �÷���
 
     void Start()
@@ -79,7 +95,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                         connectedPort.GetComponent<DataInPort>().IsConnected = true;
                     }
                 }
-            }    
+            }
         }
         if (!isConnected)
         {
