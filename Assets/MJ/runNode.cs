@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class runNode : MonoBehaviour
 {
+    public GameObject resultCanvas;
     public GameObject flowEndPort;
     public GameObject flowStartPort;
     public Button button;
@@ -16,6 +17,7 @@ public class runNode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (flowEndPort.GetComponent<endNode>().isConnected == true && flowStartPort.GetComponent<FlowoutPort>().IsConnected == true)  // isConnected 변수 대신 IsConnected 프로퍼티 사용
         {
             button.interactable = true;
@@ -30,6 +32,8 @@ public class runNode : MonoBehaviour
 
     public void Run()
     {
+        resultCanvas.SetActive(true);
+
         NodeManager.Instance.Compile();
 
         if (NodeManager.Instance != null)

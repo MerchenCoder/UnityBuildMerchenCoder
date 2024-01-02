@@ -19,7 +19,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     }
 
 
-    private Vector2 originVector2; // ���� ��ġ��
+    private Vector3 originVector3; // ���� ��ġ��
     private bool isConnected;
     private Sprite nullImage;
 
@@ -31,10 +31,18 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     }
 
 
+
+    public Canvas canvas;
+    private RectTransform canvasRectTransform;
+
+
+
     void Start()
     {
-        originVector2 = transform.position;
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
+        originVector3 = transform.position;
         isConnected = false;
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -45,7 +53,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);
         }
         else arrowObject.SetActive(true);
-        arrowObject.transform.position = originVector2;
+
 
         // ���� ���¿��� �ٽ� �巡��
         if (isConnected)
@@ -59,11 +67,37 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     public void OnDrag(PointerEventData eventData)
     {
         // �̹����� ��ġ ����
-        transform.position = eventData.position;
+        // transform.position = eventData.position;
 
-        Vector2 nowPos = transform.position;
-        arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector2), 1);
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, nowPos));
+        // Vector2 nowPos = transform.position;
+        // arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector2), 1);
+        // arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, nowPos));
+
+
+        // 화살표 머리의 위치를 UI 카메라를 사용하여 설정
+        Vector3 worldPos;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRectTransform, eventData.position, eventData.pressEventCamera, out worldPos);
+        transform.position = worldPos;
+
+        // 화살표 몸통의 스케일 설정
+        Vector3 nowPos = worldPos;
+        nowPos.z = 0;
+
+
+        Vector2 direction = nowPos - originVector3;
+
+        // 몸통의 길이를 조절
+        float arrowLength = direction.magnitude;
+
+
+        arrowObject.transform.position = originVector3;
+        arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector3), 1);
+        // arrowObject.transform.localScale = new Vector3(arrowLength, 1, 1);
+        arrowObject.GetComponent<RectTransform>().sizeDelta = new Vector2(arrowLength, arrowObject.GetComponent<RectTransform>().sizeDelta.y);
+
+
+        // 몸통의 회전 설정
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, nowPos));
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -89,7 +123,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         }
         if (!isConnected)
         {
-            transform.position = originVector2;
+            transform.position = originVector3;
             arrowObject.SetActive(false);
             if (connectedPort.transform.parent.gameObject.tag == "endNode")
             {
@@ -101,8 +135,8 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     void ConnectPort()
     {
         // ���� ����
-        arrowObject.transform.localScale = new Vector2(Vector2.Distance(connectedPort.transform.position, originVector2), 1);
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, connectedPort.transform.position));
+        arrowObject.transform.localScale = new Vector2(Vector2.Distance(connectedPort.transform.position, originVector3), 1);
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, connectedPort.transform.position));
         // out port ȭ��ǥ ����
         transform.position = connectedPort.transform.position;
         nullImage = connectedPort.GetComponent<Image>().sprite;
