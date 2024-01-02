@@ -39,7 +39,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
         {
             if (inPort.CompareTag("data_int"))
             {
-                stringData = dataInPort.InputValue.ToString();
+                stringData = dataInPort.InputValueInt.ToString();
                 dataUIText.text = stringData;
                 // chatText.text = stringData;
             }

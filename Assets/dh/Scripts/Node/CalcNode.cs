@@ -167,12 +167,12 @@ public class CalcNode : MonoBehaviour
         switch (caseNum)
         {
             case 1:
-                input1 = inPort1.GetComponent<DataInPort>().InputValue;
+                input1 = inPort1.GetComponent<DataInPort>().InputValueInt;
                 input1Val.GetComponent<TextMeshProUGUI>().text = input1.ToString();
                 outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = input1.ToString();
                 break;
             case 2:
-                input2 = inPort2.GetComponent<DataInPort>().InputValue;
+                input2 = inPort2.GetComponent<DataInPort>().InputValueInt;
                 if ((method == 3 || method == 4) && input2 == 0)
                 {
                     input2Val.GetComponent<TextMeshProUGUI>().color = Color.red;

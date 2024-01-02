@@ -30,7 +30,7 @@ public class IntNodeBtn : MonoBehaviour
         {
             //연결된 calcNode 찾기
             // GameObject connectedCalcNode = dataOutPort.ConnectedPort.transform.parent.GetComponent<CalcNode>().UpdatePortData()
-            dataOutPort.ConnectedPort.GetComponent<DataInPort>().InputValue = intValue;
+            dataOutPort.ConnectedPort.GetComponent<DataInPort>().InputValueInt = intValue;
             dataOutPort.ConnectedPort.GetComponent<DataInPort>().IsConnected = false;
             dataOutPort.ConnectedPort.GetComponent<DataInPort>().IsConnected = true;
         }
