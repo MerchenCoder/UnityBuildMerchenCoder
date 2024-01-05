@@ -9,25 +9,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 {
     public GameObject arrowPrefab; // ȭ��ǥ UI ������
     private GameObject arrowObject;
-    private GameObject connectedPort;
-    public GameObject ConnectedPort
-    {
-        get
-        {
-            return connectedPort;
-        }
-    }
+    public GameObject connectedPort;
     private Vector2 originVector2; // ���� ��ġ��
-    private bool isConnected;
-    public bool IsConnected
-    {
-        get
-        {
-            return isConnected;
-        }
-    }
-
-
+    public bool isConnected;
     private Color originColor; // inPort ���� �÷���
 
     void Start()
@@ -94,20 +78,20 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                         connectedPort.GetComponent<DataInPort>().InputValueInt = this.transform.parent.GetComponent<NodeData>().data_int;
                         connectedPort.GetComponent<DataInPort>().IsConnected = true;
                     }
-                    else if (this.gameObject.CompareTag("data_bool"))
+                    if (this.gameObject.CompareTag("data_bool"))
                     {
                         connectedPort.tag = "data_bool";
                         connectedPort.GetComponent<DataInPort>().InputValueBool = this.transform.parent.GetComponent<NodeData>().data_bool;
                         connectedPort.GetComponent<DataInPort>().IsConnected = true;
                     }
-                    else if (this.gameObject.CompareTag("data_string"))
+                    if (this.gameObject.CompareTag("data_string"))
                     {
                         connectedPort.tag = "data_string";
                         connectedPort.GetComponent<DataInPort>().InputValueStr = this.transform.parent.GetComponent<NodeData>().data_string;
                         connectedPort.GetComponent<DataInPort>().IsConnected = true;
                     }
                 }
-            }
+            }    
         }
         if (!isConnected)
         {
@@ -120,21 +104,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     connectedPort.GetComponent<DataInPort>().InputValueInt = 0;
                     connectedPort.GetComponent<DataInPort>().IsConnected = false;
                 }
-                else if (this.gameObject.CompareTag("data_bool"))
-                {
-                    connectedPort.GetComponent<DataInPort>().InputValueBool = false;
-                    connectedPort.GetComponent<DataInPort>().IsConnected = false;
-                }
-                else
-                {
-                    connectedPort.GetComponent<DataInPort>().InputValueStr = null;
-                    connectedPort.GetComponent<DataInPort>().IsConnected = false;
-                }
-                //print node만 data_all이므로 이 경우만 처리해준다.
-                if (connectedPort.transform.parent.GetComponent<NodeNameManager>().NodeName == "PrintNode")
-                {
-                    connectedPort.tag = "data_all";
-                }
+                connectedPort.tag = "data_all";
                 connectedPort = null;
             }
         }
