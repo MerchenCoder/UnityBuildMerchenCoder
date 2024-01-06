@@ -38,14 +38,20 @@ public class IntNodeBtn : MonoBehaviour
 
     public void ValueUpButton()
     {
-        intValue++;
-        UpdateValue();
+        if(intValue < 99)
+        {
+            intValue++;
+            UpdateValue();
+        }
     }
 
     public void ValueDownButton()
     {
-        intValue--;
-        UpdateValue();
+        if(intValue > -99)
+        {
+            intValue--;
+            UpdateValue();
+        }
     }
 
 }

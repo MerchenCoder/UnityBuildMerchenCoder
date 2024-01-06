@@ -104,6 +104,16 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     connectedPort.GetComponent<DataInPort>().InputValueInt = 0;
                     connectedPort.GetComponent<DataInPort>().IsConnected = false;
                 }
+                if (this.gameObject.CompareTag("data_bool"))
+                {
+                    connectedPort.GetComponent<DataInPort>().InputValueBool = true;
+                    connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                }
+                if (this.gameObject.CompareTag("data_string"))
+                {
+                    connectedPort.GetComponent<DataInPort>().InputValueStr = null;
+                    connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                }
                 connectedPort.tag = "data_all";
                 connectedPort = null;
             }

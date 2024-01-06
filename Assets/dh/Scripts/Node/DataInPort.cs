@@ -26,7 +26,7 @@ public class DataInPort : MonoBehaviour
 
     private int inputValueInt;
     private bool inputValueBool;
-    private string inputValuStr;
+    private string inputValueStr;
 
 
     public bool IsConnected
@@ -74,11 +74,11 @@ public class DataInPort : MonoBehaviour
     {
         get
         {
-            return InputValueStr;
+            return inputValueStr;
         }
         set
         {
-            InputValueStr = value;
+            inputValueStr = value;
         }
     }
 

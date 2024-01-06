@@ -43,10 +43,27 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 dataUIText.text = stringData;
                 // chatText.text = stringData;
             }
+            if (inPort.CompareTag("data_bool"))
+            {
+                if (dataInPort.InputValueBool)
+                {
+                    dataUIText.text = "참";
+                }
+                else
+                {
+                    dataUIText.text = "거짓";
+                }
+                // chatText.text = stringData;
+            }
+            if (inPort.CompareTag("data_string"))
+            {
+                dataUIText.text = dataInPort.InputValueStr;
+                // chatText.text = stringData;
+            }
         }
         else
         {
-            dataUIText.text = "������";
+            dataUIText.text = "데이터";
         }
     }
 
