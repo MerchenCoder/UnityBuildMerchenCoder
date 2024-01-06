@@ -10,6 +10,7 @@ public class NodeData : MonoBehaviour
     [NonSerialized] public bool data_bool;
 
 
+
     //public void ReadNodeData()
     //{
     //    if (gameObject.CompareTag("data_int"))

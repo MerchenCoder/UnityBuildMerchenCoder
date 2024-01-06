@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 4115736756388966698}
   - component: {fileID: 2637662803674032976}
   - component: {fileID: 2004385397240328151}
+  - component: {fileID: 4628489725596770315}
+  - component: {fileID: 6766221559783726345}
   m_Layer: 5
   m_Name: Node_Bool
-  m_TagString: Untagged
+  m_TagString: data_bool
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +94,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 1
+--- !u!114 &4628489725596770315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156923610194330970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47e61f3caba374d974b5f16666412e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6766221559783726345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156923610194330970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e952ee1244fde3a49b3d665498cb54e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &309967835485007433
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,16 +205,28 @@ MonoBehaviour:
       - m_Target: {fileID: 418517162524043855}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
-  m_IsOn: 0
+      - m_Target: {fileID: 4628489725596770315}
+        m_TargetAssemblyTypeName: BoolNodeToggle, Assembly-CSharp
+        m_MethodName: ValueSetTrue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  m_IsOn: 1
 --- !u!1 &418517162524043855
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7395491628141717602
 RectTransform:
   m_ObjectHideFlags: 0
@@ -580,6 +618,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 3584662256496145391, guid: 4b9fe3cab02e4eb4898db9fe787b5ce9, type: 3}
+  connectedPort: {fileID: 0}
+  isConnected: 0
 --- !u!1 &6772857029325268558
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +708,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4628489725596770315}
+        m_TargetAssemblyTypeName: BoolNodeToggle, Assembly-CSharp
+        m_MethodName: ValueSetFalse
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
