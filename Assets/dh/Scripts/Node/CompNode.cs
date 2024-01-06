@@ -173,12 +173,12 @@ public class CompNode : MonoBehaviour
             case 10:
                 outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "□";
                 input1Val.GetComponent<TextMeshProUGUI>().text = "□";
-                this.GetComponent<NodeData>().data_int = 0;
+                this.GetComponent<NodeData>().data_bool = false;
                 break;
             case 20:
                 outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "△";
                 input2Val.GetComponent<TextMeshProUGUI>().text = "△";
-                this.GetComponent<NodeData>().data_int = 0;
+                this.GetComponent<NodeData>().data_bool = false;
                 break;
             default:
                 Debug.Log("연산 노드의 UpdatePortData 함수 호출 과정에서 오류 발생");
