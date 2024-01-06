@@ -22,12 +22,7 @@ public class DataInPort : MonoBehaviour
     //상태변화 이벤트 선언
     public event EventHandler<InputPortStateChangedEventArgs> StateChanged;
     private bool isConnected;
-
-
-    private int inputValueInt;
-    private bool inputValueBool;
-    private string inputValueStr;
-
+    private int inputValue;
 
     public bool IsConnected
     {
@@ -47,42 +42,17 @@ public class DataInPort : MonoBehaviour
         }
     }
 
-    public int InputValueInt
+    public int InputValue
     {
         get
         {
-            return inputValueInt;
+            return inputValue;
         }
         set
         {
-            inputValueInt = value;
+            inputValue = value;
         }
     }
-
-    public bool InputValueBool
-    {
-        get
-        {
-            return inputValueBool;
-        }
-        set
-        {
-            inputValueBool = value;
-        }
-    }
-    public string InputValueStr
-    {
-        get
-        {
-            return inputValueStr;
-        }
-        set
-        {
-            inputValueStr = value;
-        }
-    }
-
-
 
     // 이벤트 핸들러 메서드를 호출하는 보호된 가상 메서드
     protected virtual void OnStateChanged(InputPortStateChangedEventArgs e)
