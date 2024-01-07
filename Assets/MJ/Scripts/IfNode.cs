@@ -33,10 +33,12 @@ public class IfNode : MonoBehaviour, IFollowFlow, INode
     {
         if (input1 == true)
         {
+            //Debug.Log("conclusion: input1 is true");
             return transform.Find("outputTrueFlow").GetComponent<FlowoutPort>();
         }
         else
         {
+            //Debug.Log("conclusion: input1 is false");
             return transform.Find("outputFalseFlow").GetComponent<FlowoutPort>();
         }
     }
@@ -44,16 +46,16 @@ public class IfNode : MonoBehaviour, IFollowFlow, INode
     // Start is called before the first frame update
     void Start()
     {
-        inPort1 = transform.GetChild(1).gameObject;
-        Debug.Log("inport1 is " + inPort1);
-        input1Val = inPort1.transform.GetChild(0).gameObject;
-
-        outputData = transform.GetChild(3).gameObject;
+        inPort1 = transform.GetChild(4).gameObject;
+        //Debug.Log("inport1 is " + inPort1);
 
         dataInPort1 = inPort1.GetComponent<DataInPort>();
 
         //DataInputPort 클래스의 StateChanged 이벤트에 이벤트 핸들러 메서드 등록;
         dataInPort1.StateChanged += HandleStateChanged;
+        //node name
+        nameManager = this.GetComponent<NodeNameManager>();
+        nameManager.NodeName = "IfNode";
     }
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
@@ -62,26 +64,18 @@ public class IfNode : MonoBehaviour, IFollowFlow, INode
         //가져온 값을 각각 input1로 할당하고 호출 예정
         if (e.IsConnected)
         {
+            Debug.Log("inport1 is connected");
             if (inPort1.GetComponent<DataInPort>().IsConnected)
             {
                 // inputPort1과 inputPort2가 연결되어 있을 때만 계산 수행
-                //input1 = inPort1.GetComponent<DataInPort>().InputValue;
-                input1Val.GetComponent<TextMeshProUGUI>().text = input1.ToString();
-                outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = input1.ToString();
+                input1 = inPort1.GetComponent<DataInPort>().InputValueBool;
+                //Debug.Log("connected inport1 is " + input1);
             }
+            NextFlow();
         }
         else
         {
-            if (!inPort1.GetComponent<DataInPort>().IsConnected)
-            {
-                outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "□";
-                input1Val.GetComponent<TextMeshProUGUI>().text = "□";
-                this.GetComponent<NodeData>().data_int = 0;
-            }
-            else
-            {
-                Debug.Log("오류 예외상황");
-            }
+            //Debug.Log("inport1 is disconnected");
         }
 
     }
