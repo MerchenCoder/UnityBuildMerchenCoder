@@ -20,6 +20,12 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
 
     private Vector3 originVector3; // ���� ��ġ��
+    private Vector2 originLocalPosition;
+    private Vector2 currentLocalPosition;
+    private float arrowLength;
+
+
+
     private bool isConnected;
     private Sprite nullImage;
 
@@ -30,30 +36,31 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         set { isConnected = value; }
     }
 
-
-
-    public Canvas canvas;
-    private RectTransform canvasRectTransform;
+    private Camera uiCamera;
 
 
 
     void Start()
     {
-        canvasRectTransform = canvas.GetComponent<RectTransform>();
+        uiCamera = GameObject.Find("UI_Camera").GetComponent<Camera>();
         originVector3 = transform.position;
+        originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
         isConnected = false;
 
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+
         // prefab ���� 
         if (arrowObject == null)
         {
-            arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);
+            arrowObject = Instantiate(arrowPrefab, transform.parent);
+            // arrowObject.transform.position = originVector3;
+
         }
         else arrowObject.SetActive(true);
-
+        arrowObject.transform.position = originVector3;
 
         // ���� ���¿��� �ٽ� �巡��
         if (isConnected)
@@ -66,38 +73,21 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void OnDrag(PointerEventData eventData)
     {
-        // �̹����� ��ġ ����
-        // transform.position = eventData.position;
-
-        // Vector2 nowPos = transform.position;
-        // arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector2), 1);
-        // arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, nowPos));
-
 
         // 화살표 머리의 위치를 UI 카메라를 사용하여 설정
-        Vector3 worldPos;
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRectTransform, eventData.position, eventData.pressEventCamera, out worldPos);
-        transform.position = worldPos;
+        Vector3 currentPos = uiCamera.ScreenToWorldPoint(eventData.position);
+        transform.position = new Vector3(currentPos.x, currentPos.y, transform.position.z);
 
-        // 화살표 몸통의 스케일 설정
-        Vector3 nowPos = worldPos;
-        nowPos.z = 0;
+        currentLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
 
-
-        Vector2 direction = nowPos - originVector3;
-
-        // 몸통의 길이를 조절
-        float arrowLength = direction.magnitude;
-
-
-        arrowObject.transform.position = originVector3;
-        arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector3), 1);
-        // arrowObject.transform.localScale = new Vector3(arrowLength, 1, 1);
-        arrowObject.GetComponent<RectTransform>().sizeDelta = new Vector2(arrowLength, arrowObject.GetComponent<RectTransform>().sizeDelta.y);
+        arrowLength = Vector2.Distance(originLocalPosition, currentLocalPosition);
+        Debug.Log(arrowLength);
+        arrowObject.transform.localScale = new Vector3(arrowLength, 1, 1);
+        //arrowObject.GetComponent<RectTransform>().sizeDelta = new Vector2(distance, arrowObject.GetComponent<RectTransform>().sizeDelta.y);
 
 
         // 몸통의 회전 설정
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, nowPos));
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, currentPos));
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -134,14 +124,15 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     void ConnectPort()
     {
-        // ���� ����
-        arrowObject.transform.localScale = new Vector2(Vector2.Distance(connectedPort.transform.position, originVector3), 1);
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, connectedPort.transform.position));
         // out port ȭ��ǥ ����
         transform.position = connectedPort.transform.position;
         nullImage = connectedPort.GetComponent<Image>().sprite;
         connectedPort.GetComponent<Image>().sprite = this.GetComponent<Image>().sprite;
         connectedPort.GetComponent<Image>().raycastTarget = false;
+
+        // ���� ����
+        arrowObject.transform.localScale = new Vector2(Vector2.Distance(originLocalPosition, transform.localPosition), 1);
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, connectedPort.transform.position));
     }
 
     public static float AngleInRad(Vector3 vec1, Vector3 vec2)

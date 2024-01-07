@@ -120,11 +120,11 @@ public class LogicNotNode : MonoBehaviour
     {
         if (value)
         {
-            return "O";
+            return "참";
         }
         else
         {
-            return "X";
+            return "거짓";
         }
     }
 
