@@ -11,25 +11,16 @@ public class CalcNode : MonoBehaviour
     public int method;
     //0:더하기 1:빼기 2:곱하기 3:나누기 4:나머지
 
-    //inPort
-    private GameObject inPort1;
-    private GameObject inPort2;
-    private GameObject outputData;
+    //outPort
+    private GameObject outPort;
 
-    //operand
-    private int input1;
-    private int input2;
-
-    //operand gameobject
-    private GameObject input1Val;
-    private GameObject input2Val;
-
-    //result
-    [NonSerialized] public int result;
-
+    //outPort 피연산자 text
+    private TextMeshProUGUI operand1;
+    private TextMeshProUGUI operand2;
 
     //DataInputPort 클래스 참조
     private DataInPort dataInPort1;
+    private GameObject inPort2Text;
     private DataInPort dataInPort2;
 
 
@@ -37,79 +28,107 @@ public class CalcNode : MonoBehaviour
     //node name
     private NodeNameManager nameManager;
 
-    //flag
-    private bool errorFlag = false;
-    public bool ErrorFlag
-    {
-        get
-        {
-            return errorFlag;
-        }
-    }
+    //nodeData
+    private NodeData nodeData;
 
 
     void Start()
     {
+        //outPort
+        outPort = transform.GetChild(3).gameObject;
+        operand1 = outPort.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        operand2 = outPort.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-        inPort1 = transform.GetChild(1).gameObject;
-        input1Val = inPort1.transform.GetChild(0).gameObject;
-        inPort2 = transform.GetChild(2).gameObject;
-        input2Val = inPort2.transform.GetChild(0).gameObject;
 
-        outputData = transform.GetChild(3).gameObject;
-
-        dataInPort1 = inPort1.GetComponent<DataInPort>();
-        dataInPort2 = inPort2.GetComponent<DataInPort>();
+        //inPort
+        inPort2Text = transform.GetChild(2).GetChild(0).gameObject;
+        dataInPort1 = transform.GetChild(1).GetComponent<DataInPort>();
+        dataInPort2 = transform.GetChild(2).GetComponent<DataInPort>();
 
         //DataInputPort 클래스의 StateChanged 이벤트에 이벤트 핸들러 메서드 등록;
         dataInPort1.StateChanged += HandleStateChanged;
         dataInPort2.StateChanged += HandleStateChanged;
 
-
         //node name
         nameManager = this.GetComponent<NodeNameManager>();
         nameManager.NodeName = "CalcNode";
+
+        //node data
+        nodeData = GetComponent<NodeData>();
     }
 
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
-        //inputPort에 연결된 StateChanged 이벤트에서 isConnected가 바뀌면 이벤트가 발생
-        //inputPort는 두개 있음
-        //두 포트의 isConnected가 true로 바뀔때만 계산함.
-        //가져온 값을 각각 input1, input2로 할당하고 CalcData 호출 예정
+        int n1 = 0;
+        int n2 = 0;
         if (e.IsConnected)
         {
-            // inputPort1과 inputPort2가 연결되어 있을 때만 계산 수행
-            if (inPort1.GetComponent<DataInPort>().IsConnected)
+            if (dataInPort1.IsConnected)
             {
-                Debug.Log("update Port 1");
-                UpdatePortData(1);
+                if (dataInPort1.IsError)
+                {
+                    operand1.text = "오류";
+                    operand1.color = Color.red;
+                }
+                else
+                {
+                    n1 = dataInPort1.InputValueInt;
+                    //update outPort operand txt
+                    operand1.text = n1.ToString();
+                    operand1.color = Color.black;
+                }
             }
-            if (inPort2.GetComponent<DataInPort>().IsConnected)
+            if (dataInPort2.IsConnected)
             {
-                Debug.Log("update Port 2");
-                UpdatePortData(2);
+                if (dataInPort2.IsError)
+                {
+                    operand2.text = "오류";
+                    operand2.color = Color.red;
+                }
+                else
+                {
+                    n2 = dataInPort2.InputValueInt;
+                    operand2.text = n2.ToString();
+                    if ((method == 3 || method == 4) && n2 == 0)
+                    {
+                        operand2.color = Color.red;
+                        inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.red;
+                    }
+                    else
+                    {
+                        //update outPort operand txt
+                        operand2.color = Color.black;
+                        inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.black;
+
+
+                    }
+
+
+                }
             }
-            if (inPort1.GetComponent<DataInPort>().IsConnected && inPort2.GetComponent<DataInPort>().IsConnected)
+            if (dataInPort1.IsConnected && dataInPort2.IsConnected && !dataInPort1.IsError && !dataInPort2.IsError)
             {
-                UpdatePortData(3);
+                //계산
+                nodeData.SetData_Int = CalcData(method, n1, n2);
             }
 
         }
         else
         {
-            if (!inPort1.GetComponent<DataInPort>().IsConnected)
+            nodeData.ErrorFlag = true;
+            if (!dataInPort1.IsConnected)
             {
-                UpdatePortData(10);
+                operand1.text = "□";
+                operand1.color = Color.black;
             }
-            else if (!inPort2.GetComponent<DataInPort>().IsConnected)
+            if (!dataInPort2.IsConnected)
             {
-                UpdatePortData(20);
+
+                inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.black;
+                operand2.text = "△";
+                operand2.color = Color.black;
             }
-            else
-            {
-                UpdatePortData(0000);
-            }
+
         }
 
     }
@@ -117,7 +136,12 @@ public class CalcNode : MonoBehaviour
 
     int CalcData(int method, int input1, int input2)
     {
+        Debug.Log("cacData호출");
+        nodeData.ErrorFlag = false;
+        Debug.Log("호출 후 errorFlag 변경 " + nodeData.ErrorFlag);
+
         int result = 0;
+
         switch (method)
         {
             case 0:
@@ -136,7 +160,7 @@ public class CalcNode : MonoBehaviour
                 }
                 catch (DivideByZeroException e)
                 {
-                    errorFlag = true;
+                    nodeData.ErrorFlag = true;
                     Debug.LogError(e.Message);
                 }
                 break;
@@ -147,7 +171,7 @@ public class CalcNode : MonoBehaviour
                 }
                 catch (DivideByZeroException e)
                 {
-                    errorFlag = true;
+                    nodeData.ErrorFlag = true;
                     Debug.LogError(e.Message);
                 }
                 break;
@@ -155,57 +179,65 @@ public class CalcNode : MonoBehaviour
         return result;
     }
 
+    // private void FixedUpdate()
+    // {
+    //     Debug.Log(nodeData.ErrorFlag + "는 calcData의 errorFlag");
+    // }
 
-    public void UpdatePortData(int caseNum)
-    {
-        //inport 1 연결 = 1
-        //inport 2 연결 = 2
-        //outport로 계산결과 출력 = 3
-        //inport 1 초기화 = 10
-        //inport 2 초기화 = 20
 
-        switch (caseNum)
-        {
-            case 1:
-                input1 = inPort1.GetComponent<DataInPort>().InputValueInt;
-                input1Val.GetComponent<TextMeshProUGUI>().text = input1.ToString();
-                outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = input1.ToString();
-                break;
-            case 2:
-                input2 = inPort2.GetComponent<DataInPort>().InputValueInt;
-                if ((method == 3 || method == 4) && input2 == 0)
-                {
-                    input2Val.GetComponent<TextMeshProUGUI>().color = Color.red;
-                    outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.red;
-                }
-                else
-                {
-                    input2Val.GetComponent<TextMeshProUGUI>().color = Color.black;
-                    outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.black;
-                }
-                input2Val.GetComponent<TextMeshProUGUI>().text = input2.ToString();
-                outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = input2.ToString();
-                break;
-            case 3:
-                result = CalcData(method, input1, input2);
-                Debug.Log("계산결과 : " + result);
-                this.GetComponent<NodeData>().data_int = result;
-                break;
-            case 10:
-                outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "□";
-                input1Val.GetComponent<TextMeshProUGUI>().text = "□";
-                this.GetComponent<NodeData>().data_int = 0;
-                break;
-            case 20:
-                outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "△";
-                input2Val.GetComponent<TextMeshProUGUI>().text = "△";
-                this.GetComponent<NodeData>().data_int = 0;
-                break;
-            default:
-                Debug.Log("연산 노드의 UpdatePortData 함수 호출 과정에서 오류 발생");
-                break;
-        }
-    }
+    // public void UpdatePortData(int caseNum)
+    // {
+    //     //inport 1 연결 = 1
+    //     //inport 2 연결 = 2
+    //     //outport로 계산결과 출력 = 3
+    //     //inport 1 초기화 = 10
+    //     //inport 2 초기화 = 20
+
+    //     switch (caseNum)
+    //     {
+    //         case 1:
+    //             input1 = inPort1.GetComponent<DataInPort>().InputValueInt;
+    //             input1Val.GetComponent<TextMeshProUGUI>().text = input1.ToString();
+    //             outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = input1.ToString();
+    //             break;
+    //         case 2:
+    //             input2 = inPort2.GetComponent<DataInPort>().InputValueInt;
+    //             if ((method == 3 || method == 4) && input2 == 0)
+    //             {
+    //                 input2Val.GetComponent<TextMeshProUGUI>().color = Color.red;
+    //                 outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.red;
+    //             }
+    //             else
+    //             {
+    //                 input2Val.GetComponent<TextMeshProUGUI>().color = Color.black;
+    //                 outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.black;
+    //             }
+    //             input2Val.GetComponent<TextMeshProUGUI>().text = input2.ToString();
+    //             outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = input2.ToString();
+    //             break;
+    //         case 3:
+    //             result = CalcData(method, input1, input2);
+    //             Debug.Log("계산결과 : " + result);
+    //             this.GetComponent<NodeData>().data_int = result;
+    //             break;
+    //         case 10:
+    //             outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "□";
+    //             input1Val.GetComponent<TextMeshProUGUI>().text =
+    //             this.GetComponent<NodeData>().data_int = 0;
+    //             dataErrorManager.ErrorFlag = true;
+    //             break;
+    //         case 20:
+    //             outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+    //             input2Val.GetComponent<TextMeshProUGUI>().text = "△";
+    //             this.GetComponent<NodeData>().data_int = 0;
+    //             dataErrorManager.ErrorFlag = true;
+    //             break;
+    //         default:
+    //             Debug.Log("연산 노드의 UpdatePortData 함수 호출 과정에서 오류 발생");
+    //             dataErrorManager.ErrorFlag = true;
+    //             break;
+    //     }
+    // }
 
 
 

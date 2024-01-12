@@ -22,23 +22,12 @@ public class IntNodeBtn : MonoBehaviour
     void UpdateValue()
     {
         ui_text.text = intValue.ToString();
-        data.data_int = intValue;
-
-        if (dataOutPort.isConnected)
-        {
-            //연결된 calcNode 찾기
-            // GameObject connectedCalcNode = dataOutPort.ConnectedPort.transform.parent.GetComponent<CalcNode>().UpdatePortData()
-            dataOutPort.connectedPort.GetComponent<DataInPort>().InputValueInt = intValue;
-            dataOutPort.connectedPort.GetComponent<DataInPort>().IsConnected = false;
-            dataOutPort.connectedPort.GetComponent<DataInPort>().IsConnected = true;
-        }
-
-
+        data.SetData_Int = intValue;
     }
 
     public void ValueUpButton()
     {
-        if(intValue < 99)
+        if (intValue < 99)
         {
             intValue++;
             UpdateValue();
@@ -47,7 +36,7 @@ public class IntNodeBtn : MonoBehaviour
 
     public void ValueDownButton()
     {
-        if(intValue > -99)
+        if (intValue > -99)
         {
             intValue--;
             UpdateValue();

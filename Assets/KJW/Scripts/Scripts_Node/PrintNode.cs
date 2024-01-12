@@ -35,36 +35,37 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
-        if (e.IsConnected)
-        {
-            if (inPort.CompareTag("data_int"))
-            {
-                stringData = dataInPort.InputValueInt.ToString();
-                dataUIText.text = stringData;
-                // chatText.text = stringData;
-            }
-            if (inPort.CompareTag("data_bool"))
-            {
-                if (dataInPort.InputValueBool)
-                {
-                    dataUIText.text = "참";
-                }
-                else
-                {
-                    dataUIText.text = "거짓";
-                }
-                // chatText.text = stringData;
-            }
-            if (inPort.CompareTag("data_string"))
-            {
-                dataUIText.text = dataInPort.InputValueStr;
-                // chatText.text = stringData;
-            }
-        }
-        else
-        {
-            dataUIText.text = "데이터";
-        }
+        // if (e.IsConnected)
+        // {
+        //     if (inPort.CompareTag("data_int"))
+        //     {
+        //         stringData = dataInPort.InputValueInt.ToString();
+        //         dataUIText.text = stringData;
+        //         // chatText.text = stringData;
+        //     }
+        //     if (inPort.CompareTag("data_bool"))
+        //     {
+        //         if (dataInPort.InputValueBool)
+        //         {
+        //             dataUIText.text = "참";
+        //         }
+        //         else
+        //         {
+        //             dataUIText.text = "거짓";
+        //         }
+        //         // chatText.text = stringData;
+        //     }
+        //     if (inPort.CompareTag("data_string"))
+        //     {
+        //         dataUIText.text = dataInPort.InputValueStr;
+        //         // chatText.text = stringData;
+        //     }
+        // }
+        // else
+        // {
+        //     Debug.Log(e.IsConnected);
+        //     dataUIText.text = "데이터";
+        // }
     }
 
 
