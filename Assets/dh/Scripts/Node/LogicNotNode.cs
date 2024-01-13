@@ -62,7 +62,7 @@ public class LogicNotNode : MonoBehaviour
                 else
                 {
                     b1 = dataInPort1.InputValueBool;
-                    operand1.text = b1.ToString();
+                    operand1.text = b1.ToString().Substring(0, 1);
                     operand1.color = Color.black;
 
                     nodeData.SetData_Bool = !b1;

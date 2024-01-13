@@ -72,7 +72,7 @@ public class LogicNode : MonoBehaviour
                 else
                 {
                     b1 = dataInPort1.InputValueBool;
-                    operand1.text = b1.ToString();
+                    operand1.text = b1.ToString().Substring(0, 1);
                     operand1.color = Color.black;
                 }
             }
@@ -87,7 +87,7 @@ public class LogicNode : MonoBehaviour
                 else
                 {
                     b2 = dataInPort2.InputValueBool;
-                    operand2.text = b2.ToString();
+                    operand2.text = b2.ToString().Substring(0, 1);
                     operand2.color = Color.black;
                 }
             }

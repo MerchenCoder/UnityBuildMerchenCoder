@@ -184,7 +184,7 @@ public class DataInPort : MonoBehaviour
                 inPortText.text = inputValueInt.ToString();
                 break;
             case 1:
-                inPortText.text = inputValueBool.ToString();
+                inPortText.text = inputValueBool.ToString().Substring(0, 1);
                 break;
             case 2:
                 inPortText.text = inputValueStr;
