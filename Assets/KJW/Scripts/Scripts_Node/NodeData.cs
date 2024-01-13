@@ -84,7 +84,7 @@ public class NodeData : MonoBehaviour
         outPort = transform.Find("outPort").GetComponent<DataOutPort>();
         errorFlag = true;
 
-        if (this.gameObject.name == "Node_Int" || this.gameObject.name == "Node_Bool" || this.gameObject.name == "Node_String")
+        if (this.gameObject.CompareTag("Node_Int") || this.gameObject.CompareTag("Node_Bool") || this.gameObject.CompareTag("Node_String"))
         {
             errorFlag = false;
         }
