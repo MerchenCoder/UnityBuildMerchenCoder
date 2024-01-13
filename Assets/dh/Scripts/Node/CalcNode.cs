@@ -12,16 +12,16 @@ public class CalcNode : MonoBehaviour
     //0:더하기 1:빼기 2:곱하기 3:나누기 4:나머지
 
     //outPort
-    private GameObject outPort;
+    private GameObject output;
 
-    //outPort 피연산자 text
+    //outPort operands textmeshpro componenet for updating data
     private TextMeshProUGUI operand1;
     private TextMeshProUGUI operand2;
 
-    //DataInputPort 클래스 참조
+    //DataInputPort Class
     private DataInPort dataInPort1;
-    private GameObject inPort2Text;
     private DataInPort dataInPort2;
+    private GameObject inPort2Text;
 
 
 
@@ -35,9 +35,9 @@ public class CalcNode : MonoBehaviour
     void Start()
     {
         //outPort
-        outPort = transform.GetChild(3).gameObject;
-        operand1 = outPort.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        operand2 = outPort.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        output = transform.GetChild(3).gameObject;
+        operand1 = output.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        operand2 = output.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
 
         //inPort
@@ -65,19 +65,37 @@ public class CalcNode : MonoBehaviour
         {
             if (dataInPort1.IsConnected)
             {
+                /* 
+                * If dataInPort1 is connected, there are two possible cases. 
+                * 1. Data with a true error flag: This indicates that the Node parent of the outPort has incorrect data, and its error flag is set to true.
+                * 2. Data with a false error flag: This represents a normal situation.
+                * When an outPort is connected to an inPort, it sends its own data along with an error flag. Subsequently, the inPort updates the 'isError' and data variables('inputValueInt', 'inputValueBool', 'inputValueStr')
+                * Therefore, it is necessary to check whether dataInPort's 'IsError' is true or false.
+                *
+
+                * If it's true -> we need to provide error information to the user and update the output data.
+                * If it's false -> just update the output data.
+                * The process of updating inPort data is managed by the inPort itself through DataInPort.cs.
+                * Therefore, we don't need to concern ourselves with it; we simply update the output data (located next to the outPort arrow).
+                */
+
+
                 if (dataInPort1.IsError)
                 {
+                    //error info
                     operand1.text = "오류";
                     operand1.color = Color.red;
                 }
                 else
                 {
+                    //Take data from inPort using property
                     n1 = dataInPort1.InputValueInt;
                     //update outPort operand txt
                     operand1.text = n1.ToString();
                     operand1.color = Color.black;
                 }
             }
+            //same logic for dataInPort2
             if (dataInPort2.IsConnected)
             {
                 if (dataInPort2.IsError)
@@ -108,13 +126,16 @@ public class CalcNode : MonoBehaviour
             }
             if (dataInPort1.IsConnected && dataInPort2.IsConnected && !dataInPort1.IsError && !dataInPort2.IsError)
             {
-                //계산
+                //when dataInPort1 & 2 are all connected & no error -> process the data(make result)
+                //Store the result in the 'nodeData' using the 'appropriate property' based on the 'data type' of the result. 
+                //For instance, if the result is of type 'int,' use the 'SetData_Int' property; if it's of type 'bool,' use the 'SetData_Bool' property.
                 nodeData.SetData_Int = CalcData(method, n1, n2);
             }
 
         }
         else
         {
+            //연결 해제인 경우
             nodeData.ErrorFlag = true;
             if (!dataInPort1.IsConnected)
             {
@@ -136,10 +157,7 @@ public class CalcNode : MonoBehaviour
 
     int CalcData(int method, int input1, int input2)
     {
-        Debug.Log("cacData호출");
         nodeData.ErrorFlag = false;
-        Debug.Log("호출 후 errorFlag 변경 " + nodeData.ErrorFlag);
-
         int result = 0;
 
         switch (method)
@@ -178,67 +196,4 @@ public class CalcNode : MonoBehaviour
         }
         return result;
     }
-
-    // private void FixedUpdate()
-    // {
-    //     Debug.Log(nodeData.ErrorFlag + "는 calcData의 errorFlag");
-    // }
-
-
-    // public void UpdatePortData(int caseNum)
-    // {
-    //     //inport 1 연결 = 1
-    //     //inport 2 연결 = 2
-    //     //outport로 계산결과 출력 = 3
-    //     //inport 1 초기화 = 10
-    //     //inport 2 초기화 = 20
-
-    //     switch (caseNum)
-    //     {
-    //         case 1:
-    //             input1 = inPort1.GetComponent<DataInPort>().InputValueInt;
-    //             input1Val.GetComponent<TextMeshProUGUI>().text = input1.ToString();
-    //             outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = input1.ToString();
-    //             break;
-    //         case 2:
-    //             input2 = inPort2.GetComponent<DataInPort>().InputValueInt;
-    //             if ((method == 3 || method == 4) && input2 == 0)
-    //             {
-    //                 input2Val.GetComponent<TextMeshProUGUI>().color = Color.red;
-    //                 outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.red;
-    //             }
-    //             else
-    //             {
-    //                 input2Val.GetComponent<TextMeshProUGUI>().color = Color.black;
-    //                 outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.black;
-    //             }
-    //             input2Val.GetComponent<TextMeshProUGUI>().text = input2.ToString();
-    //             outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = input2.ToString();
-    //             break;
-    //         case 3:
-    //             result = CalcData(method, input1, input2);
-    //             Debug.Log("계산결과 : " + result);
-    //             this.GetComponent<NodeData>().data_int = result;
-    //             break;
-    //         case 10:
-    //             outputData.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "□";
-    //             input1Val.GetComponent<TextMeshProUGUI>().text =
-    //             this.GetComponent<NodeData>().data_int = 0;
-    //             dataErrorManager.ErrorFlag = true;
-    //             break;
-    //         case 20:
-    //             outputData.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-    //             input2Val.GetComponent<TextMeshProUGUI>().text = "△";
-    //             this.GetComponent<NodeData>().data_int = 0;
-    //             dataErrorManager.ErrorFlag = true;
-    //             break;
-    //         default:
-    //             Debug.Log("연산 노드의 UpdatePortData 함수 호출 과정에서 오류 발생");
-    //             dataErrorManager.ErrorFlag = true;
-    //             break;
-    //     }
-    // }
-
-
-
 }
