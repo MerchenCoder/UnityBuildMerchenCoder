@@ -131,9 +131,9 @@ public class DataInPort : MonoBehaviour
                 if (this.CompareTag("data_int"))
                 {
                     UpdatePortData(0);
-                    Debug.Log("메시지 보내기");
                     if (transform.parent.GetComponent<NodeNameManager>().NodeName == "CalcNode")
                     {
+                        Debug.Log("메시지 보내기");
 
                         transform.parent.SendMessage("HandleOperandColorDivisionByZero", e);
                     }

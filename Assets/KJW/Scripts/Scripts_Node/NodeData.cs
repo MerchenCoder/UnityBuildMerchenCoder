@@ -79,12 +79,12 @@ public class NodeData : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         outPort = transform.Find("outPort").GetComponent<DataOutPort>();
         errorFlag = true;
 
-        if (this.gameObject.CompareTag("Node_Int") || this.gameObject.CompareTag("Node_Bool") || this.gameObject.CompareTag("Node_String"))
+        if (GetComponent<NodeNameManager>().NodeName == "DataNode")
         {
             errorFlag = false;
         }
