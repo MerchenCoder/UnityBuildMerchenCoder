@@ -32,6 +32,10 @@ public class CalcNode : MonoBehaviour
     private NodeData nodeData;
 
 
+    private int n1;
+    private int n2;
+
+
     void Start()
     {
         //outPort
@@ -59,8 +63,6 @@ public class CalcNode : MonoBehaviour
 
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
-        int n1 = 0;
-        int n2 = 0;
         if (e.IsConnected)
         {
             if (dataInPort1.IsConnected)
@@ -107,21 +109,8 @@ public class CalcNode : MonoBehaviour
                 {
                     n2 = dataInPort2.InputValueInt;
                     operand2.text = n2.ToString();
-                    if ((method == 3 || method == 4) && n2 == 0)
-                    {
-                        operand2.color = Color.red;
-                        inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.red;
-                    }
-                    else
-                    {
-                        //update outPort operand txt
-                        operand2.color = Color.black;
-                        inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.black;
-
-
-                    }
-
-
+                    //update outPort operand txt
+                    operand2.color = Color.black;
                 }
             }
             if (dataInPort1.IsConnected && dataInPort2.IsConnected && !dataInPort1.IsError && !dataInPort2.IsError)
@@ -144,7 +133,6 @@ public class CalcNode : MonoBehaviour
             }
             if (!dataInPort2.IsConnected)
             {
-
                 inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.black;
                 operand2.text = "△";
                 operand2.color = Color.black;
@@ -152,6 +140,17 @@ public class CalcNode : MonoBehaviour
 
         }
 
+    }
+
+    void HandleOperandColorDivisionByZero(InputPortStateChangedEventArgs e)
+    {
+        Debug.Log("메시지 받음 in CalcNode");
+        if ((method == 3 || method == 4) && dataInPort2.InputValueInt <= 0 && dataInPort2.IsConnected)
+        {
+            Debug.Log("HandleOperandColorDivisionByZero 조건 만족");
+            operand2.color = Color.red;
+            inPort2Text.GetComponent<TextMeshProUGUI>().color = Color.red;
+        }
     }
 
 
@@ -172,25 +171,25 @@ public class CalcNode : MonoBehaviour
                 result = input1 * input2;
                 break;
             case 3:
-                try
+                if (input2 > 0)
                 {
                     result = input1 / input2;
                 }
-                catch (DivideByZeroException e)
+                else
                 {
                     nodeData.ErrorFlag = true;
-                    Debug.LogError(e.Message);
+                    Debug.Log("0 또는 음수로 나눌 수 없습니다.");
                 }
                 break;
             case 4:
-                try
+                if (input2 > 0)
                 {
                     result = input1 % input2;
                 }
-                catch (DivideByZeroException e)
+                else
                 {
                     nodeData.ErrorFlag = true;
-                    Debug.LogError(e.Message);
+                    Debug.Log("0 또는 음수로 나눌 수 없습니다.");
                 }
                 break;
         }
