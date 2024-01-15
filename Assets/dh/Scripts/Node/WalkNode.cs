@@ -8,7 +8,7 @@ public class WalkNode : MonoBehaviour, INode, IFollowFlow
     private float moveDuration = 5.0f; // 플레이어가 이동할 총 시간 (5초)
     private bool isMoving = false; // 플레이어가 현재 이동 중인지 여부
     private float startTime; // 이동 시작 시간
-    private float moveSpeed = 10.0f; // 이동 속도를 조절할 변수
+    private float moveSpeed = 2.0f; // 이동 속도를 조절할 변수
 
     private NodeNameManager nameManager;
 
@@ -28,6 +28,7 @@ public class WalkNode : MonoBehaviour, INode, IFollowFlow
     public void Execute()
     {
         MoveRight();
+        // NodeManager.Instance.ExecuteNodes();
 
     }
 
@@ -58,14 +59,16 @@ public class WalkNode : MonoBehaviour, INode, IFollowFlow
 
             if (elapsedTime < moveDuration)
             {
-                // 플레이어 이동
-                player.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+                // 플레이어 이동 (말풍선도 같이 이동하기 위해 parent 자체를 이동)
+                // player.transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+                player.transform.parent.Translate(moveSpeed * Time.deltaTime, 0, 0);
             }
             else
             {
                 // 5초가 지나면 이동 중지
                 isMoving = false;
                 walkAnim.SetInteger("WalkingSpeed", 0);
+                NodeManager.Instance.ExecuteNodes();
             }
         }
     }

@@ -9,6 +9,8 @@ public class StartNode : MonoBehaviour, IFollowFlow, INode
 
     public void Execute()
     {
+        NodeManager.Instance.ExecuteNodes();
+
     }
 
     public FlowoutPort NextFlow()

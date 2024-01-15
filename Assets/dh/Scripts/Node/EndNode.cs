@@ -10,7 +10,8 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
 
     public void Execute()
     {
-        return;
+        NodeManager.Instance.ExecuteNodes();
+
     }
 
     public FlowoutPort NextFlow()
