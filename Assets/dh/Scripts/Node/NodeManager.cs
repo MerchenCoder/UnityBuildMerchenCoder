@@ -7,8 +7,6 @@ public class NodeManager : MonoBehaviour
 {
     //--싱글톤 생성--//
     public static NodeManager Instance { get; private set; }
-
-
     //실행할 INode 인스턴스들을 저장할 큐를 생성
     private Queue<INode> nodesToExecute = new Queue<INode>();
 
@@ -16,6 +14,7 @@ public class NodeManager : MonoBehaviour
     private GameObject startNode;
     private GameObject currentNode;
     private FlowoutPort currentFlowoutPort;
+
 
 
     private void Awake()
@@ -31,37 +30,11 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-
     //노드를 큐에 추가하는 메서드
     public void AddNodeToQueue(INode node)
     {
         nodesToExecute.Enqueue(node);
     }
-    //큐에 있는 모든 노드를 실행하는 메서드
-    public void ExecuteNodes()
-    {
-        StartCoroutine(ExecuteNodesInOrder());
-    }
-
-
-    private IEnumerator ExecuteNodesInOrder()
-    {
-        if (nodesToExecute.Count == 0)
-        {
-            Debug.Log("Empty Queue");
-        }
-        while (nodesToExecute.Count > 0)
-        {
-            //큐에서 노드를 하나씩 꺼낸다.
-            INode currentNode = nodesToExecute.Dequeue();
-            //노드를 실행한다.
-            currentNode.Execute();
-
-            //노드 실행 사이의 약간의 딜레이 주기
-            yield return new WaitForSeconds(0.3f);
-        }
-    }
-
 
     //큐를 초기화하는 메서드
     public void ClearNodeQueue()
@@ -70,8 +43,15 @@ public class NodeManager : MonoBehaviour
     }
 
 
+    //다음 노드 반환하는 메소드
+    public GameObject NextNode(FlowoutPort flowoutPort)
+    {
+        return flowoutPort.ConnectedPort.transform.parent.gameObject;
+    }
 
 
+
+    //컴파일
     public void Compile()
     {
         //큐 초기화
@@ -93,6 +73,7 @@ public class NodeManager : MonoBehaviour
                 currentNode = NextNode(currentFlowoutPort);
 
             }
+
             Debug.Log("Compile Complete");
         }
         catch (NullReferenceException e)
@@ -104,10 +85,20 @@ public class NodeManager : MonoBehaviour
 
 
 
-    public GameObject NextNode(FlowoutPort flowoutPort)
+    public void ExecuteNodes()
     {
-        return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        if (nodesToExecute.Count == 0)
+        {
+            Debug.Log("Empty Queue");
+        }
+        else
+        {
+            //큐에서 노드 꺼내기
+            INode currentNode = nodesToExecute.Dequeue();
+            Debug.Log(currentNode);
+            currentNode.Execute();
+
+
+        }
     }
-
-
 }

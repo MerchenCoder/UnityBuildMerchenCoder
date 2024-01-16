@@ -107,8 +107,6 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                         connectedPort.GetComponent<DataInPort>().IsConnected = false;
                         connectedPort = null;
                     }
-                    Debug.Log(connectedPort);
-                    Debug.Log(result.gameObject);
                     connectedPort = result.gameObject;
                     ConnectPort();
                     isConnected = true;
@@ -122,7 +120,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             arrowObject.SetActive(false);
             if (connectedPort != null)
             {
-                if (connectedPort.transform.parent.gameObject.name == "Node_Print")
+                if (connectedPort.transform.parent.gameObject.CompareTag("Node_Print"))
                 {
                     connectedPort.tag = "data_all";
                 }

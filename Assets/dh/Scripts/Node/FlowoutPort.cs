@@ -81,7 +81,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         currentLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
 
         arrowLength = Vector2.Distance(originLocalPosition, currentLocalPosition);
-        Debug.Log(arrowLength);
+        // Debug.Log(arrowLength);
         arrowObject.transform.localScale = new Vector3(arrowLength, 1, 1);
         //arrowObject.GetComponent<RectTransform>().sizeDelta = new Vector2(distance, arrowObject.GetComponent<RectTransform>().sizeDelta.y);
 
@@ -100,7 +100,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         {
             if (result.gameObject.GetComponent<BoxCollider2D>() != null && (result.gameObject.CompareTag(this.gameObject.tag) || result.gameObject.CompareTag("flow_end")))
             {
-                Debug.Log("연결되었습니다.");
+                // Debug.Log("연결되었습니다.");
                 connectedPort = result.gameObject;
                 ConnectPort();
                 isConnected = true;
@@ -115,7 +115,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         {
             transform.position = originVector3;
             arrowObject.SetActive(false);
-            if (connectedPort.transform.parent.gameObject.tag == "endNode")
+            if (connectedPort != null && connectedPort.transform.parent.gameObject.tag == "endNode")
             {
                 connectedPort.GetComponent<endNode>().IsConnected = false;
             }

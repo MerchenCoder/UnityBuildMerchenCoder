@@ -122,7 +122,6 @@ public class DataInPort : MonoBehaviour
         {
             if (e.IsError)
             {
-                Debug.Log("e.IsError " + e.IsError);
                 inPortText.text = "오류";
                 inPortText.color = Color.red;
             }
@@ -132,6 +131,12 @@ public class DataInPort : MonoBehaviour
                 if (this.CompareTag("data_int"))
                 {
                     UpdatePortData(0);
+                    if (transform.parent.GetComponent<NodeNameManager>().NodeName == "CalcNode")
+                    {
+                        Debug.Log("메시지 보내기");
+
+                        transform.parent.SendMessage("HandleOperandColorDivisionByZero", e);
+                    }
                 }
                 else if (this.CompareTag("data_bool"))
                 {
@@ -173,20 +178,16 @@ public class DataInPort : MonoBehaviour
         //int = 0
         //bool = 1
         //string = 2
-        //all = 3
-
         switch (dataType)
         {
             case 0:
                 inPortText.text = inputValueInt.ToString();
                 break;
             case 1:
-                inPortText.text = inputValueBool.ToString();
+                inPortText.text = inputValueBool.ToString().Substring(0, 1);
                 break;
             case 2:
                 inPortText.text = inputValueStr;
-                break;
-            case 3:
                 break;
             case -1:
                 inPortText.text = originTextData;

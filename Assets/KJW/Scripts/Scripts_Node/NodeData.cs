@@ -67,24 +67,24 @@ public class NodeData : MonoBehaviour
         {
             if (errorFlag != value)
             {
-                Debug.Log("errorFlag 변경");
+                // Debug.Log("errorFlag 변경");
                 errorFlag = value;
                 if (outPort.isConnected)
                 {
                     outPort.SendData();
-                    Debug.Log("outPort가 inPort로 데이터 전달");
+                    // Debug.Log("outPort가 inPort로 데이터 전달");
                 }
 
             }
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         outPort = transform.Find("outPort").GetComponent<DataOutPort>();
         errorFlag = true;
 
-        if (this.gameObject.name == "Node_Int" || this.gameObject.name == "Node_Bool" || this.gameObject.name == "Node_String")
+        if (GetComponent<NodeNameManager>().NodeName == "DataNode")
         {
             errorFlag = false;
         }
