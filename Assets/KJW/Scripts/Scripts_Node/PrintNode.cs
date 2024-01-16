@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
 
 public class PrintNode : MonoBehaviour, INode, IFollowFlow
 {
@@ -20,6 +21,8 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
     private GameObject player;
     private GameObject playerChatBubble;
 
+    private float printDuration = 2f;
+
 
     void Start()
     {
@@ -35,37 +38,37 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
-        // if (e.IsConnected)
-        // {
-        //     if (inPort.CompareTag("data_int"))
-        //     {
-        //         stringData = dataInPort.InputValueInt.ToString();
-        //         dataUIText.text = stringData;
-        //         // chatText.text = stringData;
-        //     }
-        //     if (inPort.CompareTag("data_bool"))
-        //     {
-        //         if (dataInPort.InputValueBool)
-        //         {
-        //             dataUIText.text = "참";
-        //         }
-        //         else
-        //         {
-        //             dataUIText.text = "거짓";
-        //         }
-        //         // chatText.text = stringData;
-        //     }
-        //     if (inPort.CompareTag("data_string"))
-        //     {
-        //         dataUIText.text = dataInPort.InputValueStr;
-        //         // chatText.text = stringData;
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.Log(e.IsConnected);
-        //     dataUIText.text = "데이터";
-        // }
+        if (e.IsConnected)
+        {
+            if (inPort.CompareTag("data_int"))
+            {
+                stringData = dataInPort.InputValueInt.ToString();
+                // dataUIText.text = stringData;
+                // chatText.text = stringData;
+            }
+            if (inPort.CompareTag("data_bool"))
+            {
+                if (dataInPort.InputValueBool)
+                {
+                    stringData = "참";
+                }
+                else
+                {
+                    stringData = "거짓";
+                }
+                // chatText.text = stringData;
+            }
+            if (inPort.CompareTag("data_string"))
+            {
+                stringData = dataInPort.InputValueStr;
+                // chatText.text = stringData;
+            }
+        }
+        else
+        {
+            // Debug.Log(e.IsConnected);
+            // dataUIText.text = "데이터";
+        }
     }
 
 
@@ -80,18 +83,23 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
         playerChatBubble.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = stringData;
         playerChatBubble.SetActive(true);
-
-        //코루틴
-        StartCoroutine(DisableChatBubbleAfterTime(2.0f)); //2초 후에 비활성화
-
+        // Invoke("DisableChatBubbleAfterTime", 2f);
+        StartCoroutine(DisableChatBubbleAfterTime(printDuration));
     }
 
+    // private void DisableChatBubbleAfterTime(float )
+    // {
+    //     Debug.Log("말풍선 안보이게하기");
+    //     playerChatBubble.SetActive(false);
+    // }
 
-    //일정 시간 후 chat bubble 비활성화하는 코루틴
+
     private IEnumerator DisableChatBubbleAfterTime(float delay)
     {
         yield return new WaitForSeconds(delay);
+        Debug.Log("말풍선 안보이게하기");
         playerChatBubble.SetActive(false);
+        NodeManager.Instance.ExecuteNodes();
     }
 
     public FlowoutPort NextFlow()
