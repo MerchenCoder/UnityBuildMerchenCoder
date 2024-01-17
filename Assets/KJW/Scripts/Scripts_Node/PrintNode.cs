@@ -102,6 +102,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
         NodeManager.Instance.ExecuteNodes();
     }
 
+
     public FlowoutPort NextFlow()
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
