@@ -23,29 +23,6 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
         this.GetComponent<NodeNameManager>().NodeName = "ForLoopNode";
     }
 
-    public void Execute()
-    {
-        StartCoroutine(delay());
-    }
-
-
-    IEnumerator delay()
-    {
-        _index = 0;
-        // dataInPort에서 inputValue 가져오기
-        loopIndex = dataInPort.InputValueInt;
-        for (_index = 0; _index < loopIndex; ++_index)
-        {
-            Compile();
-            Debug.Log(_index + 1 + "번째 실행");
-
-            GetComponent<NodeData>().data_int = _index;
-            if (dataOutPort.isConnected) dataOutPort.SendData();
-            yield return ExecuteNodes();
-        }
-    }
-
-
     //노드를 큐에 추가하는 메서드
     public void AddNodeToQueue(INode node)
     {
@@ -104,29 +81,33 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
 
 
 
-    IEnumerator ExecuteNodes()
-    {
-        if (nodeToExcute_save.Count == 0)
-        {
-            Debug.Log("(반복문) Empty Queue");
-            yield return null;
-        }
-        else
-        {
-            //큐에서 노드 꺼내기
-            INode currentNode = nodeToExcute_save.Dequeue();
-            Debug.Log(currentNode);
-            currentNode.Execute();
-            yield return null;
-        }
-    }
-
-
-
-
     // 실행함수 완전히 종료 후 종료플로우
     public FlowoutPort NextFlow()
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+    }
+
+    IEnumerator INode.Execute()
+    {
+        _index = 0;
+        // dataInPort에서 inputValue 가져오기
+        loopIndex = dataInPort.InputValueInt;
+        for (_index = 0; _index < loopIndex; ++_index)
+        {
+            Compile();
+            Debug.Log(_index + 1 + "번째 실행");
+
+            GetComponent<NodeData>().data_int = _index;
+            if (dataOutPort.isConnected) dataOutPort.SendData();
+
+            while (nodeToExcute_save.Count != 0)
+            {
+                //큐에서 노드 꺼내기
+                INode currentNode = nodeToExcute_save.Dequeue();
+                Debug.Log(currentNode);
+                yield return currentNode.Execute();
+            }
+            yield return null;
+        }
     }
 }

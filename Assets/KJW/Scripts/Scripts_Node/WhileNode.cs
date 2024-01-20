@@ -64,5 +64,8 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
-    
+    IEnumerator INode.Execute()
+    {
+        throw new System.NotImplementedException();
+    }
 }
