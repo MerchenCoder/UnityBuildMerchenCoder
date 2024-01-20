@@ -10,20 +10,85 @@ public class NodeData : MonoBehaviour
     [NonSerialized] public bool data_bool;
 
 
+    public int SetData_Int
+    {
+        set
+        {
+            if (data_int != value)
+            {
+                data_int = value;
+                if (outPort.isConnected)
+                {
+                    outPort.SendData();
+                }
+            }
+        }
+    }
+    public bool SetData_Bool
+    {
+        set
+        {
+            if (data_bool != value)
+            {
+                data_bool = value;
 
-    //public void ReadNodeData()
-    //{
-    //    if (gameObject.CompareTag("data_int"))
-    //    {
+                if (outPort.isConnected)
+                {
+                    outPort.SendData();
+                }
+            }
+        }
+    }
+    public string SetData_string
+    {
+        set
+        {
+            if (data_string != value)
+            {
+                data_string = value;
+                if (outPort.isConnected)
+                {
+                    outPort.SendData();
+                }
+            }
+        }
+    }
 
-    //    }
-    //    else if (gameObject.CompareTag("data_string"))
-    //    {
+    private DataOutPort outPort;
+    private bool errorFlag;
 
-    //    }
-    //    else if (gameObject.CompareTag("data_bool"))
-    //    {
+    public bool ErrorFlag
+    {
+        get
+        {
+            return errorFlag;
+        }
+        set
+        {
+            if (errorFlag != value)
+            {
+                // Debug.Log("errorFlag 변경");
+                errorFlag = value;
+                if (outPort.isConnected)
+                {
+                    outPort.SendData();
+                    // Debug.Log("outPort가 inPort로 데이터 전달");
+                }
 
-    //    }
-    //}
+            }
+        }
+    }
+
+    private void Start()
+    {
+        outPort = transform.Find("outPort").GetComponent<DataOutPort>();
+        errorFlag = true;
+
+        if (GetComponent<NodeNameManager>().NodeName == "DataNode")
+        {
+            errorFlag = false;
+        }
+
+
+    }
 }

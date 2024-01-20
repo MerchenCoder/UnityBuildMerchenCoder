@@ -1,4 +1,6 @@
+using System.Collections;
+
 public interface INode
 {
-    public abstract void Execute();
+    public IEnumerator Execute();
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
 
 public class PrintNode : MonoBehaviour, INode, IFollowFlow
 {
@@ -19,6 +20,8 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
     //for execute
     private GameObject player;
     private GameObject playerChatBubble;
+
+    private float printDuration = 2f;
 
 
     void Start()
@@ -40,58 +43,51 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
             if (inPort.CompareTag("data_int"))
             {
                 stringData = dataInPort.InputValueInt.ToString();
-                dataUIText.text = stringData;
+                // dataUIText.text = stringData;
                 // chatText.text = stringData;
             }
             if (inPort.CompareTag("data_bool"))
             {
                 if (dataInPort.InputValueBool)
                 {
-                    dataUIText.text = "참";
+                    stringData = "참";
                 }
                 else
                 {
-                    dataUIText.text = "거짓";
+                    stringData = "거짓";
                 }
                 // chatText.text = stringData;
             }
             if (inPort.CompareTag("data_string"))
             {
-                dataUIText.text = dataInPort.InputValueStr;
+                stringData = dataInPort.InputValueStr;
                 // chatText.text = stringData;
             }
         }
         else
         {
-            dataUIText.text = "데이터";
+            // Debug.Log(e.IsConnected);
+            // dataUIText.text = "데이터";
         }
     }
 
 
-    public void Execute()
+    IEnumerator INode.Execute()
     {
+        dataInPort.connectedPort.SendData();
         //Canvas_Result가 Acitve 된 후에 할당해야 함.
         //result panel의 player는 항상 첫번째 자식이어야 함!!
         player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
         playerChatBubble = player.transform.GetChild(1).gameObject;
-
-
-
         playerChatBubble.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = stringData;
         playerChatBubble.SetActive(true);
-
-        //코루틴
-        StartCoroutine(DisableChatBubbleAfterTime(2.0f)); //2초 후에 비활성화
-
-    }
-
-
-    //일정 시간 후 chat bubble 비활성화하는 코루틴
-    private IEnumerator DisableChatBubbleAfterTime(float delay)
-    {
-        yield return new WaitForSeconds(delay);
+        // Invoke("DisableChatBubbleAfterTime", 2f);
+        yield return new WaitForSeconds(printDuration);
+        Debug.Log("말풍선 안보이게하기");
         playerChatBubble.SetActive(false);
+        yield return null;
     }
+
 
     public FlowoutPort NextFlow()
     {

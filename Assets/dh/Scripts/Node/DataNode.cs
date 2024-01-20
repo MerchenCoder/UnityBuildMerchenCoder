@@ -7,7 +7,7 @@ public class DataNode : MonoBehaviour
     //node name 설정
     private NodeNameManager nameManager;
 
-    private void Start()
+    private void Awake()
     {
         nameManager = this.GetComponent<NodeNameManager>();
         nameManager.NodeName = "DataNode";
