@@ -16,7 +16,7 @@ public class FunctionMaker : MonoBehaviour
     private void Start() {
         functionManager = GameObject.Find("FunctionManager").GetComponent<FunctionManager>();
         GetComponent<Button>().onClick.AddListener(SetFuncType);
-        Panel2 = GameObject.Find("Canvas_Func").transform.GetChild(1).gameObject;
+        Panel2 = GameObject.Find("Canvas_FuncSetting").transform.GetChild(1).gameObject;
     }
 
     public void SetFuncType() {
