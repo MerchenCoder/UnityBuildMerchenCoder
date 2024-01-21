@@ -20,15 +20,17 @@ public class FunctionToggleGroupManager : MonoBehaviour
         int selectedToggleCount = 0;
         foreach (Toggle toggle in toggles)
         {
+            selectedToggleCount++;
             if (toggle.isOn)
             {
-                selectedToggleCount++;
                 break; // 하나라도 선택되었다면 반복문 종료
             }
         }
 
         // 선택된 Toggle이 있으면 버튼 활성화, 그렇지 않으면 비활성화
         button.interactable = selectedToggleCount > 0;
+        button.GetComponent<FunctionMaker>().Type = selectedToggleCount;
+        Debug.Log("Type: "+button.GetComponent<FunctionMaker>().Type);
     }
 
     //close button 눌렀을 때 모달 창 reset
@@ -40,18 +42,5 @@ public class FunctionToggleGroupManager : MonoBehaviour
         button.interactable = false;
 
     }
-
-
-
-    //함수 설정 UI 모두 비활성화
-
-
-
-
-
-
-
-
-
 
 }
