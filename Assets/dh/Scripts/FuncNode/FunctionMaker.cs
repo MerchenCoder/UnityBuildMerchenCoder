@@ -41,9 +41,5 @@ public class FunctionMaker : MonoBehaviour
         }
         Debug.Log(functionManager.hasPara.ToString() + functionManager.hasReturn.ToString());
         Panel2.SetActive(true);
-
-
     }
-
-
 }

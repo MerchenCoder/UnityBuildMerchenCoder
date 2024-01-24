@@ -13,8 +13,6 @@ public class FunctionForm : MonoBehaviour
     private TMP_Dropdown dropdown_para2;
     private TMP_Dropdown dropdown_return; 
 
-
-
     private FunctionManager functionManager;
     
     // Start is called before the first frame update
@@ -33,16 +31,6 @@ public class FunctionForm : MonoBehaviour
     {
         form = transform.GetChild(0).GetChild(3);
         functionManager = GameObject.Find("FunctionManager").GetComponent<FunctionManager>();  
-
-        // input_funcName = form.GetChild(0).GetChild(1).GetComponent<TMP_InputField>();
-        // input_paraName1 = form.GetChild(1).GetChild(2).GetComponent<TMP_InputField>();
-        // input_paraName2 = form.GetChild(2).GetChild(2).GetComponent<TMP_InputField>();
-
-        // dropdown_para1 = form.GetChild(1).GetChild(1).GetComponent<TMP_Dropdown>();
-        // dropdown_para2 = form.GetChild(2).GetChild(1).GetComponent<TMP_Dropdown>();
-        // dropdown_return = form.GetChild(3).GetChild(1).GetComponent<TMP_Dropdown>();
-
-
         //form reset
         ResetForms();
         Debug.Log(functionManager.hasPara.ToString() + functionManager.hasReturn.ToString());
@@ -62,11 +50,7 @@ public class FunctionForm : MonoBehaviour
         else {
             form.GetChild(3).gameObject.SetActive(false);
         }
-
     }
-
-
-
 
     public void ResetForms() {
         for(int i=0;i<4;i++){

@@ -1131,6 +1131,9 @@ MonoBehaviour:
   hasPara1: 0
   hasPara2: 0
   hasReturn: 0
+  para1Type: -1
+  para2Type: -1
+  returnType: -1
 --- !u!1 &141855975
 GameObject:
   m_ObjectHideFlags: 0
@@ -2829,7 +2832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &333967184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4224,7 +4227,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2584806155989138830, guid: a620c49125894fb4c955272a31ec7e88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783759330}
   m_SourcePrefab: {fileID: 100100000, guid: a620c49125894fb4c955272a31ec7e88, type: 3}
 --- !u!224 &566173640 stripped
 RectTransform:
@@ -5541,7 +5547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643738506574356217, guid: 1babb73a09b497948a26f4fde4b8f1b2, type: 3}
       propertyPath: m_FontData.m_FontSize
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4643738506786153174, guid: 1babb73a09b497948a26f4fde4b8f1b2, type: 3}
       propertyPath: m_Sprite
@@ -5585,11 +5591,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643738506786153179, guid: 1babb73a09b497948a26f4fde4b8f1b2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 400
+      value: 307.22
       objectReference: {fileID: 0}
     - target: {fileID: 4643738506786153179, guid: 1babb73a09b497948a26f4fde4b8f1b2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 157.37
       objectReference: {fileID: 0}
     - target: {fileID: 4643738506786153179, guid: 1babb73a09b497948a26f4fde4b8f1b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11623,6 +11629,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!1 &1783759325 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2584806155989138830, guid: a620c49125894fb4c955272a31ec7e88, type: 3}
+  m_PrefabInstance: {fileID: 566173639}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1783759330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783759325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16104534618e4ec59aae8b763172475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  functionManager: {fileID: 131986107}
 --- !u!1 &1803782651
 GameObject:
   m_ObjectHideFlags: 0
