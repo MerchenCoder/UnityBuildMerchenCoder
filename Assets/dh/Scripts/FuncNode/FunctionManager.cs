@@ -76,10 +76,9 @@ public class FunctionManager : MonoBehaviour
     }
 
 
-    //for create canvas prefab
+    //for create canvas instance
     public GameObject canvasFuncMakePrefab;
     public Transform spawnPoint;
-
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +91,6 @@ public class FunctionManager : MonoBehaviour
         para1Type = -1;
         para2Type = -1;
         returnType = -1;
-        Debug.Log("reset -> hasPara2: " + hasPara2.ToString());
     }
 
 
@@ -100,9 +98,6 @@ public class FunctionManager : MonoBehaviour
 
     public void CreateFunctionMakeCanvas(){
         Debug.Log("generate function make panel 호출");
-
-        Debug.Log(hasPara2.ToString());        
-
         //캔버스 프리팹 생성
         GameObject canvasPrefabInstance = Instantiate(canvasFuncMakePrefab);
 
@@ -132,5 +127,30 @@ public class FunctionManager : MonoBehaviour
 
         canvasPrefabInstance.transform.position = spawnPoint.position;
         canvasPrefabInstance.gameObject.SetActive(true);
+
+
+        Debug.Log(canvasPrefabInstance);
+        GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
+        GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
+        //반환 노드 버튼 만들기
+        if(hasReturn){
+            Debug.Log(canvasPrefabInstance.transform.Find("returnNodeBtn"));
+
+            returnBtn.SetActive(true);
+            returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
+            
+        }
+        else{
+            returnBtn.SetActive(false);
+        }
+        //매개변수 노드 만들기
+        if(hasPara){
+            paraBtn.SetActive(true);
+        }
+        else {
+            paraBtn.SetActive(false);
+        }
     }
 }
+
+

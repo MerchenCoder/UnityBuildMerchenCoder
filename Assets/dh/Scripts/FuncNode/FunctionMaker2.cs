@@ -137,7 +137,6 @@ public class FunctionMaker2 : MonoBehaviour
 
         functionManager.CreateFunctionMakeCanvas();
         
-        Debug.Log(transform.GetComponentInParent<Canvas>().gameObject);
         transform.GetComponentInParent<Canvas>().gameObject.SetActive(false);
 
 
