@@ -36,27 +36,12 @@ public class FunctionManager : MonoBehaviour
     bool hasPara = false;
     bool hasReturn = false;
 
-    // public bool HasPara {
-    //     get{
-    //         return hasPara;
-    //     }
-    // }
-
-    // public bool HasReturn {
-    //     get{
-    //         return hasReturn;
-    //     }
-    // }
-
-
     public bool hasPara1 = false;
     public bool hasPara2 = false;
     //타입 : 0=int, 1=bool, 2=string, -1=초기화, 없음 (드롭다운 option index랑 동일값으로 한다)
     public int para1Type = -1;
     public int para2Type = -1;
     public int returnType = -1;
-
-
 
 
     private string funcName = null;
@@ -91,6 +76,11 @@ public class FunctionManager : MonoBehaviour
     }
 
 
+    //for create canvas prefab
+    public GameObject canvasFuncMakePrefab;
+    public Transform spawnPoint;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -102,5 +92,45 @@ public class FunctionManager : MonoBehaviour
         para1Type = -1;
         para2Type = -1;
         returnType = -1;
+        Debug.Log("reset -> hasPara2: " + hasPara2.ToString());
+    }
+
+
+
+
+    public void CreateFunctionMakeCanvas(){
+        Debug.Log("generate function make panel 호출");
+
+        Debug.Log(hasPara2.ToString());        
+
+        //캔버스 프리팹 생성
+        GameObject canvasPrefabInstance = Instantiate(canvasFuncMakePrefab);
+
+        //캔버스 렌더링 모드 설정(UI 카메라로 변경)
+        Canvas canvas = canvasPrefabInstance.GetComponent<Canvas>();
+        if (canvas != null)
+        {
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+
+            Camera[] cameras = FindObjectsOfType<Camera>();
+            foreach (Camera camera in cameras)
+            {
+                if (camera.name == "UI_Camera") // 여기서 "MyCameraName"은 원하는 카메라 이름으로 바꿔야 합니다.
+                {
+                    canvas.worldCamera = camera;
+                    break; // 원하는 카메라를 찾았으므로 루프를 종료합니다.
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("프리팹에 Canvas 컴포넌트가 없습니다.");
+        }
+
+        canvasPrefabInstance.name = funcName+"_canvas";
+
+
+        canvasPrefabInstance.transform.position = spawnPoint.position;
+        canvasPrefabInstance.gameObject.SetActive(true);
     }
 }

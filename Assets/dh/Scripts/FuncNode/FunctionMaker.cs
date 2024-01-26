@@ -17,7 +17,6 @@ public class FunctionMaker : MonoBehaviour
 
     public void SetFuncType() {
         functionManager.ResetFuncSetting();
-        Debug.Log(selectType);
         functionManager.Type = selectType;
         Panel2.SetActive(true);
     }

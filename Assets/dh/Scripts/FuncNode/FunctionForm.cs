@@ -14,7 +14,6 @@ public class FunctionForm : MonoBehaviour
         functionManager = GameObject.Find("FunctionManager").GetComponent<FunctionManager>();  
         //form reset
         ResetForms();
-        Debug.Log(functionManager.Type);
 
         if(functionManager.Type>=3){ //hasPara
             form.GetChild(1).gameObject.SetActive(true);

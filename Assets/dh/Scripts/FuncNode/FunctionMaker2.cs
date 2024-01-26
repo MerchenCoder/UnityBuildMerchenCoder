@@ -118,12 +118,13 @@ public class FunctionMaker2 : MonoBehaviour
         functionManager.FunName = funNameRow.transform.GetChild(1).GetComponent<TMP_InputField>().text;
         //매개변수 타입, 이름 (type 3, 4)
         if(functionManager.Type>=3){
-            if(para1Row.activeSelf){
+            if(para1OnOffBtn.IsOn){
+                Debug.Log(functionManager.hasPara2.ToString()+"는 hasPara2");
                 functionManager.hasPara1 = true;
                 functionManager.para1Type = para1Row.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
                 functionManager.Para1Name = para1Row.transform.GetChild(2).GetComponent<TMP_InputField>().text;
             }
-            if(para2Row.activeSelf){
+            if(para2OnOffBtn.IsOn){
                 functionManager.hasPara2 = true;
                 functionManager.para2Type = para2Row.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
                 functionManager.Para2Name = para2Row.transform.GetChild(2).GetComponent<TMP_InputField>().text;
@@ -133,6 +134,13 @@ public class FunctionMaker2 : MonoBehaviour
         if(functionManager.Type%2==0){
             functionManager.returnType = returnRow.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
         }
+
+        functionManager.CreateFunctionMakeCanvas();
+        
+        Debug.Log(transform.GetComponentInParent<Canvas>().gameObject);
+        transform.GetComponentInParent<Canvas>().gameObject.SetActive(false);
+
+
     }
 
 
