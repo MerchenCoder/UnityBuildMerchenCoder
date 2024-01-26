@@ -29,8 +29,8 @@ public class FunctionToggleGroupManager : MonoBehaviour
 
         // 선택된 Toggle이 있으면 버튼 활성화, 그렇지 않으면 비활성화
         button.interactable = selectedToggleCount > 0;
-        button.GetComponent<FunctionMaker>().Type = selectedToggleCount;
-        Debug.Log("Type: "+button.GetComponent<FunctionMaker>().Type);
+        button.GetComponent<FunctionMaker>().selectType = selectedToggleCount;
+        Debug.Log("Type: "+button.GetComponent<FunctionMaker>().selectType);
     }
 
     //close button 눌렀을 때 모달 창 reset

@@ -6,26 +6,7 @@ using TMPro;
 public class FunctionForm : MonoBehaviour
 {
     private Transform form;
-    private TMP_InputField  input_funcName;
-    private TMP_InputField input_paraName1;
-    private TMP_InputField input_paraName2;
-    private TMP_Dropdown dropdown_para1;
-    private TMP_Dropdown dropdown_para2;
-    private TMP_Dropdown dropdown_return; 
-
     private FunctionManager functionManager;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void OnEnable() 
     {
@@ -33,10 +14,9 @@ public class FunctionForm : MonoBehaviour
         functionManager = GameObject.Find("FunctionManager").GetComponent<FunctionManager>();  
         //form reset
         ResetForms();
-        Debug.Log(functionManager.hasPara.ToString() + functionManager.hasReturn.ToString());
+        Debug.Log(functionManager.Type);
 
-
-        if(functionManager.hasPara){
+        if(functionManager.Type>=3){ //hasPara
             form.GetChild(1).gameObject.SetActive(true);
             form.GetChild(2).gameObject.SetActive(true);       
         }
@@ -44,7 +24,7 @@ public class FunctionForm : MonoBehaviour
             form.GetChild(1).gameObject.SetActive(false);
             form.GetChild(2).gameObject.SetActive(false);    
         }
-        if(functionManager.hasReturn){
+        if(functionManager.Type%2==0){
             form.GetChild(3).gameObject.SetActive(true);
         }
         else {
