@@ -23,8 +23,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     void Start()
     {
         uiCamera = GameObject.Find("UI_Camera").GetComponent<Camera>();
-        originVector3 = transform.position;
-        originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        // originVector3 = transform.position;
+        // originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        UpdatePosition();
         isConnected = false;
 
         parentNode = transform.parent.GetComponent<NodeData>();
@@ -34,6 +35,13 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         }
         connectedPort = null;
     }
+
+    public void UpdatePosition()
+    {
+        originVector3 = transform.position;
+        originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
