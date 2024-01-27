@@ -29,28 +29,6 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
         dataInPort.StateChanged += HandleStateChanged;
     }
 
-    public void Execute()
-    {
-        if(dropdown.value <= 1)
-        {
-            // can not play
-        }
-        else
-        {
-            if (CompareTag("data_int"))
-            {
-                valueManager.intValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueInt;
-            }
-            else if (CompareTag("data_bool"))
-            {
-                valueManager.boolValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueBool;
-            }
-            else if (CompareTag("data_string"))
-            {
-                valueManager.stringValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueStr;
-            }
-        }
-    }
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
         if (e.IsConnected)
@@ -87,15 +65,12 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
-<<<<<<< Updated upstream
-=======
 
     IEnumerator INode.Execute()
     {
         if (dropdown.value <= 1)
         {
             // can not play
-            Debug.Log("NOT SET");
         }
         else
         {
@@ -114,5 +89,4 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
         }
         yield return null;
     }
->>>>>>> Stashed changes
 }

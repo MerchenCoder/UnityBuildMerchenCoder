@@ -63,5 +63,4 @@ public class AddValueBtn : MonoBehaviour
         valueNameSettingUI.SetActive(true);
         valueNameSettingUI.tag = this.tag;
     }
-    
 }
