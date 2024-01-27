@@ -21,14 +21,15 @@ public class FunctionMaker2 : MonoBehaviour
     private TMP_Dropdown para1Type;
     private TMP_Dropdown para2Type;
     private TMP_Dropdown returnType;
-    
+
 
     private Button button;
 
     bool allFieldsHasValue;
 
-    
-    private void OnEnable() {
+
+    private void OnEnable()
+    {
 
         //변수 초기화
         FunctionMaker2Reset();
@@ -40,7 +41,8 @@ public class FunctionMaker2 : MonoBehaviour
         //form 컴포넌트 가져오기
         Transform form = transform.parent.GetChild(3).transform;
         funNameRow = form.GetChild(0).gameObject;
-        if(functionManager.Type>=3){
+        if (functionManager.Type >= 3)
+        {
             para1Row = form.GetChild(1).gameObject;
             para2Row = form.GetChild(2).gameObject;
 
@@ -53,7 +55,8 @@ public class FunctionMaker2 : MonoBehaviour
 
 
         }
-        if(functionManager.Type%2==0){
+        if (functionManager.Type % 2 == 0)
+        {
             returnRow = form.GetChild(3).gameObject;
             returnType = returnRow.transform.GetChild(1).GetComponent<TMP_Dropdown>();
         }
@@ -61,21 +64,23 @@ public class FunctionMaker2 : MonoBehaviour
         funName = funNameRow.transform.GetChild(1).GetComponent<TMP_InputField>();
     }
 
-    private void Update() {
+    private void Update()
+    {
 
         //모든 input 값을 입력했는지 check -> 모두 입력했을 때만 button active;
-        switch(functionManager.Type){
+        switch (functionManager.Type)
+        {
             case 1:
                 allFieldsHasValue = FunNameCheckFields();
                 break;
             case 2:
-            allFieldsHasValue = FunNameCheckFields()&&ReturnCheckFields();
-            break;
+                allFieldsHasValue = FunNameCheckFields() && ReturnCheckFields();
+                break;
             case 3:
-            allFieldsHasValue = FunNameCheckFields()&&ParaCheckFields();
-            break;
+                allFieldsHasValue = FunNameCheckFields() && ParaCheckFields();
+                break;
             case 4:
-            allFieldsHasValue = FunNameCheckFields()&&ParaCheckFields()&&ReturnCheckFields();
+                allFieldsHasValue = FunNameCheckFields() && ParaCheckFields() && ReturnCheckFields();
                 break;
             default:
                 Debug.Log("allFieldHasValue 체크 오류");
@@ -87,56 +92,66 @@ public class FunctionMaker2 : MonoBehaviour
     }
 
 
-    bool ParaCheckFields(){
+    bool ParaCheckFields()
+    {
         bool result = false;
-        if(!string.IsNullOrEmpty(funName.text)&&(para1OnOffBtn.IsOn||para2OnOffBtn.IsOn)){
-                if(para1OnOffBtn.IsOn){
-                    result = para1Type.value!=-1 && !string.IsNullOrEmpty(para1Name.text);
-                }
-                if(para2OnOffBtn.IsOn){
-                    result= para2Type.value!=-1 && !string.IsNullOrEmpty(para2Name.text);
-                }
+        if (!string.IsNullOrEmpty(funName.text) && (para1OnOffBtn.IsOn || para2OnOffBtn.IsOn))
+        {
+            if (para1OnOffBtn.IsOn)
+            {
+                result = para1Type.value != -1 && !string.IsNullOrEmpty(para1Name.text);
+            }
+            if (para2OnOffBtn.IsOn)
+            {
+                result = para2Type.value != -1 && !string.IsNullOrEmpty(para2Name.text);
+            }
         }
         return result;
     }
 
 
-    bool ReturnCheckFields(){
+    bool ReturnCheckFields()
+    {
 
-        return returnType.value!=-1;
+        return returnType.value != -1;
     }
 
-    bool FunNameCheckFields(){
+    bool FunNameCheckFields()
+    {
         return !string.IsNullOrEmpty(funName.text);
     }
 
 
-    public void FuncSetting() {
+    public void FuncSetting()
+    {
         //함수 이름 / 함수 매개변수 타입, 이름 / 함수 반환값 타입 값 넘겨주기
 
         //함수 이름
         functionManager.FunName = funNameRow.transform.GetChild(1).GetComponent<TMP_InputField>().text;
         //매개변수 타입, 이름 (type 3, 4)
-        if(functionManager.Type>=3){
-            if(para1OnOffBtn.IsOn){
-                Debug.Log(functionManager.hasPara2.ToString()+"는 hasPara2");
+        if (functionManager.Type >= 3)
+        {
+            if (para1OnOffBtn.IsOn)
+            {
                 functionManager.hasPara1 = true;
                 functionManager.para1Type = para1Row.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
                 functionManager.Para1Name = para1Row.transform.GetChild(2).GetComponent<TMP_InputField>().text;
             }
-            if(para2OnOffBtn.IsOn){
+            if (para2OnOffBtn.IsOn)
+            {
                 functionManager.hasPara2 = true;
                 functionManager.para2Type = para2Row.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
                 functionManager.Para2Name = para2Row.transform.GetChild(2).GetComponent<TMP_InputField>().text;
             }
 
         }
-        if(functionManager.Type%2==0){
+        if (functionManager.Type % 2 == 0)
+        {
             functionManager.returnType = returnRow.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
         }
 
         functionManager.CreateFunctionMakeCanvas();
-        
+
         transform.GetComponentInParent<Canvas>().gameObject.SetActive(false);
 
 
@@ -144,12 +159,13 @@ public class FunctionMaker2 : MonoBehaviour
 
 
 
-    void FunctionMaker2Reset() {
+    void FunctionMaker2Reset()
+    {
         funNameRow = null;
         para1Row = null;
         para2Row = null;
         returnRow = null;
-        
+
         funName = null;
         para1Name = null;
         para2Name = null;
@@ -160,6 +176,6 @@ public class FunctionMaker2 : MonoBehaviour
         returnType = null;
 
 
-        allFieldsHasValue=false;
+        allFieldsHasValue = false;
     }
 }

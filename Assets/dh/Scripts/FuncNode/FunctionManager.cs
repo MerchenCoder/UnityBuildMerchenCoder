@@ -7,30 +7,38 @@ public class FunctionManager : MonoBehaviour
     //외부에서는 type에 접근해서 읽고 쓸 수 있음
     private int type = 0; //초기화 0(아무것도 아닌 타입)
     //type을 바꾸면 haspara... 등 설정 자동으로 변경
-    public int Type {
-        get{
+    public int Type
+    {
+        get
+        {
             return type;
         }
-        set{
-            if(value==0){
+        set
+        {
+            if (value == 0)
+            {
                 hasPara = false;
                 hasPara1 = false;
                 hasPara2 = false;
                 hasReturn = false;
             }
-            if(value>=3){
+            if (value >= 3)
+            {
                 hasPara = true;
             }
-            else{
+            else
+            {
                 hasPara = false;
             }
-            if(value%2==0){
-                hasReturn=true;
+            if (value % 2 == 0)
+            {
+                hasReturn = true;
             }
-            else{
-                hasReturn=false;
+            else
+            {
+                hasReturn = false;
             }
-            type=value;
+            type = value;
         }
     }
     bool hasPara = false;
@@ -45,11 +53,14 @@ public class FunctionManager : MonoBehaviour
 
 
     private string funcName = null;
-    public string FunName{
-        get{
+    public string FunName
+    {
+        get
+        {
             return funcName;
         }
-        set {
+        set
+        {
             funcName = value;
         }
     }
@@ -57,22 +68,28 @@ public class FunctionManager : MonoBehaviour
     private string para1Name = null;
 
     private string para2Name = null;
-    public string Para1Name{
-        get{
+    public string Para1Name
+    {
+        get
+        {
             return para1Name;
         }
-        set {
+        set
+        {
             para1Name = value;
         }
     }
-    public string Para2Name{
-        get{
+    public string Para2Name
+    {
+        get
+        {
             return para2Name;
         }
-        set {
+        set
+        {
             para2Name = value;
         }
-        
+
     }
 
 
@@ -83,9 +100,10 @@ public class FunctionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
-    public void ResetFuncSetting() {
+    public void ResetFuncSetting()
+    {
         Type = 0;
         funcName = null;
         para1Type = -1;
@@ -96,7 +114,8 @@ public class FunctionManager : MonoBehaviour
 
 
 
-    public void CreateFunctionMakeCanvas(){
+    public void CreateFunctionMakeCanvas()
+    {
         Debug.Log("generate function make panel 호출");
         //캔버스 프리팹 생성
         GameObject canvasPrefabInstance = Instantiate(canvasFuncMakePrefab);
@@ -122,32 +141,48 @@ public class FunctionManager : MonoBehaviour
             Debug.LogError("프리팹에 Canvas 컴포넌트가 없습니다.");
         }
 
-        canvasPrefabInstance.name = funcName+"_canvas";
+        canvasPrefabInstance.name = funcName + "_canvas";
 
 
         canvasPrefabInstance.transform.position = spawnPoint.position;
         canvasPrefabInstance.gameObject.SetActive(true);
 
-
-        Debug.Log(canvasPrefabInstance);
         GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
         GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
         //반환 노드 버튼 만들기
-        if(hasReturn){
-            Debug.Log(canvasPrefabInstance.transform.Find("returnNodeBtn"));
-
+        if (hasReturn)
+        {
             returnBtn.SetActive(true);
             returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
-            
+
         }
-        else{
+        else
+        {
             returnBtn.SetActive(false);
         }
         //매개변수 노드 만들기
-        if(hasPara){
+        if (hasPara)
+        {
+            Debug.Log("hasPara");
+            //초기화
+            paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
             paraBtn.SetActive(true);
+
+            if (hasPara1)
+            {
+                paraBtn.GetComponent<ParaNodeBtn>().Para1Name = para1Name;
+                paraBtn.GetComponent<ParaNodeBtn>().Para1Type = para1Type;
+
+            }
+            if (hasPara2)
+            {
+                paraBtn.GetComponent<ParaNodeBtn>().Para2Name = para2Name;
+                paraBtn.GetComponent<ParaNodeBtn>().Para2Type = para2Type;
+
+            }
         }
-        else {
+        else
+        {
             paraBtn.SetActive(false);
         }
     }
