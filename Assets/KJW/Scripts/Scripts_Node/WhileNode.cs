@@ -6,11 +6,9 @@ using UnityEngine;
 public class WhileNode : MonoBehaviour, INode, IFollowFlow
 {
     private Queue<INode> nodeToExcute_save = new Queue<INode>();
-
-    private int loopIndex;
-    public int _index;
+    private bool loopCondition;
+    int _index;
     [SerializeField] private DataInPort dataInPort;
-    [SerializeField] private DataOutPort dataOutPort;
 
     //변수 선언
     private GameObject currentNode;
@@ -87,16 +85,16 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
 
     IEnumerator INode.Execute()
     {
-        _index = 0;
-        // dataInPort에서 inputValue 가져오기
-        loopIndex = dataInPort.InputValueInt;
-        for (_index = 0; _index < loopIndex; ++_index)
+        if (dataInPort.connectedPort.transform.parent.GetComponent<GetValueNode>() != null)
+        {
+            dataInPort.connectedPort.transform.parent.GetComponent<GetValueNode>().BringValueData();
+        }
+        loopCondition = dataInPort.InputValueBool;
+
+        for (_index = 0; loopCondition; ++_index)
         {
             Compile();
             Debug.Log(_index + 1 + "번째 실행");
-
-            GetComponent<NodeData>().data_int = _index;
-            if (dataOutPort.isConnected) dataOutPort.SendData();
 
             while (nodeToExcute_save.Count != 0)
             {
@@ -105,7 +103,15 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
                 Debug.Log(currentNode);
                 yield return currentNode.Execute();
             }
+            if (dataInPort.connectedPort.transform.parent.GetComponent<GetValueNode>() != null)
+            {
+                Debug.Log("변수연결");
+                dataInPort.connectedPort.transform.parent.GetComponent<GetValueNode>().BringValueData();
+            }
+            loopCondition = dataInPort.InputValueBool;
+
             yield return null;
         }
     }
 }
+
