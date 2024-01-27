@@ -87,4 +87,32 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
+<<<<<<< Updated upstream
+=======
+
+    IEnumerator INode.Execute()
+    {
+        if (dropdown.value <= 1)
+        {
+            // can not play
+            Debug.Log("NOT SET");
+        }
+        else
+        {
+            if (CompareTag("data_int"))
+            {
+                valueManager.intValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueInt;
+            }
+            else if (CompareTag("data_bool"))
+            {
+                valueManager.boolValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueBool;
+            }
+            else if (CompareTag("data_string"))
+            {
+                valueManager.stringValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueStr;
+            }
+        }
+        yield return null;
+    }
+>>>>>>> Stashed changes
 }
