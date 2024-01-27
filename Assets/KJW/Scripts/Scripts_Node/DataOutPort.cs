@@ -139,7 +139,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     }
 
 
-    void ConnectPort()
+    public void ConnectPort()
     {
         connectedPort.GetComponent<DataInPort>().connectedPort = this.GetComponent<DataOutPort>();
 

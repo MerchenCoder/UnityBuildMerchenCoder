@@ -15,6 +15,10 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     private RectTransform rectTransform;
 
 
+
+
+
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -28,13 +32,33 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("down");
+        // dataOutPorts = new DataOutPort[dataInPorts.Length];
+        // for (int i = 0; i < dataInPorts.Length; i++)
+        // {
+        //     if (dataInPorts[i].IsConnected)
+        //     {
+        //         //연결되어있다면 연결된 dataOutPort를 찾아서 배열에 넣어주기
+        //         List<RaycastResult> results = new List<RaycastResult>();
+        //         EventSystem.current.RaycastAll(eventData, results);
+        //         foreach (RaycastResult result in results)
+        //         {
+
+        //             if (result.gameObject.CompareTag(this.gameObject.tag))
+        //             {
+        //                 dataOutPorts[i] = result.gameObject.transform.GetComponent<DataOutPort>();
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
+
 
     }
     public void OnEndDrag(PointerEventData eventData)
     {
         DataOutPort[] dataOutPorts = GetComponentsInChildren<DataOutPort>();
         FlowoutPort[] flowoutPorts = GetComponentsInChildren<FlowoutPort>();
+
 
         foreach (DataOutPort dataOutPort in dataOutPorts)
         {
@@ -44,11 +68,33 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         {
             flowoutPort.UpdatePosition();
         }
+
+
+
+        // //연결된 dataOutPort 위치 업데이트
+        // foreach (DataOutPort dataoutport in dataOutPorts)
+        // {
+        //     if (dataoutport != null)
+        //     {
+        //         dataoutport.transform.position = dataoutport.connectedPort.transform.position;
+        //         dataoutport.UpdatePosition();
+        //     }
+        // }
+
+
+
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("drag");
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+
+        DataInPort[] dataInPorts = GetComponentsInChildren<DataInPort>();
+        foreach (DataInPort dataInPort in dataInPorts)
+        {
+            dataInPort.connectedPort.ConnectPort();
+        }
     }
 }
