@@ -24,5 +24,9 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
         nameManager.NodeName = "EndNode";
     }
 
+    private void Update() {
+        
+    }
+
 }
 
