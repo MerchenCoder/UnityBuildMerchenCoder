@@ -33,7 +33,6 @@ public class DataInPort : MonoBehaviour
     private bool inputValueBool;
     private string inputValueStr;
 
-    [NonSerialized] public DataOutPort connectedPort;
 
     //inPort data text
     private TextMeshProUGUI inPortText;

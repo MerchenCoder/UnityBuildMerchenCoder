@@ -7,14 +7,15 @@ public class StartNode : MonoBehaviour, IFollowFlow, INode
     //node name
     private NodeNameManager nameManager;
 
+    public void Execute()
+    {
+        NodeManager.Instance.ExecuteNodes();
+
+    }
+
     public FlowoutPort NextFlow()
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
-    }
-
-    IEnumerator INode.Execute()
-    {
-        yield return null;
     }
 
     // Start is called before the first frame update

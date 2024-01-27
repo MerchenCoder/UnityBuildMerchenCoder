@@ -16,6 +16,7 @@ public class NodeManager : MonoBehaviour
     private FlowoutPort currentFlowoutPort;
 
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -86,19 +87,18 @@ public class NodeManager : MonoBehaviour
 
     public void ExecuteNodes()
     {
-        StartCoroutine(ExcuteNode());
-    }
-
-
-    IEnumerator ExcuteNode()
-    {
-        while(nodesToExecute.Count != 0)
+        if (nodesToExecute.Count == 0)
+        {
+            Debug.Log("Empty Queue");
+        }
+        else
         {
             //큐에서 노드 꺼내기
             INode currentNode = nodesToExecute.Dequeue();
             Debug.Log(currentNode);
-            yield return StartCoroutine(currentNode.Execute());
+            currentNode.Execute();
+
+
         }
-        yield return null;
     }
 }
