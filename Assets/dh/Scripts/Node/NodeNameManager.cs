@@ -88,13 +88,28 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("drag");
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
 
         DataInPort[] dataInPorts = GetComponentsInChildren<DataInPort>();
         foreach (DataInPort dataInPort in dataInPorts)
         {
-            dataInPort.connectedPort.ConnectPort();
+            if (dataInPort.connectedPort != null)
+            {
+
+                dataInPort.connectedPort.ConnectPort();
+            }
         }
+
+
+        FlowinPort[] flowinPorts = GetComponentsInChildren<FlowinPort>();
+        foreach (FlowinPort flowinPort in flowinPorts)
+        {
+            if (flowinPort.connectedPort != null)
+            {
+
+                flowinPort.connectedPort.ConnectPort();
+            }
+        }
+
     }
 }

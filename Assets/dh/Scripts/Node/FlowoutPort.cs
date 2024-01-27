@@ -116,6 +116,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     connectedPort.GetComponent<endNode>().IsConnected = true;
                 }
                 //result.gameObject.GetComponent<endNode>().isConnectedEnd();
+
             }
         }
         if (!isConnected)
@@ -126,11 +127,14 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             {
                 connectedPort.GetComponent<endNode>().IsConnected = false;
             }
+            connectedPort.GetComponent<FlowinPort>().IsConnected = false;
+            connectedPort = null;
         }
     }
 
-    void ConnectPort()
+    public void ConnectPort()
     {
+        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
         // out port ȭ��ǥ ����
         transform.position = connectedPort.transform.position;
         nullImage = connectedPort.GetComponent<Image>().sprite;
