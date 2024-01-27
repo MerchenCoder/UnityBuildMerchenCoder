@@ -24,10 +24,6 @@ public class IfNode : MonoBehaviour, IFollowFlow, INode
     //DataInputPort 클래스 참조
     private DataInPort dataInPort1;
 
-    public void Execute()
-    {
-        return;
-    }
 
     public FlowoutPort NextFlow()
     {
@@ -78,5 +74,10 @@ public class IfNode : MonoBehaviour, IFollowFlow, INode
             //Debug.Log("inport1 is disconnected");
         }
 
+    }
+
+    IEnumerator INode.Execute()
+    {
+        throw new NotImplementedException();
     }
 }

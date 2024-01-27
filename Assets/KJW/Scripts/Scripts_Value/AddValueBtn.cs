@@ -52,6 +52,7 @@ public class AddValueBtn : MonoBehaviour
             {
                 nodeData.data_string = valueManager.stringValues[dropdown.value - 2].valueOfValue;
             }
+            transform.parent.GetComponent<NodeData>().ErrorFlag = false;
         }
     }
 
