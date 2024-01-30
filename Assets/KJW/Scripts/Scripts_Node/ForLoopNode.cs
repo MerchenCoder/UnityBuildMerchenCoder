@@ -17,6 +17,7 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
     //변수 선언
     private GameObject currentNode;
     private FlowoutPort currentFlowoutPort;
+    [NonSerialized] public bool isBreaking;
 
     private void Start()
     {
@@ -56,7 +57,7 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
             //Flow loopPort로 반복내용 node 찾아서 currentNode 업데이트
             currentNode = NextNode(currentFlowoutPort);
 
-            while (currentNode.GetComponent<NodeNameManager>().NodeName != "BreakNode")
+            while (!currentNode.CompareTag("Node_Break"))
             {
                 //현재 노드를 큐에 추가
                 AddNodeToQueue(currentNode.GetComponent<INode>());
@@ -70,7 +71,12 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
                     currentNode = NextNode(currentFlowoutPort);
                 }
             }
-
+            if (currentNode.CompareTag("Node_Break"))
+            {
+                AddNodeToQueue(currentNode.GetComponent<INode>());
+                currentNode.GetComponent<BreakNode>().isForLoop = true;
+                currentNode.GetComponent<BreakNode>().loopStartNode = this.gameObject;
+            }
             Debug.Log("(반복문) Compile Complete");
         }
         catch (NullReferenceException e)
@@ -92,7 +98,7 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
         _index = 0;
         // dataInPort에서 inputValue 가져오기
         loopIndex = dataInPort.InputValueInt;
-        for (_index = 0; _index < loopIndex; ++_index)
+        for (_index = 0; _index < loopIndex && !isBreaking; ++_index)
         {
             Compile();
             Debug.Log(_index + 1 + "번째 실행");

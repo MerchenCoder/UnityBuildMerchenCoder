@@ -13,10 +13,12 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
     //변수 선언
     private GameObject currentNode;
     private FlowoutPort currentFlowoutPort;
+    [NonSerialized] public bool isBreaking;
 
     private void Start()
     {
         this.GetComponent<NodeNameManager>().NodeName = "ForLoopNode";
+        isBreaking = false;
     }
 
     //노드를 큐에 추가하는 메서드
@@ -52,7 +54,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
             //Flow loopPort로 반복내용 node 찾아서 currentNode 업데이트
             currentNode = NextNode(currentFlowoutPort);
 
-            while (currentNode.GetComponent<NodeNameManager>().NodeName != "BreakNode")
+            while (!currentNode.CompareTag("Node_Break"))
             {
                 //현재 노드를 큐에 추가
                 AddNodeToQueue(currentNode.GetComponent<INode>());
@@ -65,6 +67,13 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
                     //Flow outPort로 다음 node 찾아서 currentNode 업데이트
                     currentNode = NextNode(currentFlowoutPort);
                 }
+            }
+
+            if (currentNode.CompareTag("Node_Break"))
+            {
+                AddNodeToQueue(currentNode.GetComponent<INode>());
+                currentNode.GetComponent<BreakNode>().isWhileLoop = true;
+                currentNode.GetComponent<BreakNode>().loopStartNode = this.gameObject;
             }
 
             Debug.Log("(반복문) Compile Complete");
@@ -91,7 +100,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
         }
         loopCondition = dataInPort.InputValueBool;
 
-        for (_index = 0; loopCondition; ++_index)
+        for (_index = 0; loopCondition && !isBreaking; ++_index)
         {
             Compile();
             Debug.Log(_index + 1 + "번째 실행");
@@ -101,6 +110,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
                 //큐에서 노드 꺼내기
                 INode currentNode = nodeToExcute_save.Dequeue();
                 Debug.Log(currentNode);
+
                 yield return currentNode.Execute();
             }
             if (dataInPort.connectedPort.transform.parent.GetComponent<GetValueNode>() != null)
@@ -113,5 +123,6 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
             yield return null;
         }
     }
+
 }
 
