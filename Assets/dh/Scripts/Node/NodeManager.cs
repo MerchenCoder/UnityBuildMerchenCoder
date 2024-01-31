@@ -8,7 +8,7 @@ public class NodeManager : MonoBehaviour
     //--싱글톤 생성--//
     public static NodeManager Instance { get; private set; }
     //실행할 INode 인스턴스들을 저장할 큐를 생성
-    private Queue<INode> nodesToExecute = new Queue<INode>();
+    // private Queue<INode> nodesToExecute = new Queue<INode>();
 
     //변수 선언
     private GameObject startNode;
@@ -30,16 +30,16 @@ public class NodeManager : MonoBehaviour
     }
 
     //노드를 큐에 추가하는 메서드
-    public void AddNodeToQueue(INode node)
-    {
-        nodesToExecute.Enqueue(node);
-    }
+    // public void AddNodeToQueue(INode node)
+    // {
+    //     nodesToExecute.Enqueue(node);
+    // }
 
-    //큐를 초기화하는 메서드
-    public void ClearNodeQueue()
-    {
-        nodesToExecute.Clear();
-    }
+    // //큐를 초기화하는 메서드
+    // public void ClearNodeQueue()
+    // {
+    //     nodesToExecute.Clear();
+    // }
 
 
     //다음 노드 반환하는 메소드
@@ -51,20 +51,34 @@ public class NodeManager : MonoBehaviour
 
 
     //컴파일
-    public void Compile()
+    public void Run()
     {
         //큐 초기화
-        ClearNodeQueue();
+        // ClearNodeQueue();
         //find start node
         startNode = GameObject.FindGameObjectWithTag("startNode");
         currentNode = startNode;
         try
         {
+            // while (currentNode.GetComponent<NodeNameManager>().NodeName != "EndNode")
+            // {
+            //     Debug.Log("while문 수행");
+            //     //현재 노드를 큐에 추가
+            //     AddNodeToQueue(currentNode.GetComponent<INode>());
+            //     //현재 노드의 Flow outPort 찾기
+            //     currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
+            //     Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);
+            //     //Flow outPort로 다음 node 찾아서 currentNode 업데이트
+            //     currentNode = NextNode(currentFlowoutPort);
+
+            // }
+
+            //함수 노드 때문에 EndNode까지 반복문 돌리는 걸로 수정
             while (currentNode.GetComponent<NodeNameManager>().NodeName != "EndNode")
             {
-                Debug.Log("while문 수행");
+                Debug.Log("실행 시작");
                 //현재 노드를 큐에 추가
-                AddNodeToQueue(currentNode.GetComponent<INode>());
+                StartCoroutine(ExcuteNode(currentNode.GetComponent<INode>()));
                 //현재 노드의 Flow outPort 찾기
                 currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
                 Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);
@@ -73,7 +87,7 @@ public class NodeManager : MonoBehaviour
 
             }
 
-            Debug.Log("Compile Complete");
+            Debug.Log("Run Complete");
         }
         catch (NullReferenceException e)
         {
@@ -84,21 +98,21 @@ public class NodeManager : MonoBehaviour
 
 
 
-    public void ExecuteNodes()
-    {
-        StartCoroutine(ExcuteNode());
-    }
+    // public void ExecuteNodes()
+    // {
+    //     StartCoroutine(ExcuteNode());
+    // }
 
 
-    IEnumerator ExcuteNode()
+    IEnumerator ExcuteNode(INode currentNode)
     {
-        while(nodesToExecute.Count != 0)
-        {
-            //큐에서 노드 꺼내기
-            INode currentNode = nodesToExecute.Dequeue();
-            Debug.Log(currentNode);
-            yield return StartCoroutine(currentNode.Execute());
-        }
-        yield return null;
+        // while (nodesToExecute.Count != 0)
+        // {
+        //     //큐에서 노드 꺼내기
+        //     INode currentNode = nodesToExecute.Dequeue();
+        //     Debug.Log(currentNode);
+        yield return StartCoroutine(currentNode.Execute());
+        // // }
+        // yield return null;
     }
 }

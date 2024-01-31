@@ -69,11 +69,11 @@ public class NodeData : MonoBehaviour
             {
                 // Debug.Log("errorFlag 변경");
                 errorFlag = value;
-                if (outPort.isConnected)
-                {
-                    outPort.SendData();
-                    // Debug.Log("outPort가 inPort로 데이터 전달");
-                }
+                // if (outPort.isConnected)
+                // {
+                //     outPort.SendData();
+                //     // Debug.Log("outPort가 inPort로 데이터 전달");
+                // }
 
             }
         }

@@ -110,7 +110,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     connectedPort = result.gameObject;
                     ConnectPort();
                     isConnected = true;
-                    SendData();
+                    // SendData();
+                    connectedPort.GetComponent<DataInPort>().IsConnected = true;
+
                 }
             }
         }
@@ -160,7 +162,6 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     public void SendData()
     {
         connectedPort.GetComponent<DataInPort>().IsError = parentNode.ErrorFlag;
-
         if (!parentNode.ErrorFlag)
         {
             //정상적일 때
@@ -183,7 +184,11 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 // connectedPort.GetComponent<DataInPort>().IsConnected = true;
             }
         }
-        connectedPort.GetComponent<DataInPort>().IsConnected = true;
+        else
+        {
+            Debug.Log("현재 노드에 error가 있습니다.  :  " + parentNode.ErrorFlag.ToString());
+        }
+        // connectedPort.GetComponent<DataInPort>().IsConnected = true;
 
     }
 
