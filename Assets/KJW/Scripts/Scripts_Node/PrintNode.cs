@@ -135,9 +135,8 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
-
-    IEnumerator INode.ProcessData()
+    public IEnumerator ProcessData()
     {
-        throw new System.NotImplementedException();
+        yield return null;
     }
 }
