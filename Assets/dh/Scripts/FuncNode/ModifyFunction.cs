@@ -63,7 +63,7 @@ public class ModifyFunction : MonoBehaviour
             Canvas removeFuncCanvas = FunctionManager.Instance.functionCanvas[funcListDropDown.value];
             FunctionManager.Instance.functionCanvas.RemoveAt(funcListDropDown.value);
             Debug.Log(removeFuncCanvas.name.ToString() + " 함수가 삭제되었습니다.");
-            DestroyImmediate(removeFuncCanvas.gameObject);
+            Destroy(removeFuncCanvas.gameObject);
             modifyCanvas.gameObject.SetActive(false);
         }
 

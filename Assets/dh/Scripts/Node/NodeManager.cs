@@ -18,6 +18,7 @@ public class NodeManager : MonoBehaviour
     private Coroutine excuteCoroutine;
 
 
+    //compile Error 상태
     private bool compileError;
 
 
@@ -45,6 +46,9 @@ public class NodeManager : MonoBehaviour
 
     }
 
+
+
+    public bool deleteMode = false;
     private void Awake()
     {
         compileError = false;

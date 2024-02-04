@@ -61,6 +61,10 @@ public class NodeData : MonoBehaviour
 
     private void Start()
     {
+        if (this.GetComponent<RectTransform>() == null)
+        {
+            return;
+        }
         outPort = transform.Find("outPort").GetComponent<DataOutPort>();
         errorFlag = true;
 
