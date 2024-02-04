@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class DropDown : MonoBehaviour
 {
-    private void OnEnable() {
+    private void OnEnable()
+    {
         this.GetComponent<TMP_Dropdown>().value = -1;
     }
 }

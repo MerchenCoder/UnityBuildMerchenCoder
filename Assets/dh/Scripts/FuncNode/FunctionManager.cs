@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FunctionManager : MonoBehaviour
 {
+    //----싱글톤 생성----// (씬 넘어갈때 destory할 예정)
+    public static FunctionManager Instance { get; private set; }
+
     //외부에서는 type에 접근해서 읽고 쓸 수 있음
     private int type = 0; //초기화 0(아무것도 아닌 타입)
     //type을 바꾸면 haspara... 등 설정 자동으로 변경
@@ -97,7 +101,50 @@ public class FunctionManager : MonoBehaviour
     public GameObject canvasFuncMakePrefab;
     public Transform spawnPoint;
 
+
+
+
+    //현재 scene에서 만든 총 함수 개수 관리 (Modify function을 위함)
+    public int totalFunction = 0;
+    //함수 만들때 생성되는 canvas를 동적 배열에 저장
+    public List<Canvas> functionCanvas = new List<Canvas>();
+
+
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    //-----씬이 언로드될 때 싱글톤 파괴-----//
+    private void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log("FucntionManager 싱글톤 객체 파괴");
+        Destroy(gameObject);
+    }
+
+    //-------------------------------//
+
     void Start()
     {
 
@@ -116,7 +163,6 @@ public class FunctionManager : MonoBehaviour
 
     public void CreateFunctionMakeCanvas()
     {
-        Debug.Log("generate function make panel 호출");
         //캔버스 프리팹 생성
         GameObject canvasPrefabInstance = Instantiate(canvasFuncMakePrefab);
 
@@ -141,12 +187,16 @@ public class FunctionManager : MonoBehaviour
             Debug.LogError("프리팹에 Canvas 컴포넌트가 없습니다.");
         }
 
+
+        //캔버스 인스턴스 이름 지정하기 : 함수이름+_canvas
         canvasPrefabInstance.name = funcName + "_canvas";
 
-
+        //스폰 포지션 설정
         canvasPrefabInstance.transform.position = spawnPoint.position;
+        //캔버스 활성화
         canvasPrefabInstance.gameObject.SetActive(true);
 
+        //반환 노드, 매개변수 노드 인스턴스를 생성할 버튼 설정해주기
         GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
         GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
         //반환 노드 버튼 만들기
@@ -185,6 +235,13 @@ public class FunctionManager : MonoBehaviour
         {
             paraBtn.SetActive(false);
         }
+
+
+
+        //함수 개수 업데이트, 캔버스 리스트 업데이트
+        totalFunction++;
+        functionCanvas.Add(canvasPrefabInstance.GetComponent<Canvas>());
+
     }
 }
 

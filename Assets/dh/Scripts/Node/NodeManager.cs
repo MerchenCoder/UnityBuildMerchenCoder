@@ -8,7 +8,6 @@ public class NodeManager : MonoBehaviour
     //--싱글톤 생성--//
     public static NodeManager Instance { get; private set; }
     //실행할 INode 인스턴스들을 저장할 큐를 생성
-    // private Queue<INode> nodesToExecute = new Queue<INode>();
 
     //변수 선언
     private GameObject startNode;
