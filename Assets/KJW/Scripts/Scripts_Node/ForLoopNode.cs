@@ -110,4 +110,9 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
             yield return null;
         }
     }
+
+    IEnumerator INode.ProcessData()
+    {
+        throw new NotImplementedException();
+    }
 }

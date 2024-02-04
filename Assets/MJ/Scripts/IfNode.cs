@@ -80,4 +80,10 @@ public class IfNode : MonoBehaviour, IFollowFlow, INode
     {
         throw new NotImplementedException();
     }
+
+
+    IEnumerator INode.ProcessData()
+    {
+        throw new NotImplementedException();
+    }
 }

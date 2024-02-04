@@ -17,6 +17,11 @@ public class StartNode : MonoBehaviour, IFollowFlow, INode
         yield return null;
     }
 
+    IEnumerator INode.ProcessData()
+    {
+        throw new System.NotImplementedException();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

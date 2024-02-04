@@ -113,5 +113,10 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
             yield return null;
         }
     }
+
+    IEnumerator INode.ProcessData()
+    {
+        throw new NotImplementedException();
+    }
 }
 
