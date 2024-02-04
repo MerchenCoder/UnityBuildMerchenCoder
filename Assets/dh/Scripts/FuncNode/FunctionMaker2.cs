@@ -27,6 +27,8 @@ public class FunctionMaker2 : MonoBehaviour
 
     bool allFieldsHasValue;
 
+    bool funNameCheck;
+
 
     private void OnEnable()
     {
@@ -62,6 +64,10 @@ public class FunctionMaker2 : MonoBehaviour
         }
 
         funName = funNameRow.transform.GetChild(1).GetComponent<TMP_InputField>();
+
+        funName.transform.GetChild(1).gameObject.SetActive(false);
+        funName.onValueChanged.AddListener(checkFunName);
+
     }
 
     private void Update()
@@ -71,16 +77,16 @@ public class FunctionMaker2 : MonoBehaviour
         switch (functionManager.Type)
         {
             case 1:
-                allFieldsHasValue = FunNameCheckFields();
+                allFieldsHasValue = FunNameCheckFields() && funNameCheck;
                 break;
             case 2:
-                allFieldsHasValue = FunNameCheckFields() && ReturnCheckFields();
+                allFieldsHasValue = FunNameCheckFields() && ReturnCheckFields() && funNameCheck;
                 break;
             case 3:
-                allFieldsHasValue = FunNameCheckFields() && ParaCheckFields();
+                allFieldsHasValue = FunNameCheckFields() && ParaCheckFields() && funNameCheck;
                 break;
             case 4:
-                allFieldsHasValue = FunNameCheckFields() && ParaCheckFields() && ReturnCheckFields();
+                allFieldsHasValue = FunNameCheckFields() && ParaCheckFields() && ReturnCheckFields() && funNameCheck;
                 break;
             default:
                 Debug.Log("allFieldHasValue 체크 오류");
@@ -177,5 +183,22 @@ public class FunctionMaker2 : MonoBehaviour
 
 
         allFieldsHasValue = false;
+    }
+
+
+    private void checkFunName(string inputText)
+    {
+        foreach (Canvas function in FunctionManager.Instance.functionCanvas)
+        {
+            if (function.name.Split("_")[0].ToString() == inputText)
+            {
+                funName.transform.GetChild(1).gameObject.SetActive(true);
+                funNameCheck = false;
+                return;
+
+            }
+            funName.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        funNameCheck = true;
     }
 }
