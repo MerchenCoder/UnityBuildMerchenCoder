@@ -38,43 +38,67 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
     void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
     {
-        if (e.IsConnected)
-        {
-            if (inPort.CompareTag("data_int"))
-            {
-                stringData = dataInPort.InputValueInt.ToString();
-                // dataUIText.text = stringData;
-                // chatText.text = stringData;
-            }
-            if (inPort.CompareTag("data_bool"))
-            {
-                if (dataInPort.InputValueBool)
-                {
-                    stringData = "참";
-                }
-                else
-                {
-                    stringData = "거짓";
-                }
-                // chatText.text = stringData;
-            }
-            if (inPort.CompareTag("data_string"))
-            {
-                stringData = dataInPort.InputValueStr;
-                // chatText.text = stringData;
-            }
-        }
-        else
-        {
-            // Debug.Log(e.IsConnected);
-            // dataUIText.text = "데이터";
-        }
+        // if (e.IsConnected)
+        // {
+        //     if (inPort.CompareTag("data_int"))
+        //     {
+        //         stringData = dataInPort.InputValueInt.ToString();
+        //         // dataUIText.text = stringData;
+        //         // chatText.text = stringData;
+        //     }
+        //     if (inPort.CompareTag("data_bool"))
+        //     {
+        //         if (dataInPort.InputValueBool)
+        //         {
+        //             stringData = "참";
+        //         }
+        //         else
+        //         {
+        //             stringData = "거짓";
+        //         }
+        //         // chatText.text = stringData;
+        //     }
+        //     if (inPort.CompareTag("data_string"))
+        //     {
+        //         stringData = dataInPort.InputValueStr;
+        //         // chatText.text = stringData;
+        //     }
+        // }
+        // else
+        // {
+        //     // Debug.Log(e.IsConnected);
+        //     // dataUIText.text = "데이터";
+        // }
     }
 
 
     IEnumerator INode.Execute()
     {
         dataInPort.connectedPort.SendData();
+        if (inPort.CompareTag("data_int"))
+        {
+            stringData = dataInPort.InputValueInt.ToString();
+            // dataUIText.text = stringData;
+            // chatText.text = stringData;
+        }
+        if (inPort.CompareTag("data_bool"))
+        {
+            if (dataInPort.InputValueBool)
+            {
+                stringData = "참";
+            }
+            else
+            {
+                stringData = "거짓";
+            }
+            // chatText.text = stringData;
+        }
+        if (inPort.CompareTag("data_string"))
+        {
+            stringData = dataInPort.InputValueStr;
+            // chatText.text = stringData;
+        }
+
         //Canvas_Result가 Acitve 된 후에 할당해야 함.
         //result panel의 player는 항상 첫번째 자식이어야 함!!
         player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;

@@ -34,16 +34,16 @@ public class runNode : MonoBehaviour
     {
         resultCanvas.SetActive(true);
 
-        NodeManager.Instance.Compile();
+        NodeManager.Instance.Run();
 
-        if (NodeManager.Instance != null)
-        {
-            NodeManager.Instance.ExecuteNodes();
-        }
-        else
-        {
-            Debug.Log("NodeManager.Instance == null");
-        }
+        // if (NodeManager.Instance != null)
+        // {
+        //     NodeManager.Instance.ExecuteNodes();
+        // }
+        // else
+        // {
+        //     Debug.Log("NodeManager.Instance == null");
+        // }
     }
 
 

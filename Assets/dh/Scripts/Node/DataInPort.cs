@@ -117,57 +117,57 @@ public class DataInPort : MonoBehaviour
     // 이벤트 핸들러 메서드를 호출하는 보호된 가상 메서드
     protected virtual void OnStateChanged(InputPortStateChangedEventArgs e)
     {
-        // 이벤트가 null이 아닌 경우에만 호출
+        // // 이벤트가 null이 아닌 경우에만 호출
         StateChanged?.Invoke(this, e);
-        if (e.IsConnected)
-        {
-            if (e.IsError)
-            {
-                inPortText.text = "오류";
-                inPortText.color = Color.red;
-            }
-            else
-            {
-                inPortText.color = Color.black;
-                if (this.CompareTag("data_int"))
-                {
-                    UpdatePortData(0);
-                    if (transform.parent.GetComponent<NodeNameManager>().NodeName == "CalcNode")
-                    {
-                        Debug.Log("메시지 보내기");
+        // if (e.IsConnected)
+        // {
+        //     if (e.IsError)
+        //     {
+        //         inPortText.text = "오류";
+        //         inPortText.color = Color.red;
+        //     }
+        //     else
+        //     {
+        //         inPortText.color = Color.black;
+        //         if (this.CompareTag("data_int"))
+        //         {
+        //             UpdatePortData(0);
+        //             if (transform.parent.GetComponent<NodeNameManager>().NodeName == "CalcNode")
+        //             {
+        //                 Debug.Log("메시지 보내기");
 
-                        transform.parent.SendMessage("HandleOperandColorDivisionByZero", e);
-                    }
-                }
-                else if (this.CompareTag("data_bool"))
-                {
-                    UpdatePortData(1);
-                }
-                else if (this.CompareTag("data_string"))
-                {
-                    UpdatePortData(2);
-                }
-                else
-                {
-                    //data_all
-                    UpdatePortData(3);
-                }
+        //                 transform.parent.SendMessage("HandleOperandColorDivisionByZero", e);
+        //             }
+        //         }
+        //         else if (this.CompareTag("data_bool"))
+        //         {
+        //             UpdatePortData(1);
+        //         }
+        //         else if (this.CompareTag("data_string"))
+        //         {
+        //             UpdatePortData(2);
+        //         }
+        //         else
+        //         {
+        //             //data_all
+        //             UpdatePortData(3);
+        //         }
 
-            }
-        }
-        else
-        {
-            inPortText.color = Color.black;
-            UpdatePortData(-1);
-        }
+        //     }
+        // }
+        // else
+        // {
+        //     inPortText.color = Color.black;
+        //     UpdatePortData(-1);
+        // }
 
     }
 
 
     private void Start()
     {
-        inPortText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        originTextData = inPortText.text;
+        // inPortText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        // originTextData = inPortText.text;
     }
 
 
