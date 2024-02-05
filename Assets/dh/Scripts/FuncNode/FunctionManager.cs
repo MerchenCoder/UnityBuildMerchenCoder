@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
+using TMPro;
 public class FunctionManager : MonoBehaviour
 {
     //----싱글톤 생성----// (씬 넘어갈때 destory할 예정)
     public static FunctionManager Instance { get; private set; }
     public GameObject[] functionPrefabs = new GameObject[6];
-    public GameObject funcBtn;
+    public GameObject funcBtnPrefab;
     public Sprite[] funcBtnImgs;
+
+    public Transform funcBtnSpawnPoint;
 
 
 
@@ -165,6 +168,7 @@ public class FunctionManager : MonoBehaviour
 
     public void CreateFunctionNode()
     {
+        GameObject functionInstance = null;
         //인스턴스 설정
         int funcInsType = 0;
         if (type != 0)
@@ -183,20 +187,122 @@ public class FunctionManager : MonoBehaviour
             {
                 funcInsType = type - 1;
             }
-            GameObject functionInstance = Instantiate(functionPrefabs[funcInsType]);
-            // funcBtn.GetComponent
+            functionInstance = Instantiate(functionPrefabs[funcInsType]);
+            int[] paraTypes = new int[] { para1Type, para2Type };
+            string[] paraNames = new string[] { para1Name, para2Name };
+            //functionInstance port type & function name 설정
+            functionInstance = SetFuncNode(functionInstance, type, funcName, paraTypes, paraNames, returnType);
+
+
+            FuncNode funcNode = functionInstance.GetComponent<FuncNode>();
+            //FuncNode의 funIndex 설정
+            funcNode.funIndex = myfuncNodes.Count;
+            //FuncNode의 type 설정
+            funcNode.type = type;
+            funcNode.funName = funcName;
+
+            myfuncNodes.Add(funcNode);
+
         }
         else
         {
             Debug.Log("type 오류 " + type.ToString());
+
         }
 
 
-        //funcBtn 설정
+        //funcBtn prefab으로 인스턴스 생성 후 기타 설정
+        GameObject funcBtn = Instantiate(funcBtnPrefab) as GameObject;
+        //1. 버튼 sprite 교체
+        funcBtn.GetComponent<Button>().image.sprite = funcBtnImgs[type - 1];
+        //2. 버튼 text rycp
+        funcBtn.GetComponentInChildren<TextMeshProUGUI>().text = funcName != null ? funcName : "이름 오류";
+        //3. funBtn 버튼의 prefab gameobject 설정하기
+        funcBtn.GetComponent<FuncNodeBtn>().funcNode = functionInstance;
 
-        //FuncNode의 funIndex 설정
-        //public int type 설정
-        //function 이름
+        //funBtn 배치하기
+        funcBtn.transform.SetParent(funcBtnSpawnPoint, false);
+
+    }
+
+
+    public GameObject SetFuncNode(GameObject funcNode, int type, string funcName, int[] paraTypes, string[] paraNames, int rtType)
+    {
+        funcNode.GetComponent<NodeNameManager>().NodeName = "FuncNode";
+        funcNode.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = funcName;
+
+
+        //outport 색상, 태그 설정
+        if (type == 2 || type == 4)
+        {
+            GameObject outPort = funcNode.transform.GetChild(0).gameObject;
+            switch (rtType)
+            {
+                //0:int, 1:bool, 2=string
+                case 0:
+                    //태그 설정
+                    outPort.tag = "data_int";
+                    //color 설정
+                    outPort.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f);
+                    break;
+                case 1:
+                    //태그 설정
+                    outPort.tag = "data_bool";
+                    //color 설정
+                    outPort.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f);
+                    break;
+                case 2:
+                    //태그 설정
+                    outPort.tag = "data_string";
+                    //color 설정
+                    outPort.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f);
+                    break;
+            }
+        }
+
+        //inport 색상, 태그 설정
+        if (type == 3 || type == 4)
+        {
+            DataInPort[] dataInPorts = funcNode.GetComponentsInChildren<DataInPort>();
+
+            for (int i = 0; i < dataInPorts.Length; i++)
+            {
+                if (paraTypes[i] == -1)
+                {
+                    Debug.Log("파라미터 2개 아님. 파라미터 없음");
+                    continue;
+                }
+                switch (paraTypes[i])
+                {
+                    //0:int, 1:bool, 2=string
+                    case 0:
+                        //태그 설정
+                        dataInPorts[i].gameObject.tag = "data_int";
+                        //color 설정
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f);
+
+                        break;
+                    case 1:
+                        //태그 설정
+                        dataInPorts[i].gameObject.tag = "data_bool";
+                        //color 설정
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f);
+                        break;
+                    case 2:
+                        //태그 설정
+                        dataInPorts[i].gameObject.tag = "data_string";
+                        //color 설정
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f);
+                        break;
+                }
+                dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
+
+            }
+        }
+
+        return funcNode;
+
+
     }
 
 

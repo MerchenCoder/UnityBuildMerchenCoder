@@ -27,14 +27,14 @@ RectTransform:
   m_GameObject: {fileID: 1099755935000077505}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99964267, y: 0.99964267, z: 0.99964267}
+  m_LocalScale: {x: 0.9996426, y: 0.9996426, z: 0.9996426}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3006832624821102043}
+  m_Father: {fileID: 5174473970656649072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -124, y: -78.89871}
+  m_AnchoredPosition: {x: 134.50568, y: 0.101486206}
   m_SizeDelta: {x: 127.29, y: 42.77}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &114047259158378815
@@ -236,7 +236,6 @@ GameObject:
   - component: {fileID: 7809480604148093905}
   - component: {fileID: 6336495158822388394}
   - component: {fileID: 4383374913290550866}
-  - component: {fileID: 6470170068975366884}
   m_Layer: 5
   m_Name: Node_Func_3_p1
   m_TagString: Node_Print
@@ -260,7 +259,6 @@ RectTransform:
   - {fileID: 41493704948824322}
   - {fileID: 4873262079616743154}
   - {fileID: 3901859563152500202}
-  - {fileID: 2457626887546999562}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -328,18 +326,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d4df0ae3ba9c480f9a1a09d2ddab669, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6470170068975366884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5760841367783855225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e952ee1244fde3a49b3d665498cb54e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7277375189496132919
@@ -476,7 +462,7 @@ GameObject:
   - component: {fileID: 338471547954880093}
   m_Layer: 5
   m_Name: Name
-  m_TagString: Untagged
+  m_TagString: funcName
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -691,7 +677,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4832336005495550337, guid: d786a313a5d0149a9ac71d03b24f4e12, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2457626887546999562}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d786a313a5d0149a9ac71d03b24f4e12, type: 3}
 --- !u!224 &5174473970656649072 stripped

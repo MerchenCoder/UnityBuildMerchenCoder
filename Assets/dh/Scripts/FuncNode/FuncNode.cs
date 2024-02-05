@@ -13,6 +13,7 @@ public class FuncNode : MonoBehaviour, INode
     [NonSerialized]
     public int type;
 
+
     private DataInPort dataInPort1;
     private DataInPort dataInPort2;
 
