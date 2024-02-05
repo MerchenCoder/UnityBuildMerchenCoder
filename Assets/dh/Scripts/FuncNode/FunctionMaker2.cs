@@ -188,7 +188,7 @@ public class FunctionMaker2 : MonoBehaviour
 
     private void checkFunName(string inputText)
     {
-        foreach (Canvas function in FunctionManager.Instance.functionCanvas)
+        foreach (GameObject function in FunctionManager.Instance.myfuncCanvas)
         {
             if (function.name.Split("_")[0].ToString() == inputText)
             {

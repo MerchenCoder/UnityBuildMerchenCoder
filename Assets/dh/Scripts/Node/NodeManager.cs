@@ -15,7 +15,7 @@ public class NodeManager : MonoBehaviour
     private FlowoutPort currentFlowoutPort;
 
 
-    private Coroutine excuteCoroutine;
+    private Coroutine executeCoroutine;
 
 
     //compile Error 상태
@@ -38,7 +38,7 @@ public class NodeManager : MonoBehaviour
     protected virtual void OnCompileErrorChanged(bool compileError)
     {
         CompileErrorChanged?.Invoke(compileError);
-        if (excuteCoroutine != null)
+        if (executeCoroutine != null)
         {
             Debug.Log("모든 코루틴 중단");
             StopAllCoroutines();
@@ -84,7 +84,7 @@ public class NodeManager : MonoBehaviour
 
 
 
-            excuteCoroutine = StartCoroutine(ExcuteNode());
+            executeCoroutine = StartCoroutine(ExcuteNode());
 
         }
         catch (NullReferenceException e)
@@ -103,12 +103,12 @@ public class NodeManager : MonoBehaviour
             Debug.Log("실행 시작");
             //현재 노드 실행 후 끝날 때까지 기다리기
             yield return currentNode.GetComponent<INode>().Execute();
-            if (compileError)
-            {
-                //오류 메시지 UI 필요
-                Debug.Log("컴파일 오류가 있어서 실행 중단");
-                break;
-            }
+            // if (compileError)
+            // {
+            //     //오류 메시지 UI 필요
+            //     Debug.Log("컴파일 오류가 있어서 실행 중단");
+            //     break;
+            // }
             //현재 노드의 Flow outPort 찾기
             currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
             Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);

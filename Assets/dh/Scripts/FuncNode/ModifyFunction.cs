@@ -37,7 +37,7 @@ public class ModifyFunction : MonoBehaviour
     void SetDropdownOpts()
     {
         funcListDropDown.options.Clear();
-        foreach (Canvas functionCanvas in FunctionManager.Instance.functionCanvas)
+        foreach (GameObject functionCanvas in FunctionManager.Instance.myfuncCanvas)
         {
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
             option.text = functionCanvas.name.Split("_")[0].ToString();
@@ -50,7 +50,7 @@ public class ModifyFunction : MonoBehaviour
 
     public void FuncCanvasActive()
     {
-        FunctionManager.Instance.functionCanvas[funcListDropDown.value].gameObject.SetActive(true);
+        FunctionManager.Instance.myfuncCanvas[funcListDropDown.value].gameObject.SetActive(true);
         modifyCanvas.gameObject.SetActive(false);
     }
 
@@ -58,10 +58,11 @@ public class ModifyFunction : MonoBehaviour
     {
         int selectedIndex = funcListDropDown.value;
 
-        if (selectedIndex >= 0 && selectedIndex < FunctionManager.Instance.functionCanvas.Count)
+        if (selectedIndex >= 0 && selectedIndex < FunctionManager.Instance.myfuncCanvas.Count)
         {
-            Canvas removeFuncCanvas = FunctionManager.Instance.functionCanvas[funcListDropDown.value];
-            FunctionManager.Instance.functionCanvas.RemoveAt(funcListDropDown.value);
+            GameObject removeFuncCanvas = FunctionManager.Instance.myfuncCanvas[funcListDropDown.value];
+            FunctionManager.Instance.myfuncCanvas.RemoveAt(funcListDropDown.value);
+            FunctionManager.Instance.myfuncNodes.RemoveAt(funcListDropDown.value);
             Debug.Log(removeFuncCanvas.name.ToString() + " 함수가 삭제되었습니다.");
             Destroy(removeFuncCanvas.gameObject);
             modifyCanvas.gameObject.SetActive(false);

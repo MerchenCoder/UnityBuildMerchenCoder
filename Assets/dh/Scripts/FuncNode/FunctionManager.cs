@@ -7,6 +7,11 @@ public class FunctionManager : MonoBehaviour
 {
     //----싱글톤 생성----// (씬 넘어갈때 destory할 예정)
     public static FunctionManager Instance { get; private set; }
+    public GameObject[] functionPrefabs = new GameObject[6];
+    public GameObject funcBtn;
+    public Sprite[] funcBtnImgs;
+
+
 
     //외부에서는 type에 접근해서 읽고 쓸 수 있음
     private int type = 0; //초기화 0(아무것도 아닌 타입)
@@ -96,7 +101,6 @@ public class FunctionManager : MonoBehaviour
 
     }
 
-
     //for create canvas instance
     public GameObject canvasFuncMakePrefab;
     public Transform spawnPoint;
@@ -107,7 +111,10 @@ public class FunctionManager : MonoBehaviour
     //현재 scene에서 만든 총 함수 개수 관리 (Modify function을 위함)
     public int totalFunction = 0;
     //함수 만들때 생성되는 canvas를 동적 배열에 저장
-    public List<Canvas> functionCanvas = new List<Canvas>();
+    public List<GameObject> myfuncCanvas = new List<GameObject>();
+
+    //함수 노드 prefab의 핵심 컴포넌트
+    public List<FuncNode> myfuncNodes = new List<FuncNode>();
 
 
     // Start is called before the first frame update
@@ -145,10 +152,6 @@ public class FunctionManager : MonoBehaviour
 
     //-------------------------------//
 
-    void Start()
-    {
-
-    }
     public void ResetFuncSetting()
     {
         Type = 0;
@@ -159,6 +162,42 @@ public class FunctionManager : MonoBehaviour
     }
 
 
+
+    public void CreateFunctionNode()
+    {
+        //인스턴스 설정
+        int funcInsType = 0;
+        if (type != 0)
+        {
+            //0 - 1번
+            //1 - 2번
+            //2 - 3번에 파라미터 1개 
+            //3 - 4번에 파라미터 1개 
+            //4 - 3번에 파라미터 2개 
+            //5 - 4번에 파라미터 2개
+            if (hasPara1 && hasPara2)
+            {
+                funcInsType = type + 2 - 1;
+            }
+            else
+            {
+                funcInsType = type - 1;
+            }
+            GameObject functionInstance = Instantiate(functionPrefabs[funcInsType]);
+            // funcBtn.GetComponent
+        }
+        else
+        {
+            Debug.Log("type 오류 " + type.ToString());
+        }
+
+
+        //funcBtn 설정
+
+        //FuncNode의 funIndex 설정
+        //public int type 설정
+        //function 이름
+    }
 
 
     public void CreateFunctionMakeCanvas()
@@ -199,6 +238,7 @@ public class FunctionManager : MonoBehaviour
         //반환 노드, 매개변수 노드 인스턴스를 생성할 버튼 설정해주기
         GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
         GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
+
         //반환 노드 버튼 만들기
         if (hasReturn)
         {
@@ -240,7 +280,7 @@ public class FunctionManager : MonoBehaviour
 
         //함수 개수 업데이트, 캔버스 리스트 업데이트
         totalFunction++;
-        functionCanvas.Add(canvasPrefabInstance.GetComponent<Canvas>());
+        myfuncCanvas.Add(canvasPrefabInstance);
 
     }
 }
