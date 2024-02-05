@@ -203,6 +203,9 @@ public class FunctionManager : MonoBehaviour
 
             myfuncNodes.Add(funcNode);
 
+            functionInstance.transform.SetParent(this.transform, false);
+
+
         }
         else
         {
@@ -279,20 +282,20 @@ public class FunctionManager : MonoBehaviour
                         //태그 설정
                         dataInPorts[i].gameObject.tag = "data_int";
                         //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f);
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
 
                         break;
                     case 1:
                         //태그 설정
                         dataInPorts[i].gameObject.tag = "data_bool";
                         //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f);
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
                         break;
                     case 2:
                         //태그 설정
                         dataInPorts[i].gameObject.tag = "data_string";
                         //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f);
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
                         break;
                 }
                 dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
