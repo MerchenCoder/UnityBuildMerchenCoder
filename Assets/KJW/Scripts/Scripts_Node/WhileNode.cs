@@ -124,5 +124,9 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
         }
     }
 
+    public IEnumerator ProcessData()
+    {
+        throw new NotImplementedException();
+    }
 }
 

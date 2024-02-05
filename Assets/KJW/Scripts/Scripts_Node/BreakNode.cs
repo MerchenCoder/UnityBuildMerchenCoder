@@ -27,12 +27,17 @@ public class BreakNode : MonoBehaviour, INode, IFollowFlow
         {
 
         }
-        
+
         yield return true;
     }
 
     public FlowoutPort NextFlow()
     {
         return null;
+    }
+
+    public IEnumerator ProcessData()
+    {
+        throw new NotImplementedException();
     }
 }

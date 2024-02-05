@@ -67,6 +67,7 @@ public class NodeManager : MonoBehaviour
     //다음 노드 반환하는 메소드
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
+
         return flowoutPort.ConnectedPort.transform.parent.gameObject;
     }
 

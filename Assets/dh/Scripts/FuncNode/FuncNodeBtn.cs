@@ -12,7 +12,7 @@ public class FuncNodeBtn : MonoBehaviour
 
     private Transform spawnPoint;
 
-    private void Start()
+    private void OnEnable()
     {
         // spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).transform;
 
@@ -31,6 +31,10 @@ public class FuncNodeBtn : MonoBehaviour
             GameObject funcNodeInstance = Instantiate(funcNode);
             funcNodeInstance.transform.SetParent(spawnPoint, false);
             funcNodeInstance.transform.localPosition = Vector3.zero;
+            funcNodeInstance.GetComponent<FuncNode>().Type = funcNode.GetComponent<FuncNode>().Type;
+            Debug.Log(funcNodeInstance.GetComponent<FuncNode>().Type);
+            Debug.Log(funcNode.GetComponent<FuncNode>().Type);
+
         }
 
     }

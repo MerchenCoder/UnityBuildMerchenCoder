@@ -168,51 +168,46 @@ public class FunctionManager : MonoBehaviour
 
     public void CreateFunctionNode()
     {
-        GameObject functionInstance = null;
+        GameObject functionInstance;
         //인스턴스 설정
         int funcInsType = 0;
-        if (type != 0)
+        if (type == 0)
         {
-            //0 - 1번
-            //1 - 2번
-            //2 - 3번에 파라미터 1개 
-            //3 - 4번에 파라미터 1개 
-            //4 - 3번에 파라미터 2개 
-            //5 - 4번에 파라미터 2개
-            if (hasPara1 && hasPara2)
-            {
-                funcInsType = type + 2 - 1;
-            }
-            else
-            {
-                funcInsType = type - 1;
-            }
-            functionInstance = Instantiate(functionPrefabs[funcInsType]);
-            int[] paraTypes = new int[] { para1Type, para2Type };
-            string[] paraNames = new string[] { para1Name, para2Name };
-            //functionInstance port type & function name 설정
-            functionInstance = SetFuncNode(functionInstance, type, funcName, paraTypes, paraNames, returnType);
 
+            Debug.Log("type오류");
+        }
 
-            FuncNode funcNode = functionInstance.GetComponent<FuncNode>();
-            //FuncNode의 funIndex 설정
-            funcNode.funIndex = myfuncNodes.Count;
-            //FuncNode의 type 설정
-            funcNode.type = type;
-            funcNode.funName = funcName;
-
-            myfuncNodes.Add(funcNode);
-
-            functionInstance.transform.SetParent(this.transform, false);
-
-
+        //0 - 1번
+        //1 - 2번
+        //2 - 3번에 파라미터 1개 
+        //3 - 4번에 파라미터 1개 
+        //4 - 3번에 파라미터 2개 
+        //5 - 4번에 파라미터 2개
+        if (hasPara1 && hasPara2)
+        {
+            funcInsType = type + 2 - 1;
         }
         else
         {
-            Debug.Log("type 오류 " + type.ToString());
-
+            funcInsType = type - 1;
         }
+        functionInstance = Instantiate(functionPrefabs[funcInsType]);
+        int[] paraTypes = new int[] { para1Type, para2Type };
+        string[] paraNames = new string[] { para1Name, para2Name };
+        //functionInstance port type & function name 설정
+        functionInstance = SetFuncNode(functionInstance, type, funcName, paraTypes, paraNames, returnType);
 
+
+        FuncNode funcNode = functionInstance.GetComponent<FuncNode>();
+        //FuncNode의 funIndex 설정
+        funcNode.funIndex = myfuncNodes.Count;
+        //FuncNode의 type 설정
+        funcNode.Type = type;
+        funcNode.funName = funcName;
+
+        myfuncNodes.Add(funcNode);
+
+        functionInstance.transform.SetParent(this.transform, false);
 
         //funcBtn prefab으로 인스턴스 생성 후 기타 설정
         GameObject funcBtn = Instantiate(funcBtnPrefab) as GameObject;
@@ -222,6 +217,7 @@ public class FunctionManager : MonoBehaviour
         funcBtn.GetComponentInChildren<TextMeshProUGUI>().text = funcName != null ? funcName : "이름 오류";
         //3. funBtn 버튼의 prefab gameobject 설정하기
         funcBtn.GetComponent<FuncNodeBtn>().funcNode = functionInstance;
+        Debug.Log(funcBtn.GetComponent<FuncNodeBtn>().funcNode.GetComponent<FuncNode>().Type);
 
         //funBtn 배치하기
         funcBtn.transform.SetParent(funcBtnSpawnPoint, false);
