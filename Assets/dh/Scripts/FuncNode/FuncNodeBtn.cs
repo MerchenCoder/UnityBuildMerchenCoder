@@ -32,8 +32,6 @@ public class FuncNodeBtn : MonoBehaviour
             funcNodeInstance.transform.SetParent(spawnPoint, false);
             funcNodeInstance.transform.localPosition = Vector3.zero;
             funcNodeInstance.GetComponent<FuncNode>().Type = funcNode.GetComponent<FuncNode>().Type;
-            Debug.Log(funcNodeInstance.GetComponent<FuncNode>().Type);
-            Debug.Log(funcNode.GetComponent<FuncNode>().Type);
 
         }
 

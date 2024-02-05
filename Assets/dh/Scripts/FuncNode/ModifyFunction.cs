@@ -65,8 +65,13 @@ public class ModifyFunction : MonoBehaviour
             FunctionManager.Instance.myfuncNodes.RemoveAt(funcListDropDown.value);
             Debug.Log(removeFuncCanvas.name.ToString() + " 함수가 삭제되었습니다.");
             Destroy(removeFuncCanvas.gameObject);
+
+
             GameObject functionManager = GameObject.Find("FunctionManager").gameObject;
-            Destroy(functionManager.transform.GetChild(funcListDropDown.value));
+            Destroy(functionManager.transform.GetChild(funcListDropDown.value).gameObject);
+
+            //더 좋은 방법이 없을까?
+            Destroy(GameObject.Find("temp menu").transform.GetChild(2).GetChild(funcListDropDown.value).gameObject);
             modifyCanvas.gameObject.SetActive(false);
         }
 

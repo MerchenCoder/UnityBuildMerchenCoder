@@ -217,8 +217,6 @@ public class FunctionManager : MonoBehaviour
         funcBtn.GetComponentInChildren<TextMeshProUGUI>().text = funcName != null ? funcName : "이름 오류";
         //3. funBtn 버튼의 prefab gameobject 설정하기
         funcBtn.GetComponent<FuncNodeBtn>().funcNode = functionInstance;
-        Debug.Log(funcBtn.GetComponent<FuncNodeBtn>().funcNode.GetComponent<FuncNode>().Type);
-
         //funBtn 배치하기
         funcBtn.transform.SetParent(funcBtnSpawnPoint, false);
 
