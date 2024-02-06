@@ -96,15 +96,6 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
                 flowinPort.connectedPort.ConnectPort();
             }
-            public void OnDrag(PointerEventData eventData)
-            {
-
-            }
-
-            public void OnEndDrag(PointerEventData eventData)
-            {
-
-            }
 
 
         }
