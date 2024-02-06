@@ -30,6 +30,7 @@ public class ReturnNodeBtn : MonoBehaviour
     public void MakeInstance()
     {
         GameObject returnNodeInstance = Instantiate(returnNodePrefab);
+        returnNodeInstance.GetComponent<NodeNameManager>().NodeName = "ReturnNode";
         returnNodeInstance.GetComponent<ReturnNode>().SetReturnNode(returnType);
         returnNodeInstance.transform.SetParent(spawnPoint, false); // 부모를 spawnPoint로 설정하고, worldPositionStays를 false로 설정하여 로컬 좌표로 배치
         returnNodeInstance.transform.localPosition = Vector3.zero; // 로컬 좌표의 원점에 배치

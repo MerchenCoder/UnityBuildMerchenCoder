@@ -4,29 +4,20 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ReturnNode : MonoBehaviour
+public class ReturnNode : MonoBehaviour, INode, IFollowFlow
 {
     //node name
     private NodeNameManager nameManager;
     private NodeData nodeData;
 
-    // private FunctionManager functionManager;
-
+    private DataInPort dataInPort;
     // Start is called before the first frame update
     void Start()
     {
-        // functionManager = GameObject.Find("FunctionManager").GetComponent<FunctionManager>();  
         nameManager = GetComponent<NodeNameManager>();
-        // nameManager.NodeName = functionManager.FunName;
+        dataInPort = transform.GetChild(1).GetComponent<DataInPort>();
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 
     //functionManager에서 호출해서 설정하도록 함.
     public void SetReturnNode(int type)
@@ -58,5 +49,55 @@ public class ReturnNode : MonoBehaviour
                 break;
         }
 
+    }
+
+    public FlowoutPort NextFlow()
+    {
+        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+
+    }
+
+    public IEnumerator Execute()
+    {
+        //데이터 인포트 연결되어 있는지 확인
+        //연결 안되어 있으면 바로 코루틴 중단해야함
+        if (!dataInPort.IsConnected)
+        {
+            Debug.Log("반환노드에 반환할 데이터가 연결되어 있지 않음");
+            NodeManager.Instance.SetCompileError(true);
+            yield return null;
+        }
+        //데이터 인포트와 연결되어있는 포트로부터 값을 가져와야함(기다림)
+        yield return dataInPort.connectedPort.GetComponent<DataOutPort>().SendData();
+
+
+        //가져온 값을 반환처리 (해당 함수의 캔버스의 ForFunctionRunData 스크립트 변수에 저장해준다.)
+        //혹시 모르니 해당 노드의 NodeData에도 저장을 해준다 (필요할까...?)
+        if (dataInPort.tag == "data_int")
+        {
+            transform.parent.parent.GetComponent<ForFunctionRunData>().rt_int = dataInPort.InputValueInt;
+            GetComponent<NodeData>().SetData_Int = dataInPort.InputValueInt;
+
+        }
+        else if (dataInPort.tag == "data_bool")
+        {
+            transform.parent.parent.GetComponent<ForFunctionRunData>().rt_bool = dataInPort.InputValueBool;
+            GetComponent<NodeData>().SetData_Bool = dataInPort.InputValueBool;
+        }
+        else
+        {
+            transform.parent.parent.GetComponent<ForFunctionRunData>().rt_string = dataInPort.InputValueStr;
+            GetComponent<NodeData>().SetData_string = dataInPort.InputValueStr;
+        }
+        GetComponent<NodeData>().ErrorFlag = false;
+
+        yield return null;
+
+    }
+
+    public IEnumerator ProcessData()
+    {
+        Debug.Log("Return Node calls ProcessData()");
+        return null;
     }
 }

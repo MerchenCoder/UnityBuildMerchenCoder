@@ -89,6 +89,8 @@ public class ParaNode : MonoBehaviour, INode
             else
                 GetComponent<NodeData>().SetData_string = transform.parent.parent.GetComponent<ForFunctionRunData>().p2_string;
         }
+
+
         GetComponent<NodeData>().ErrorFlag = false;
 
         yield return outPort.GetComponent<DataOutPort>().SendData();

@@ -33,12 +33,14 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
     private GameObject currentNode;
     private FlowoutPort currentFlowoutPort;
 
+    private NodeData nodeData;
+
 
 
 
     private void Start()
     {
-
+        nodeData = GetComponent<NodeData>();
     }
 
     public IEnumerator Execute()
@@ -115,9 +117,29 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
             currentNode = NextNode(currentFlowoutPort);
         }
 
-        //endnode에서 처리할 일
-        //....
-
+        //반환값이 있다면 가져와야함
+        if (type == 2 || type == 4)
+        {
+            Debug.Log("반환값 가져와서 함수 노드에 저장하기");
+            GameObject outPort = transform.GetChild(0).gameObject;
+            ForFunctionRunData forFunctionRunData = FunctionManager.Instance.myfuncCanvas[funIndex].GetComponent<ForFunctionRunData>();
+            if (outPort.tag == "data_int")
+            {
+                nodeData.SetData_Int = forFunctionRunData.rt_int;
+                Debug.Log("반환값은 : " + nodeData.data_int.ToString());
+            }
+            else if (outPort.tag == "data_bool")
+            {
+                nodeData.SetData_Bool = forFunctionRunData.rt_bool;
+                Debug.Log("반환값은 : " + nodeData.data_bool.ToString());
+            }
+            else
+            {
+                nodeData.SetData_string = forFunctionRunData.rt_string;
+                Debug.Log("반환값은 : " + nodeData.data_string);
+            }
+            nodeData.ErrorFlag = false;
+        }
         Debug.Log("함수 실행 종료");
         yield return null;
     }
@@ -125,15 +147,22 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
+        Debug.Log("flowoutPort의 부모 이름이 무엇이냐 : " + flowoutPort.transform.parent.GetComponent<NodeNameManager>());
+        if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
+        {
+            return flowoutPort.transform.parent.GetChild(0).gameObject;
+        }
         return flowoutPort.ConnectedPort.transform.parent.gameObject;
     }
 
     public IEnumerator ProcessData()
     {
         Debug.Log("Process Data : 함수의 매개변수의 값을 가져오기");
+        Debug.Log("먼저 함수를 실행해서 반환값을 불러와 노드에 저장");
+        yield return Execute();
 
-
-        yield return null;
+        Debug.Log("다음 포트로 값 전달하기");
+        yield return GetComponentInChildren<DataOutPort>().SendData();
     }
 
     public FlowoutPort NextFlow()
