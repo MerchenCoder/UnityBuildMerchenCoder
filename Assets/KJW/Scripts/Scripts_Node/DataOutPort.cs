@@ -118,7 +118,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     connectedPort = result.gameObject;
                     ConnectPort();
                     isConnected = true;
-                    SendData();
+                    // SendData();
+                    connectedPort.GetComponent<DataInPort>().IsConnected = true;
+
                 }
             }
         }
@@ -165,10 +167,11 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
     }
 
-    public void SendData()
+    public IEnumerator SendData()
     {
-        connectedPort.GetComponent<DataInPort>().IsError = parentNode.ErrorFlag;
-
+        Debug.Log("sendData()");
+        //현재 노드에서 연결된 이전 노드의 SendData()를 호출
+        // connectedPort.GetComponent<DataInPort>().IsError = parentNode.ErrorFlag;
         if (!parentNode.ErrorFlag)
         {
             //정상적일 때
@@ -190,8 +193,17 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 connectedPort.GetComponent<DataInPort>().InputValueStr = this.transform.parent.GetComponent<NodeData>().data_string;
                 // connectedPort.GetComponent<DataInPort>().IsConnected = true;
             }
+            yield return null;
         }
-        connectedPort.GetComponent<DataInPort>().IsConnected = true;
+        else
+        {
+
+            Debug.Log(parentNode.gameObject.name.ToString() + ", 의 errorFlag가 false인 상황.따라서 SendData를 할 수 없어서 먼저 processData()를 호출하여 데이터를 가져와 처리(계산)해야함");
+
+            yield return parentNode.GetComponent<INode>().ProcessData();
+
+        }
+        // connectedPort.GetComponent<DataInPort>().IsConnected = true;
 
     }
 

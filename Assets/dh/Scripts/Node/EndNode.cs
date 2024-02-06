@@ -12,9 +12,15 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
         return null;
     }
 
+
     IEnumerator INode.Execute()
     {
         yield return null;
+    }
+
+    IEnumerator INode.ProcessData()
+    {
+        throw new System.NotImplementedException();
     }
 
     // Start is called before the first frame update
@@ -24,8 +30,9 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
         nameManager.NodeName = "EndNode";
     }
 
-    private void Update() {
-        
+    private void Update()
+    {
+
     }
 
 }

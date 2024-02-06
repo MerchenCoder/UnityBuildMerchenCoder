@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
+
 public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private string nodeName;
@@ -25,10 +27,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         canvas = this.GetComponentInParent<Canvas>();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
 
-    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -52,7 +51,63 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         //     }
         // }
 
+        if (NodeManager.Instance.deleteMode)
+        {
+            Debug.Log(gameObject.name.ToString() + "삭제");
+            //이벤트 리스너부터 삭제
+            EventTrigger eventTrigger = GetComponent<EventTrigger>();
+            if (eventTrigger != null)
+            {
+                eventTrigger.triggers.Clear();
+            }
+            //게임 오브젝트 파괴
+            Destroy(gameObject);
+        }
 
+
+    }
+
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+
+        DataInPort[] dataInPorts = GetComponentsInChildren<DataInPort>();
+        foreach (DataInPort dataInPort in dataInPorts)
+        {
+            if (dataInPort.connectedPort != null)
+            {
+
+                dataInPort.connectedPort.ConnectPort();
+            }
+        }
+
+
+        FlowinPort[] flowinPorts = GetComponentsInChildren<FlowinPort>();
+        foreach (FlowinPort flowinPort in flowinPorts)
+        {
+            if (flowinPort.connectedPort != null)
+            {
+
+                flowinPort.connectedPort.ConnectPort();
+            }
+            public void OnDrag(PointerEventData eventData)
+            {
+
+            }
+
+            public void OnEndDrag(PointerEventData eventData)
+            {
+
+            }
+
+
+        }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -85,31 +140,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
 
     }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-
-        DataInPort[] dataInPorts = GetComponentsInChildren<DataInPort>();
-        foreach (DataInPort dataInPort in dataInPorts)
-        {
-            if (dataInPort.connectedPort != null)
-            {
-
-                dataInPort.connectedPort.ConnectPort();
-            }
-        }
-
-
-        FlowinPort[] flowinPorts = GetComponentsInChildren<FlowinPort>();
-        foreach (FlowinPort flowinPort in flowinPorts)
-        {
-            if (flowinPort.connectedPort != null)
-            {
-
-                flowinPort.connectedPort.ConnectPort();
-            }
-        }
-
-    }
 }
+
+
+

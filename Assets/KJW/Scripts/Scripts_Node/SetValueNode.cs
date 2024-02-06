@@ -112,4 +112,10 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
         }
         yield return null;
     }
+
+
+    IEnumerator INode.ProcessData()
+    {
+        throw new System.NotImplementedException();
+    }
 }
