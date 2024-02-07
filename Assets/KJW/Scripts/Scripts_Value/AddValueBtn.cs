@@ -32,14 +32,14 @@ public class AddValueBtn : MonoBehaviour
             // if connected with node in this state -> ??? 
             nodeData.ErrorFlag = true;
         }
-        else if(dropdown.value == 1)
+        else if(dropdown.value == 1 && transform.parent.GetComponent<NodeNameManager>().NodeName == "SetValueNode")
         {
             // add value
             SetValueName();
             dropdown.SetValueWithoutNotify(0);
             nodeData.ErrorFlag = true;
         }
-        else
+        else if (transform.parent.GetComponent<NodeNameManager>().NodeName == "SetValueNode")
         {
             // select exist value
             if (CompareTag("data_int"))
@@ -54,7 +54,22 @@ public class AddValueBtn : MonoBehaviour
             {
                 nodeData.data_string = valueManager.stringValues[dropdown.value - 2].valueOfValue;
             }
-            nodeData.ErrorFlag = false;
+        }
+        else
+        {
+            // select exist value
+            if (CompareTag("data_int"))
+            {
+                nodeData.data_int = valueManager.intValues[dropdown.value - 1].valueOfValue;
+            }
+            else if (CompareTag("data_bool"))
+            {
+                nodeData.data_bool = valueManager.boolValues[dropdown.value - 1].valueOfValue;
+            }
+            else if (CompareTag("data_string"))
+            {
+                nodeData.data_string = valueManager.stringValues[dropdown.value - 1].valueOfValue;
+            }
         }
     }
 

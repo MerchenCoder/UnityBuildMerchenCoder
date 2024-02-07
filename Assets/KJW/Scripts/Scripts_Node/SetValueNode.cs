@@ -9,9 +9,7 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
     private ValueManager valueManager;
     private TMP_Dropdown dropdown;
     private DataInPort dataInPort;
-
-    private TMPro.TextMeshProUGUI dataUIText;
-    private string stringData;
+    private NodeData nodeData;
 
     //node name
     private NodeNameManager nameManager;
@@ -20,97 +18,59 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
     {
         nameManager = this.GetComponent<NodeNameManager>();
         nameManager.NodeName = "SetValueNode";
-
+        nodeData = GetComponent<NodeData>();
         valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
         dropdown = transform.GetChild(0).GetComponent<TMP_Dropdown>();
         dataInPort = inPort.GetComponent<DataInPort>();
-        dataUIText = inPort.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
-
-        dataInPort.StateChanged += HandleStateChanged;
-    }
-
-    public void Execute()
-    {
-        if (dropdown.value <= 1)
-        {
-            // can not play
-        }
-        else
-        {
-            if (CompareTag("data_int"))
-            {
-                valueManager.intValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueInt;
-            }
-            else if (CompareTag("data_bool"))
-            {
-                valueManager.boolValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueBool;
-            }
-            else if (CompareTag("data_string"))
-            {
-                valueManager.stringValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueStr;
-            }
-        }
-    }
-
-    void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
-    {
-        if (e.IsConnected)
-        {
-            if (inPort.CompareTag("data_int"))
-            {
-                stringData = dataInPort.InputValueInt.ToString();
-                dataUIText.text = stringData;
-            }
-            if (inPort.CompareTag("data_bool"))
-            {
-                if (dataInPort.InputValueBool)
-                {
-                    dataUIText.text = "참";
-                }
-                else
-                {
-                    dataUIText.text = "거짓";
-                }
-            }
-            if (inPort.CompareTag("data_string"))
-            {
-                dataUIText.text = dataInPort.InputValueStr;
-            }
-        }
-        else
-        {
-            dataUIText.text = "데이터";
-        }
-    }
-
-
-    public FlowoutPort NextFlow()
-    {
-        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
     IEnumerator INode.Execute()
     {
-        if (dropdown.value <= 1)
+        if (!dataInPort.IsConnected)
         {
-            // can not play
+            Debug.Log("값 설정하기 노드 연결안됨");
+            NodeManager.Instance.SetCompileError(true);
+
+            yield return null;
         }
         else
         {
-            if (CompareTag("data_int"))
+            if (dropdown.value <= 1)
             {
-                valueManager.intValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueInt;
+                Debug.Log("값 설정하기 노드 변수 설정 안됨");
+                NodeManager.Instance.SetCompileError(true);
             }
-            else if (CompareTag("data_bool"))
+            else
             {
-                valueManager.boolValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueBool;
-            }
-            else if (CompareTag("data_string"))
-            {
-                valueManager.stringValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueStr;
+                yield return dataInPort.connectedPort.SendData();
+                if (CompareTag("data_int"))
+                {
+                    valueManager.intValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueInt;
+                    nodeData.data_int = dataInPort.InputValueInt;
+                }
+                else if (CompareTag("data_bool"))
+                {
+                    valueManager.boolValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueBool;
+                    nodeData.data_bool = dataInPort.InputValueBool;
+                }
+                else if (CompareTag("data_string"))
+                {
+                    valueManager.stringValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueStr;
+                    nodeData.data_string = dataInPort.InputValueStr;
+                }
+                else
+                {
+                    Debug.Log(gameObject.name + " 변수 태그 세팅 안됨");
+                    NodeManager.Instance.SetCompileError(true);
+                }
+                GetComponent<NodeData>().ErrorFlag = false;
             }
         }
-        yield return null;
+    }
+
+    public FlowoutPort NextFlow()
+    {
+        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
 
