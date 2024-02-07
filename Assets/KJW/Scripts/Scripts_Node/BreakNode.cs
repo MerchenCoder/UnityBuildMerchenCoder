@@ -25,7 +25,7 @@ public class BreakNode : MonoBehaviour, INode, IFollowFlow
         }
         else if (isForLoop)
         {
-
+            loopStartNode.GetComponent<ForLoopNode>().isBreaking = true;
         }
 
         yield return true;
@@ -38,6 +38,6 @@ public class BreakNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator ProcessData()
     {
-        throw new NotImplementedException();
+        return null;
     }
 }

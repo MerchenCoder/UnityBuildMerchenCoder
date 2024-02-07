@@ -30,12 +30,14 @@ public class AddValueBtn : MonoBehaviour
         {
             // null select
             // if connected with node in this state -> ??? 
+            nodeData.ErrorFlag = true;
         }
         else if(dropdown.value == 1)
         {
             // add value
             SetValueName();
             dropdown.SetValueWithoutNotify(0);
+            nodeData.ErrorFlag = true;
         }
         else
         {
@@ -52,7 +54,7 @@ public class AddValueBtn : MonoBehaviour
             {
                 nodeData.data_string = valueManager.stringValues[dropdown.value - 2].valueOfValue;
             }
-            transform.parent.GetComponent<NodeData>().ErrorFlag = false;
+            nodeData.ErrorFlag = false;
         }
     }
 
