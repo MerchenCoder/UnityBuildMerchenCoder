@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class IfNode : MonoBehaviour, INode
+public class IfNode : MonoBehaviour, INode, IFollowFlow
 {
     // node name
     private NodeNameManager nameManager;
@@ -49,12 +49,7 @@ public class IfNode : MonoBehaviour, INode
     //    }
     //}
 
-    public IEnumerator Execute()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerator ProcessData()
+    IEnumerator INode.Execute()
     {
         if (!dataInPort1.IsConnected)
         {
@@ -66,20 +61,29 @@ public class IfNode : MonoBehaviour, INode
         {
             Debug.Log("Data 노드 연결 됨");
             yield return dataInPort1.connectedPort.GetComponent<DataOutPort>().SendData();
-            n1 = dataInPort1.InputValueBool;
+            NextFlow();
             //yield return GetComponentInChildren<DataOutPort>().SendData();
-            if (n1 == true)
-            {
-                Debug.Log("conclusion: n1 is true");
-                nodeData.ErrorFlag = false;
-                yield return transform.Find("outputTrueFlow").GetComponentInChildren<DataOutPort>().SendData();
-            }
-            else
-            {
-                Debug.Log("conclusion: n1 is false");
-                nodeData.ErrorFlag = false;
-                yield return transform.Find("outputFalseFlow").GetComponentInChildren<DataOutPort>().SendData();
-            }
+        }
+    }
+    public IEnumerator ProcessData()
+    {
+        yield return null;
+    }
+
+    public FlowoutPort NextFlow()
+    {
+        n1 = dataInPort1.InputValueBool;
+        if (n1 == true)
+        {
+            Debug.Log("conclusion: n1 is true");
+            nodeData.ErrorFlag = false;
+            return this.transform.Find("outputTrueFlow").GetComponent<FlowoutPort>(); ;
+        }
+        else
+        {
+            Debug.Log("conclusion: n1 is false");
+            nodeData.ErrorFlag = false;
+            return this.transform.Find("outputFalseFlow").GetComponent<FlowoutPort>(); ;
         }
     }
 }
