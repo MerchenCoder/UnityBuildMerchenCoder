@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -18,15 +19,19 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         set { connectedPort = value; }
     }
 
+    [NonSerialized]
+    public Vector3 originVector3; // 포트 원래 좌표(월드 좌표계)
+    [NonSerialized]
+    public Vector2 originLocalPosition; //포트 원래 좌표(로컬 좌표계)
 
-    private Vector3 originVector3; // ���� ��ġ��
-    private Vector2 originLocalPosition;
-    private Vector2 currentLocalPosition;
+    Vector3 updatePosition; //업데이트 된 포트 좌표(월드 좌표계)
+    private Vector2 updateLocalPosition; //업데이트 된 포트 좌표(로컬 좌표계)
+
     private float arrowLength;
 
 
 
-    private bool isConnected;
+    public bool isConnected;
     private Sprite nullImage;
 
 
@@ -67,7 +72,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
         }
         else arrowObject.SetActive(true);
-        arrowObject.transform.position = originVector3;
+        arrowObject.transform.localPosition = originLocalPosition; // 수정 2/8
 
         // ���� ���¿��� �ٽ� �巡��
         if (isConnected)
@@ -83,18 +88,21 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
         // 화살표 머리의 위치를 UI 카메라를 사용하여 설정
         Vector3 currentPos = uiCamera.ScreenToWorldPoint(eventData.position);
-        transform.position = new Vector3(currentPos.x, currentPos.y, transform.position.z);
+        updatePosition = new Vector3(currentPos.x, currentPos.y, transform.position.z);
+        transform.position = updatePosition;
 
-        currentLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
 
-        arrowLength = Vector2.Distance(originLocalPosition, currentLocalPosition);
-        // Debug.Log(arrowLength);
+        DrawArrow();
+    }
+
+    public void DrawArrow()
+    {
+        // Debug.Log("DrawArrow 함수 호출되어 화살표 다시 그리는 중");
+        arrowLength = Vector2.Distance(originLocalPosition, updateLocalPosition);
         arrowObject.transform.localScale = new Vector3(arrowLength, 1, 1);
-        //arrowObject.GetComponent<RectTransform>().sizeDelta = new Vector2(distance, arrowObject.GetComponent<RectTransform>().sizeDelta.y);
-
-
         // 몸통의 회전 설정
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, currentPos));
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, updatePosition));
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -111,9 +119,11 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 connectedPort = result.gameObject;
                 ConnectPort();
                 isConnected = true;
+                connectedPort.GetComponent<FlowinPort>().IsConnected = true;
                 if (connectedPort.transform.parent.gameObject.tag == "endNode")
                 {
                     connectedPort.GetComponent<endNode>().IsConnected = true;
+
                 }
                 //result.gameObject.GetComponent<endNode>().isConnectedEnd();
 
@@ -136,15 +146,28 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     {
         connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
         // out port ȭ��ǥ ����
-        transform.position = connectedPort.transform.position;
+        updatePosition = connectedPort.transform.position;
+        transform.position = updatePosition;
+        updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+
         nullImage = connectedPort.GetComponent<Image>().sprite;
         connectedPort.GetComponent<Image>().sprite = this.GetComponent<Image>().sprite;
         connectedPort.GetComponent<Image>().raycastTarget = false;
 
-        // ���� ����
-        arrowObject.transform.localScale = new Vector2(Vector2.Distance(originLocalPosition, transform.localPosition), 1);
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, connectedPort.transform.position));
+        DrawArrow();
     }
+
+    public void ReconnectPort()
+    {
+        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
+        updatePosition = connectedPort.transform.position;
+        transform.position = updatePosition;
+        updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        connectedPort.GetComponent<Image>().color = GetComponent<Image>().color;
+        connectedPort.GetComponent<Image>().raycastTarget = false;
+        DrawArrow();
+    }
+
 
     public static float AngleInRad(Vector3 vec1, Vector3 vec2)
     {

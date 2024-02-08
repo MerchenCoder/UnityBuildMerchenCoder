@@ -13,44 +13,24 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         set { nodeName = value; }
     }
 
-    private Canvas canvas;
+
     private RectTransform rectTransform;
+    private List<Vector3> offsetList = new List<Vector3>();
 
 
 
 
 
-
-    private void Awake()
+    private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvas = this.GetComponentInParent<Canvas>();
     }
 
 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        // dataOutPorts = new DataOutPort[dataInPorts.Length];
-        // for (int i = 0; i < dataInPorts.Length; i++)
-        // {
-        //     if (dataInPorts[i].IsConnected)
-        //     {
-        //         //연결되어있다면 연결된 dataOutPort를 찾아서 배열에 넣어주기
-        //         List<RaycastResult> results = new List<RaycastResult>();
-        //         EventSystem.current.RaycastAll(eventData, results);
-        //         foreach (RaycastResult result in results)
-        //         {
-
-        //             if (result.gameObject.CompareTag(this.gameObject.tag))
-        //             {
-        //                 dataOutPorts[i] = result.gameObject.transform.GetComponent<DataOutPort>();
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
-
+        //삭제 로직
         if (NodeManager.Instance.deleteMode)
         {
             Debug.Log(gameObject.name.ToString() + "삭제");
@@ -65,72 +45,137 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         }
 
 
+
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        foreach (Transform child in rectTransform)
+        {
+            if (child.GetComponent<DataOutPort>())
+            {
+                Vector3 offset = child.GetComponent<DataOutPort>().originVector3 - transform.position;
+                offsetList.Add(offset);
+            }
+            else if (child.GetComponent<FlowoutPort>()
 
+            )
+            {
+                Vector3 offset = child.GetComponent<FlowoutPort>().originVector3 - transform.position;
+                offsetList.Add(offset);
+            }
+            else
+            {
+                Debug.Log("dataoutport,flowoutport가 아닌 자식 " + child.name);
+                offsetList.Add(Vector2.zero);
+
+            }
+
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-
-        DataInPort[] dataInPorts = GetComponentsInChildren<DataInPort>();
-        foreach (DataInPort dataInPort in dataInPorts)
+        //삭제모드이면 drag시 아무런 처리 안함
+        if (NodeManager.Instance.deleteMode)
         {
-            if (dataInPort.connectedPort != null)
-            {
-
-                dataInPort.connectedPort.ConnectPort();
-            }
+            Debug.Log("삭제모드입니다. 노드를 움직일 수 없습니다.");
+            return;
         }
 
+        //최상위 부모 움직이기
+        Vector2 delta = eventData.delta;
+        rectTransform.anchoredPosition += delta;
 
-        FlowinPort[] flowinPorts = GetComponentsInChildren<FlowinPort>();
-        foreach (FlowinPort flowinPort in flowinPorts)
+        for (int i = 0; i < rectTransform.childCount; i++)
         {
-            if (flowinPort.connectedPort != null)
+            Transform child = rectTransform.GetChild(i);
+            if (child != null)
             {
+                if (child.GetComponent<DataOutPort>())
+                {
+                    if (!child.GetComponent<DataOutPort>().isConnected)
+                    { //연결 안된 상태
+                        Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected);
+                        // child.GetComponent<RectTransform>().anchoredPosition += delta;
+                        child.GetComponent<DataOutPort>().UpdatePosition();
+                    }
+                    else
+                    {
+                        Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
+                        //연결된 상태
+                        //1. DataOutPort의 originVector3와 originLocalPosition을 update 해준다.(노드가 포트의 원래 위치도 움직임에 따라 같이 움직여야 하기 때문)
+                        Debug.Log("포트의 원래 좌표-월드계 업데이트");
+                        child.GetComponent<DataOutPort>().originVector3 = transform.position + offsetList[i];
+                        //2.포트는 연결되어 있는 상태에서 그 위치 그대로 유지
+                        //3. arrow 다시 그리기
+                        //이를 위한 함수 호출;
 
-                flowinPort.connectedPort.ConnectPort();
+                        child.GetComponent<DataOutPort>().ReconnectPort();
+                    }
+                }
+                else if (child.GetComponent<FlowoutPort>())
+                {
+                    if (child.GetComponent<FlowoutPort>())
+                    {
+                        if (!child.GetComponent<FlowoutPort>().isConnected)
+                        { //연결 안된 상태
+                            Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected);
+                            // child.GetComponent<RectTransform>().anchoredPosition += delta;
+                            child.GetComponent<FlowoutPort>().UpdatePosition();
+                        }
+                        else
+                        {
+                            Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
+                            //연결된 상태
+                            //1.DataOutPort의 originVector3와 originLocalPosition을 update 해준다.(노드가 포트의 원래 위치도 움직임에 따라 같이 움직여야 하기 때문)
+                            child.GetComponent<FlowoutPort>().originVector3 = transform.position + offsetList[i];
+
+                            //2. 포트는 연결되어 있는 상태에서 그 위치 그대로 유지
+                            //3. arrow 다시 그리기
+                            //이를 위한 함수 호출
+                            child.GetComponent<FlowoutPort>().ReconnectPort();
+                        }
+                    }
+
+                }
+
             }
 
 
+
+
+
+            //datainport들도 같이 움직여야 함
+            DataInPort[] dataInPorts = GetComponentsInChildren<DataInPort>();
+            foreach (DataInPort dataInPort in dataInPorts)
+            {
+                if (dataInPort.IsConnected)
+                {
+
+                    dataInPort.connectedPort.ReconnectPort();
+                }
+            }
+
+            //
+            FlowinPort[] flowinPorts = GetComponentsInChildren<FlowinPort>();
+            foreach (FlowinPort flowinPort in flowinPorts)
+            {
+                if (flowinPort.IsConnected)
+                {
+
+                    flowinPort.connectedPort.ReconnectPort();
+                }
+
+
+            }
         }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        DataOutPort[] dataOutPorts = GetComponentsInChildren<DataOutPort>();
-        FlowoutPort[] flowoutPorts = GetComponentsInChildren<FlowoutPort>();
-
-
-        foreach (DataOutPort dataOutPort in dataOutPorts)
-        {
-            dataOutPort.UpdatePosition();
-        }
-        foreach (FlowoutPort flowoutPort in flowoutPorts)
-        {
-            flowoutPort.UpdatePosition();
-        }
-
-
-
-        // //연결된 dataOutPort 위치 업데이트
-        // foreach (DataOutPort dataoutport in dataOutPorts)
-        // {
-        //     if (dataoutport != null)
-        //     {
-        //         dataoutport.transform.position = dataoutport.connectedPort.transform.position;
-        //         dataoutport.UpdatePosition();
-        //     }
-        // }
-
-
-
-
     }
+
 }
 
 
