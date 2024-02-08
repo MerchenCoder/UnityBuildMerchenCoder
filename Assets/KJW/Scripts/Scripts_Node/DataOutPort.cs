@@ -49,6 +49,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+
         if (arrowObject == null)
         {
             arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);

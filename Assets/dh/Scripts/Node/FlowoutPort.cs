@@ -133,11 +133,14 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         {
             transform.position = originVector3;
             arrowObject.SetActive(false);
-            if (connectedPort != null && connectedPort.transform.parent.gameObject.tag == "endNode")
+            if (connectedPort != null)
             {
-                connectedPort.GetComponent<endNode>().IsConnected = false;
+                connectedPort.GetComponent<FlowinPort>().IsConnected = false;
+                if (connectedPort.transform.parent.gameObject.tag == "endNode")
+
+                    connectedPort.GetComponent<endNode>().IsConnected = false;
             }
-            connectedPort.GetComponent<FlowinPort>().IsConnected = false;
+
             connectedPort = null;
         }
     }

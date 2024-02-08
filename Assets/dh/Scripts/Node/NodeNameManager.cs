@@ -44,13 +44,17 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             Destroy(gameObject);
         }
 
-
-
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // Debug.Log(eventData.pointerPressRaycast);
+        if (!eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>())
+        { //null이면 (node가 아닌 그 하위 gameobject들이 이에 해당)
+            Debug.Log(eventData.pointerPressRaycast.gameObject.name + "is not Node");
+            return;
+        }
         foreach (Transform child in rectTransform)
         {
             if (child.GetComponent<DataOutPort>())
@@ -67,7 +71,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             }
             else
             {
-                Debug.Log("dataoutport,flowoutport가 아닌 자식 " + child.name);
+                // Debug.Log("dataoutport,flowoutport가 아닌 자식 " + child.name);
                 offsetList.Add(Vector2.zero);
 
             }
@@ -77,6 +81,11 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>())
+        { //null이면 (node가 아닌 그 하위 gameobject들이 이에 해당)
+            Debug.Log(eventData.pointerPressRaycast.gameObject.name + "is not Node");
+            return;
+        }
         //삭제모드이면 drag시 아무런 처리 안함
         if (NodeManager.Instance.deleteMode)
         {
@@ -97,17 +106,19 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                 {
                     if (!child.GetComponent<DataOutPort>().isConnected)
                     { //연결 안된 상태
-                        Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected);
+                        // Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected);
                         // child.GetComponent<RectTransform>().anchoredPosition += delta;
                         child.GetComponent<DataOutPort>().UpdatePosition();
                     }
                     else
                     {
-                        Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
+                        // Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
+
                         //연결된 상태
                         //1. DataOutPort의 originVector3와 originLocalPosition을 update 해준다.(노드가 포트의 원래 위치도 움직임에 따라 같이 움직여야 하기 때문)
-                        Debug.Log("포트의 원래 좌표-월드계 업데이트");
+                        // Debug.Log("포트의 원래 좌표-월드계 업데이트");
                         child.GetComponent<DataOutPort>().originVector3 = transform.position + offsetList[i];
+
                         //2.포트는 연결되어 있는 상태에서 그 위치 그대로 유지
                         //3. arrow 다시 그리기
                         //이를 위한 함수 호출;
@@ -121,13 +132,13 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                     {
                         if (!child.GetComponent<FlowoutPort>().isConnected)
                         { //연결 안된 상태
-                            Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected);
+                            // Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected);
                             // child.GetComponent<RectTransform>().anchoredPosition += delta;
                             child.GetComponent<FlowoutPort>().UpdatePosition();
                         }
                         else
                         {
-                            Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
+                            // Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
                             //연결된 상태
                             //1.DataOutPort의 originVector3와 originLocalPosition을 update 해준다.(노드가 포트의 원래 위치도 움직임에 따라 같이 움직여야 하기 때문)
                             child.GetComponent<FlowoutPort>().originVector3 = transform.position + offsetList[i];
