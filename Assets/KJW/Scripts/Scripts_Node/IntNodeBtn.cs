@@ -22,7 +22,7 @@ public class IntNodeBtn : MonoBehaviour
     void UpdateValue()
     {
         ui_text.text = intValue.ToString();
-        // data.SetData_Int = intValue;
+        data.SetData_Int = intValue;
     }
 
     public void ValueUpButton()

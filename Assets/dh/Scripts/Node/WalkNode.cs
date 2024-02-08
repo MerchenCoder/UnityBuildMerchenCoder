@@ -49,4 +49,9 @@ public class WalkNode : MonoBehaviour, INode, IFollowFlow
         walkAnim.SetInteger("WalkingSpeed", 0);
         yield return null;
     }
+
+    public IEnumerator ProcessData()
+    {
+        throw new System.NotImplementedException();
+    }
 }

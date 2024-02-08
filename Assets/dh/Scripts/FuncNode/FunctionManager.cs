@@ -1,9 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 public class FunctionManager : MonoBehaviour
 {
+    //----싱글톤 생성----// (씬 넘어갈때 destory할 예정)
+    public static FunctionManager Instance { get; private set; }
+    public GameObject[] functionPrefabs = new GameObject[6];
+    public GameObject funcBtnPrefab;
+    public Sprite[] funcBtnImgs;
+
+    public Transform funcBtnSpawnPoint;
+
+
+
     //외부에서는 type에 접근해서 읽고 쓸 수 있음
     private int type = 0; //초기화 0(아무것도 아닌 타입)
     //type을 바꾸면 haspara... 등 설정 자동으로 변경
@@ -92,16 +104,57 @@ public class FunctionManager : MonoBehaviour
 
     }
 
-
     //for create canvas instance
     public GameObject canvasFuncMakePrefab;
     public Transform spawnPoint;
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
+
+
+    //현재 scene에서 만든 총 함수 개수 관리 (Modify function을 위함)
+    public int totalFunction = 0;
+    //함수 만들때 생성되는 canvas를 동적 배열에 저장
+    public List<GameObject> myfuncCanvas = new List<GameObject>();
+
+    //함수 노드 prefab의 핵심 컴포넌트
+    public List<FuncNode> myfuncNodes = new List<FuncNode>();
+
+
+    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
+
+    //-----씬이 언로드될 때 싱글톤 파괴-----//
+    private void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log("FucntionManager 싱글톤 객체 파괴");
+        Destroy(gameObject);
+    }
+
+    //-------------------------------//
+
     public void ResetFuncSetting()
     {
         Type = 0;
@@ -113,10 +166,145 @@ public class FunctionManager : MonoBehaviour
 
 
 
+    public void CreateFunctionNode()
+    {
+        GameObject functionInstance;
+        //인스턴스 설정
+        int funcInsType = 0;
+        if (type == 0)
+        {
+
+            Debug.Log("type오류");
+        }
+
+        //0 - 1번
+        //1 - 2번
+        //2 - 3번에 파라미터 1개 
+        //3 - 4번에 파라미터 1개 
+        //4 - 3번에 파라미터 2개 
+        //5 - 4번에 파라미터 2개
+        if (hasPara1 && hasPara2)
+        {
+            funcInsType = type + 2 - 1;
+        }
+        else
+        {
+            funcInsType = type - 1;
+        }
+        functionInstance = Instantiate(functionPrefabs[funcInsType]);
+        int[] paraTypes = new int[] { para1Type, para2Type };
+        string[] paraNames = new string[] { para1Name, para2Name };
+        //functionInstance port type & function name 설정
+        functionInstance = SetFuncNode(functionInstance, type, funcName, paraTypes, paraNames, returnType);
+
+
+        FuncNode funcNode = functionInstance.GetComponent<FuncNode>();
+        //FuncNode의 funIndex 설정
+        funcNode.funIndex = myfuncNodes.Count;
+        //FuncNode의 type 설정
+        funcNode.Type = type;
+        funcNode.funName = funcName;
+
+        myfuncNodes.Add(funcNode);
+
+        functionInstance.transform.SetParent(this.transform, false);
+
+        //funcBtn prefab으로 인스턴스 생성 후 기타 설정
+        GameObject funcBtn = Instantiate(funcBtnPrefab) as GameObject;
+        //1. 버튼 sprite 교체
+        funcBtn.GetComponent<Button>().image.sprite = funcBtnImgs[type - 1];
+        //2. 버튼 text rycp
+        funcBtn.GetComponentInChildren<TextMeshProUGUI>().text = funcName != null ? funcName : "이름 오류";
+        //3. funBtn 버튼의 prefab gameobject 설정하기
+        funcBtn.GetComponent<FuncNodeBtn>().funcNode = functionInstance;
+        //funBtn 배치하기
+        funcBtn.transform.SetParent(funcBtnSpawnPoint, false);
+
+    }
+
+
+    public GameObject SetFuncNode(GameObject funcNode, int type, string funcName, int[] paraTypes, string[] paraNames, int rtType)
+    {
+        funcNode.GetComponent<NodeNameManager>().NodeName = "FuncNode";
+        funcNode.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = funcName;
+
+
+        //outport 색상, 태그 설정
+        if (type == 2 || type == 4)
+        {
+            GameObject outPort = funcNode.transform.GetChild(0).gameObject;
+            switch (rtType)
+            {
+                //0:int, 1:bool, 2=string
+                case 0:
+                    //태그 설정
+                    outPort.tag = "data_int";
+                    //color 설정
+                    outPort.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f);
+                    break;
+                case 1:
+                    //태그 설정
+                    outPort.tag = "data_bool";
+                    //color 설정
+                    outPort.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f);
+                    break;
+                case 2:
+                    //태그 설정
+                    outPort.tag = "data_string";
+                    //color 설정
+                    outPort.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f);
+                    break;
+            }
+        }
+
+        //inport 색상, 태그 설정
+        if (type == 3 || type == 4)
+        {
+            DataInPort[] dataInPorts = funcNode.GetComponentsInChildren<DataInPort>();
+
+            for (int i = 0; i < dataInPorts.Length; i++)
+            {
+                if (paraTypes[i] == -1)
+                {
+                    Debug.Log("파라미터 2개 아님. 파라미터 없음");
+                    continue;
+                }
+                switch (paraTypes[i])
+                {
+                    //0:int, 1:bool, 2=string
+                    case 0:
+                        //태그 설정
+                        dataInPorts[i].gameObject.tag = "data_int";
+                        //color 설정
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+
+                        break;
+                    case 1:
+                        //태그 설정
+                        dataInPorts[i].gameObject.tag = "data_bool";
+                        //color 설정
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+                        break;
+                    case 2:
+                        //태그 설정
+                        dataInPorts[i].gameObject.tag = "data_string";
+                        //color 설정
+                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+                        break;
+                }
+                dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
+
+            }
+        }
+
+        return funcNode;
+
+
+    }
+
 
     public void CreateFunctionMakeCanvas()
     {
-        Debug.Log("generate function make panel 호출");
         //캔버스 프리팹 생성
         GameObject canvasPrefabInstance = Instantiate(canvasFuncMakePrefab);
 
@@ -141,14 +329,19 @@ public class FunctionManager : MonoBehaviour
             Debug.LogError("프리팹에 Canvas 컴포넌트가 없습니다.");
         }
 
+
+        //캔버스 인스턴스 이름 지정하기 : 함수이름+_canvas
         canvasPrefabInstance.name = funcName + "_canvas";
 
-
+        //스폰 포지션 설정
         canvasPrefabInstance.transform.position = spawnPoint.position;
+        //캔버스 활성화
         canvasPrefabInstance.gameObject.SetActive(true);
 
+        //반환 노드, 매개변수 노드 인스턴스를 생성할 버튼 설정해주기
         GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
         GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
+
         //반환 노드 버튼 만들기
         if (hasReturn)
         {
@@ -185,6 +378,13 @@ public class FunctionManager : MonoBehaviour
         {
             paraBtn.SetActive(false);
         }
+
+
+
+        //함수 개수 업데이트, 캔버스 리스트 업데이트
+        totalFunction++;
+        myfuncCanvas.Add(canvasPrefabInstance);
+
     }
 }
 

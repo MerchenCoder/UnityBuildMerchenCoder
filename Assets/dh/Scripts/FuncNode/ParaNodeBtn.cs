@@ -99,13 +99,15 @@ public class ParaNodeBtn : MonoBehaviour
         GameObject paraNodeInstance = Instantiate(paraNodePrefab);
         if (paraNum == 1)
         {
-            paraNodeInstance.GetComponent<ParaNode>().SetParaNode(para1Type, para1Name);
+            paraNodeInstance.GetComponent<ParaNode>().SetParaNode(para1Type, para1Name, paraNum);
+
 
         }
         else
         {
-            paraNodeInstance.GetComponent<ParaNode>().SetParaNode(para2Type, para2Name);
+            paraNodeInstance.GetComponent<ParaNode>().SetParaNode(para2Type, para2Name, paraNum);
         }
+        paraNodeInstance.GetComponent<NodeNameManager>().NodeName = "ParaNode";
         paraNodeInstance.transform.SetParent(spawnPoint, false);
         paraNodeInstance.transform.localPosition = Vector3.zero;
     }

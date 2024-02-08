@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetValueNode : MonoBehaviour
+public class GetValueNode : MonoBehaviour, INode
 {
-    private AddValueBtn addValueAllowBtn;
+    private NodeNameManager nodeNameManager;
     [SerializeField] private DataOutPort outPort;
+
+    public IEnumerator Execute()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public IEnumerator ProcessData()
+    {
+        transform.GetChild(0).GetComponent<AddValueBtn>().OnChangeValue();
+        GetComponent<NodeData>().ErrorFlag = false;
+        yield return outPort.SendData();
+    }
 
     void Start()
     {
-        addValueAllowBtn = transform.GetChild(0).GetComponent<AddValueBtn>();
+        GetComponent<NodeData>().ErrorFlag = true;
+        nodeNameManager = GetComponent<NodeNameManager>();
+        nodeNameManager.NodeName = "GetValueNode";
     }
-
-    public void BringValueData()
-    {
-        addValueAllowBtn.OnChangeValue();
-        outPort.SendData();
-    }
-
 }

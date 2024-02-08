@@ -4,15 +4,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using System;
 public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public GameObject arrowPrefab; // ȭ��ǥ UI ������
     private GameObject arrowObject;
     public GameObject connectedPort;
-    private Vector3 originVector3; // ���� ��ġ��
-    private Vector2 originLocalPosition;
-    private Vector2 currentLocalPosition;
+    [NonSerialized]
+    public Vector3 originVector3; // 포트 원래 좌표(월드 좌표계)
+    [NonSerialized]
+    public Vector2 originLocalPosition; //포트 원래 좌표(로컬 좌표계)
+    Vector3 updatePosition; //업데이트 된 포트 좌표(월드 좌표계)
+    private Vector2 updateLocalPosition; //업데이트 된 포트 좌표(로컬 좌표계)
     private float arrowLength;
     public bool isConnected;
     private Color originColor; // inPort ���� �÷���
@@ -23,8 +26,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     void Start()
     {
         uiCamera = GameObject.Find("UI_Camera").GetComponent<Camera>();
-        originVector3 = transform.position;
-        originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        // originVector3 = transform.position;
+        // originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        UpdatePosition();
         isConnected = false;
 
         parentNode = transform.parent.GetComponent<NodeData>();
@@ -35,17 +39,26 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         connectedPort = null;
     }
 
+    //별도의 함수로 분리
+    public void UpdatePosition()
+    {
+        originVector3 = transform.position;
+        originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+    }
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // prefab ���� 
+
         if (arrowObject == null)
         {
             arrowObject = Instantiate(arrowPrefab.gameObject, transform.parent);
         }
         else arrowObject.SetActive(true);
-        arrowObject.transform.position = originVector3;
+        //arrowPosition = originVector3;
+        arrowObject.transform.localPosition = originLocalPosition; // 수정 2/8
         arrowObject.GetComponent<Image>().color = GetComponent<Image>().color;
-        // ���� ���¿��� �ٽ� �巡��
+
         if (isConnected)
         {
             isConnected = false;
@@ -56,32 +69,25 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void OnDrag(PointerEventData eventData)
     {
-        // // // �̹����� ��ġ ����
-        // transform.position = eventData.position;
-
-        // Vector2 nowPos = transform.position;
-
-        // float distance = Vector2.Distance(nowPos, originVector2);
-
-        // arrowObject.transform.localScale = new Vector2(Vector2.Distance(nowPos, originVector2), 1);
-        // arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector2, nowPos));
-
-
-        // // arrowObject의 위치 업데이트
-        // arrowObject.transform.position = originVector2;
 
         // 화살표 머리의 위치를 UI 카메라를 사용하여 설정
         Vector3 currentPos = uiCamera.ScreenToWorldPoint(eventData.position);
-        transform.position = new Vector3(currentPos.x, currentPos.y, transform.position.z);
+        updatePosition = new Vector3(currentPos.x, currentPos.y, transform.position.z);
+        transform.position = updatePosition;
 
-        currentLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
 
-        arrowLength = Vector2.Distance(originLocalPosition, currentLocalPosition);
+        DrawArrow();
+    }
+
+    //별도의 함수로 분리
+    public void DrawArrow()
+    {
+        // Debug.Log("DrawArrow 함수 호출되어 화살표 다시 그리는 중");
+        arrowLength = Vector2.Distance(originLocalPosition, updateLocalPosition);
         arrowObject.transform.localScale = new Vector3(arrowLength, 1, 1);
         // 몸통의 회전 설정
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, currentPos));
-
-
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, updatePosition));
     }
 
 
@@ -133,20 +139,30 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     }
 
 
-    void ConnectPort()
+    private void ConnectPort()
     {
         connectedPort.GetComponent<DataInPort>().connectedPort = this.GetComponent<DataOutPort>();
 
         // out port ȭ��ǥ ����
-        transform.position = connectedPort.transform.position;
+        updatePosition = connectedPort.transform.position;
+        transform.position = updatePosition;
+        updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
         originColor = connectedPort.GetComponent<Image>().color;
         connectedPort.GetComponent<Image>().color = GetComponent<Image>().color;
         connectedPort.GetComponent<Image>().raycastTarget = false;
 
+        DrawArrow();
+    }
 
-        // ���� ����
-        arrowObject.transform.localScale = new Vector2(Vector2.Distance(originLocalPosition, transform.localPosition), 1);
-        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(originVector3, connectedPort.transform.position));
+    public void ReconnectPort()
+    {
+        connectedPort.GetComponent<DataInPort>().connectedPort = this.GetComponent<DataOutPort>();
+        updatePosition = connectedPort.transform.position;
+        transform.position = updatePosition;
+        updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        connectedPort.GetComponent<Image>().color = GetComponent<Image>().color;
+        connectedPort.GetComponent<Image>().raycastTarget = false;
+        DrawArrow();
     }
 
     public static float AngleInRad(Vector3 vec1, Vector3 vec2)
@@ -159,9 +175,11 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
     }
 
-    public void SendData()
+    public IEnumerator SendData()
     {
-        connectedPort.GetComponent<DataInPort>().IsError = parentNode.ErrorFlag;
+        Debug.Log("sendData()");
+        //현재 노드에서 연결된 이전 노드의 SendData()를 호출
+        // connectedPort.GetComponent<DataInPort>().IsError = parentNode.ErrorFlag;
         if (!parentNode.ErrorFlag)
         {
             //정상적일 때
@@ -183,10 +201,15 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 connectedPort.GetComponent<DataInPort>().InputValueStr = this.transform.parent.GetComponent<NodeData>().data_string;
                 // connectedPort.GetComponent<DataInPort>().IsConnected = true;
             }
+            yield return null;
         }
         else
         {
-            Debug.Log("현재 노드에 error가 있습니다.  :  " + parentNode.ErrorFlag.ToString());
+
+            Debug.Log(parentNode.gameObject.name.ToString() + ", 의 errorFlag가 false인 상황.따라서 SendData를 할 수 없어서 먼저 processData()를 호출하여 데이터를 가져와 처리(계산)해야함");
+
+            yield return parentNode.GetComponent<INode>().ProcessData();
+
         }
         // connectedPort.GetComponent<DataInPort>().IsConnected = true;
 
