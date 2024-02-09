@@ -1584,6 +1584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 6819217839682874252, guid: d304d8ee049c5449fb280c598ab41924, type: 3}
+  isConnected: 0
 --- !u!114 &1575744748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2769,6 +2770,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979146092615927262, guid: 5d32fc2f551694b32a5d3a450634d88b, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 210292054}
+    - target: {fileID: 5979146092615927262, guid: 5d32fc2f551694b32a5d3a450634d88b, type: 3}
       propertyPath: flowEndPort
       value: 
       objectReference: {fileID: 3569235825649911027}
@@ -2786,7 +2791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8414806508976202961, guid: 5d32fc2f551694b32a5d3a450634d88b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2819,6 +2824,10 @@ PrefabInstance:
     - target: {fileID: 948579454012520374, guid: 22077db22683c4437a3a74592f6d7abe, type: 3}
       propertyPath: m_Name
       value: RunButton (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 948579454012520374, guid: 22077db22683c4437a3a74592f6d7abe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3105042424922379961, guid: 22077db22683c4437a3a74592f6d7abe, type: 3}
       propertyPath: flowEndPort
