@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 6819217839682874252, guid: d304d8ee049c5449fb280c598ab41924, type: 3}
+  isConnected: 0
 --- !u!1 &1407385689101603805
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +236,7 @@ GameObject:
   - component: {fileID: 1559392000247123729}
   - component: {fileID: 5218000620450104245}
   - component: {fileID: 4518651987058430602}
+  - component: {fileID: 8715687841088855919}
   m_Layer: 5
   m_Name: inFlow
   m_TagString: flow
@@ -344,6 +346,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 79.9314, y: 71.41577}
   m_EdgeRadius: 0
+--- !u!114 &8715687841088855919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618832537508306552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168403ea3263f47a291891d5252030ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5709160913432183274
 GameObject:
   m_ObjectHideFlags: 0
