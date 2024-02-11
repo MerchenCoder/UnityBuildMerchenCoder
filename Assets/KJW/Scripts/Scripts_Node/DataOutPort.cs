@@ -138,6 +138,24 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         }
     }
 
+    //함수 삭제시에 사용되는 함수(NodeNameManager.cs에서 사용)
+    public void DisConnect()
+    {
+        connectedPort.GetComponent<Image>().color = originColor;
+        connectedPort.GetComponent<Image>().raycastTarget = true;
+        transform.position = originVector3;
+        arrowObject.SetActive(false);
+        if (connectedPort != null)
+        {
+            if (connectedPort.transform.parent.gameObject.CompareTag("Node_Print"))
+            {
+                connectedPort.tag = "data_all";
+            }
+            connectedPort.GetComponent<DataInPort>().IsConnected = false;
+            connectedPort = null;
+        }
+    }
+
 
     private void ConnectPort()
     {
@@ -182,6 +200,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         // connectedPort.GetComponent<DataInPort>().IsError = parentNode.ErrorFlag;
         if (!parentNode.ErrorFlag)
         {
+            Debug.Log(parentNode.gameObject.name.ToString() + " error flag가 꺼진상황");
             //정상적일 때
             if (this.gameObject.CompareTag("data_int"))
             {

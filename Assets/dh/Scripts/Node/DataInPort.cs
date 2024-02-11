@@ -69,22 +69,6 @@ public class DataInPort : MonoBehaviour
         }
     }
 
-    // public bool GetDataSignal
-    // {
-    //     get
-    //     {
-    //         return getDataSignal;
-    //     }
-    //     set
-    //     {
-    //         if (getDataSignal != value)
-    //         {
-    //             getDataSignal = value;
-    //             OnStateChanged(new InputPortStateChangedEventArgs(getDataSignal));
-    //         }
-    //     }
-    // }
-
     public int InputValueInt
     {
         get

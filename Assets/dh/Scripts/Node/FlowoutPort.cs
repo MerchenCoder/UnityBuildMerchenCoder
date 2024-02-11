@@ -144,6 +144,24 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             connectedPort = null;
         }
     }
+    //함수 삭제시에 사용되는 함수(NodeNameManager.cs에서 사용)
+    public void DisConnect()
+    {
+        connectedPort.GetComponent<Image>().sprite = nullImage;
+        connectedPort.GetComponent<Image>().raycastTarget = true;
+        transform.position = originVector3;
+        arrowObject.SetActive(false);
+        if (connectedPort != null)
+        {
+            if (connectedPort.transform.parent.gameObject.CompareTag("Node_Print"))
+            {
+                connectedPort.tag = "data_all";
+            }
+            connectedPort.GetComponent<FlowinPort>().IsConnected = false;
+            connectedPort = null;
+        }
+    }
+
 
     public void ConnectPort()
     {

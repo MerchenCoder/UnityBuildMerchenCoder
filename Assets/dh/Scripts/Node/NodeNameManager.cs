@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IPointerUpHandler
 {
     private string nodeName;
     public string NodeName
@@ -18,21 +18,69 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     private List<Vector3> offsetList = new List<Vector3>();
 
 
+    private DataOutPort[] dataOutPorts;
+    private FlowoutPort[] flowoutPorts;
+    private FlowinPort[] flowinPorts;
+    private DataInPort[] dataInPorts;
+
+
+    [SerializeField]
+    private bool canDelete = false;
+
+
+
 
 
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+        dataOutPorts = GetComponentsInChildren<DataOutPort>();
+        dataInPorts = GetComponentsInChildren<DataInPort>();
+        flowoutPorts = GetComponentsInChildren<FlowoutPort>();
+        flowinPorts = GetComponentsInChildren<FlowinPort>();
     }
 
 
-
-    public void OnPointerDown(PointerEventData eventData)
+    public void DeleteNode()
     {
-        //삭제 로직
-        if (NodeManager.Instance.deleteMode)
+        if (canDelete)
         {
+            //dataOutPort 정리
+            foreach (DataOutPort dataOutPort in dataOutPorts)
+            {
+                if (dataOutPort.isConnected)
+                {
+                    dataOutPort.DisConnect();
+                }
+            }
+            //flowoutPort 정리
+            foreach (FlowoutPort flowoutPort in flowoutPorts)
+            {
+                if (flowoutPort.isConnected)
+                {
+                    flowoutPort.DisConnect();
+                }
+            }
+            //datainPort 정리
+            foreach (DataInPort dataInPort in dataInPorts)
+            {
+                if (dataInPort.IsConnected)
+                {
+                    dataInPort.connectedPort.DisConnect();
+                }
+            }
+
+            //flowinPort 정리
+            foreach (FlowinPort flowinPort in flowinPorts)
+            {
+                if (flowinPort.IsConnected)
+                {
+                    flowinPort.connectedPort.DisConnect();
+                }
+            }
+
+            Debug.Log("포트 모두 연결 해제");
             Debug.Log(gameObject.name.ToString() + "삭제");
             //이벤트 리스너부터 삭제
             EventTrigger eventTrigger = GetComponent<EventTrigger>();
@@ -43,40 +91,61 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             //게임 오브젝트 파괴
             Destroy(gameObject);
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        //삭제 로직
+        if (NodeManager.Instance.deleteMode)
+        {
+            if (eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>() != null)
+            {
+                canDelete = true;
+            }
+            else
+            {
+                canDelete = false;
+            }
+
+        }
 
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Debug.Log(eventData.pointerPressRaycast);
-        if (!eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>())
-        { //null이면 (node가 아닌 그 하위 gameobject들이 이에 해당)
-            Debug.Log(eventData.pointerPressRaycast.gameObject.name + "is not Node");
-            return;
-        }
-        foreach (Transform child in rectTransform)
+        if (!NodeManager.Instance.deleteMode)
         {
-            if (child.GetComponent<DataOutPort>())
-            {
-                Vector3 offset = child.GetComponent<DataOutPort>().originVector3 - transform.position;
-                offsetList.Add(offset);
+            // Debug.Log(eventData.pointerPressRaycast);
+            if (!eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>())
+            { //null이면 (node가 아닌 그 하위 gameobject들이 이에 해당)
+                Debug.Log(eventData.pointerPressRaycast.gameObject.name + "is not Node");
+                return;
             }
-            else if (child.GetComponent<FlowoutPort>()
-
-            )
+            foreach (Transform child in rectTransform)
             {
-                Vector3 offset = child.GetComponent<FlowoutPort>().originVector3 - transform.position;
-                offsetList.Add(offset);
-            }
-            else
-            {
-                // Debug.Log("dataoutport,flowoutport가 아닌 자식 " + child.name);
-                offsetList.Add(Vector2.zero);
+                if (child.GetComponent<DataOutPort>())
+                {
+                    Vector3 offset = child.GetComponent<DataOutPort>().originVector3 - transform.position;
+                    offsetList.Add(offset);
+                }
+                else if (child.GetComponent<FlowoutPort>()
+
+                )
+                {
+                    Vector3 offset = child.GetComponent<FlowoutPort>().originVector3 - transform.position;
+                    offsetList.Add(offset);
+                }
+                else
+                {
+                    // Debug.Log("dataoutport,flowoutport가 아닌 자식 " + child.name);
+                    offsetList.Add(Vector2.zero);
+
+                }
 
             }
-
         }
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -106,8 +175,8 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                 {
                     if (!child.GetComponent<DataOutPort>().isConnected)
                     { //연결 안된 상태
-                        // Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected);
-                        // child.GetComponent<RectTransform>().anchoredPosition += delta;
+                      // Debug.Log("connected 상태 : " + child.GetComponent<DataOutPort>().isConnected);
+                      // child.GetComponent<RectTransform>().anchoredPosition += delta;
                         child.GetComponent<DataOutPort>().UpdatePosition();
                     }
                     else
@@ -132,8 +201,8 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                     {
                         if (!child.GetComponent<FlowoutPort>().isConnected)
                         { //연결 안된 상태
-                            // Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected);
-                            // child.GetComponent<RectTransform>().anchoredPosition += delta;
+                          // Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected);
+                          // child.GetComponent<RectTransform>().anchoredPosition += delta;
                             child.GetComponent<FlowoutPort>().UpdatePosition();
                         }
                         else
@@ -183,10 +252,22 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             }
         }
     }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-    }
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log(eventData.pointerCurrentRaycast);
+        if (NodeManager.Instance.deleteMode)
+        {
+            if (canDelete && (eventData.pointerCurrentRaycast.gameObject == eventData.pointerPressRaycast.gameObject) && eventData.pointerCurrentRaycast.gameObject.GetComponent<NodeNameManager>() != null)
+            {
+                DeleteNode();
+            }
+            else
+            {
+                canDelete = false;
+            }
+        }
+    }
 }
 
 

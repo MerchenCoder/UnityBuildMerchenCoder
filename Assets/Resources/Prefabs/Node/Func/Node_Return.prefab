@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 200, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 7010868325069411353}
   - component: {fileID: 5453527422441269367}
   - component: {fileID: 5682551906998948612}
+  - component: {fileID: 8329986255568473983}
   m_Layer: 5
   m_Name: inFlow
   m_TagString: flow
@@ -375,6 +376,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 79.9314, y: 71.41577}
   m_EdgeRadius: 0
+--- !u!114 &8329986255568473983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730689245334859711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168403ea3263f47a291891d5252030ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2736864416952090265
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 6819217839682874252, guid: d304d8ee049c5449fb280c598ab41924, type: 3}
+  isConnected: 0
 --- !u!1 &2838858249096562434
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,6 +801,10 @@ PrefabInstance:
     - target: {fileID: 1426645312744895353, guid: ebcf008862bc04703adeeca3f4c1d18d, type: 3}
       propertyPath: m_Name
       value: Node_End
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447662056014363301, guid: ebcf008862bc04703adeeca3f4c1d18d, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7149511577435641855, guid: ebcf008862bc04703adeeca3f4c1d18d, type: 3}
       propertyPath: m_Pivot.x
