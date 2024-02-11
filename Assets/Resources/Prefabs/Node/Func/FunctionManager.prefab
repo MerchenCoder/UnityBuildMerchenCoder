@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &797567237971509508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7785454894845428076}
+  - component: {fileID: 5312364564332328830}
+  m_Layer: 0
+  m_Name: FunctionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7785454894845428076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797567237971509508}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1383.1516, y: 480.8263, z: 1093.521}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5312364564332328830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797567237971509508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f4ea67ad8a24b43ad807a866e2f959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  functionPrefabs:
+  - {fileID: 5709160913432183274, guid: c5cf2a85a099a4ccfb445e732c37c20a, type: 3}
+  - {fileID: 8263999221581653708, guid: 8142b512a080b48deae33c6c1609a4b7, type: 3}
+  - {fileID: 5760841367783855225, guid: ff01abcd5439340e9b2a619222f2e5d5, type: 3}
+  - {fileID: 4187929048732230442, guid: 37f9e60e004e74164a7939807e2bf632, type: 3}
+  - {fileID: 4141480689516534558, guid: e33ffa1cb046947dfa61d68171905e16, type: 3}
+  - {fileID: 5208643521121328345, guid: f366770af9b8c45a789471ff5887790a, type: 3}
+  funcBtnPrefab: {fileID: 3193215347585704223, guid: 510500a13c7cf4181809a5df3b719c05, type: 3}
+  funcBtnImgs:
+  - {fileID: 21300000, guid: 87082983e02b8400cba0cb22e8f70117, type: 3}
+  - {fileID: 21300000, guid: 57f17a8342b704f2b9e4184a1d9a1932, type: 3}
+  - {fileID: 21300000, guid: eff22772e86724a8d8d3af26265aa5c9, type: 3}
+  - {fileID: 21300000, guid: b04ac69dfa2554938a269f6c93d21ee5, type: 3}
+  funcBtnSpawnPoint: {fileID: 0}
+  hasPara1: 0
+  hasPara2: 0
+  para1Type: -1
+  para2Type: -1
+  returnType: -1
+  canvasFuncMakePrefab: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  totalFunction: 0
+  myfuncCanvas: []
+  myfuncNodes: []
