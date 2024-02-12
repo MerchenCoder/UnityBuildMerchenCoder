@@ -85,6 +85,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
         }
         else
         {
+            Debug.Log("말하기 노드 데이터 가져오는 중");
             yield return dataInPort.connectedPort.SendData();
             // while (!dataInPort.connectedPort.SendData())
             // {
@@ -114,6 +115,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 // chatText.text = stringData;
             }
 
+            Debug.Log(stringData + "가 stringData");
             //Canvas_Result가 Acitve 된 후에 할당해야 함.
             //result panel의 player는 항상 첫번째 자식이어야 함!!
             player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;

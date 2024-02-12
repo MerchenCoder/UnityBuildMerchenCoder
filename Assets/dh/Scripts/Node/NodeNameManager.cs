@@ -152,7 +152,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     {
         if (!eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>())
         { //null이면 (node가 아닌 그 하위 gameobject들이 이에 해당)
-            Debug.Log(eventData.pointerPressRaycast.gameObject.name + "is not Node");
+            //Debug.Log(eventData.pointerPressRaycast.gameObject.name + "is not Node");
             return;
         }
         //삭제모드이면 drag시 아무런 처리 안함
@@ -255,7 +255,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log(eventData.pointerCurrentRaycast);
+        //Debug.Log(eventData.pointerCurrentRaycast);
         if (NodeManager.Instance.deleteMode)
         {
             if (canDelete && (eventData.pointerCurrentRaycast.gameObject == eventData.pointerPressRaycast.gameObject) && eventData.pointerCurrentRaycast.gameObject.GetComponent<NodeNameManager>() != null)

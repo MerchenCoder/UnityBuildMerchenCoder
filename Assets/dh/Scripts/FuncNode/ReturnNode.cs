@@ -86,6 +86,7 @@ public class ReturnNode : MonoBehaviour, INode, IFollowFlow
         }
         else
         {
+            Debug.Log("반환 노드의 dataInPort tag는? " + dataInPort.tag);
             transform.parent.parent.GetComponent<ForFunctionRunData>().rt_string = dataInPort.InputValueStr;
             GetComponent<NodeData>().SetData_string = dataInPort.InputValueStr;
         }

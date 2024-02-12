@@ -56,12 +56,12 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
                 if (dataInPorts.Length == 2)
                 {
                     dataInPort2 = dataInPorts[1];
+
                 }
                 dataInPort1 = dataInPorts[0];
             }
 
-            Debug.Log(dataInPort1.ToString() + " " + dataInPort2.ToString());
-            Debug.Log(dataInPort2.IsConnected);
+
 
             if ((dataInPort1 != null ? !dataInPort1.IsConnected : false) || (dataInPort2 != null ? !dataInPort2.IsConnected : false))
             {
@@ -94,8 +94,14 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
                 startNode = node.gameObject;
                 break;
             }
-            Debug.Log("start 노드를 찾을 수 없습니다.");
-            yield return null;
+            else
+            {
+                Debug.Log("start 노드를 찾을 수 없습니다.");
+                NodeManager.Instance.SetCompileError(true);
+                Debug.Log("FunNode Excute() 종료.");
+                yield break;
+            }
+
 
 
         }
@@ -115,6 +121,11 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
             currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
             currentNode = NextNode(currentFlowoutPort);
+            if (currentNode == null)
+            {
+                Debug.Log("FuncNode의 ExcuteFunction 코루틴 종료");
+                yield break;
+            }
         }
 
         //반환값이 있다면 가져와야함
@@ -140,19 +151,33 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
             }
             nodeData.ErrorFlag = false;
         }
-        Debug.Log("함수 실행 종료");
+        Debug.Log(funName + " 함수 실행 종료");
         yield return null;
     }
 
 
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
-        Debug.Log("flowoutPort의 부모 이름이 무엇이냐 : " + flowoutPort.transform.parent.GetComponent<NodeNameManager>());
-        if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
+        if (flowoutPort.isConnected)
         {
-            return flowoutPort.transform.parent.GetChild(0).gameObject;
+            // Debug.Log("flowoutPort의 부모 이름이 무엇이냐 : " + flowoutPort.transform.parent.GetComponent<NodeNameManager>());
+            if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
+            {
+                return flowoutPort.transform.parent.GetChild(0).gameObject;
+            }
+            else
+            {
+                return flowoutPort.ConnectedPort.transform.parent.gameObject;
+
+            }
         }
-        return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        else
+        {
+            Debug.Log("Flow 연결에 문제가 있습니다.");
+            NodeManager.Instance.SetCompileError(true);
+            return null;
+        }
+
     }
 
     public IEnumerator ProcessData()
