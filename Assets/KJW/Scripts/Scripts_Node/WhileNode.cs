@@ -25,7 +25,9 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
     //다음 노드 반환하는 메소드
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
-        return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        if (flowoutPort.ConnectedPort != null)
+            return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        else return null;
     }
 
     // 실행함수 완전히 종료 후 종료플로우
@@ -38,7 +40,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
     {
         if (!dataInPort.IsConnected)
         {
-            Debug.Log("While 반복문 노드 연결 안됨");
+            Debug.Log("While 반복문 노드 반복횟수 연결 안됨");
             NodeManager.Instance.SetCompileError(true);
 
             yield return null;
@@ -65,19 +67,48 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
 
             // 실행
             Debug.Log(currentNode);
-            yield return currentNode.GetComponent<INode>().Execute();
+            if (currentNode != null)
+                yield return currentNode.GetComponent<INode>().Execute();
+            else
+            {
+                Debug.Log("For 반복문 노드 반복내용 연결 안됨");
+                NodeManager.Instance.SetCompileError(true);
+
+                yield return null;
+            }
+            if (currentNode.CompareTag("endNode"))
+            {
+                Debug.Log("For 반복문 노드 끝 노드에 연결됨");
+                NodeManager.Instance.SetCompileError(true);
+                isBreaking = true;
+                break;
+            }
+            if (currentNode.CompareTag("Node_Break"))
+            {
+                currentNode.GetComponent<BreakNode>().isWhileLoop = true;
+                currentNode.GetComponent<BreakNode>().loopStartNode = this.gameObject;
+                isBreaking = true;
+                break;
+            }
 
             // 조건 bool값 다시 확인
             yield return dataInPort.connectedPort.SendData();
             loopCondition = dataInPort.InputValueBool;
 
             //다음 노드 없으면 처음부터 실행
-            while (currentNode.transform.Find("outFlow").GetComponent<FlowoutPort>().IsConnected)
+            while (currentNode.GetComponent<IFollowFlow>().NextFlow().isConnected)
             {
                 //현재 노드의 Flow outPort 찾기
                 currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
                 //Flow outPort로 다음 node 찾아서 currentNode 업데이트
                 currentNode = NextNode(currentFlowoutPort);
+                if (currentNode.CompareTag("endNode"))
+                {
+                    Debug.Log("For 반복문 노드 끝 노드에 연결됨");
+                    NodeManager.Instance.SetCompileError(true);
+                    isBreaking = true;
+                    break;
+                }
                 if (currentNode.CompareTag("Node_Break"))
                 {
                     currentNode.GetComponent<BreakNode>().isWhileLoop = true;

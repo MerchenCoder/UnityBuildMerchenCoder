@@ -10,18 +10,21 @@ public class IntValue
 {
     public string valueName;
     public int valueOfValue;
+    public bool isInit;
 }
 
 public class BoolValue
 {
     public string valueName;
     public bool valueOfValue;
+    public bool isInit;
 }
 
 public class StrValue 
 {
     public string valueName;
     public string valueOfValue;
+    public bool isInit;
 }
 
 
@@ -49,6 +52,7 @@ public class ValueManager : MonoBehaviour
             IntValue intValue = new IntValue();
             intValue.valueName = name;
             intValue.valueOfValue = 0;
+            intValue.isInit = false;
             intValues.Add(intValue);
         }
         if(type == 1)
@@ -56,12 +60,14 @@ public class ValueManager : MonoBehaviour
             BoolValue boolValue = new BoolValue();
             boolValue.valueName = name;
             boolValue.valueOfValue = true;
+            boolValue.isInit = false;
             boolValues.Add(boolValue);
         }if(type == 2)
         {
             StrValue strValue = new StrValue();
             strValue.valueName = name;
             strValue.valueOfValue = null;
+            strValue.isInit = false;
             stringValues.Add(strValue);
         }
         OnUpdateValues?.Invoke(this, EventArgs.Empty);
