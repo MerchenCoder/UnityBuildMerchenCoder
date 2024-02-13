@@ -118,7 +118,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     isConnected = true;
                     // SendData();
                     connectedPort.GetComponent<DataInPort>().IsConnected = true;
-
+                    return; //서로 다른 노드의 포트 겹쳐져있을 때 하나만 인식하도록 해야함(2/13추가)
                 }
             }
         }

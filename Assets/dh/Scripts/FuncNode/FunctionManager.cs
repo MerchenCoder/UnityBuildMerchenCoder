@@ -261,46 +261,110 @@ public class FunctionManager : MonoBehaviour
         if (type == 3 || type == 4)
         {
             DataInPort[] dataInPorts = funcNode.GetComponentsInChildren<DataInPort>();
+            Debug.Log(paraTypes[0].ToString() + " " + paraTypes[1].ToString());
 
-            for (int i = 0; i < dataInPorts.Length; i++)
+            if (dataInPorts.Length > 1)
             {
-                if (paraTypes[i] == -1)
+                for (int i = 0; i < dataInPorts.Length; i++)
                 {
-                    Debug.Log("파라미터 2개 아님. 파라미터 없음");
-                    continue;
+                    switch (paraTypes[i])
+                    {
+                        //0:int, 1:bool, 2=string
+                        case 0:
+                            //태그 설정
+                            dataInPorts[i].gameObject.tag = "data_int";
+                            //color 설정
+                            dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+                            Debug.Log("paraTypes index: " + i.ToString() + paraTypes[i].ToString());
+                            Debug.Log("data_int 파라");
+                            break;
+                        case 1:
+                            //태그 설정
+                            dataInPorts[i].gameObject.tag = "data_bool";
+                            //color 설정
+                            dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+                            Debug.Log("paraTypes index: " + i.ToString() + paraTypes[i].ToString());
+                            Debug.Log("data_bool 파라");
+                            break;
+                        case 2:
+                            //태그 설정
+                            dataInPorts[i].gameObject.tag = "data_string";
+                            //color 설정
+                            dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+                            Debug.Log("paraTypes index: " + i.ToString() + paraTypes[i].ToString());
+                            Debug.Log("data_string 파라");
+                            break;
+                    }
+                    dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
                 }
-                switch (paraTypes[i])
-                {
-                    //0:int, 1:bool, 2=string
-                    case 0:
-                        //태그 설정
-                        dataInPorts[i].gameObject.tag = "data_int";
-                        //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
-
-                        break;
-                    case 1:
-                        //태그 설정
-                        dataInPorts[i].gameObject.tag = "data_bool";
-                        //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
-                        break;
-                    case 2:
-                        //태그 설정
-                        dataInPorts[i].gameObject.tag = "data_string";
-                        //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
-                        break;
-                }
-                dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
-
             }
+            else
+            {
+                if (paraTypes[0] == -1)
+                {
+                    switch (paraTypes[1])
+                    {
+                        //0:int, 1:bool, 2=string
+                        case 0:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_int";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+
+                            break;
+                        case 1:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_bool";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+
+                            break;
+                        case 2:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_string";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+
+                            break;
+                    }
+                    dataInPorts[0].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[1];
+                }
+                else
+                {
+                    switch (paraTypes[0])
+                    {
+                        //0:int, 1:bool, 2=string
+                        case 0:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_int";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+
+                            break;
+                        case 1:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_bool";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+
+                            break;
+                        case 2:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_string";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+
+                            break;
+                    }
+                    dataInPorts[0].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[0];
+                }
+            }
+
+
         }
-
         return funcNode;
-
-
     }
+
 
 
     public void CreateFunctionMakeCanvas()

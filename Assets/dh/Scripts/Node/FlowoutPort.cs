@@ -126,6 +126,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
                 }
                 //result.gameObject.GetComponent<endNode>().isConnectedEnd();
+                return; //서로 다른 노드의 포트 겹쳐져있을 때 하나만 인식하도록 해야함(2/13추가)
 
             }
         }

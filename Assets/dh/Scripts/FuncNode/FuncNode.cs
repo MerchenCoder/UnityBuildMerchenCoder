@@ -158,27 +158,29 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
-        if (flowoutPort.isConnected)
+        if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
         {
-            // Debug.Log("flowoutPort의 부모 이름이 무엇이냐 : " + flowoutPort.transform.parent.GetComponent<NodeNameManager>());
-            if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
-            {
-                return flowoutPort.transform.parent.GetChild(0).gameObject;
-            }
-            else
-            {
-                return flowoutPort.ConnectedPort.transform.parent.gameObject;
+            return flowoutPort.transform.parent.GetChild(0).gameObject;
 
-            }
         }
         else
         {
-            Debug.Log("Flow 연결에 문제가 있습니다.");
-            NodeManager.Instance.SetCompileError(true);
-            return null;
-        }
+            if (flowoutPort.isConnected)
+            {
+                return flowoutPort.ConnectedPort.transform.parent.gameObject;
+            }
+            else
+            {
+                Debug.Log("flow 문제 발생한 노드는 : " + flowoutPort.transform.parent.name);
+                Debug.Log("Flow 연결에 문제가 있습니다.");
+                NodeManager.Instance.SetCompileError(true);
+                return null;
+            }
 
+        }
     }
+
+
 
     public IEnumerator ProcessData()
     {
