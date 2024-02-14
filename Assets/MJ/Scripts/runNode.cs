@@ -9,11 +9,13 @@ public class runNode : MonoBehaviour
     public GameObject resultCanvas;
     public GameObject canvas;
     public GameObject[] flowEndPorts; // 배열로 변경
+    public GameObject[] inFlows; // inFlow 객체 배열
     public GameObject flowStartPort;
     public Button button;
 
     void Start()
     {
+        InitializeInFlows();
         InitializeFlowEndPorts();
     }
 
@@ -26,6 +28,24 @@ public class runNode : MonoBehaviour
     {
         resultCanvas.SetActive(true);
         NodeManager.Instance.Run();
+    }
+
+    private void InitializeInFlows()
+    {
+        List<GameObject> inFlowObjects = new List<GameObject>();
+
+        // canvas의 모든 하위 객체를 검사하여 이름이 "inFlow"인 것을 찾음
+        foreach (Transform child in canvas.GetComponentsInChildren<Transform>())
+        {
+            if (child.name == "inFlow")
+            {
+                inFlowObjects.Add(child.gameObject);
+            }
+        }
+
+        // List를 배열로 변환
+        inFlows = inFlowObjects.ToArray();
+        Debug.Log("inFlows Length = " + inFlows.Length);
     }
 
     private void InitializeFlowEndPorts()
@@ -42,82 +62,46 @@ public class runNode : MonoBehaviour
     private void CheckExecutionAvailability()
     {
         // flowEndPorts 배열의 모든 요소가 연결되어 있는지 확인
+        bool allEndPortsConnected = true;
+        // inFlows 배열의 모든 요소가 연결되어 있는지 확인
         foreach (GameObject port in flowEndPorts)
         {
+            // 포트가 파괴되었는지 확인
+            if (port == null)
+            {
+                // 포트가 파괴되었으면 반복문을 종료하고 함수를 빠져나감
+                allEndPortsConnected = false;
+                break;
+            }
+
+            // 연결 상태 확인
             if (!port.GetComponent<endNode>().isConnected)
             {
-                Debug.Log("연결 안 됨");
-                button.interactable = false;
+                allEndPortsConnected = false;
                 break; // 하나라도 연결이 안 되어 있으면 바로 종료
             }
-            else
+        }
+
+        // 모든 inFlows가 연결되어 있는지 확인
+        bool allInFlowsConnected = true;
+        foreach (GameObject inFlowObject in inFlows)
+        {
+            FlowinPort inFlowPort = inFlowObject.GetComponent<FlowinPort>();
+            if (inFlowPort == null || !inFlowPort.IsConnected)
             {
-                Debug.Log("연결 됨");
-                Debug.Log("버튼 실행 가능");
-                button.interactable = true;
+                allInFlowsConnected = false;
+                break;
             }
         }
-        //BtnActive(allEndPortsConnected);
+
+        // 모든 flowEndPorts가 연결되어 있고 flowStartPort도 연결되어 있다면 실행 가능
+        if (allEndPortsConnected && (flowStartPort != null) && allInFlowsConnected && (flowStartPort.GetComponent<FlowoutPort>() != null))
+        {
+            button.interactable = flowStartPort.GetComponent<FlowoutPort>().IsConnected;
+        }
+        else
+        {
+            button.interactable = false;
+        }
     }
-    //public void BtnActive(bool allEndPortsConnected)
-    //{
-    //    if (allEndPortsConnected && flowStartPort.GetComponent<FlowoutPort>().IsConnected)
-    //    {
-    //        Debug.Log("버튼 실행 가능");
-    //        button.interactable = true;
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("버튼 실행 불가능");
-    //        button.interactable = false;
-    //    }
-    //}
 }
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.UI;
-
-//public class runNode : MonoBehaviour
-//{
-//    public GameObject resultCanvas;
-//    public GameObject flowEndPort;
-//    public GameObject flowStartPort;
-//    public Button button;
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-
-//        if (flowEndPort.GetComponent<endNode>().isConnected == true && flowStartPort.GetComponent<FlowoutPort>().IsConnected == true)  // isConnected 변수 대신 IsConnected 프로퍼티 사용
-//        {
-//            button.interactable = true;
-//            // Debug.Log("실행가능합니다.");
-//        }
-//        else
-//        {
-//            button.interactable = false;
-//            // Debug.Log("실행 불가능합니다.");
-//        }
-//    }
-
-//    public void Run()
-//    {
-//        resultCanvas.SetActive(true);
-
-//        NodeManager.Instance.Run();
-
-//        // if (NodeManager.Instance != null)
-//        // {
-//        //     NodeManager.Instance.ExecuteNodes();
-//        // }
-//        // else
-//        // {
-//        //     Debug.Log("NodeManager.Instance == null");
-//        // }
-//    }
-//}
