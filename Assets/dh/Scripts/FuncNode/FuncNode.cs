@@ -184,12 +184,13 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator ProcessData()
     {
-        Debug.Log("Process Data : 함수의 매개변수의 값을 가져오기");
-        Debug.Log("먼저 함수를 실행해서 반환값을 불러와 노드에 저장");
-        yield return Execute();
+        Debug.Log("Process Data 함수 실행됨");
+        // Debug.Log("먼저 함수를 실행해서 반환값을 불러와 노드에 저장");
+        // yield return Execute();
 
-        Debug.Log("다음 포트로 값 전달하기");
-        yield return GetComponentInChildren<DataOutPort>().SendData();
+        // Debug.Log("다음 포트로 값 전달하기");
+        // yield return GetComponentInChildren<DataOutPort>().SendData();
+        yield return null;
     }
 
     public FlowoutPort NextFlow()

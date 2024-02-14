@@ -56,6 +56,9 @@ public class FunctionMaker2 : MonoBehaviour
             para1Name = para1Row.transform.GetChild(2).GetComponent<TMP_InputField>();
             para2Name = para2Row.transform.GetChild(2).GetComponent<TMP_InputField>();
 
+            para2Name.transform.GetChild(1).gameObject.SetActive(false); //error message 안보이게
+            // para2Name.onValueChanged.AddListener(checkParaName);
+
 
         }
         if (functionManager.Type % 2 == 0)
@@ -69,8 +72,7 @@ public class FunctionMaker2 : MonoBehaviour
         funName.transform.GetChild(1).gameObject.SetActive(false); //error message 안보이게
         funName.onValueChanged.AddListener(checkFunName);
 
-        para2Name.transform.GetChild(1).gameObject.SetActive(false); //error message 안보이게
-        // para2Name.onValueChanged.AddListener(checkParaName);
+
     }
 
     private void Update()
