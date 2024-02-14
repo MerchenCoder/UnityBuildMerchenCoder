@@ -225,7 +225,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         else
         {
 
-            Debug.Log(parentNode.gameObject.name.ToString() + ", 의 errorFlag가 false인 상황.따라서 SendData를 할 수 없어서 먼저 processData()를 호출하여 데이터를 가져와 처리(계산)해야함");
+            Debug.Log(parentNode.gameObject.name.ToString() + "의 errorFlag가 true인 상황.따라서 SendData를 할 수 없어서 먼저 processData()를 호출하여 데이터를 가져와 처리(계산)해야함");
 
             yield return parentNode.GetComponent<INode>().ProcessData();
 

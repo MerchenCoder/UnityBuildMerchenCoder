@@ -111,6 +111,7 @@ public class NodeManager : MonoBehaviour
         while (currentNode.GetComponent<NodeNameManager>().NodeName != "EndNode")
         {
             Debug.Log("실행 시작");
+            Debug.Log("현재 실행 중 노드: " + currentNode.name);
             //현재 노드 실행 후 끝날 때까지 기다리기
             yield return currentNode.GetComponent<INode>().Execute();
             // if (compileError)
@@ -121,7 +122,7 @@ public class NodeManager : MonoBehaviour
             // }
             //현재 노드의 Flow outPort 찾기
             currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
-            Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);
+            // Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);
             //Flow outPort로 다음 node 찾아서 currentNode 업데이트
             currentNode = NextNode(currentFlowoutPort);
             if (currentNode == null)

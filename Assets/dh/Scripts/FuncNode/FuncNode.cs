@@ -87,23 +87,22 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
         Debug.Log(FunctionManager.Instance.myfuncCanvas[funIndex].name);
         NodeNameManager[] nodes = FunctionManager.Instance.myfuncCanvas[funIndex].transform.GetChild(0).GetComponentsInChildren<NodeNameManager>();
-        foreach (NodeNameManager node in nodes)
+
+        for (int i = 0; i < nodes.Length; i++)
         {
-            if (node.NodeName == "StartNode")
+            if (nodes[i].NodeName == "StartNode")
             {
-                startNode = node.gameObject;
+                startNode = nodes[i].gameObject;
                 break;
             }
-            else
+            if (i == nodes.Length - 1)
             {
                 Debug.Log("start 노드를 찾을 수 없습니다.");
                 NodeManager.Instance.SetCompileError(true);
                 Debug.Log("FunNode Excute() 종료.");
                 yield break;
+
             }
-
-
-
         }
         currentNode = startNode;
         yield return ExecuteFunction();
@@ -165,12 +164,14 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
         }
         else
         {
+            Debug.Log(flowoutPort.transform.parent.name);
             if (flowoutPort.isConnected)
             {
                 return flowoutPort.ConnectedPort.transform.parent.gameObject;
             }
             else
             {
+                Debug.Log(flowoutPort.isConnected);
                 Debug.Log("flow 문제 발생한 노드는 : " + flowoutPort.transform.parent.name);
                 Debug.Log("Flow 연결에 문제가 있습니다.");
                 NodeManager.Instance.SetCompileError(true);
@@ -184,10 +185,8 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator ProcessData()
     {
-        Debug.Log("Process Data 함수 실행됨");
-        // Debug.Log("먼저 함수를 실행해서 반환값을 불러와 노드에 저장");
-        // yield return Execute();
-
+        Debug.Log("함수를 flow에 연결하지 않고 dataPort에 연결하여 반환값을 사용하려고 하는 상태 -> error로 처리해야함");
+        NodeManager.Instance.SetCompileError(true);
         // Debug.Log("다음 포트로 값 전달하기");
         // yield return GetComponentInChildren<DataOutPort>().SendData();
         yield return null;

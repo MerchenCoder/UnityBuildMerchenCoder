@@ -114,8 +114,6 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 stringData = dataInPort.InputValueStr;
                 // chatText.text = stringData;
             }
-
-            Debug.Log(stringData + "가 stringData");
             //Canvas_Result가 Acitve 된 후에 할당해야 함.
             //result panel의 player는 항상 첫번째 자식이어야 함!!
             player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;

@@ -100,6 +100,7 @@ public class FunctionManager : MonoBehaviour
         set
         {
             para2Name = value;
+            Debug.Log(para2Name);
         }
 
     }
@@ -194,6 +195,8 @@ public class FunctionManager : MonoBehaviour
         functionInstance = Instantiate(functionPrefabs[funcInsType]);
         int[] paraTypes = new int[] { para1Type, para2Type };
         string[] paraNames = new string[] { para1Name, para2Name };
+        Debug.Log(para2Name);
+        Debug.Log(paraNames);
         //functionInstance port type & function name 설정
         functionInstance = SetFuncNode(functionInstance, type, funcName, paraTypes, paraNames, returnType);
 

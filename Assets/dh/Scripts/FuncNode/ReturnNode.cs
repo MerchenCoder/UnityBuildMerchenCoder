@@ -77,18 +77,21 @@ public class ReturnNode : MonoBehaviour, INode, IFollowFlow
         {
             transform.parent.parent.GetComponent<ForFunctionRunData>().rt_int = dataInPort.InputValueInt;
             GetComponent<NodeData>().SetData_Int = dataInPort.InputValueInt;
+            Debug.Log("반환 값은 : " + dataInPort.InputValueInt.ToString());
 
         }
         else if (dataInPort.tag == "data_bool")
         {
             transform.parent.parent.GetComponent<ForFunctionRunData>().rt_bool = dataInPort.InputValueBool;
             GetComponent<NodeData>().SetData_Bool = dataInPort.InputValueBool;
+            Debug.Log("반환 값은 : " + dataInPort.InputValueBool.ToString());
         }
+
         else
         {
-            Debug.Log("반환 노드의 dataInPort tag는? " + dataInPort.tag);
             transform.parent.parent.GetComponent<ForFunctionRunData>().rt_string = dataInPort.InputValueStr;
             GetComponent<NodeData>().SetData_string = dataInPort.InputValueStr;
+            Debug.Log("반환 값은 : " + dataInPort.InputValueStr);
         }
         GetComponent<NodeData>().ErrorFlag = false;
 

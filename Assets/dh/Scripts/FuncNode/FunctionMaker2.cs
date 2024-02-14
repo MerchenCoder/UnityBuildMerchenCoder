@@ -176,6 +176,7 @@ public class FunctionMaker2 : MonoBehaviour
             {
                 functionManager.hasPara2 = true;
                 functionManager.para2Type = para2Row.transform.GetChild(1).GetComponent<TMP_Dropdown>().value;
+                Debug.Log(para2Row.transform.GetChild(2).GetComponent<TMP_InputField>().text);
                 functionManager.Para2Name = para2Row.transform.GetChild(2).GetComponent<TMP_InputField>().text;
             }
 
