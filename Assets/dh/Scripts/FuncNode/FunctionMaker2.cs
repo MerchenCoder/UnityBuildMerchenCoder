@@ -28,6 +28,7 @@ public class FunctionMaker2 : MonoBehaviour
     bool allFieldsHasValue;
 
     bool funNameCheck;
+    bool paraNameCheck;
 
 
     private void OnEnable()
@@ -65,9 +66,11 @@ public class FunctionMaker2 : MonoBehaviour
 
         funName = funNameRow.transform.GetChild(1).GetComponent<TMP_InputField>();
 
-        funName.transform.GetChild(1).gameObject.SetActive(false);
+        funName.transform.GetChild(1).gameObject.SetActive(false); //error message 안보이게
         funName.onValueChanged.AddListener(checkFunName);
 
+        para2Name.transform.GetChild(1).gameObject.SetActive(false); //error message 안보이게
+        // para2Name.onValueChanged.AddListener(checkParaName);
     }
 
     private void Update()
@@ -101,19 +104,43 @@ public class FunctionMaker2 : MonoBehaviour
     bool ParaCheckFields()
     {
         bool result = false;
-        if (!string.IsNullOrEmpty(funName.text) && (para1OnOffBtn.IsOn || para2OnOffBtn.IsOn))
+        if (para1OnOffBtn.IsOn || para2OnOffBtn.IsOn)
         {
             if (para1OnOffBtn.IsOn)
             {
                 result = para1Type.value != -1 && !string.IsNullOrEmpty(para1Name.text);
+                para2Name.transform.GetChild(1).gameObject.SetActive(false);
             }
             if (para2OnOffBtn.IsOn)
             {
                 result = para2Type.value != -1 && !string.IsNullOrEmpty(para2Name.text);
+                para2Name.transform.GetChild(1).gameObject.SetActive(false);
+            }
+
+        }
+        if (para1OnOffBtn.IsOn && para2OnOffBtn.IsOn)
+        {
+            if (para1Name.text == para2Name.text)
+            {
+                if (para1Name.text != "")
+                {
+                    para2Name.transform.GetChild(1).gameObject.SetActive(true);
+                    result = false;
+                }
+                else
+                {
+                    para2Name.transform.GetChild(1).gameObject.SetActive(false);
+                }
+
+            }
+            else
+            {
+                para2Name.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
         return result;
     }
+
 
 
     bool ReturnCheckFields()
@@ -202,4 +229,23 @@ public class FunctionMaker2 : MonoBehaviour
         }
         funNameCheck = true;
     }
+
+    // private void checkParaName(string inputText)
+    // {
+    //     if (para1OnOffBtn.IsOn && para2OnOffBtn.IsOn)
+    //     {
+    //         if (inputText != null && para1Name.text != null && inputText == para1Name.text)
+    //         {
+    //             para2Name.transform.GetChild(1).gameObject.SetActive(true);
+    //             paraNameCheck = false;
+    //         }
+    //         else
+    //         {
+    //             para2Name.transform.GetChild(1).gameObject.SetActive(false);
+    //             paraNameCheck = true;
+    //         }
+    //     }
+
+
+    // }
 }
