@@ -124,6 +124,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
             yield return new WaitForSeconds(printDuration);
             Debug.Log("말풍선 안보이게하기");
             playerChatBubble.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
             yield return null;
         }
 
