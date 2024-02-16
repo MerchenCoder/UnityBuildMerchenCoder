@@ -15,7 +15,7 @@ public class runNode : MonoBehaviour
 
     void Start()
     {
-        InitializeInFlows();
+        InitializeFlowStartPorts();
         InitializeFlowEndPorts();
     }
 
@@ -30,22 +30,18 @@ public class runNode : MonoBehaviour
         NodeManager.Instance.Run();
     }
 
-    private void InitializeInFlows()
+    private void InitializeFlowStartPorts()
     {
-        List<GameObject> inFlowObjects = new List<GameObject>();
-
-        // canvas의 모든 하위 객체를 검사하여 이름이 "inFlow"인 것을 찾음
-        foreach (Transform child in canvas.GetComponentsInChildren<Transform>())
+        GameObject[] startNodes = GameObject.FindGameObjectsWithTag("startNode");
+        if (startNodes.Length > 0)
         {
-            if (child.name == "inFlow")
-            {
-                inFlowObjects.Add(child.gameObject);
-            }
+            flowStartPort = startNodes[0];
+            //Debug.Log("startNodes length is " + startNodes.Length);
         }
-
-        // List를 배열로 변환
-        inFlows = inFlowObjects.ToArray();
-        Debug.Log("inFlows Length = " + inFlows.Length);
+        else
+        {
+            Debug.Log("No object found with tag 'startNode'");
+        }
     }
 
     private void InitializeFlowEndPorts()
@@ -82,22 +78,18 @@ public class runNode : MonoBehaviour
             }
         }
 
-        // 모든 inFlows가 연결되어 있는지 확인
-        bool allInFlowsConnected = true;
-        foreach (GameObject inFlowObject in inFlows)
+        // startFlowConnected 변수 초기화
+        bool startFlowConnected = true;
+        FlowoutPort outFlow = flowStartPort.GetComponentInChildren<FlowoutPort>();
+        if (outFlow != null && !outFlow.IsConnected)
         {
-            FlowinPort inFlowPort = inFlowObject.GetComponent<FlowinPort>();
-            if (inFlowPort == null || !inFlowPort.IsConnected)
-            {
-                allInFlowsConnected = false;
-                break;
-            }
+            startFlowConnected = false;
         }
 
         // 모든 flowEndPorts가 연결되어 있고 flowStartPort도 연결되어 있다면 실행 가능
-        if (allEndPortsConnected && (flowStartPort != null) && allInFlowsConnected && (flowStartPort.GetComponent<FlowoutPort>() != null))
+        if (allEndPortsConnected && startFlowConnected)
         {
-            button.interactable = flowStartPort.GetComponent<FlowoutPort>().IsConnected;
+            button.interactable = true;
         }
         else
         {
