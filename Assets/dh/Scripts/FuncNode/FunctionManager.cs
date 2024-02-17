@@ -405,9 +405,11 @@ public class FunctionManager : MonoBehaviour
         //캔버스 활성화
         canvasPrefabInstance.gameObject.SetActive(true);
 
+        // Transform PanelFuncContent = canvasPrefabInstance.transform.Find("NodeMenu").GetChild(9).GetChild(0);
+
         //반환 노드, 매개변수 노드 인스턴스를 생성할 버튼 설정해주기
-        GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
-        GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
+        GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>(true).gameObject;
+        GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>(true).gameObject;
 
         //반환 노드 버튼 만들기
         if (hasReturn)
@@ -423,7 +425,6 @@ public class FunctionManager : MonoBehaviour
         //매개변수 노드 만들기
         if (hasPara)
         {
-            Debug.Log("hasPara");
             //초기화
             paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
             paraBtn.SetActive(true);
