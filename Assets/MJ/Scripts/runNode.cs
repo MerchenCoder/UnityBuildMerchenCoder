@@ -80,8 +80,15 @@ public class runNode : MonoBehaviour
 
         // startFlowConnected 변수 초기화
         bool startFlowConnected = true;
-        FlowoutPort outFlow = flowStartPort.GetComponentInChildren<FlowoutPort>();
-        if (outFlow != null && !outFlow.IsConnected)
+        if (flowStartPort != null)
+        {
+            FlowoutPort outFlow = flowStartPort.GetComponentInChildren<FlowoutPort>();
+            if (outFlow != null && !outFlow.IsConnected)
+            {
+                startFlowConnected = false;
+            }
+        }
+        else
         {
             startFlowConnected = false;
         }
