@@ -220,8 +220,29 @@ public class FunctionManager : MonoBehaviour
         funcBtn.GetComponentInChildren<TextMeshProUGUI>().text = funcName != null ? funcName : "이름 오류";
         //3. funBtn 버튼의 prefab gameobject 설정하기
         funcBtn.GetComponent<FuncNodeBtn>().funcNode = functionInstance;
-        //funBtn 배치하기
+        //funBtn 배치하기(메인 캔버스 노드 메뉴에)
         funcBtn.transform.SetParent(funcBtnSpawnPoint, false);
+
+        //funBtn 배치하기(함수 캔버스 노드 메뉴에)
+        for (int i = 0; i < myfuncCanvas.Count - 1; i++)
+        {
+            Transform funcNodeMenu = myfuncCanvas[i].transform.GetChild(1);
+            if (funcNodeMenu != null)
+            {
+                Transform panelFunContent = funcNodeMenu.GetChild(9).GetChild(0).transform;
+
+                //funcBtn 복제
+                GameObject clonedFuncBtn = Instantiate(funcBtn);
+                clonedFuncBtn.transform.SetParent(panelFunContent, false);
+                Debug.Log(myfuncCanvas[i].name + "에 clonedFuncBtn 삽입");
+            }
+            else
+            {
+                Debug.Log("funcNodeMenu is null ref");
+            }
+        }
+
+
 
     }
 
@@ -414,6 +435,7 @@ public class FunctionManager : MonoBehaviour
         //반환 노드 버튼 만들기
         if (hasReturn)
         {
+            returnBtn.transform.parent.gameObject.SetActive(true);
             returnBtn.SetActive(true);
             returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
 
@@ -427,6 +449,7 @@ public class FunctionManager : MonoBehaviour
         {
             //초기화
             paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
+            paraBtn.transform.parent.gameObject.SetActive(true);
             paraBtn.SetActive(true);
 
             if (hasPara1)
@@ -447,7 +470,18 @@ public class FunctionManager : MonoBehaviour
             paraBtn.SetActive(false);
         }
 
+        //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
+        Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0);
+        GameObject nodeMenuFuncPanel = GameObject.Find("Canvas").transform.GetChild(1).GetChild(9).GetChild(0).gameObject;
+        int childCount = nodeMenuFuncPanel.transform.childCount;
 
+        for (int i = 1; i < childCount; i++)
+        {
+            //현재 생성 중인 함수 제외한 함수 노드 버튼 복제
+            GameObject clonedFuncBtn = Instantiate(nodeMenuFuncPanel.transform.GetChild(i).gameObject);
+            Debug.Log(" 새로 생성중인 함수 캔버스에 clonedFuncBtn 삽입 - 반복 횟수 : " + i.ToString());
+            clonedFuncBtn.transform.SetParent(newCanvasPenalFunContent, false);
+        }
 
         //함수 개수 업데이트, 캔버스 리스트 업데이트
         totalFunction++;
