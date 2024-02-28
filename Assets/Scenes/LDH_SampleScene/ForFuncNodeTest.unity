@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!224 &46328202 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6763825224878560237, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
+  m_PrefabInstance: {fileID: 225330836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &120778175 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8561577251468521567, guid: c5e41d2904f722042b2bf5d0c1815fe6, type: 3}
@@ -150,6 +155,7 @@ GameObject:
   - component: {fileID: 170689106}
   - component: {fileID: 170689108}
   - component: {fileID: 170689107}
+  - component: {fileID: 170689109}
   m_Layer: 5
   m_Name: ScrollContent
   m_TagString: Untagged
@@ -222,6 +228,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170689105}
   m_CullTransparentMesh: 1
+--- !u!114 &170689109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170689105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e37b91948ea274b12876ac05ab99960e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &210292054
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +399,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1835566995046614889, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 937.4999
+      objectReference: {fileID: 0}
     - target: {fileID: 2010802563547698590, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -509,6 +531,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
+    - target: {fileID: 3981422996977076558, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 937.4999
+      objectReference: {fileID: 0}
     - target: {fileID: 4084463119286058605, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -599,7 +625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0025634766
+      value: -0.0073242188
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -781,7 +807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8256653369828932804, guid: 1eda36998c2b7fc47aa3b97a02897c6c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0013122559
+      value: 0.0026283264
       objectReference: {fileID: 0}
     - target: {fileID: 8512176580561018587, guid: 1eda36998c2b7fc47aa3b97a02897c6c, type: 3}
       propertyPath: m_Pivot.x
@@ -868,6 +894,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1eda36998c2b7fc47aa3b97a02897c6c, type: 3}
+--- !u!114 &417055000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6500049427021526424, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
+  m_PrefabInstance: {fileID: 225330836}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4874c2872d9524c058e88deb355a12ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &491846449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2696,7 +2733,19 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 170689109}
+        m_TargetAssemblyTypeName: UpdatePortsPosition, Assembly-CSharp
+        m_MethodName: UpdatePortsPos
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &31108231114921200
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3200,7 +3249,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 417055000}
         m_TargetAssemblyTypeName: ModifyFunction, Assembly-CSharp
         m_MethodName: FuncCanvasActive
         m_Mode: 1
@@ -4570,7 +4619,7 @@ PrefabInstance:
     - target: {fileID: 5312364564332328830, guid: 8756a284c44d749ad8d82e6b9e118a50, type: 3}
       propertyPath: funcBtnSpawnPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 46328202}
     - target: {fileID: 7785454894845428076, guid: 8756a284c44d749ad8d82e6b9e118a50, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1383.1516

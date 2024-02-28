@@ -227,6 +227,7 @@ public class FunctionManager : MonoBehaviour
         for (int i = 0; i < myfuncCanvas.Count - 1; i++)
         {
             Transform funcNodeMenu = myfuncCanvas[i].transform.GetChild(1);
+
             if (funcNodeMenu != null)
             {
                 Transform panelFunContent = funcNodeMenu.GetChild(9).GetChild(0).transform;
@@ -235,11 +236,14 @@ public class FunctionManager : MonoBehaviour
                 GameObject clonedFuncBtn = Instantiate(funcBtn);
                 clonedFuncBtn.transform.SetParent(panelFunContent, false);
                 Debug.Log(myfuncCanvas[i].name + "에 clonedFuncBtn 삽입");
+
+                // LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)panelFunContent.transform); //content sizefitter 버그 해결을 위한 리프레시
             }
             else
             {
                 Debug.Log("funcNodeMenu is null ref");
             }
+
         }
 
 
@@ -424,51 +428,58 @@ public class FunctionManager : MonoBehaviour
         //스폰 포지션 설정
         canvasPrefabInstance.transform.position = spawnPoint.position;
         //캔버스 활성화
-        canvasPrefabInstance.gameObject.SetActive(true);
 
         // Transform PanelFuncContent = canvasPrefabInstance.transform.Find("NodeMenu").GetChild(9).GetChild(0);
 
         //반환 노드, 매개변수 노드 인스턴스를 생성할 버튼 설정해주기
         GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>(true).gameObject;
         GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>(true).gameObject;
-
-        //반환 노드 버튼 만들기
-        if (hasReturn)
+        if (hasReturn || hasPara)
         {
-            returnBtn.transform.parent.gameObject.SetActive(true);
-            returnBtn.SetActive(true);
-            returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
+            canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(true);
+            if (hasReturn)
+            {
+                returnBtn.SetActive(true);
+                returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
+                // returnBtn.transform.parent.gameObject.SetActive(true);
+
+            }
+            else
+            {
+                returnBtn.SetActive(false);
+            }
+            //매개변수 노드 만들기
+            if (hasPara)
+            {
+                //초기화
+                paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
+                paraBtn.SetActive(true);
+
+                if (hasPara1)
+                {
+                    paraBtn.GetComponent<ParaNodeBtn>().Para1Name = para1Name;
+                    paraBtn.GetComponent<ParaNodeBtn>().Para1Type = para1Type;
+
+                }
+                if (hasPara2)
+                {
+                    paraBtn.GetComponent<ParaNodeBtn>().Para2Name = para2Name;
+                    paraBtn.GetComponent<ParaNodeBtn>().Para2Type = para2Type;
+
+                }
+                // paraBtn.transform.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                paraBtn.SetActive(false);
+            }
 
         }
         else
         {
-            returnBtn.SetActive(false);
+            canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(false);
         }
-        //매개변수 노드 만들기
-        if (hasPara)
-        {
-            //초기화
-            paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
-            paraBtn.transform.parent.gameObject.SetActive(true);
-            paraBtn.SetActive(true);
 
-            if (hasPara1)
-            {
-                paraBtn.GetComponent<ParaNodeBtn>().Para1Name = para1Name;
-                paraBtn.GetComponent<ParaNodeBtn>().Para1Type = para1Type;
-
-            }
-            if (hasPara2)
-            {
-                paraBtn.GetComponent<ParaNodeBtn>().Para2Name = para2Name;
-                paraBtn.GetComponent<ParaNodeBtn>().Para2Type = para2Type;
-
-            }
-        }
-        else
-        {
-            paraBtn.SetActive(false);
-        }
 
         //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
         Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0);
@@ -479,6 +490,7 @@ public class FunctionManager : MonoBehaviour
         {
             //현재 생성 중인 함수 제외한 함수 노드 버튼 복제
             GameObject clonedFuncBtn = Instantiate(nodeMenuFuncPanel.transform.GetChild(i).gameObject);
+            clonedFuncBtn.GetComponent<FuncNodeBtn>().funcNode = nodeMenuFuncPanel.transform.GetChild(i).gameObject.GetComponent<FuncNodeBtn>().funcNode;
             Debug.Log(" 새로 생성중인 함수 캔버스에 clonedFuncBtn 삽입 - 반복 횟수 : " + i.ToString());
             clonedFuncBtn.transform.SetParent(newCanvasPenalFunContent, false);
         }
@@ -486,6 +498,9 @@ public class FunctionManager : MonoBehaviour
         //함수 개수 업데이트, 캔버스 리스트 업데이트
         totalFunction++;
         myfuncCanvas.Add(canvasPrefabInstance);
+
+
+        canvasPrefabInstance.gameObject.SetActive(true);
 
     }
 }

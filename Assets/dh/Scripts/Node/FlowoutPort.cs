@@ -60,6 +60,14 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         originVector3 = transform.position;
         originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
     }
+    public void UpdatePositionByScroll()
+    {
+        if (originVector3 != transform.position)
+        {
+            Debug.Log("originVector3 변경됨");
+            originVector3 = transform.parent.TransformPoint(originLocalPosition);
+        }
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -161,6 +169,8 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             connectedPort.GetComponent<FlowinPort>().IsConnected = false;
             connectedPort = null;
         }
+        //자신의 isConnected 변수도 업데이트 시켜줘야함(2.28 오류 발생)
+        isConnected = false;
     }
 
 
