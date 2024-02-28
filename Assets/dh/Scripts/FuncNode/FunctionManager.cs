@@ -436,7 +436,8 @@ public class FunctionManager : MonoBehaviour
         GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>(true).gameObject;
         if (hasReturn || hasPara)
         {
-            canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(true);
+            //canvasPrefabInstance.transform.GetChild(2).GetChild(9).gameObject.SetActive(true);
+            canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(true);
             if (hasReturn)
             {
                 returnBtn.SetActive(true);
@@ -477,12 +478,12 @@ public class FunctionManager : MonoBehaviour
         }
         else
         {
-            canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(false);
         }
 
 
         //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
-        Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(1).GetChild(9).GetChild(0);
+        Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0);
         GameObject nodeMenuFuncPanel = GameObject.Find("Canvas").transform.GetChild(1).GetChild(9).GetChild(0).gameObject;
         int childCount = nodeMenuFuncPanel.transform.childCount;
 

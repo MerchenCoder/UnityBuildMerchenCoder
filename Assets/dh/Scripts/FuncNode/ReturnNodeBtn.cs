@@ -14,7 +14,7 @@ public class ReturnNodeBtn : MonoBehaviour
         btn = GetComponent<Button>();
         btn.onClick.AddListener(MakeInstance);
 
-        spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).transform;
+        spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform;
     }
 
     //returnNode 정보

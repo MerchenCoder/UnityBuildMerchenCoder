@@ -15,6 +15,7 @@ public class NodeMenuBtn : MonoBehaviour
     void Start()
     {
         spawnPoint = GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform; //Canvas(main) 바로 첫번째 자식인 BG 게임 오브젝트
+        Debug.Log(spawnPoint.name);
         btn = GetComponent<Button>();
         btn.onClick.AddListener(MakeInstance);
 
