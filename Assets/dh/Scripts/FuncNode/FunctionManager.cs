@@ -474,7 +474,6 @@ public class FunctionManager : MonoBehaviour
             {
                 paraBtn.SetActive(false);
             }
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)canvasPrefabInstance.transform.GetChild(2).GetChild(9));
 
         }
         else
@@ -496,10 +495,6 @@ public class FunctionManager : MonoBehaviour
             Debug.Log(" 새로 생성중인 함수 캔버스에 clonedFuncBtn 삽입 - 반복 횟수 : " + i.ToString());
             clonedFuncBtn.transform.SetParent(newCanvasPenalFunContent, false);
         }
-
-        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)newCanvasPenalFunContent);
-        // LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)newCanvasPenalFunContent.GetChild(0));
-        // newCanvasPenalFunContent.GetComponentInChildren<RefreshLayout>().RebuildLayout();
 
         //함수 개수 업데이트, 캔버스 리스트 업데이트
         totalFunction++;
