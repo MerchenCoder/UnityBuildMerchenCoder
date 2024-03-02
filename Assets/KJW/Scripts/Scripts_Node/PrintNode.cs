@@ -130,9 +130,9 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
     }
 
 
-    public FlowoutPort NextFlow()
+    public outFlow NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+        return this.transform.Find("outFlow").GetComponent<outFlow>();
     }
 
     public IEnumerator ProcessData()

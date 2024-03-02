@@ -7,7 +7,7 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
     //node name
     private NodeNameManager nameManager;
 
-    public FlowoutPort NextFlow()
+    public outFlow NextFlow()
     {
         return null;
     }
@@ -34,6 +34,5 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
     {
 
     }
-
 }
 

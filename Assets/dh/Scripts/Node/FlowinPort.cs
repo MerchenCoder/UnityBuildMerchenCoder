@@ -6,7 +6,7 @@ using System;
 public class FlowinPort : MonoBehaviour
 {
     private bool isConnected = false;
-    [NonSerialized] public FlowoutPort connectedPort;
+    [NonSerialized] public outFlow connectedPort;
 
     public bool IsConnected
     {

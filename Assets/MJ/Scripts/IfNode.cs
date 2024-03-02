@@ -70,20 +70,20 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
         yield return null;
     }
 
-    public FlowoutPort NextFlow()
+    public outFlow NextFlow()
     {
         n1 = dataInPort1.InputValueBool;
         if (n1 == true)
         {
             Debug.Log("conclusion: n1 is true");
             nodeData.ErrorFlag = false;
-            return this.transform.Find("outputTrueFlow").GetComponent<FlowoutPort>(); ;
+            return this.transform.Find("outputTrueFlow").GetComponent<outFlow>(); ;
         }
         else
         {
             Debug.Log("conclusion: n1 is false");
             nodeData.ErrorFlag = false;
-            return this.transform.Find("outputFalseFlow").GetComponent<FlowoutPort>(); ;
+            return this.transform.Find("outputFalseFlow").GetComponent<outFlow>(); ;
         }
     }
 }

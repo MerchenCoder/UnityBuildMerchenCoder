@@ -1,4 +1,4 @@
 public interface IFollowFlow
 {
-    public abstract FlowoutPort NextFlow();
+    public abstract outFlow NextFlow();
 }

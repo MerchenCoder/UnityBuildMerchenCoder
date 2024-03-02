@@ -12,7 +12,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
 
     //변수 선언
     private GameObject currentNode;
-    private FlowoutPort currentFlowoutPort;
+    private outFlow currentFlowoutPort;
     [NonSerialized] public bool isBreaking;
 
     private void Start()
@@ -23,7 +23,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
 
 
     //다음 노드 반환하는 메소드
-    public GameObject NextNode(FlowoutPort flowoutPort)
+    public GameObject NextNode(outFlow flowoutPort)
     {
         if (flowoutPort.ConnectedPort != null)
             return flowoutPort.ConnectedPort.transform.parent.gameObject;
@@ -31,9 +31,9 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
     }
 
     // 실행함수 완전히 종료 후 종료플로우
-    public FlowoutPort NextFlow()
+    public outFlow NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+        return this.transform.Find("outFlow").GetComponent<outFlow>();
     }
 
     IEnumerator INode.Execute()
@@ -61,7 +61,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
 
             Debug.Log(_index + 1 + "번째 실행");
             //반복 시작 노드의 Flow outPort 찾기
-            currentFlowoutPort = this.transform.Find("loopFlow").GetComponent<FlowoutPort>();
+            currentFlowoutPort = this.transform.Find("loopFlow").GetComponent<outFlow>();
             //Flow loopPort로 반복내용 node 찾아서 currentNode 업데이트
             currentNode = NextNode(currentFlowoutPort);
 

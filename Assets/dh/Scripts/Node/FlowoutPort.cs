@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
-public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class outFlow : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public GameObject arrowPrefab; // ȭ��ǥ UI ������
     private GameObject arrowObject;
@@ -122,7 +122,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 connectedPort.GetComponent<FlowinPort>().IsConnected = true;
                 if (connectedPort.transform.parent.gameObject.tag == "endNode")
                 {
-                    connectedPort.GetComponent<endNode>().IsConnected = true;
+                    connectedPort.GetComponent<Node_End>().IsConnected = true;
 
                 }
                 //result.gameObject.GetComponent<endNode>().isConnectedEnd();
@@ -139,7 +139,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 connectedPort.GetComponent<FlowinPort>().IsConnected = false;
                 if (connectedPort.transform.parent.gameObject.tag == "endNode")
 
-                    connectedPort.GetComponent<endNode>().IsConnected = false;
+                    connectedPort.GetComponent<Node_End>().IsConnected = false;
             }
 
             connectedPort = null;
@@ -166,7 +166,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void ConnectPort()
     {
-        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
+        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<outFlow>();
         // out port ȭ��ǥ ����
         updatePosition = connectedPort.transform.position;
         transform.position = updatePosition;
@@ -181,7 +181,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     public void ReconnectPort()
     {
-        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
+        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<outFlow>();
         updatePosition = connectedPort.transform.position;
         transform.position = updatePosition;
         updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
