@@ -46,9 +46,38 @@ public class NodeManager : MonoBehaviour
 
     }
 
+    private bool deleteMode = false;
+    public event Action<bool> DeleteModeChanged;
+
+    public bool DeleteMode
+    {
+        get
+        {
+            return deleteMode;
+
+        }
+
+        set
+        {
+            if (deleteMode != value)
+            {
+                deleteMode = value;
+                OnDeleteModeChanged(deleteMode);
+
+            }
+
+        }
 
 
-    public bool deleteMode = false;
+    }
+    protected virtual void OnDeleteModeChanged(bool newState)
+    {
+        DeleteModeChanged?.Invoke(newState);
+
+    }
+
+
+
     private void Awake()
     {
         compileError = false;

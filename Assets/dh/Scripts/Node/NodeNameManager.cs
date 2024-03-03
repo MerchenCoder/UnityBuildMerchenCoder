@@ -96,7 +96,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public void OnPointerDown(PointerEventData eventData)
     {
         //삭제 로직
-        if (NodeManager.Instance.deleteMode)
+        if (NodeManager.Instance.DeleteMode)
         {
             if (eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>() != null)
             {
@@ -114,7 +114,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!NodeManager.Instance.deleteMode)
+        if (!NodeManager.Instance.DeleteMode)
         {
             // Debug.Log(eventData.pointerPressRaycast);
             if (!eventData.pointerPressRaycast.gameObject.GetComponent<NodeNameManager>())
@@ -156,7 +156,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             return;
         }
         //삭제모드이면 drag시 아무런 처리 안함
-        if (NodeManager.Instance.deleteMode)
+        if (NodeManager.Instance.DeleteMode)
         {
             Debug.Log("삭제모드입니다. 노드를 움직일 수 없습니다.");
             return;
@@ -256,7 +256,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public void OnPointerUp(PointerEventData eventData)
     {
         //Debug.Log(eventData.pointerCurrentRaycast);
-        if (NodeManager.Instance.deleteMode)
+        if (NodeManager.Instance.DeleteMode)
         {
             if (canDelete && (eventData.pointerCurrentRaycast.gameObject == eventData.pointerPressRaycast.gameObject) && eventData.pointerCurrentRaycast.gameObject.GetComponent<NodeNameManager>() != null)
             {
