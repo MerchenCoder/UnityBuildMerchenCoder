@@ -6,9 +6,7 @@ using System;
 public class FuncNode : MonoBehaviour, INode, IFollowFlow
 {
     //함수 만들어질때 설정되는 값
-    [NonSerialized]
     public int funIndex;
-    [NonSerialized]
     public string funName;
 
     private int type;
@@ -112,7 +110,12 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     IEnumerator ExecuteFunction()
     {
-        Debug.Log("함수 실행 시작");
+        if (type == 2 || type == 4)
+        {
+            nodeData.ErrorFlag = true;
+        }
+
+        Debug.Log(funName + "함수 실행 시작");
         while (currentNode.GetComponent<NodeNameManager>().NodeName != "EndNode")
         {
             Debug.Log(currentNode.name);
@@ -196,4 +199,5 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
+
 }

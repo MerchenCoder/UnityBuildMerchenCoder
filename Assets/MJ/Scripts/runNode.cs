@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,19 +8,16 @@ public class runNode : MonoBehaviour
 {
     public GameObject resultCanvas;
     public GameObject canvas;
-    public GameObject[] flowEndPorts; // 배열로 변경
-    public GameObject[] inFlows; // inFlow 객체 배열
+    public GameObject[] flowEndPorts;
+    public GameObject[] inFlows;
     public GameObject flowStartPort;
     public Button button;
-
-    void Start()
-    {
-        InitializeInFlows();
-        InitializeFlowEndPorts();
-    }
+    public GameObject[] endNodes;
 
     void Update()
     {
+        InitializeFlowStartPorts();
+        InitializeFlowEndPorts(); // Update에서 InitializeFlowEndPorts 호출
         CheckExecutionAvailability();
     }
 
@@ -30,77 +27,82 @@ public class runNode : MonoBehaviour
         NodeManager.Instance.Run();
     }
 
-    private void InitializeInFlows()
+    private void InitializeFlowStartPorts()
     {
-        List<GameObject> inFlowObjects = new List<GameObject>();
-
-        // canvas의 모든 하위 객체를 검사하여 이름이 "inFlow"인 것을 찾음
-        foreach (Transform child in canvas.GetComponentsInChildren<Transform>())
+        GameObject[] startNodes = GameObject.FindGameObjectsWithTag("startNode");
+        if (startNodes.Length > 0)
         {
-            if (child.name == "inFlow")
-            {
-                inFlowObjects.Add(child.gameObject);
-            }
+            flowStartPort = startNodes[0];
         }
-
-        // List를 배열로 변환
-        inFlows = inFlowObjects.ToArray();
-        Debug.Log("inFlows Length = " + inFlows.Length);
+        else
+        {
+            Debug.Log("No object found with tag 'startNode'");
+            flowStartPort = null;
+        }
     }
 
     private void InitializeFlowEndPorts()
     {
-        // canvas 자식들 중 endNode 컴포넌트가 있는 오브젝트를 찾아서 flowEndPorts 배열에 할당
-        endNode[] endNodes = canvas.GetComponentsInChildren<endNode>();
-        flowEndPorts = new GameObject[endNodes.Length];
-        for (int i = 0; i < endNodes.Length; i++)
+        endNodes = GameObject.FindGameObjectsWithTag("endNode");
+        if (endNodes.Length > 0)
         {
-            flowEndPorts[i] = endNodes[i].gameObject;
+            flowEndPorts = endNodes;
+        }
+        else
+        {
+            Debug.Log("No object found with tag 'endNode'");
+            flowEndPorts = null;
         }
     }
 
     private void CheckExecutionAvailability()
     {
-        // flowEndPorts 배열의 모든 요소가 연결되어 있는지 확인
-        bool allEndPortsConnected = true;
-        // inFlows 배열의 모든 요소가 연결되어 있는지 확인
-        foreach (GameObject port in flowEndPorts)
+        if (flowEndPorts == null || flowStartPort == null)
         {
-            // 포트가 파괴되었는지 확인
-            if (port == null)
-            {
-                // 포트가 파괴되었으면 반복문을 종료하고 함수를 빠져나감
-                allEndPortsConnected = false;
-                break;
-            }
+            button.interactable = false;
+            return;
+        }
 
-            // 연결 상태 확인
-            if (!port.GetComponent<endNode>().isConnected)
+        // Check if start port is connected
+        bool startFlowConnected = false;
+        if (flowStartPort != null)
+        {
+            FlowoutPort outFlow = flowStartPort.GetComponentInChildren<FlowoutPort>();
+            if (outFlow != null && outFlow.IsConnected)
             {
-                allEndPortsConnected = false;
-                break; // 하나라도 연결이 안 되어 있으면 바로 종료
+                startFlowConnected = true;
             }
         }
 
-        // 모든 inFlows가 연결되어 있는지 확인
-        bool allInFlowsConnected = true;
-        foreach (GameObject inFlowObject in inFlows)
+        // Check if all end ports are connected
+        bool allEndPortsConnected = true; // 기본값을 true로 설정
+        GameObject[] inFlows = GameObject.FindGameObjectsWithTag("flow_end");
+        foreach (GameObject inflow in inFlows)
         {
-            FlowinPort inFlowPort = inFlowObject.GetComponent<FlowinPort>();
-            if (inFlowPort == null || !inFlowPort.IsConnected)
+            // inflow에 태그가 "flow_end"인 경우
+            if (inflow.CompareTag("flow_end"))
             {
-                allInFlowsConnected = false;
-                break;
+                // 해당 오브젝트의 연결 상태를 확인하고 연결되어 있지 않으면 allEndPortsConnected를 false로 설정
+                Node_End endNode = inflow.GetComponent<Node_End>();
+                if (endNode == null || !endNode.IsConnected)
+                {
+                    allEndPortsConnected = false;
+                    //Debug.Log("End Node not connected: " + inflow.name); // 연결되지 않은 노드 이름을 출력
+                }
             }
         }
 
         // 모든 flowEndPorts가 연결되어 있고 flowStartPort도 연결되어 있다면 실행 가능
-        if (allEndPortsConnected && (flowStartPort != null) && allInFlowsConnected && (flowStartPort.GetComponent<FlowoutPort>() != null))
+        if (allEndPortsConnected && startFlowConnected)
         {
-            button.interactable = flowStartPort.GetComponent<FlowoutPort>().IsConnected;
+            //Debug.Log("allEndPortsConnected: " + allEndPortsConnected);
+            //Debug.Log("startFlowConnected: " + startFlowConnected);
+            button.interactable = true;
         }
         else
         {
+            //Debug.Log("allEndPortsConnected: " + allEndPortsConnected);
+            //Debug.Log("startFlowConnected: " + startFlowConnected);
             button.interactable = false;
         }
     }

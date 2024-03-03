@@ -16,21 +16,25 @@ public class GetValueNode : MonoBehaviour, INode
     public IEnumerator ProcessData()
     {
         transform.GetChild(0).GetComponent<AddValueBtn>().OnChangeValue();
+        Debug.Log("GetValueNode 내부 ProcessData 실행중");
         if (transform.GetChild(0).GetComponent<AddValueBtn>().dropdown.value == 0)
         {
             Debug.Log("변수가 선택되지 않음");
             NodeManager.Instance.SetCompileError(true);
 
-            yield return null;
+            yield break;
         }
         if (!transform.GetChild(0).GetComponent<AddValueBtn>().IsInit())
         {
             Debug.Log("추가한 변수가 초기화되지 않은 상태로 사용됨");
             NodeManager.Instance.SetCompileError(true);
 
-            yield return null;
+            yield break;
         }
+        GetComponent<NodeData>().ErrorFlag = false;
         yield return outPort.SendData();
+        GetComponent<NodeData>().ErrorFlag = true;
+
     }
 
     void Start()

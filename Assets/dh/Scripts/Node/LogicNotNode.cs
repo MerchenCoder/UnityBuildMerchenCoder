@@ -100,7 +100,7 @@ public class LogicNotNode : MonoBehaviour, INode
             nodeData.ErrorFlag = false;
 
             yield return GetComponentInChildren<DataOutPort>().SendData();
-
+            nodeData.ErrorFlag = true;
 
         }
     }
