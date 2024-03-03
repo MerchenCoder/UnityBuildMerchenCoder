@@ -67,7 +67,7 @@ public class runNode : MonoBehaviour
         bool startFlowConnected = false;
         if (flowStartPort != null)
         {
-            outFlow outFlow = flowStartPort.GetComponentInChildren<outFlow>();
+            FlowoutPort outFlow = flowStartPort.GetComponentInChildren<FlowoutPort>();
             if (outFlow != null && outFlow.IsConnected)
             {
                 startFlowConnected = true;

@@ -19,7 +19,7 @@ public class runNode1 : MonoBehaviour
     void Update()
     {
 
-        if (flowEndPort.GetComponent<Node_End>().isConnected == true && flowStartPort.GetComponent<outFlow>().IsConnected == true && flowEndPort1.GetComponent<Node_End>().isConnected == true)  // isConnected 변수 대신 IsConnected 프로퍼티 사용
+        if (flowEndPort.GetComponent<Node_End>().isConnected == true && flowStartPort.GetComponent<FlowoutPort>().IsConnected == true && flowEndPort1.GetComponent<Node_End>().isConnected == true)  // isConnected 변수 대신 IsConnected 프로퍼티 사용
         {
             button.interactable = true;
             // Debug.Log("실행가능합니다.");

@@ -19,7 +19,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
 
     private DataOutPort[] dataOutPorts;
-    private outFlow[] flowoutPorts;
+    private FlowoutPort[] flowoutPorts;
     private FlowinPort[] flowinPorts;
     private DataInPort[] dataInPorts;
 
@@ -37,7 +37,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         rectTransform = GetComponent<RectTransform>();
         dataOutPorts = GetComponentsInChildren<DataOutPort>();
         dataInPorts = GetComponentsInChildren<DataInPort>();
-        flowoutPorts = GetComponentsInChildren<outFlow>();
+        flowoutPorts = GetComponentsInChildren<FlowoutPort>();
         flowinPorts = GetComponentsInChildren<FlowinPort>();
     }
 
@@ -55,7 +55,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                 }
             }
             //flowoutPort 정리
-            foreach (outFlow flowoutPort in flowoutPorts)
+            foreach (FlowoutPort flowoutPort in flowoutPorts)
             {
                 if (flowoutPort.isConnected)
                 {
@@ -129,11 +129,11 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                     Vector3 offset = child.GetComponent<DataOutPort>().originVector3 - transform.position;
                     offsetList.Add(offset);
                 }
-                else if (child.GetComponent<outFlow>()
+                else if (child.GetComponent<FlowoutPort>()
 
                 )
                 {
-                    Vector3 offset = child.GetComponent<outFlow>().originVector3 - transform.position;
+                    Vector3 offset = child.GetComponent<FlowoutPort>().originVector3 - transform.position;
                     offsetList.Add(offset);
                 }
                 else
@@ -195,27 +195,27 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
                         child.GetComponent<DataOutPort>().ReconnectPort();
                     }
                 }
-                else if (child.GetComponent<outFlow>())
+                else if (child.GetComponent<FlowoutPort>())
                 {
-                    if (child.GetComponent<outFlow>())
+                    if (child.GetComponent<FlowoutPort>())
                     {
-                        if (!child.GetComponent<outFlow>().isConnected)
+                        if (!child.GetComponent<FlowoutPort>().isConnected)
                         { //연결 안된 상태
                           // Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected);
                           // child.GetComponent<RectTransform>().anchoredPosition += delta;
-                            child.GetComponent<outFlow>().UpdatePosition();
+                            child.GetComponent<FlowoutPort>().UpdatePosition();
                         }
                         else
                         {
                             // Debug.Log("connected 상태 : " + child.GetComponent<FlowoutPort>().isConnected + "이므로 이 포트는 움직이지 않아야함");
                             //연결된 상태
                             //1.DataOutPort의 originVector3와 originLocalPosition을 update 해준다.(노드가 포트의 원래 위치도 움직임에 따라 같이 움직여야 하기 때문)
-                            child.GetComponent<outFlow>().originVector3 = transform.position + offsetList[i];
+                            child.GetComponent<FlowoutPort>().originVector3 = transform.position + offsetList[i];
 
                             //2. 포트는 연결되어 있는 상태에서 그 위치 그대로 유지
                             //3. arrow 다시 그리기
                             //이를 위한 함수 호출
-                            child.GetComponent<outFlow>().ReconnectPort();
+                            child.GetComponent<FlowoutPort>().ReconnectPort();
                         }
                     }
 

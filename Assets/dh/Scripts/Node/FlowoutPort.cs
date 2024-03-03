@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
-public class outFlow : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public GameObject arrowPrefab; // ȭ��ǥ UI ������
     private GameObject arrowObject;
@@ -172,7 +172,7 @@ public class outFlow : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void ConnectPort()
     {
-        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<outFlow>();
+        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
         // out port ȭ��ǥ ����
         updatePosition = connectedPort.transform.position;
         transform.position = updatePosition;
@@ -187,7 +187,7 @@ public class outFlow : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void ReconnectPort()
     {
-        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<outFlow>();
+        connectedPort.GetComponent<FlowinPort>().connectedPort = this.GetComponent<FlowoutPort>();
         updatePosition = connectedPort.transform.position;
         transform.position = updatePosition;
         updateLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);

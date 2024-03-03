@@ -29,7 +29,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     private GameObject startNode;
     private GameObject currentNode;
-    private outFlow currentFlowoutPort;
+    private FlowoutPort currentFlowoutPort;
 
     private NodeData nodeData;
 
@@ -158,7 +158,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
     }
 
 
-    public GameObject NextNode(outFlow flowoutPort)
+    public GameObject NextNode(FlowoutPort flowoutPort)
     {
         if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
         {
@@ -195,8 +195,9 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
         yield return null;
     }
 
-    public outFlow NextFlow()
+    public FlowoutPort NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<outFlow>();
+        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
+
 }

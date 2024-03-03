@@ -614,7 +614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0072021484
+      value: -0.008422852
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -872,6 +872,37 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4163269284571209319, guid: 166a87645ab0641a8923ddc732559392, type: 3}
   m_PrefabInstance: {fileID: 491846449}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &684056681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 684056682}
+  m_Layer: 0
+  m_Name: TestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &684056682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684056681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1378.5491, y: 476.97125, z: 4189.5615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &797096878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1164,6 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50f767717d2c489ca349d2f6a03dd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deleteMode: 0
 --- !u!4 &1240061377
 Transform:
   m_ObjectHideFlags: 0
@@ -5032,3 +5064,4 @@ SceneRoots:
   - {fileID: 2049903908}
   - {fileID: 6326580562153244377}
   - {fileID: 1730286749}
+  - {fileID: 684056682}

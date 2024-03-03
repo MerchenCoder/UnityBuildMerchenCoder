@@ -12,7 +12,7 @@ public class NodeManager : MonoBehaviour
     //변수 선언
     private GameObject startNode;
     private GameObject currentNode;
-    private outFlow currentFlowoutPort;
+    private FlowoutPort currentFlowoutPort;
 
 
     private Coroutine executeCoroutine;
@@ -94,7 +94,7 @@ public class NodeManager : MonoBehaviour
 
 
     //다음 노드 반환하는 메소드
-    public GameObject NextNode(outFlow flowoutPort)
+    public GameObject NextNode(FlowoutPort flowoutPort)
     {
         if (flowoutPort.isConnected)
         {

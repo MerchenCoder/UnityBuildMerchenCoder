@@ -7,9 +7,9 @@ public class StartNode : MonoBehaviour, IFollowFlow, INode
     //node name
     private NodeNameManager nameManager;
 
-    public outFlow NextFlow()
+    public FlowoutPort NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<outFlow>();
+        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
     IEnumerator INode.Execute()

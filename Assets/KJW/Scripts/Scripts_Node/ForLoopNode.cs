@@ -14,7 +14,7 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
 
     //변수 선언
     private GameObject currentNode;
-    private outFlow currentFlowoutPort;
+    private FlowoutPort currentFlowoutPort;
     [NonSerialized] public bool isBreaking;
 
     private void Start()
@@ -23,17 +23,17 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
     }
 
     //다음 노드 반환하는 메소드
-    public GameObject NextNode(outFlow flowoutPort)
+    public GameObject NextNode(FlowoutPort flowoutPort)
     {
-        if(flowoutPort.ConnectedPort != null)
+        if (flowoutPort.ConnectedPort != null)
             return flowoutPort.ConnectedPort.transform.parent.gameObject;
         else return null;
     }
 
     // 실행함수 완전히 종료 후 종료플로우
-    public outFlow NextFlow()
+    public FlowoutPort NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<outFlow>();
+        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
     IEnumerator INode.Execute()
@@ -58,13 +58,13 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
             Debug.Log(_index + 1 + "번째 실행");
             GetComponent<NodeData>().data_int = _index + 1;
             //반복 시작 노드의 Flow outPort 찾기
-            currentFlowoutPort = this.transform.Find("loopFlow").GetComponent<outFlow>();
+            currentFlowoutPort = this.transform.Find("loopFlow").GetComponent<FlowoutPort>();
             //Flow loopPort로 반복내용 node 찾아서 currentNode 업데이트
             currentNode = NextNode(currentFlowoutPort);
             if (dataOutPort.isConnected) dataOutPort.SendData();
 
             // 실행
-            if(currentNode != null)
+            if (currentNode != null)
                 yield return currentNode.GetComponent<INode>().Execute();
             else
             {
@@ -96,7 +96,7 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
                 //Flow outPort로 다음 node 찾아서 currentNode 업데이트
                 currentNode = NextNode(currentFlowoutPort);
 
-                if(currentNode.CompareTag("endNode"))
+                if (currentNode.CompareTag("endNode"))
                 {
                     Debug.Log("For 반복문 노드 끝 노드에 연결됨");
                     NodeManager.Instance.SetCompileError(true);

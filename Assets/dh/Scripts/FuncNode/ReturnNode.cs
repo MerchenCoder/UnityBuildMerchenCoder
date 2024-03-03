@@ -51,9 +51,9 @@ public class ReturnNode : MonoBehaviour, INode, IFollowFlow
 
     }
 
-    public outFlow NextFlow()
+    public FlowoutPort NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<outFlow>();
+        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
 
     }
 
