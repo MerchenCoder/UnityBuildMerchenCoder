@@ -25,11 +25,11 @@ public class FuncNodeBtn : MonoBehaviour
 
     private void MakeInstance()
     {
-        Debug.Log("MakeInstance 함수 호출");
         if (funcNode != null)
         {
+            Debug.Log("MakeInstance 함수 호출");
             Debug.Log(transform.GetComponentInParent<Canvas>().name);
-            spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).transform;
+            spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform;
 
             GameObject funcNodeInstance = Instantiate(funcNode);
             funcNodeInstance.transform.SetParent(spawnPoint, false);

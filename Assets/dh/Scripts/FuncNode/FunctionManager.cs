@@ -226,7 +226,7 @@ public class FunctionManager : MonoBehaviour
         //funBtn 배치하기(함수 캔버스 노드 메뉴에)
         for (int i = 0; i < myfuncCanvas.Count - 1; i++)
         {
-            Transform funcNodeMenu = myfuncCanvas[i].transform.GetChild(1);
+            Transform funcNodeMenu = myfuncCanvas[i].transform.GetChild(2);
 
             if (funcNodeMenu != null)
             {
@@ -234,10 +234,11 @@ public class FunctionManager : MonoBehaviour
 
                 //funcBtn 복제
                 GameObject clonedFuncBtn = Instantiate(funcBtn);
+                clonedFuncBtn.GetComponent<FuncNodeBtn>().funcNode = funcBtn.GetComponent<FuncNodeBtn>().funcNode;
+
                 clonedFuncBtn.transform.SetParent(panelFunContent, false);
                 Debug.Log(myfuncCanvas[i].name + "에 clonedFuncBtn 삽입");
 
-                // LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)panelFunContent.transform); //content sizefitter 버그 해결을 위한 리프레시
             }
             else
             {
@@ -437,7 +438,8 @@ public class FunctionManager : MonoBehaviour
         if (hasReturn || hasPara)
         {
             //canvasPrefabInstance.transform.GetChild(2).GetChild(9).gameObject.SetActive(true);
-            canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(true);
+            GameObject PanelFuncContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).gameObject;
+            PanelFuncContent.transform.GetChild(0).gameObject.SetActive(true);
             if (hasReturn)
             {
                 returnBtn.SetActive(true);
@@ -468,18 +470,22 @@ public class FunctionManager : MonoBehaviour
                     paraBtn.GetComponent<ParaNodeBtn>().Para2Type = para2Type;
 
                 }
-                // paraBtn.transform.parent.gameObject.SetActive(true);
             }
             else
             {
                 paraBtn.SetActive(false);
             }
-
+            // paraBtn.transform.parent.gameObject.SetActive(true);
+            Debug.Log("HorizonatalLayout 끄고 켜기");
+            PanelFuncContent.GetComponent<HorizontalLayoutGroup>().enabled = false;
+            PanelFuncContent.GetComponent<HorizontalLayoutGroup>().enabled = true;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(PanelFuncContent.GetComponent<RectTransform>());
         }
         else
         {
             canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(false);
         }
+
 
 
         //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
