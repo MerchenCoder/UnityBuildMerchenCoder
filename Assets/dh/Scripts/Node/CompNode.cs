@@ -170,7 +170,7 @@ public class CompNode : MonoBehaviour, INode
 
 
             yield return GetComponentInChildren<DataOutPort>().SendData();
-
+            nodeData.ErrorFlag = true;
         }
     }
 

@@ -75,19 +75,23 @@ public class ReturnNode : MonoBehaviour, INode, IFollowFlow
         //혹시 모르니 해당 노드의 NodeData에도 저장을 해준다 (필요할까...?)
         if (dataInPort.tag == "data_int")
         {
-            transform.parent.parent.GetComponent<ForFunctionRunData>().rt_int = dataInPort.InputValueInt;
+            transform.GetComponentInParent<ForFunctionRunData>(true).rt_int = dataInPort.InputValueInt;
             GetComponent<NodeData>().SetData_Int = dataInPort.InputValueInt;
+            Debug.Log("반환 값은 : " + dataInPort.InputValueInt.ToString());
 
         }
         else if (dataInPort.tag == "data_bool")
         {
-            transform.parent.parent.GetComponent<ForFunctionRunData>().rt_bool = dataInPort.InputValueBool;
+            transform.GetComponentInParent<ForFunctionRunData>(true).rt_bool = dataInPort.InputValueBool;
             GetComponent<NodeData>().SetData_Bool = dataInPort.InputValueBool;
+            Debug.Log("반환 값은 : " + dataInPort.InputValueBool.ToString());
         }
+
         else
         {
-            transform.parent.parent.GetComponent<ForFunctionRunData>().rt_string = dataInPort.InputValueStr;
+            transform.GetComponentInParent<ForFunctionRunData>(true).rt_string = dataInPort.InputValueStr;
             GetComponent<NodeData>().SetData_string = dataInPort.InputValueStr;
+            Debug.Log("반환 값은 : " + dataInPort.InputValueStr);
         }
         GetComponent<NodeData>().ErrorFlag = false;
 

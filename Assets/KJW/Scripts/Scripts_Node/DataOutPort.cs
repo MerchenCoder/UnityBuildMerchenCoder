@@ -46,6 +46,15 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
     }
 
+    public void UpdatePositionByScroll()
+    {
+        if (originVector3 != transform.position)
+        {
+            Debug.Log("originVector3 변경됨");
+            originVector3 = transform.parent.TransformPoint(originLocalPosition);
+        }
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -118,7 +127,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                     isConnected = true;
                     // SendData();
                     connectedPort.GetComponent<DataInPort>().IsConnected = true;
-
+                    return; //서로 다른 노드의 포트 겹쳐져있을 때 하나만 인식하도록 해야함(2/13추가)
                 }
             }
         }
@@ -154,6 +163,8 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             connectedPort.GetComponent<DataInPort>().IsConnected = false;
             connectedPort = null;
         }
+        //자신의 isConnected 변수도 업데이트 시켜줘야함(2.28 오류 발생)
+        isConnected = false;
     }
 
 
@@ -225,7 +236,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         else
         {
 
-            Debug.Log(parentNode.gameObject.name.ToString() + ", 의 errorFlag가 false인 상황.따라서 SendData를 할 수 없어서 먼저 processData()를 호출하여 데이터를 가져와 처리(계산)해야함");
+            Debug.Log(parentNode.gameObject.name.ToString() + "의 errorFlag가 true인 상황.따라서 SendData를 할 수 없어서 먼저 processData()를 호출하여 데이터를 가져와 처리(계산)해야함");
 
             yield return parentNode.GetComponent<INode>().ProcessData();
 

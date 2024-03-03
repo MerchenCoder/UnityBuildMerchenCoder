@@ -207,6 +207,7 @@ public class CalcNode : MonoBehaviour, INode
             nodeData.SetData_Int = CalcData(method, n1, n2);
 
             yield return GetComponentInChildren<DataOutPort>().SendData();
+            nodeData.ErrorFlag = true;
         }
 
 

@@ -34,6 +34,5 @@ public class EndNode : MonoBehaviour, IFollowFlow, INode
     {
 
     }
-
 }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class endNode : MonoBehaviour
+public class Node_End : MonoBehaviour
 {
 
     // DataOutPort 클래스의 인스턴스를 저장할 변수

@@ -45,16 +45,19 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
                 yield return dataInPort.connectedPort.SendData();
                 if (CompareTag("data_int"))
                 {
+                    valueManager.intValues[dropdown.value - 2].isInit = true;
                     valueManager.intValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueInt;
                     nodeData.data_int = dataInPort.InputValueInt;
                 }
                 else if (CompareTag("data_bool"))
                 {
+                    valueManager.boolValues[dropdown.value - 2].isInit = true;
                     valueManager.boolValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueBool;
                     nodeData.data_bool = dataInPort.InputValueBool;
                 }
                 else if (CompareTag("data_string"))
                 {
+                    valueManager.stringValues[dropdown.value - 2].isInit = true;
                     valueManager.stringValues[dropdown.value - 2].valueOfValue = dataInPort.InputValueStr;
                     nodeData.data_string = dataInPort.InputValueStr;
                 }

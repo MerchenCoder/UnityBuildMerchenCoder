@@ -54,27 +54,28 @@ public class ModifyFunction : MonoBehaviour
         modifyCanvas.gameObject.SetActive(false);
     }
 
-    public void RemoveFunc()
-    {
-        int selectedIndex = funcListDropDown.value;
+    //삭제 기능 제거
+    // public void RemoveFunc()
+    // {
+    //     int selectedIndex = funcListDropDown.value;
 
-        if (selectedIndex >= 0 && selectedIndex < FunctionManager.Instance.myfuncCanvas.Count)
-        {
-            GameObject removeFuncCanvas = FunctionManager.Instance.myfuncCanvas[funcListDropDown.value];
-            FunctionManager.Instance.myfuncCanvas.RemoveAt(funcListDropDown.value);
-            FunctionManager.Instance.myfuncNodes.RemoveAt(funcListDropDown.value);
-            Debug.Log(removeFuncCanvas.name.ToString() + " 함수가 삭제되었습니다.");
-            Destroy(removeFuncCanvas.gameObject);
+    //     if (selectedIndex >= 0 && selectedIndex < FunctionManager.Instance.myfuncCanvas.Count)
+    //     {
+    //         GameObject removeFuncCanvas = FunctionManager.Instance.myfuncCanvas[funcListDropDown.value];
+    //         FunctionManager.Instance.myfuncCanvas.RemoveAt(funcListDropDown.value);
+    //         FunctionManager.Instance.myfuncNodes.RemoveAt(funcListDropDown.value);
+    //         Debug.Log(removeFuncCanvas.name.ToString() + " 함수가 삭제되었습니다.");
+    //         Destroy(removeFuncCanvas.gameObject);
 
 
-            GameObject functionManager = GameObject.Find("FunctionManager").gameObject;
-            Destroy(functionManager.transform.GetChild(funcListDropDown.value).gameObject);
+    //         GameObject functionManager = GameObject.Find("FunctionManager").gameObject;
+    //         Destroy(functionManager.transform.GetChild(funcListDropDown.value).gameObject);
 
-            //더 좋은 방법이 없을까?
-            Destroy(GameObject.Find("temp menu").transform.GetChild(2).GetChild(funcListDropDown.value).gameObject);
-            modifyCanvas.gameObject.SetActive(false);
-        }
+    //         //더 좋은 방법이 없을까?
+    //         Destroy(GameObject.Find("PanelFunContent").transform.GetChild(2).GetChild(funcListDropDown.value + 1).gameObject);
+    //         modifyCanvas.gameObject.SetActive(false);
+    //     }
 
-    }
+    // }
 
 }

@@ -46,9 +46,38 @@ public class NodeManager : MonoBehaviour
 
     }
 
+    private bool deleteMode = false;
+    public event Action<bool> DeleteModeChanged;
+
+    public bool DeleteMode
+    {
+        get
+        {
+            return deleteMode;
+
+        }
+
+        set
+        {
+            if (deleteMode != value)
+            {
+                deleteMode = value;
+                OnDeleteModeChanged(deleteMode);
+
+            }
+
+        }
 
 
-    public bool deleteMode = false;
+    }
+    protected virtual void OnDeleteModeChanged(bool newState)
+    {
+        DeleteModeChanged?.Invoke(newState);
+
+    }
+
+
+
     private void Awake()
     {
         compileError = false;
@@ -67,9 +96,19 @@ public class NodeManager : MonoBehaviour
     //다음 노드 반환하는 메소드
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
-
-        return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        if (flowoutPort.isConnected)
+        {
+            return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        }
+        else
+        {
+            Debug.Log("Flow 연결에 문제가 있습니다.");
+            SetCompileError(true);
+            return null;
+        }
     }
+
+
 
 
 
@@ -83,14 +122,13 @@ public class NodeManager : MonoBehaviour
             currentNode = startNode;
             // 코루틴 실행 메서드
 
-
-
             executeCoroutine = StartCoroutine(ExcuteNode());
 
         }
         catch (NullReferenceException e)
         {
             Debug.LogError("Can't find start node / " + e.Message);
+            SetCompileError(true);
             Debug.LogError(e.StackTrace);
         }
     }
@@ -102,6 +140,7 @@ public class NodeManager : MonoBehaviour
         while (currentNode.GetComponent<NodeNameManager>().NodeName != "EndNode")
         {
             Debug.Log("실행 시작");
+            Debug.Log("현재 실행 중 노드: " + currentNode.name);
             //현재 노드 실행 후 끝날 때까지 기다리기
             yield return currentNode.GetComponent<INode>().Execute();
             // if (compileError)
@@ -112,9 +151,14 @@ public class NodeManager : MonoBehaviour
             // }
             //현재 노드의 Flow outPort 찾기
             currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
-            Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);
+            // Debug.Log("현재 플로우 아웃포트 " + currentFlowoutPort);
             //Flow outPort로 다음 node 찾아서 currentNode 업데이트
             currentNode = NextNode(currentFlowoutPort);
+            if (currentNode == null)
+            {
+                Debug.Log("ExcuteNode 코루틴 종료");
+                yield break;
+            }
         }
         Debug.Log("Run Complete");
         yield return null;

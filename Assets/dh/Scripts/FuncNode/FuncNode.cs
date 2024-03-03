@@ -6,9 +6,7 @@ using System;
 public class FuncNode : MonoBehaviour, INode, IFollowFlow
 {
     //함수 만들어질때 설정되는 값
-    [NonSerialized]
     public int funIndex;
-    [NonSerialized]
     public string funName;
 
     private int type;
@@ -56,12 +54,12 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
                 if (dataInPorts.Length == 2)
                 {
                     dataInPort2 = dataInPorts[1];
+
                 }
                 dataInPort1 = dataInPorts[0];
             }
 
-            Debug.Log(dataInPort1.ToString() + " " + dataInPort2.ToString());
-            Debug.Log(dataInPort2.IsConnected);
+
 
             if ((dataInPort1 != null ? !dataInPort1.IsConnected : false) || (dataInPort2 != null ? !dataInPort2.IsConnected : false))
             {
@@ -87,17 +85,22 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
         Debug.Log(FunctionManager.Instance.myfuncCanvas[funIndex].name);
         NodeNameManager[] nodes = FunctionManager.Instance.myfuncCanvas[funIndex].transform.GetChild(0).GetComponentsInChildren<NodeNameManager>();
-        foreach (NodeNameManager node in nodes)
+
+        for (int i = 0; i < nodes.Length; i++)
         {
-            if (node.NodeName == "StartNode")
+            if (nodes[i].NodeName == "StartNode")
             {
-                startNode = node.gameObject;
+                startNode = nodes[i].gameObject;
                 break;
             }
-            Debug.Log("start 노드를 찾을 수 없습니다.");
-            yield return null;
+            if (i == nodes.Length - 1)
+            {
+                Debug.Log("start 노드를 찾을 수 없습니다.");
+                NodeManager.Instance.SetCompileError(true);
+                Debug.Log("FunNode Excute() 종료.");
+                yield break;
 
-
+            }
         }
         currentNode = startNode;
         yield return ExecuteFunction();
@@ -107,7 +110,12 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
     IEnumerator ExecuteFunction()
     {
-        Debug.Log("함수 실행 시작");
+        if (type == 2 || type == 4)
+        {
+            nodeData.ErrorFlag = true;
+        }
+
+        Debug.Log(funName + "함수 실행 시작");
         while (currentNode.GetComponent<NodeNameManager>().NodeName != "EndNode")
         {
             Debug.Log(currentNode.name);
@@ -115,6 +123,11 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
 
             currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
             currentNode = NextNode(currentFlowoutPort);
+            if (currentNode == null)
+            {
+                Debug.Log("FuncNode의 ExcuteFunction 코루틴 종료");
+                yield break;
+            }
         }
 
         //반환값이 있다면 가져와야함
@@ -140,33 +153,51 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
             }
             nodeData.ErrorFlag = false;
         }
-        Debug.Log("함수 실행 종료");
+        Debug.Log(funName + " 함수 실행 종료");
         yield return null;
     }
 
 
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
-        Debug.Log("flowoutPort의 부모 이름이 무엇이냐 : " + flowoutPort.transform.parent.GetComponent<NodeNameManager>());
         if (flowoutPort.transform.GetComponentInParent<NodeNameManager>(true).NodeName == "ReturnNode")
         {
             return flowoutPort.transform.parent.GetChild(0).gameObject;
+
         }
-        return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        else
+        {
+            Debug.Log(flowoutPort.transform.parent.name);
+            if (flowoutPort.isConnected)
+            {
+                return flowoutPort.ConnectedPort.transform.parent.gameObject;
+            }
+            else
+            {
+                Debug.Log(flowoutPort.isConnected);
+                Debug.Log("flow 문제 발생한 노드는 : " + flowoutPort.transform.parent.name);
+                Debug.Log("Flow 연결에 문제가 있습니다.");
+                NodeManager.Instance.SetCompileError(true);
+                return null;
+            }
+
+        }
     }
+
+
 
     public IEnumerator ProcessData()
     {
-        Debug.Log("Process Data : 함수의 매개변수의 값을 가져오기");
-        Debug.Log("먼저 함수를 실행해서 반환값을 불러와 노드에 저장");
-        yield return Execute();
-
-        Debug.Log("다음 포트로 값 전달하기");
-        yield return GetComponentInChildren<DataOutPort>().SendData();
+        Debug.Log("함수를 flow에 연결하지 않고 dataPort에 연결하여 반환값을 사용하려고 하는 상태 -> error로 처리해야함");
+        NodeManager.Instance.SetCompileError(true);
+        // Debug.Log("다음 포트로 값 전달하기");
+        // yield return GetComponentInChildren<DataOutPort>().SendData();
+        yield return null;
     }
 
     public FlowoutPort NextFlow()
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
+
 }

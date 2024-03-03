@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1025968674273001941}
   - component: {fileID: 3877980999198967245}
   - component: {fileID: 8603453540580133497}
+  - component: {fileID: 468434959613857536}
   m_Layer: 5
   m_Name: Node_Break
   m_TagString: Node_Break
@@ -62,7 +63,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 0, y: 96, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -89,6 +90,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4bb4a1f964ff3e43bf8b1a1ff33827d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &468434959613857536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896780485476210607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23759cbc533bb454480786744312adf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDelete: 0
 --- !u!1 &4678174129174906152
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +115,7 @@ GameObject:
   - component: {fileID: 4852456095309915036}
   - component: {fileID: 3688778485784006479}
   - component: {fileID: 6698470470526901222}
+  - component: {fileID: 2773987940969063170}
   m_Layer: 5
   m_Name: inFlow
   m_TagString: flow
@@ -210,3 +225,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 79.9314, y: 71.41577}
   m_EdgeRadius: 0
+--- !u!114 &2773987940969063170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678174129174906152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168403ea3263f47a291891d5252030ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

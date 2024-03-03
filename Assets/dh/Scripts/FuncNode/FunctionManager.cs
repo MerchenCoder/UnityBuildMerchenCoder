@@ -100,6 +100,7 @@ public class FunctionManager : MonoBehaviour
         set
         {
             para2Name = value;
+            Debug.Log(para2Name);
         }
 
     }
@@ -194,6 +195,8 @@ public class FunctionManager : MonoBehaviour
         functionInstance = Instantiate(functionPrefabs[funcInsType]);
         int[] paraTypes = new int[] { para1Type, para2Type };
         string[] paraNames = new string[] { para1Name, para2Name };
+        //Debug.Log(para2Name);
+        //Debug.Log(paraNames);
         //functionInstance port type & function name 설정
         functionInstance = SetFuncNode(functionInstance, type, funcName, paraTypes, paraNames, returnType);
 
@@ -217,8 +220,34 @@ public class FunctionManager : MonoBehaviour
         funcBtn.GetComponentInChildren<TextMeshProUGUI>().text = funcName != null ? funcName : "이름 오류";
         //3. funBtn 버튼의 prefab gameobject 설정하기
         funcBtn.GetComponent<FuncNodeBtn>().funcNode = functionInstance;
-        //funBtn 배치하기
+        //funBtn 배치하기(메인 캔버스 노드 메뉴에)
         funcBtn.transform.SetParent(funcBtnSpawnPoint, false);
+
+        //funBtn 배치하기(함수 캔버스 노드 메뉴에)
+        for (int i = 0; i < myfuncCanvas.Count - 1; i++)
+        {
+            Transform funcNodeMenu = myfuncCanvas[i].transform.GetChild(2);
+
+            if (funcNodeMenu != null)
+            {
+                Transform panelFunContent = funcNodeMenu.GetChild(9).GetChild(0).transform;
+
+                //funcBtn 복제
+                GameObject clonedFuncBtn = Instantiate(funcBtn);
+                clonedFuncBtn.GetComponent<FuncNodeBtn>().funcNode = funcBtn.GetComponent<FuncNodeBtn>().funcNode;
+
+                clonedFuncBtn.transform.SetParent(panelFunContent, false);
+                Debug.Log(myfuncCanvas[i].name + "에 clonedFuncBtn 삽입");
+
+            }
+            else
+            {
+                Debug.Log("funcNodeMenu is null ref");
+            }
+
+        }
+
+
 
     }
 
@@ -261,46 +290,110 @@ public class FunctionManager : MonoBehaviour
         if (type == 3 || type == 4)
         {
             DataInPort[] dataInPorts = funcNode.GetComponentsInChildren<DataInPort>();
+            Debug.Log(paraTypes[0].ToString() + " " + paraTypes[1].ToString());
 
-            for (int i = 0; i < dataInPorts.Length; i++)
+            if (dataInPorts.Length > 1)
             {
-                if (paraTypes[i] == -1)
+                for (int i = 0; i < dataInPorts.Length; i++)
                 {
-                    Debug.Log("파라미터 2개 아님. 파라미터 없음");
-                    continue;
+                    switch (paraTypes[i])
+                    {
+                        //0:int, 1:bool, 2=string
+                        case 0:
+                            //태그 설정
+                            dataInPorts[i].gameObject.tag = "data_int";
+                            //color 설정
+                            dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+                            Debug.Log("paraTypes index: " + i.ToString() + paraTypes[i].ToString());
+                            Debug.Log("data_int 파라");
+                            break;
+                        case 1:
+                            //태그 설정
+                            dataInPorts[i].gameObject.tag = "data_bool";
+                            //color 설정
+                            dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+                            Debug.Log("paraTypes index: " + i.ToString() + paraTypes[i].ToString());
+                            Debug.Log("data_bool 파라");
+                            break;
+                        case 2:
+                            //태그 설정
+                            dataInPorts[i].gameObject.tag = "data_string";
+                            //color 설정
+                            dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+                            Debug.Log("paraTypes index: " + i.ToString() + paraTypes[i].ToString());
+                            Debug.Log("data_string 파라");
+                            break;
+                    }
+                    dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
                 }
-                switch (paraTypes[i])
-                {
-                    //0:int, 1:bool, 2=string
-                    case 0:
-                        //태그 설정
-                        dataInPorts[i].gameObject.tag = "data_int";
-                        //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
-
-                        break;
-                    case 1:
-                        //태그 설정
-                        dataInPorts[i].gameObject.tag = "data_bool";
-                        //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
-                        break;
-                    case 2:
-                        //태그 설정
-                        dataInPorts[i].gameObject.tag = "data_string";
-                        //color 설정
-                        dataInPorts[i].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
-                        break;
-                }
-                dataInPorts[i].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[i];
-
             }
+            else
+            {
+                if (paraTypes[0] == -1)
+                {
+                    switch (paraTypes[1])
+                    {
+                        //0:int, 1:bool, 2=string
+                        case 0:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_int";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+
+                            break;
+                        case 1:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_bool";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+
+                            break;
+                        case 2:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_string";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+
+                            break;
+                    }
+                    dataInPorts[0].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[1];
+                }
+                else
+                {
+                    switch (paraTypes[0])
+                    {
+                        //0:int, 1:bool, 2=string
+                        case 0:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_int";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.835f, 0.290f, 0.5f);
+
+                            break;
+                        case 1:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_bool";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.651f, 0.459f, 0.965f, 0.5f);
+
+                            break;
+                        case 2:
+                            //태그 설정
+                            dataInPorts[0].gameObject.tag = "data_string";
+                            //color 설정
+                            dataInPorts[0].gameObject.GetComponent<Image>().color = new Color(0.949f, 0.620f, 0.286f, 0.5f);
+
+                            break;
+                    }
+                    dataInPorts[0].GetComponentInChildren<TextMeshProUGUI>().text = paraNames[0];
+                }
+            }
+
+
         }
-
         return funcNode;
-
-
     }
+
 
 
     public void CreateFunctionMakeCanvas()
@@ -336,54 +429,85 @@ public class FunctionManager : MonoBehaviour
         //스폰 포지션 설정
         canvasPrefabInstance.transform.position = spawnPoint.position;
         //캔버스 활성화
-        canvasPrefabInstance.gameObject.SetActive(true);
+
+        // Transform PanelFuncContent = canvasPrefabInstance.transform.Find("NodeMenu").GetChild(9).GetChild(0);
 
         //반환 노드, 매개변수 노드 인스턴스를 생성할 버튼 설정해주기
-        GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>().gameObject;
-        GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>().gameObject;
-
-        //반환 노드 버튼 만들기
-        if (hasReturn)
+        GameObject returnBtn = canvasPrefabInstance.transform.GetComponentInChildren<ReturnNodeBtn>(true).gameObject;
+        GameObject paraBtn = canvasPrefabInstance.transform.GetComponentInChildren<ParaNodeBtn>(true).gameObject;
+        if (hasReturn || hasPara)
         {
-            returnBtn.SetActive(true);
-            returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
+            //canvasPrefabInstance.transform.GetChild(2).GetChild(9).gameObject.SetActive(true);
+            GameObject PanelFuncContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).gameObject;
+            // PanelFuncContent.transform.GetChild(0).gameObject.SetActive(true);
+            if (hasReturn)
+            {
+                returnBtn.SetActive(true);
+                returnBtn.GetComponent<ReturnNodeBtn>().ReturnType = returnType;
+                // returnBtn.transform.parent.gameObject.SetActive(true);
 
+            }
+            else
+            {
+                returnBtn.SetActive(false);
+            }
+            //매개변수 노드 만들기
+            if (hasPara)
+            {
+                //초기화
+                paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
+                paraBtn.SetActive(true);
+
+                if (hasPara1)
+                {
+                    paraBtn.GetComponent<ParaNodeBtn>().Para1Name = para1Name;
+                    paraBtn.GetComponent<ParaNodeBtn>().Para1Type = para1Type;
+
+                }
+                if (hasPara2)
+                {
+                    paraBtn.GetComponent<ParaNodeBtn>().Para2Name = para2Name;
+                    paraBtn.GetComponent<ParaNodeBtn>().Para2Type = para2Type;
+
+                }
+            }
+            else
+            {
+                paraBtn.SetActive(false);
+            }
+            // paraBtn.transform.parent.gameObject.SetActive(true);
+            Debug.Log("HorizonatalLayout 끄고 켜기");
+            PanelFuncContent.GetComponent<HorizontalLayoutGroup>().enabled = false;
+            PanelFuncContent.GetComponent<HorizontalLayoutGroup>().enabled = true;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(PanelFuncContent.GetComponent<RectTransform>());
         }
         else
         {
-            returnBtn.SetActive(false);
+            canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(false);
         }
-        //매개변수 노드 만들기
-        if (hasPara)
+
+
+
+        //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
+        Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0);
+        GameObject nodeMenuFuncPanel = GameObject.Find("Canvas").transform.GetChild(1).GetChild(9).GetChild(0).gameObject;
+        int childCount = nodeMenuFuncPanel.transform.childCount;
+
+        for (int i = 1; i < childCount; i++)
         {
-            Debug.Log("hasPara");
-            //초기화
-            paraBtn.GetComponent<ParaNodeBtn>().resetParaNodeBtn();
-            paraBtn.SetActive(true);
-
-            if (hasPara1)
-            {
-                paraBtn.GetComponent<ParaNodeBtn>().Para1Name = para1Name;
-                paraBtn.GetComponent<ParaNodeBtn>().Para1Type = para1Type;
-
-            }
-            if (hasPara2)
-            {
-                paraBtn.GetComponent<ParaNodeBtn>().Para2Name = para2Name;
-                paraBtn.GetComponent<ParaNodeBtn>().Para2Type = para2Type;
-
-            }
+            //현재 생성 중인 함수 제외한 함수 노드 버튼 복제
+            GameObject clonedFuncBtn = Instantiate(nodeMenuFuncPanel.transform.GetChild(i).gameObject);
+            clonedFuncBtn.GetComponent<FuncNodeBtn>().funcNode = nodeMenuFuncPanel.transform.GetChild(i).gameObject.GetComponent<FuncNodeBtn>().funcNode;
+            Debug.Log(" 새로 생성중인 함수 캔버스에 clonedFuncBtn 삽입 - 반복 횟수 : " + i.ToString());
+            clonedFuncBtn.transform.SetParent(newCanvasPenalFunContent, false);
         }
-        else
-        {
-            paraBtn.SetActive(false);
-        }
-
-
 
         //함수 개수 업데이트, 캔버스 리스트 업데이트
         totalFunction++;
         myfuncCanvas.Add(canvasPrefabInstance);
+
+
+        canvasPrefabInstance.gameObject.SetActive(true);
 
     }
 }

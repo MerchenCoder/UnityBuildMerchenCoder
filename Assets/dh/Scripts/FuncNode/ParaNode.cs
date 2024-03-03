@@ -20,9 +20,10 @@ public class ParaNode : MonoBehaviour, INode
     }
 
 
-    //functionManager에서 호출해서 설정하도록 함.
+    //ParaNodeBtn에서 호출해서 설정하도록 함.
     public void SetParaNode(int type, string name, int paraNum)
     {
+        Debug.Log(type.ToString() + ", " + name + ", " + paraNum.ToString());
         //노드 nodeName 설정
         GetComponent<NodeNameManager>().NodeName = "ParaNode";
 
@@ -66,14 +67,22 @@ public class ParaNode : MonoBehaviour, INode
 
     public IEnumerator ProcessData()
     {
+        Debug.Log("paraNumber: " + paraNumber.ToString());
         //데이터 받아오기
         GameObject outPort = transform.GetChild(0).gameObject;
         if (outPort.tag == "data_int")
         {
             if (paraNumber == 1)
+            {
+
                 this.GetComponent<NodeData>().SetData_Int = transform.parent.parent.GetComponent<ForFunctionRunData>().p1_int;
+                Debug.Log(transform.parent.parent.GetComponent<ForFunctionRunData>().p1_int);
+            }
             else
+            {
+                Debug.Log(transform.parent.parent.GetComponent<ForFunctionRunData>().p2_int);
                 GetComponent<NodeData>().SetData_Int = transform.parent.parent.GetComponent<ForFunctionRunData>().p2_int;
+            }
         }
         else if (outPort.tag == "data_bool")
         {
@@ -94,6 +103,9 @@ public class ParaNode : MonoBehaviour, INode
         GetComponent<NodeData>().ErrorFlag = false;
 
         yield return outPort.GetComponent<DataOutPort>().SendData();
+
+
+        GetComponent<NodeData>().ErrorFlag = true;
 
 
     }

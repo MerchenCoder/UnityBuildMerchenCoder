@@ -8,7 +8,7 @@ public class AddValueBtn : MonoBehaviour
 {
     private ValueManager valueManager;
     private NodeData nodeData;
-    private TMP_Dropdown dropdown;
+    public TMP_Dropdown dropdown;
     private GameObject valueNameSettingUI;
     private TMPro.TMP_InputField inputField;
     // public GameObject valuePrefab;
@@ -79,5 +79,22 @@ public class AddValueBtn : MonoBehaviour
         inputField.text = null;
         valueNameSettingUI.SetActive(true);
         valueNameSettingUI.tag = this.tag;
+    }
+
+    public bool IsInit()
+    {
+        if (CompareTag("data_int"))
+        {
+            return valueManager.intValues[dropdown.value - 1].isInit;
+        }
+        else if (CompareTag("data_bool"))
+        {
+            return valueManager.boolValues[dropdown.value - 1].isInit;
+        }
+        else if (CompareTag("data_string"))
+        {
+            return valueManager.stringValues[dropdown.value - 1].isInit;
+        }
+        return false;
     }
 }
