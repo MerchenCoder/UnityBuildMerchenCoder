@@ -439,7 +439,7 @@ public class FunctionManager : MonoBehaviour
         {
             //canvasPrefabInstance.transform.GetChild(2).GetChild(9).gameObject.SetActive(true);
             GameObject PanelFuncContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).gameObject;
-            PanelFuncContent.transform.GetChild(0).gameObject.SetActive(true);
+            // PanelFuncContent.transform.GetChild(0).gameObject.SetActive(true);
             if (hasReturn)
             {
                 returnBtn.SetActive(true);

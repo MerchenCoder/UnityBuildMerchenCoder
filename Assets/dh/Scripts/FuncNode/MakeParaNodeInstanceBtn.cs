@@ -13,11 +13,13 @@ public class MakeParaNodeInstanceBtn : MonoBehaviour
     void Start()
     {
         btn = this.GetComponent<Button>();
-        btn.onClick.AddListener(() =>
-        {
-            paraNodeBtn.MakeInstance(selectType);
-            transform.parent.parent.gameObject.SetActive(false);
-        });
+        btn.onClick.AddListener(setParaNodeType);
 
+    }
+
+    void setParaNodeType()
+    {
+        paraNodeBtn.MakeInstance(selectType);
+        transform.parent.parent.gameObject.SetActive(false);
     }
 }

@@ -162,10 +162,6 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         arrowObject.SetActive(false);
         if (connectedPort != null)
         {
-            if (connectedPort.transform.parent.gameObject.CompareTag("Node_Print"))
-            {
-                connectedPort.tag = "data_all";
-            }
             connectedPort.GetComponent<FlowinPort>().IsConnected = false;
             connectedPort = null;
         }
