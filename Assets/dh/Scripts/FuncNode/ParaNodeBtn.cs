@@ -8,6 +8,8 @@ public class ParaNodeBtn : MonoBehaviour
 
     public GameObject paraNodePrefab;
     private Transform spawnPoint;
+    RectTransform canvasRect;
+    float centerXInCanvas;
 
     private GameObject selectParaNodePanel;
 
@@ -64,7 +66,8 @@ public class ParaNodeBtn : MonoBehaviour
         btn.onClick.AddListener(selectParaType);
 
         spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform;
-
+        canvasRect = GetComponent<Canvas>().GetComponent<RectTransform>();
+        centerXInCanvas = canvasRect.rect.width / 2;
         selectParaNodePanel = this.transform.GetComponentInParent<Canvas>().transform.GetChild(3).gameObject;
         if (selectParaNodePanel.activeSelf)
         {
@@ -109,7 +112,9 @@ public class ParaNodeBtn : MonoBehaviour
         }
         paraNodeInstance.GetComponent<NodeNameManager>().NodeName = "ParaNode";
         paraNodeInstance.transform.SetParent(spawnPoint, false);
-        paraNodeInstance.transform.localPosition = Vector3.zero;
+        Vector2 anchoredPositionOfScrollRect = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+        float newPositionX = Mathf.Abs(anchoredPositionOfScrollRect.x) + centerXInCanvas;
+        paraNodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
     }
 
 

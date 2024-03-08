@@ -11,11 +11,20 @@ public class NodeMenuBtn : MonoBehaviour
     private Transform spawnPoint;
 
 
+
+    RectTransform canvasRect;
+    // 캔버스 상의 가운데 위치 계산
+    float centerXInCanvas;
+
     Button btn;
     void Start()
     {
+        // scrollArea = GetComponentInParent<Canvas>().transform.GetChild(0).gameObject;
         spawnPoint = GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform; //Canvas(main) 바로 첫번째 자식인 BG 게임 오브젝트
-        Debug.Log(spawnPoint.name);
+        // 현재 보이는 화면 기준으로 중앙에 놓기
+        canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+        centerXInCanvas = canvasRect.rect.width / 2f;
+        Debug.Log(centerXInCanvas);
         btn = GetComponent<Button>();
         btn.onClick.AddListener(MakeInstance);
 
@@ -27,8 +36,9 @@ public class NodeMenuBtn : MonoBehaviour
         {
             GameObject nodeInstance = Instantiate(nodePrefab);
             nodeInstance.transform.SetParent(spawnPoint, false);
-            nodeInstance.transform.localPosition = Vector3.zero;
-
+            Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+            float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
+            nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
         }
     }
 
