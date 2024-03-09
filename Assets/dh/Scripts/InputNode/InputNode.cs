@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class InputNode : MonoBehaviour, INode
 {
     private NodeNameManager nameManager;
@@ -19,7 +19,6 @@ public class InputNode : MonoBehaviour, INode
     }
     void Start()
     {
-
     }
 
     // Update is called once per frame
