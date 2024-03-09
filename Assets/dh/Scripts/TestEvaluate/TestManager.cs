@@ -5,8 +5,12 @@ using System.IO;
 using System;
 using TMPro;
 using Newtonsoft.Json;
-public class SettingTestCase : MonoBehaviour
+public class TestManager : MonoBehaviour
 {
+    //---싱글톤 생성---//
+    public static TestManager Instance { get; private set; }
+
+
     [Serializable]
     public struct TestCaseData
     {
@@ -39,7 +43,7 @@ public class SettingTestCase : MonoBehaviour
     public GameObject inputNodeBtn_string;
 
 
-    private FunctionManager functionManager;
+    // private FunctionManager functionManager;
     private Canvas mainCanvas;
     private Transform nodeMenu;
     private Transform funcNodeMenu;
@@ -50,11 +54,28 @@ public class SettingTestCase : MonoBehaviour
     [NonSerialized]
     public TestCaseData testCaseData;
 
+
+
+
+    public List<string> currentInput;
+    public List<string> currentOutput;
+    public List<string> playerOutput; //플레이어가 실행할 때 생성되는 output을 담는 리스트
+
     //테스트 케이스 데이터를 가져온다.
     //테스트 케이스가 존재하면 리스트에 차례로 넣어준다.
     //run을 위해 -> 첫 번째 테스트 케이스를 변수에 할당한다.
     private void Awake()
     {
+        //-----싱글톤-----//
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
 
         //Json 파일 경로
         string jsonFilePath = Application.dataPath + "/Data/" + TestCaseDataFileName;
@@ -72,6 +93,9 @@ public class SettingTestCase : MonoBehaviour
             testCaseData = JsonConvert.DeserializeObject<TestCaseData>(jsonString);
 
             Debug.Log("테스트 케이스 데이터 불러오기 완료");
+
+            SettingCurrentCase(1);
+            Debug.Log("현재 케이스 입력/출력 배열 셋팅 완료");
         }
         else
         {
@@ -79,7 +103,7 @@ public class SettingTestCase : MonoBehaviour
         }
 
 
-        functionManager = FindObjectOfType<FunctionManager>();
+        //functionManager = FindObjectOfType<FunctionManager>();
 
         mainCanvas = FindFirstObjectByType<Canvas>();
         nodeMenu = mainCanvas.transform.GetChild(1);
@@ -91,31 +115,26 @@ public class SettingTestCase : MonoBehaviour
 
     private void Start()
     {
-        funcNodeMenu = functionManager.canvasFuncMakeInstance.transform.GetChild(2);
+        funcNodeMenu = FunctionManager.Instance.canvasFuncMakeInstance.transform.GetChild(2);
         funcMenuSpawnPoint = funcNodeMenu.GetChild(1).GetChild(0);
 
-        Debug.Log(funcMenuSpawnPoint);
-        Debug.Log(nodeMenuSpawnPoint);
+        // Debug.Log(funcMenuSpawnPoint);
+        // Debug.Log(nodeMenuSpawnPoint);
         //1. 테스트 케이스에 입력 변수가 있다면 입력 변수 노드를 노드 메뉴에 삽입해 준다.
         if (testCaseData.hasTestCase)
         {
-            Debug.Log(testCaseData.inputInfo[0]);
             for (int i = 0; i < testCaseData.inputInfo.Count; i++)
             {
-                Debug.Log(i);
                 string name = testCaseData.inputInfo[i].name;
                 string type = testCaseData.inputInfo[i].type;
-                GameObject inputNodeBtn1 = SetInputNodeBtn(type, name);
-                GameObject inputNodeBtn2 = SetInputNodeBtn(type, name);
+                GameObject inputNodeBtn1 = SetInputNodeBtn(type, name, i);
+                GameObject inputNodeBtn2 = SetInputNodeBtn(type, name, i);
                 //노드 메뉴에 넣어주기
                 inputNodeBtn1.transform.SetParent(nodeMenuSpawnPoint, false);
                 //함수 노드 메뉴에도 넣어주기
                 inputNodeBtn2.transform.SetParent(funcMenuSpawnPoint, false);
 
             }
-
-
-
         }
 
     }
@@ -123,21 +142,53 @@ public class SettingTestCase : MonoBehaviour
     //제출시 채점 실행
     public void Test()
     {
+        for (int i = 0; i < testCaseData.testCaseLength; i++)
+        {
+            //현재 테스트 케이스 설정
+            SettingCurrentCase(i);
 
+        }
     }
 
 
     //정답 채크
     public bool CheckAnswer()
     {
-        return true;
+        if (currentOutput.Count == playerOutput.Count)
+        {
+            for (int i = 0; i < currentOutput.Count; i++)
+            {
+                if (currentOutput[i] != playerOutput[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+
+    void SettingCurrentCase(int currentCount)
+    {
+        TestCaseData.TestCase testCase = testCaseData.testCaseInput[currentCount.ToString()];
+        currentInput = testCase.input;
+        currentOutput = testCase.output;
+
+        //리스트 초기화
+        playerOutput.Clear();
+
     }
 
 
 
 
     //입력 노드 버튼, 버튼에 연결된 프리팹 내부 값 조정
-    GameObject SetInputNodeBtn(string type, string name)
+    GameObject SetInputNodeBtn(string type, string name, int index)
     {
         GameObject nodeBtn = null;
         if (type == "int")
@@ -157,6 +208,7 @@ public class SettingTestCase : MonoBehaviour
         //노드 버튼 이름 수정
         nodeBtn.GetComponentInChildren<TextMeshProUGUI>().text = name;
         nodeBtn.GetComponent<InputNodeBtn>().inputNodeName = name;
+        nodeBtn.GetComponent<InputNodeBtn>().inputIndex = index;
 
         return nodeBtn;
 

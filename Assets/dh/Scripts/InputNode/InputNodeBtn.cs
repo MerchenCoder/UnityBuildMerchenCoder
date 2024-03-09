@@ -10,6 +10,7 @@ public class InputNodeBtn : MonoBehaviour
     //spawn 위치
     private Transform spawnPoint;
     public string inputNodeName;
+    public int inputIndex;
 
 
 
@@ -39,6 +40,8 @@ public class InputNodeBtn : MonoBehaviour
 
             nodeInstance.GetComponent<InputNode>().inputNodeName = inputNodeName;
             nodeInstance.GetComponentInChildren<TextMeshProUGUI>().text = inputNodeName;
+            nodeInstance.GetComponent<InputNode>().inputIndex = inputIndex;
+
             nodeInstance.transform.SetParent(spawnPoint, false);
             Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
             float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;

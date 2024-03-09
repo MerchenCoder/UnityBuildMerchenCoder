@@ -7,7 +7,8 @@ public class NodeManager : MonoBehaviour
 {
     //--싱글톤 생성--//
     public static NodeManager Instance { get; private set; }
-    //실행할 INode 인스턴스들을 저장할 큐를 생성
+    //모드
+    public string mode = "run";
 
     //변수 선언
     private GameObject startNode;
@@ -20,7 +21,6 @@ public class NodeManager : MonoBehaviour
 
     //compile Error 상태
     private bool compileError;
-
 
     public event Action<bool> CompileErrorChanged;
     public void SetCompileError(bool value)
