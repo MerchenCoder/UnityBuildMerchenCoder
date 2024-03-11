@@ -117,18 +117,24 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 stringData = dataInPort.InputValueStr;
                 // chatText.text = stringData;
             }
-            //Canvas_Result가 Acitve 된 후에 할당해야 함.
-            //result panel의 player는 항상 첫번째 자식이어야 함!!
-            player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
-            playerChatBubble = player.transform.GetChild(1).gameObject;
-            playerChatBubble.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = stringData;
-            playerChatBubble.SetActive(true);
-            // Invoke("DisableChatBubbleAfterTime", 2f);
-            yield return new WaitForSeconds(printDuration);
-            Debug.Log("말풍선 안보이게하기");
-            playerChatBubble.SetActive(false);
 
+            //moder가 run인 경우에는 result panel 활성화, 아닌 경우에는 비활성화되므로 chatbubble 변경할 필요 없음
+            if (NodeManager.Instance.Mode == "run")
+            {
+                // //Canvas_Result가 Acitve 된 후에 할당해야 함.
+                // //result panel의 player는 항상 첫번째 자식이어야 함!!
+                player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
+                playerChatBubble = player.transform.GetChild(1).gameObject;
+                playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stringData;
+                playerChatBubble.SetActive(true);
+                // Invoke("DisableChatBubbleAfterTime", 2f);
+                yield return new WaitForSeconds(printDuration);
+                Debug.Log("말풍선 안보이게하기");
+                playerChatBubble.SetActive(false);
 
+                Debug.Log("asdfafaf");
+
+            }
             //출력 배열에 반영
             TestManager.Instance.playerOutput.Add(stringData);
 

@@ -20,7 +20,7 @@ public class BoolValue
     public bool isInit;
 }
 
-public class StrValue 
+public class StrValue
 {
     public string valueName;
     public string valueOfValue;
@@ -40,7 +40,7 @@ public class ValueManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
     public void AddValue(int type, string name)
     {
@@ -55,14 +55,15 @@ public class ValueManager : MonoBehaviour
             intValue.isInit = false;
             intValues.Add(intValue);
         }
-        if(type == 1)
+        if (type == 1)
         {
             BoolValue boolValue = new BoolValue();
             boolValue.valueName = name;
             boolValue.valueOfValue = true;
             boolValue.isInit = false;
             boolValues.Add(boolValue);
-        }if(type == 2)
+        }
+        if (type == 2)
         {
             StrValue strValue = new StrValue();
             strValue.valueName = name;

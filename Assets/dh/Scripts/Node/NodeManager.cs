@@ -7,8 +7,22 @@ public class NodeManager : MonoBehaviour
 {
     //--싱글톤 생성--//
     public static NodeManager Instance { get; private set; }
-    //모드
-    public string mode = "run";
+    //==========모드================//
+    private string mode = "run";
+    public string Mode
+    {
+        get
+        {
+            return mode;
+        }
+    }
+
+
+    public void ChangeMode(string updateMode)
+    {
+        mode = updateMode;
+    }
+
 
     //변수 선언
     private GameObject startNode;
@@ -19,7 +33,7 @@ public class NodeManager : MonoBehaviour
     private Coroutine executeCoroutine;
 
 
-    //compile Error 상태
+    //========compile Error 상태==========//
     private bool compileError;
 
     public event Action<bool> CompileErrorChanged;
@@ -46,6 +60,27 @@ public class NodeManager : MonoBehaviour
 
     }
 
+
+
+    private void Awake()
+    {
+        compileError = false;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
+
+
+    //=====삭제=========//
     private bool deleteMode = false;
     public event Action<bool> DeleteModeChanged;
 
@@ -76,23 +111,7 @@ public class NodeManager : MonoBehaviour
 
     }
 
-
-
-    private void Awake()
-    {
-        compileError = false;
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-
+    //========실행 관련============//
     //다음 노드 반환하는 메소드
     public GameObject NextNode(FlowoutPort flowoutPort)
     {
@@ -108,12 +127,26 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-
-
-
-
     //컴파일
     public void Run()
+    {
+        if (mode == "run")
+        {
+            StartCoroutine(RunProgram());
+        }
+        else if (mode == "submit")
+        {
+            StartCoroutine(TestManager.Instance.Test());
+
+        }
+        else
+        {
+            Debug.Log("mode 오류 : " + mode);
+        }
+    }
+
+
+    public IEnumerator RunProgram()
     {
         try
         {
@@ -122,7 +155,8 @@ public class NodeManager : MonoBehaviour
             currentNode = startNode;
             // 코루틴 실행 메서드
 
-            executeCoroutine = StartCoroutine(ExcuteNode());
+            // executeCoroutine = StartCoroutine(ExcuteNode());
+
 
         }
         catch (NullReferenceException e)
@@ -131,8 +165,8 @@ public class NodeManager : MonoBehaviour
             SetCompileError(true);
             Debug.LogError(e.StackTrace);
         }
+        yield return StartCoroutine(ExcuteNode()); //ExcuteNode 코루틴 호출 후 끝날때까지 기다림.
     }
-
 
     IEnumerator ExcuteNode()
     {

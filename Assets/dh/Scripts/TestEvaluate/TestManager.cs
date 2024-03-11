@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using System;
 using TMPro;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 public class TestManager : MonoBehaviour
 {
     //---싱글톤 생성---//
@@ -43,7 +45,7 @@ public class TestManager : MonoBehaviour
     public GameObject inputNodeBtn_string;
 
 
-    // private FunctionManager functionManager;
+    //입력 변수 버튼 삽입을 위한 요소
     private Canvas mainCanvas;
     private Transform nodeMenu;
     private Transform funcNodeMenu;
@@ -56,14 +58,44 @@ public class TestManager : MonoBehaviour
 
 
 
-
+    //채점을 위한 테스트 케이스 입출력, 사용자 출력 리스트 변수
     public List<string> currentInput;
     public List<string> currentOutput;
     public List<string> playerOutput; //플레이어가 실행할 때 생성되는 output을 담는 리스트
 
+
+
+    //채점 결과 UI
+    public Canvas SubmitResultCanvas;
+    private GameObject success;
+    private Text rewardTxt;
+    private GameObject fail;
+
+
     //테스트 케이스 데이터를 가져온다.
     //테스트 케이스가 존재하면 리스트에 차례로 넣어준다.
     //run을 위해 -> 첫 번째 테스트 케이스를 변수에 할당한다.
+
+    //-----씬이 언로드될 때 싱글톤 파괴-----//
+    private void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log("TestnManager 싱글톤 객체 파괴");
+        Instance = null; // Instance 변수를 초기화하여 새로운 싱글톤 객체 생성을 허용
+        Destroy(gameObject);
+
+    }
+
     private void Awake()
     {
         //-----싱글톤-----//
@@ -105,7 +137,7 @@ public class TestManager : MonoBehaviour
 
         //functionManager = FindObjectOfType<FunctionManager>();
 
-        mainCanvas = FindFirstObjectByType<Canvas>();
+        mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         nodeMenu = mainCanvas.transform.GetChild(1);
         nodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
 
@@ -115,6 +147,12 @@ public class TestManager : MonoBehaviour
 
     private void Start()
     {
+        SubmitResultCanvas = GameObject.Find("Canvas_Result_Submit").GetComponent<Canvas>();
+        SubmitResultCanvas.gameObject.SetActive(false);
+        success = SubmitResultCanvas.transform.GetChild(1).gameObject;
+        rewardTxt = success.transform.GetChild(0).GetChild(0).GetComponentInChildren<Text>();
+        fail = SubmitResultCanvas.transform.GetChild(2).gameObject;
+
         funcNodeMenu = FunctionManager.Instance.canvasFuncMakeInstance.transform.GetChild(2);
         funcMenuSpawnPoint = funcNodeMenu.GetChild(1).GetChild(0);
 
@@ -140,14 +178,34 @@ public class TestManager : MonoBehaviour
     }
 
     //제출시 채점 실행
-    public void Test()
+    public IEnumerator Test()
     {
+        Debug.Log("채점중");
+        SubmitResultCanvas.gameObject.SetActive(true);
         for (int i = 0; i < testCaseData.testCaseLength; i++)
         {
             //현재 테스트 케이스 설정
-            SettingCurrentCase(i);
+            SettingCurrentCase(i + 1);
+            Debug.Log("Run 끝나길 기다리는 중");
+            yield return StartCoroutine(NodeManager.Instance.RunProgram());
+            bool result = CheckAnswer();
 
+            if (!result)
+            {
+                Debug.Log((i + 1).ToString() + " 번째 테스트 케이스 실패. 채점 종료"); //실패 안내 관련 로직으로 변경해야함.
+                yield return new WaitForSeconds(1.5f);
+                fail.gameObject.SetActive(true);
+                StopAllCoroutines();
+                yield break;
+            }
+
+            Debug.Log((i + 1).ToString() + "번째 테스트 케이스 통과");
         }
+        yield return new WaitForSeconds(1.5f);
+        success.SetActive(true);
+        Debug.Log("모든 테스트 케이스를 통과하였습니다.");
+        Debug.Log("채점종료");
+
     }
 
 
@@ -173,7 +231,7 @@ public class TestManager : MonoBehaviour
     }
 
 
-    void SettingCurrentCase(int currentCount)
+    public void SettingCurrentCase(int currentCount)
     {
         TestCaseData.TestCase testCase = testCaseData.testCaseInput[currentCount.ToString()];
         currentInput = testCase.input;
@@ -218,5 +276,13 @@ public class TestManager : MonoBehaviour
 
 
     //맞았으면 json에 clear여부를 저장하든지.. 추후에 로직 추가 
+
+
+    //실패 -> 다시하기
+    public void Restart()
+    {
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
 }

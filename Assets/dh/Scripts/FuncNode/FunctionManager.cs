@@ -155,7 +155,9 @@ public class FunctionManager : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
         Debug.Log("FucntionManager 싱글톤 객체 파괴");
+        Instance = null; // Instance 변수를 초기화하여 새로운 싱글톤 객체 생성을 허용
         Destroy(gameObject);
+
     }
 
     //-------------------------------//
