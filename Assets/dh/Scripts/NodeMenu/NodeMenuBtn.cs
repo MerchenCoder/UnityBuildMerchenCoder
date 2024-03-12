@@ -24,7 +24,7 @@ public class NodeMenuBtn : MonoBehaviour
         // 현재 보이는 화면 기준으로 중앙에 놓기
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         centerXInCanvas = canvasRect.rect.width / 2f;
-        Debug.Log(centerXInCanvas);
+        // Debug.Log(centerXInCanvas);
         btn = GetComponent<Button>();
         btn.onClick.AddListener(MakeInstance);
 
