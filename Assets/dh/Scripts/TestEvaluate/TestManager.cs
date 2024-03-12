@@ -147,8 +147,7 @@ public class TestManager : MonoBehaviour
 
     private void Start()
     {
-        SubmitResultCanvas = GameObject.Find("Canvas_Result_Submit").GetComponent<Canvas>();
-        SubmitResultCanvas.gameObject.SetActive(false);
+        SubmitResultCanvas = GameObject.Find("Canvas_Submit_Parent").GetComponentInChildren<Canvas>(true);
         success = SubmitResultCanvas.transform.GetChild(1).gameObject;
         rewardTxt = success.transform.GetChild(0).GetChild(0).GetComponentInChildren<Text>();
         fail = SubmitResultCanvas.transform.GetChild(2).gameObject;

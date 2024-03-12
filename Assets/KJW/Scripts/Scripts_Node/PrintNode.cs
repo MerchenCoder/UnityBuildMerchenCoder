@@ -36,45 +36,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
         dataInPort = inPort.GetComponent<DataInPort>();
         dataUIText = inPort.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
-
-        // dataInPort.StateChanged += HandleStateChanged;
     }
-
-    void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
-    {
-        // if (e.IsConnected)
-        // {
-        //     if (inPort.CompareTag("data_int"))
-        //     {
-        //         stringData = dataInPort.InputValueInt.ToString();
-        //         // dataUIText.text = stringData;
-        //         // chatText.text = stringData;
-        //     }
-        //     if (inPort.CompareTag("data_bool"))
-        //     {
-        //         if (dataInPort.InputValueBool)
-        //         {
-        //             stringData = "참";
-        //         }
-        //         else
-        //         {
-        //             stringData = "거짓";
-        //         }
-        //         // chatText.text = stringData;
-        //     }
-        //     if (inPort.CompareTag("data_string"))
-        //     {
-        //         stringData = dataInPort.InputValueStr;
-        //         // chatText.text = stringData;
-        //     }
-        // }
-        // else
-        // {
-        //     // Debug.Log(e.IsConnected);
-        //     // dataUIText.text = "데이터";
-        // }
-    }
-
 
     IEnumerator INode.Execute()
     {
