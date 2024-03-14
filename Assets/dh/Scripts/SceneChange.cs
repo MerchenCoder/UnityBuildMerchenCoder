@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,35 +6,42 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
-    static GameObject container;
     //---싱글톤 선언----//
-    static SceneChange instance;
-    public static SceneChange Instance
+    public static SceneChange Instance;
+    private void Awake()
     {
-        get
+        if (null == Instance)
         {
-            if (!instance)
-            {
-                container = new GameObject();
-                container.name = "SceneManager";
-                instance = container.AddComponent(typeof(SceneChange)) as SceneChange;
-                DontDestroyOnLoad(container);
+            Instance = this;
 
-            }
-            return instance;
-
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
     }
 
-
-
-
-
+    [SerializeField] FadeInOut fadePanel;
+    [NonSerialized] public string beforeScene;
 
     //홈으로 씬 전환
     public void ChangetoHome()
+    { 
+        if(SceneManager.GetActiveScene().name == "Chapter")
+            SceneManager.LoadScene("Home");
+        else // 플레이씬의 경우 페이드아웃 - 페이드인
+        {
+            fadePanel.FadeOut();
+            Invoke("ChangeToHomeSceneDelay", 1f);
+        }
+    }
+
+    // 페이드 추가를 위한 딜레이용 함수
+    public void ChangeToHomeSceneDelay()
     {
         SceneManager.LoadScene("Home");
+        if (beforeScene != "Chapter") fadePanel.FadeIn();
     }
 
     //챕터 선택 씬으로 전환
@@ -41,8 +49,6 @@ public class SceneChange : MonoBehaviour
     {
         SceneManager.LoadScene("Chapter");
     }
-
-
 
     //챕터별 스테이지 씬으로 전환
     public void ChangetoCh1Stage()
@@ -58,34 +64,19 @@ public class SceneChange : MonoBehaviour
         SceneManager.LoadScene("Ch3Stage");
     }
 
-    //각 스테이지 씬으로 전환
-    public void ChangetoCh1S1()
-    {
-        SceneManager.LoadScene("Ch1S1");
-    }
-    public void ChangetoCh1S2()
-    {
-        SceneManager.LoadScene("Ch1S2");
-    }
-    public void ChangetoCh1S3()
-    {
-        SceneManager.LoadScene("Ch1S3");
-    }
-    public void ChangetoCh1S4()
-    {
-        SceneManager.LoadScene("Ch1S4");
-    }
-    public void ChangetoCh1S5()
-    {
-        SceneManager.LoadScene("Ch1S5");
-    }
-    public void ChangetoCh1S6()
-    {
-        SceneManager.LoadScene("Ch1S6");
-    }
-
     public void ChangeToThisScene(string SceneName)
     {
-        SceneManager.LoadScene(SceneName);
+        beforeScene = SceneManager.GetActiveScene().name;
+        StartCoroutine(ChangeSceneDelay(SceneName));
     }
+
+    IEnumerator ChangeSceneDelay(string SceneName)
+    {
+        fadePanel.FadeOut();
+        yield return new WaitForSeconds(1f); // Wait Fading Time
+        SceneManager.LoadScene(SceneName);
+        fadePanel.FadeIn();
+        yield return null;
+    }
+
 }
