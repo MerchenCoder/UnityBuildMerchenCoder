@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class NodeManager : MonoBehaviour
 {
@@ -30,11 +31,18 @@ public class NodeManager : MonoBehaviour
     private FlowoutPort currentFlowoutPort;
 
 
-    private Coroutine executeCoroutine;
+    //private Coroutine executeCoroutine;
 
 
     //========compile Error 상태==========//
     private bool compileError;
+    public bool CompileError
+    {
+        get
+        {
+            return compileError;
+        }
+    }
 
     public event Action<bool> CompileErrorChanged;
     public void SetCompileError(bool value)
@@ -52,11 +60,14 @@ public class NodeManager : MonoBehaviour
     protected virtual void OnCompileErrorChanged(bool compileError)
     {
         CompileErrorChanged?.Invoke(compileError);
-        if (executeCoroutine != null)
-        {
-            Debug.Log("모든 코루틴 중단");
-            StopAllCoroutines();
-        }
+        // if (executeCoroutine != null)
+        // {
+        //     Debug.Log("모든 코루틴 중단");
+        //     StopAllCoroutines();
+        // }
+
+        Debug.Log("모든 코루틴 중단");
+        StopAllCoroutines();
 
     }
 
@@ -65,6 +76,7 @@ public class NodeManager : MonoBehaviour
     private void Awake()
     {
         compileError = false;
+        Debug.Log(compileError);
         if (Instance == null)
         {
             Instance = this;
@@ -74,6 +86,25 @@ public class NodeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log("NodeManager 싱글톤 객체 파괴");
+        Instance = null; // Instance 변수를 초기화하여 새로운 싱글톤 객체 생성을 허용
+        Destroy(gameObject);
+
     }
 
 
@@ -191,6 +222,7 @@ public class NodeManager : MonoBehaviour
             if (currentNode == null)
             {
                 Debug.Log("ExcuteNode 코루틴 종료");
+                SetCompileError(true);
                 yield break;
             }
         }
