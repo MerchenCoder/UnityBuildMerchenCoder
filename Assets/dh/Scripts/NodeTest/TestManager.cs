@@ -52,8 +52,10 @@ public class TestManager : MonoBehaviour
     private Canvas mainCanvas;
     private Transform nodeMenu;
     private Transform funcNodeMenu;
-    Transform nodeMenuSpawnPoint;
-    Transform funcMenuSpawnPoint;
+    Transform input_NodeMenuSpawnPoint;
+    Transform input_funcMenuSpawnPoint;
+    Transform action_NodeMenuSpawnPoint;
+    Transform action_funcMenuSpawnPoint;
 
 
     [NonSerialized]
@@ -142,25 +144,29 @@ public class TestManager : MonoBehaviour
 
         mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         nodeMenu = mainCanvas.transform.GetChild(1);
-        nodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
-
+        input_NodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
+        action_NodeMenuSpawnPoint = nodeMenu.GetChild(2).GetChild(0);
 
     }
 
 
     private void Start()
     {
+
+        //변수 설정
         SubmitResultCanvas = GameObject.Find("Canvas_Submit_Parent").GetComponentInChildren<Canvas>(true);
         success = SubmitResultCanvas.transform.GetChild(1).gameObject;
         rewardTxt = success.transform.GetChild(0).GetChild(0).GetComponentInChildren<Text>();
         fail = SubmitResultCanvas.transform.GetChild(2).gameObject;
 
         funcNodeMenu = FunctionManager.Instance.canvasFuncMakeInstance.transform.GetChild(2);
-        funcMenuSpawnPoint = funcNodeMenu.GetChild(1).GetChild(0);
-
+        input_funcMenuSpawnPoint = funcNodeMenu.GetChild(1).GetChild(0);
+        action_funcMenuSpawnPoint = funcNodeMenu.GetChild(2).GetChild(0);
         // Debug.Log(funcMenuSpawnPoint);
         // Debug.Log(nodeMenuSpawnPoint);
-        //1. 테스트 케이스에 입력 변수가 있다면 입력 변수 노드를 노드 메뉴에 삽입해 준다.
+
+        //-----------입력 변수 노드 처리---------//
+        //테스트 케이스에 입력 변수가 있다면 입력 변수 노드를 노드 메뉴에 삽입해 준다.
         if (testCaseData.hasTestCase)
         {
             for (int i = 0; i < testCaseData.inputInfo.Count; i++)
@@ -168,14 +174,37 @@ public class TestManager : MonoBehaviour
                 string name = testCaseData.inputInfo[i].name;
                 string type = testCaseData.inputInfo[i].type;
                 GameObject inputNodeBtn1 = SetInputNodeBtn(type, name, i);
-                GameObject inputNodeBtn2 = SetInputNodeBtn(type, name, i);
+                GameObject inputNodeBtn2 = Instantiate(inputNodeBtn1);
                 //노드 메뉴에 넣어주기
-                inputNodeBtn1.transform.SetParent(nodeMenuSpawnPoint, false);
+                inputNodeBtn1.transform.SetParent(input_NodeMenuSpawnPoint, false);
                 //함수 노드 메뉴에도 넣어주기
-                inputNodeBtn2.transform.SetParent(funcMenuSpawnPoint, false);
+                inputNodeBtn2.transform.SetParent(input_funcMenuSpawnPoint, false);
 
             }
         }
+
+        //------------액션 노드 처리 ---------------//
+        string[] actionNodeArray = GameManager.Instance.missionData.actionNodes;
+        //문제에서 사용되는 액션 노드가 있다면 액션 노드 버튼을 생성하고, 액션 노드 프리팹을 찾아서 연결해준다.
+        if (actionNodeArray.Length != 0)
+        {
+            foreach (string actionNode in actionNodeArray)
+            {
+                string[] actionNodeName = actionNode.Split("/");
+                GameObject newActionNodeBtn1 = Instantiate(actionNodeBtn);
+                newActionNodeBtn1.GetComponentInChildren<TextMeshProUGUI>().text = actionNodeName[1];
+                newActionNodeBtn1.GetComponent<NodeMenuBtn>().nodePrefab = Resources.Load<GameObject>("Prefabs/Node/Action/" + actionNodeName[0]);
+
+                GameObject newActionNodeBtn2 = Instantiate(newActionNodeBtn1);
+
+                newActionNodeBtn1.transform.SetParent(action_NodeMenuSpawnPoint, false);
+                newActionNodeBtn2.transform.SetParent(action_funcMenuSpawnPoint, false);
+            }
+        }
+
+
+        //리워드 처리
+        rewardTxt.text = GameManager.Instance.missionData.reward.ToString();
 
     }
 

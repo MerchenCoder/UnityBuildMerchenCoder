@@ -16,9 +16,9 @@ public class MissionManager : MonoBehaviour
     void Start()
     {
 
-        title = transform.GetChild(0).GetChild(0).gameObject;
-        rewards = transform.GetChild(0).GetChild(3).gameObject;
-        info = transform.GetComponentInChildren<NodeLabelControl>().transform.parent.GetChild(0).gameObject;
+        title = transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
+        rewards = transform.GetChild(1).GetChild(0).GetChild(3).gameObject;
+        info = transform.GetChild(1).GetComponentInChildren<NodeLabelControl>().transform.parent.GetChild(0).gameObject;
 
         missionTitle = "문제 " + GameManager.Instance.missionData.missionCode + " : " + GameManager.Instance.missionData.missionTitle;
         missionInfo = GameManager.Instance.missionData.missionInfo;

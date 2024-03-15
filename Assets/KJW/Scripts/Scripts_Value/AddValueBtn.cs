@@ -18,6 +18,7 @@ public class AddValueBtn : MonoBehaviour
     {
         valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
         valueNameSettingUI = GetComponentInParent<Canvas>().transform.Find("ValueUI").transform.GetChild(0).gameObject;
+        Debug.Log(valueNameSettingUI);
         inputField = valueNameSettingUI.transform.GetChild(1).GetComponent<TMP_InputField>();
         valueNameSettingUI.SetActive(false);
         dropdown = GetComponent<TMP_Dropdown>();

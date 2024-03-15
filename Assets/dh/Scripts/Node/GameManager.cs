@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     }
 
     public string dataFileName;
+
     public MissionData missionData = new MissionData();
     // Start is called before the first frame update
     private void Awake()
