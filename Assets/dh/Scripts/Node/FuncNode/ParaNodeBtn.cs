@@ -66,7 +66,7 @@ public class ParaNodeBtn : MonoBehaviour
         btn.onClick.AddListener(selectParaType);
 
         spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform;
-        canvasRect = GetComponent<Canvas>().GetComponent<RectTransform>();
+        canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         centerXInCanvas = canvasRect.rect.width / 2;
         selectParaNodePanel = this.transform.GetComponentInParent<Canvas>().transform.GetChild(3).gameObject;
         if (selectParaNodePanel.activeSelf)

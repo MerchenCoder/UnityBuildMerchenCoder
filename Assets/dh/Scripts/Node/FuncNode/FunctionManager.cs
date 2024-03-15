@@ -236,7 +236,7 @@ public class FunctionManager : MonoBehaviour
 
             if (funcNodeMenu != null)
             {
-                Transform panelFunContent = funcNodeMenu.GetChild(9).GetChild(0).transform;
+                Transform panelFunContent = funcNodeMenu.GetChild(8).GetChild(0).transform;
 
                 //funcBtn 복제
                 GameObject clonedFuncBtn = Instantiate(funcBtn);
@@ -445,7 +445,7 @@ public class FunctionManager : MonoBehaviour
         if (hasReturn || hasPara)
         {
             //canvasPrefabInstance.transform.GetChild(2).GetChild(9).gameObject.SetActive(true);
-            GameObject PanelFuncContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).gameObject;
+            GameObject PanelFuncContent = canvasPrefabInstance.transform.GetChild(2).GetChild(8).GetChild(0).gameObject;
             // PanelFuncContent.transform.GetChild(0).gameObject.SetActive(true);
             if (hasReturn)
             {
@@ -490,14 +490,14 @@ public class FunctionManager : MonoBehaviour
         }
         else
         {
-            canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            canvasPrefabInstance.transform.GetChild(2).GetChild(8).GetChild(0).GetChild(0).gameObject.SetActive(false);
         }
 
 
 
         //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
-        Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(2).GetChild(9).GetChild(0);
-        GameObject nodeMenuFuncPanel = GameObject.Find("Canvas").transform.GetChild(1).GetChild(9).GetChild(0).gameObject;
+        Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(2).GetChild(8).GetChild(0);
+        GameObject nodeMenuFuncPanel = GameObject.Find("Canvas").transform.GetChild(1).GetChild(8).GetChild(0).gameObject;
         int childCount = nodeMenuFuncPanel.transform.childCount;
 
         for (int i = 1; i < childCount; i++)

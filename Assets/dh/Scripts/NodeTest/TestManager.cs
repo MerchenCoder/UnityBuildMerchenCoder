@@ -144,8 +144,8 @@ public class TestManager : MonoBehaviour
 
         mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         nodeMenu = mainCanvas.transform.GetChild(1);
-        input_NodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
-        action_NodeMenuSpawnPoint = nodeMenu.GetChild(2).GetChild(0);
+        input_NodeMenuSpawnPoint = nodeMenu.GetChild(0).GetChild(0);
+        action_NodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
 
     }
 
@@ -160,8 +160,8 @@ public class TestManager : MonoBehaviour
         fail = SubmitResultCanvas.transform.GetChild(2).gameObject;
 
         funcNodeMenu = FunctionManager.Instance.canvasFuncMakeInstance.transform.GetChild(2);
-        input_funcMenuSpawnPoint = funcNodeMenu.GetChild(1).GetChild(0);
-        action_funcMenuSpawnPoint = funcNodeMenu.GetChild(2).GetChild(0);
+        input_funcMenuSpawnPoint = funcNodeMenu.GetChild(0).GetChild(0);
+        action_funcMenuSpawnPoint = funcNodeMenu.GetChild(1).GetChild(0);
         // Debug.Log(funcMenuSpawnPoint);
         // Debug.Log(nodeMenuSpawnPoint);
 
