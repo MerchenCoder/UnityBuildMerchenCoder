@@ -5,7 +5,7 @@ using UnityEngine;
 public class WalkNode : MonoBehaviour, INode, IFollowFlow
 {
     private float moveDuration = 3.0f; // 플레이어가 이동할 총 시간 (3초)
-    private bool isMoving = false; // 플레이어가 현재 이동 중인지 여부
+    //private bool isMoving = false; // 플레이어가 현재 이동 중인지 여부
     private float startTime; // 이동 시작 시간
     private float moveSpeed = 2.3f; // 이동 속도를 조절할 변수
 
