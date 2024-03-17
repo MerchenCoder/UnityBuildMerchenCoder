@@ -1,8 +1,7 @@
 using System;
 
 [Serializable]
-public class Data
+public class GameData
 {
-    public bool[] chapterIsUnlock = new bool[3];
-    public bool[] ch1StageIsUnlock = new bool[6];
+    public bool[] chapterIsUnlock = new bool[2];
 }

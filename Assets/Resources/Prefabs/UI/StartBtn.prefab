@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD559\uC2B5\uD558\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6605a80b7a8c845479138349f6038cd9, type: 2}
-  m_sharedMaterial: {fileID: 5600753982151081673, guid: 6605a80b7a8c845479138349f6038cd9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 6760773814330309064}
   - component: {fileID: 3628680588192893541}
   - component: {fileID: 3728452614867637664}
-  - component: {fileID: 3091447042318046172}
+  - component: {fileID: 1513781614800949005}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -257,8 +257,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3091447042318046172}
-        m_TargetAssemblyTypeName: SceneChange, Assembly-CSharp
+      - m_Target: {fileID: 1513781614800949005}
+        m_TargetAssemblyTypeName: SceneChangeBtn, Assembly-CSharp
         m_MethodName: ChangetoChapter
         m_Mode: 1
         m_Arguments:
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObject: {fileID: 4898522570753602393}
   UnitsToMove: 0
---- !u!114 &3091447042318046172
+--- !u!114 &1513781614800949005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,6 +292,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6309317820570021800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c515fd526a68448028e39961a9820da4, type: 3}
+  m_Script: {fileID: 11500000, guid: aae2463cf1d5c7749859fd083b02ab02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

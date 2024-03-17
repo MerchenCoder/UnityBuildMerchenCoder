@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TextPressed : MonoBehaviour ,IPointerDownHandler, IPointerUpHandler
+public class TextPressed : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private RectTransform gameObject;
     private Vector2 vector2;
@@ -11,13 +11,13 @@ public class TextPressed : MonoBehaviour ,IPointerDownHandler, IPointerUpHandler
 
     void Start()
     {
-       
+
         vector2 = gameObject.GetComponent<RectTransform>().anchoredPosition;
     }
 
     public void moveDown()
     {
-        
+
     }
 
     public void OnPointerDown(PointerEventData eventData)

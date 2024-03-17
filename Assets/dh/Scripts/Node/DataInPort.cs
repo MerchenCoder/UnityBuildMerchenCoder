@@ -6,25 +6,10 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class InputPortStateChangedEventArgs : EventArgs
-{
-    public bool IsConnected { get; private set; }
-    public bool IsError { get; private set; }
-    // public bool GetDataSignal(get; private set;)
-
-    //생성자로 선언
-    // public InputPortStateChangedEventArgs(bool getData)
-    // {
-    //     GetDataSignal = GetDataSignal;
-    // }
-}
-
-
 //상태변화를 감지하고 알리는 클래스
 public class DataInPort : MonoBehaviour
 {
     //상태변화 이벤트 선언
-    public event EventHandler<InputPortStateChangedEventArgs> StateChanged;
     private bool isConnected = false;
     private bool isError = true;
     // private bool getDataSignal = false;

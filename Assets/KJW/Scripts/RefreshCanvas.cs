@@ -37,6 +37,9 @@ public class RefreshCanvas : MonoBehaviour
         Debug.Log("말풍선 초기화, 비활성화");
         playerChatBubble.SetActive(false);
 
+        //에러 메시지 박스 초기화
+        GetComponent<RunErrorMsg>().InActiveErrorMsg();
+
         this.gameObject.SetActive(false);
     }
 }
