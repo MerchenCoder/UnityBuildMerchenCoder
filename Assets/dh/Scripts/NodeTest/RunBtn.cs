@@ -24,6 +24,6 @@ public class RunBtn : MonoBehaviour
     {
         TestManager.Instance.SettingCurrentCase(1);
         NodeManager.Instance.ChangeMode("run");
-        GetComponent<runNode>().Run();
+        NodeManager.Instance.Run();
     }
 }

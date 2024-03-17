@@ -64,7 +64,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
             if ((dataInPort1 != null ? !dataInPort1.IsConnected : false) || (dataInPort2 != null ? !dataInPort2.IsConnected : false))
             {
                 Debug.Log("함수 노드의 매개변수가 모두 연결되지 않음");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "port");
 
 
                 yield return null;
@@ -96,7 +96,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
             if (i == nodes.Length - 1)
             {
                 Debug.Log("start 노드를 찾을 수 없습니다.");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "start");
                 Debug.Log("FunNode Excute() 종료.");
                 yield break;
 
@@ -177,7 +177,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
                 Debug.Log(flowoutPort.isConnected);
                 Debug.Log("flow 문제 발생한 노드는 : " + flowoutPort.transform.parent.name);
                 Debug.Log("Flow 연결에 문제가 있습니다.");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "flow");
                 return null;
             }
 
@@ -189,7 +189,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
     public IEnumerator ProcessData()
     {
         Debug.Log("함수를 flow에 연결하지 않고 dataPort에 연결하여 반환값을 사용하려고 하는 상태 -> error로 처리해야함");
-        NodeManager.Instance.SetCompileError(true);
+        NodeManager.Instance.SetCompileError(true, "함수 노드의 사용이 잘못되었습니다.\n함수 노드의 플로우 포트를 확인하세요.\n실행이 중단되었습니다.");
         // Debug.Log("다음 포트로 값 전달하기");
         // yield return GetComponentInChildren<DataOutPort>().SendData();
         yield return null;

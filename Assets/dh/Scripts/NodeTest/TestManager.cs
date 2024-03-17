@@ -184,7 +184,7 @@ public class TestManager : MonoBehaviour
         }
 
         //------------액션 노드 처리 ---------------//
-        string[] actionNodeArray = GameManager.Instance.missionData.actionNodes;
+        string[] actionNodeArray = NodeGameManager.Instance.missionData.actionNodes;
         //문제에서 사용되는 액션 노드가 있다면 액션 노드 버튼을 생성하고, 액션 노드 프리팹을 찾아서 연결해준다.
         if (actionNodeArray.Length != 0)
         {
@@ -204,7 +204,7 @@ public class TestManager : MonoBehaviour
 
 
         //리워드 처리
-        rewardTxt.text = GameManager.Instance.missionData.reward.ToString();
+        rewardTxt.text = NodeGameManager.Instance.missionData.reward.ToString();
 
     }
 

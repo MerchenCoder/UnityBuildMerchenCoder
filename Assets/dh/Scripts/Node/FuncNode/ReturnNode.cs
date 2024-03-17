@@ -64,7 +64,7 @@ public class ReturnNode : MonoBehaviour, INode, IFollowFlow
         if (!dataInPort.IsConnected)
         {
             Debug.Log("반환노드에 반환할 데이터가 연결되어 있지 않음");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
             yield return null;
         }
         //데이터 인포트와 연결되어있는 포트로부터 값을 가져와야함(기다림)

@@ -49,65 +49,6 @@ public class LogicNode : MonoBehaviour, INode
 
     }
 
-    // void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
-    // {
-    //     bool b1 = true;
-    //     bool b2 = true;
-
-    //     if (e.IsConnected)
-    //     {
-    //         if (dataInPort1.IsConnected)
-    //         {
-    //             if (dataInPort1.IsError)
-    //             {
-    //                 operand1.text = "오류";
-    //                 operand1.color = Color.red;
-    //             }
-    //             else
-    //             {
-    //                 b1 = dataInPort1.InputValueBool;
-    //                 operand1.text = b1.ToString().Substring(0, 1);
-    //                 operand1.color = Color.black;
-    //             }
-    //         }
-
-    //         if (dataInPort2.IsConnected)
-    //         {
-    //             if (dataInPort2.IsError)
-    //             {
-    //                 operand2.text = "오류";
-    //                 operand2.color = Color.red;
-    //             }
-    //             else
-    //             {
-    //                 b2 = dataInPort2.InputValueBool;
-    //                 operand2.text = b2.ToString().Substring(0, 1);
-    //                 operand2.color = Color.black;
-    //             }
-    //         }
-    //         if (dataInPort1.IsConnected && dataInPort2.IsConnected && !dataInPort1.IsError && !dataInPort2.IsError)
-    //         {
-    //             nodeData.SetData_Bool = LogicData(method, b1, b2);
-    //         }
-
-    //     }
-    //     else
-    //     {
-    //         nodeData.ErrorFlag = true;
-    //         if (!dataInPort1.IsConnected)
-    //         {
-    //             operand1.text = "□";
-    //             operand1.color = Color.black;
-    //         }
-    //         if (!dataInPort2.IsConnected)
-    //         {
-    //             operand2.text = "△";
-    //             operand2.color = Color.black;
-    //         }
-    //     }
-
-    // }
-
 
     bool LogicData(int method, bool input1, bool input2)
     {
@@ -137,7 +78,7 @@ public class LogicNode : MonoBehaviour, INode
         if (!dataInPort1.IsConnected || !dataInPort2.IsConnected)
         {
             Debug.Log("논리연산노드 연결 모두 안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
             yield return null;
 
         }

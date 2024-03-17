@@ -43,7 +43,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
         if (!dataInPort.IsConnected)
         {
             Debug.Log("프린트노드 연결안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
 
             yield return null;
 
@@ -87,7 +87,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 // //result panel의 player는 항상 첫번째 자식이어야 함!!
                 player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
                 playerChatBubble = player.transform.GetChild(1).gameObject;
-                playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stringData;
+                playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>(true).text = stringData;
                 playerChatBubble.SetActive(true);
                 // Invoke("DisableChatBubbleAfterTime", 2f);
                 yield return new WaitForSeconds(printDuration);

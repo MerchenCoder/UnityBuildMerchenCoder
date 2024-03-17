@@ -54,7 +54,7 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
         if (!dataInPort1.IsConnected)
         {
             Debug.Log("Data 노드 연결 안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
             yield return null;
         }
         else

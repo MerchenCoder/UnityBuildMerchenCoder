@@ -20,11 +20,11 @@ public class MissionManager : MonoBehaviour
         rewards = transform.GetChild(1).GetChild(0).GetChild(3).gameObject;
         info = transform.GetChild(1).GetComponentInChildren<NodeLabelControl>().transform.parent.GetChild(0).gameObject;
 
-        missionTitle = "문제 " + GameManager.Instance.missionData.missionCode + " : " + GameManager.Instance.missionData.missionTitle;
-        missionInfo = GameManager.Instance.missionData.missionInfo;
+        missionTitle = "문제 " + NodeGameManager.Instance.missionData.missionCode + " : " + NodeGameManager.Instance.missionData.missionTitle;
+        missionInfo = NodeGameManager.Instance.missionData.missionInfo;
 
         title.GetComponent<TextMeshProUGUI>().text = missionTitle;
-        rewards.transform.GetChild(2).GetComponent<Text>().text = GameManager.Instance.missionData.reward.ToString();
+        rewards.transform.GetChild(2).GetComponent<Text>().text = NodeGameManager.Instance.missionData.reward.ToString();
         info.GetComponentInChildren<TextMeshProUGUI>().text = missionInfo;
 
         Debug.Log("미션 정보 설정 완료");

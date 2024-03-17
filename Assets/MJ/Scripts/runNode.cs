@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class runNode : MonoBehaviour
 {
-    public GameObject resultCanvas;
     public GameObject canvas;
     public GameObject[] flowEndPorts;
     public GameObject[] inFlows;
@@ -19,12 +18,6 @@ public class runNode : MonoBehaviour
         InitializeFlowStartPorts();
         InitializeFlowEndPorts(); // Update에서 InitializeFlowEndPorts 호출
         CheckExecutionAvailability();
-    }
-
-    public void Run()
-    {
-        resultCanvas.SetActive(true);
-        NodeManager.Instance.Run();
     }
 
     private void InitializeFlowStartPorts()

@@ -29,6 +29,7 @@ public class NodeManager : MonoBehaviour
     private GameObject startNode;
     private GameObject currentNode;
     private FlowoutPort currentFlowoutPort;
+    private GameObject resultCanvas;
 
 
     //private Coroutine executeCoroutine;
@@ -45,19 +46,19 @@ public class NodeManager : MonoBehaviour
     }
 
     public event Action<bool> CompileErrorChanged;
-    public void SetCompileError(bool value)
+    public void SetCompileError(bool value, string error)
     {
         compileError = value;
         if (value)
         {
             // 이벤트 발생
-            OnCompileErrorChanged(compileError);
+            OnCompileErrorChanged(compileError, error);
         }
 
 
     }
 
-    protected virtual void OnCompileErrorChanged(bool compileError)
+    protected virtual void OnCompileErrorChanged(bool compileError, string error)
     {
         CompileErrorChanged?.Invoke(compileError);
         // if (executeCoroutine != null)
@@ -68,6 +69,9 @@ public class NodeManager : MonoBehaviour
 
         Debug.Log("모든 코루틴 중단");
         StopAllCoroutines();
+
+        resultCanvas.GetComponent<RunErrorMsg>().SetStateStop();
+        resultCanvas.GetComponent<RunErrorMsg>().ActiveErrorMsg(error);
 
     }
 
@@ -86,6 +90,12 @@ public class NodeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        resultCanvas = GameObject.FindGameObjectWithTag("ResultCanvas");
+        resultCanvas.SetActive(false);
     }
     private void OnEnable()
     {
@@ -142,6 +152,8 @@ public class NodeManager : MonoBehaviour
 
     }
 
+
+
     //========실행 관련============//
     //다음 노드 반환하는 메소드
     public GameObject NextNode(FlowoutPort flowoutPort)
@@ -153,7 +165,7 @@ public class NodeManager : MonoBehaviour
         else
         {
             Debug.Log("Flow 연결에 문제가 있습니다.");
-            SetCompileError(true);
+            SetCompileError(true, "flow");
             return null;
         }
     }
@@ -161,8 +173,11 @@ public class NodeManager : MonoBehaviour
     //컴파일
     public void Run()
     {
+        SetCompileError(false, null);
+        resultCanvas.GetComponent<RunErrorMsg>().SetStateRun();
         if (mode == "run")
         {
+            resultCanvas.SetActive(true);
             StartCoroutine(RunProgram());
         }
         else if (mode == "submit")
@@ -193,7 +208,7 @@ public class NodeManager : MonoBehaviour
         catch (NullReferenceException e)
         {
             Debug.LogError("Can't find start node / " + e.Message);
-            SetCompileError(true);
+            SetCompileError(true, "startNode");
             Debug.LogError(e.StackTrace);
         }
         yield return StartCoroutine(ExcuteNode()); //ExcuteNode 코루틴 호출 후 끝날때까지 기다림.
@@ -222,11 +237,11 @@ public class NodeManager : MonoBehaviour
             if (currentNode == null)
             {
                 Debug.Log("ExcuteNode 코루틴 종료");
-                SetCompileError(true);
+                SetCompileError(true, "flow");
                 yield break;
             }
         }
-        Debug.Log("Run Complete");
-        yield return null;
+        //Debug.Log("Run Complete");
+        resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
     }
 }

@@ -41,42 +41,6 @@ public class LogicNotNode : MonoBehaviour, INode
 
 
     }
-
-    // void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
-    // {
-    //     bool b1 = true;
-    //     if (e.IsConnected)
-    //     {
-    //         if (dataInPort1.IsConnected)
-    //         {
-    //             if (dataInPort1.IsError)
-    //             {
-    //                 operand1.text = "오류";
-    //                 operand1.color = Color.red;
-    //             }
-    //             else
-    //             {
-    //                 b1 = dataInPort1.InputValueBool;
-    //                 operand1.text = b1.ToString().Substring(0, 1);
-    //                 operand1.color = Color.black;
-
-    //                 nodeData.SetData_Bool = !b1;
-    //                 nodeData.ErrorFlag = false;
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         nodeData.ErrorFlag = true;
-    //         if (!dataInPort1.IsConnected)
-    //         {
-    //             operand1.text = "□";
-    //             operand1.color = Color.black;
-    //         }
-    //     }
-
-    // }
-
     public IEnumerator Execute()
     {
         throw new NotImplementedException();
@@ -87,7 +51,7 @@ public class LogicNotNode : MonoBehaviour, INode
         if (!dataInPort1.IsConnected)
         {
             Debug.Log("논리연산노드 not 연결 모두 안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
             yield return null;
 
         }

@@ -53,68 +53,6 @@ public class CompNode : MonoBehaviour, INode
         nodeData = GetComponent<NodeData>();
     }
 
-    // void HandleStateChanged(object sender, InputPortStateChangedEventArgs e)
-    // {
-    //     int n1 = 0;
-    //     int n2 = 0;
-    //     if (e.IsConnected)
-    //     {
-    //         if (dataInPort1.IsConnected)
-    //         {
-    //             if (dataInPort1.IsError)
-    //             {
-    //                 operand1.text = "오류";
-    //                 operand1.color = Color.red;
-    //             }
-    //             else
-    //             {
-
-    //                 n1 = dataInPort1.InputValueInt;
-    //                 //update outPort operand txt
-    //                 operand1.text = n1.ToString();
-    //                 operand1.color = Color.black;
-    //             }
-    //         }
-    //         if (dataInPort2.IsConnected)
-    //         {
-    //             if (dataInPort2.IsError)
-    //             {
-    //                 operand2.text = "오류";
-    //                 operand2.color = Color.red;
-    //             }
-    //             else
-    //             {
-    //                 n2 = dataInPort2.InputValueInt;
-    //                 operand2.text = n2.ToString();
-    //             }
-    //         }
-    //         if (dataInPort1.IsConnected && dataInPort2.IsConnected && !dataInPort1.IsError && !dataInPort2.IsError)
-    //         {
-    //             nodeData.SetData_Bool = CompData(method, n1, n2);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         //connected가 아닌 경우
-    //         nodeData.ErrorFlag = true;
-    //         if (!dataInPort1.IsConnected)
-    //         {
-    //             operand1.text = "□";
-    //             operand1.color = Color.black;
-    //         }
-    //         if (!dataInPort2.IsConnected)
-    //         {
-    //             operand2.text = "△";
-    //             operand2.color = Color.black;
-    //         }
-
-    //     }
-
-
-
-    // }
-
-
     bool CompData(int method, int input1, int input2)
     {
         bool result = false;
@@ -154,7 +92,7 @@ public class CompNode : MonoBehaviour, INode
         if (!dataInPort1.IsConnected || !dataInPort2.IsConnected)
         {
             Debug.Log("비교연산노드 연결 모두 안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
             yield return null;
 
         }
