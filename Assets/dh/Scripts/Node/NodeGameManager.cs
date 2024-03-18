@@ -16,6 +16,8 @@ public class NodeGameManager : MonoBehaviour
         public string missionInfo;
         public string[] nodeLabels;
         public int reward;
+        public bool hasNodeLimit;
+        public int nodeOpenIndex;
     }
 
     public string dataFileName;
