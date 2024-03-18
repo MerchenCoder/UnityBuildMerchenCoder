@@ -8,7 +8,7 @@ public class ChapterManager : MonoBehaviour
     public List<GameObject> chapterBooks;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         DataManager.Instance.LoadGameData();
         ChapterSetting();
@@ -32,11 +32,14 @@ public class ChapterManager : MonoBehaviour
             if (DataManager.Instance.data.chapterIsUnlock[i] == true)
             {
                 chapterBooks[i].GetComponent<Button>().interactable = true;//버튼 활성화
+                chapterBooks[i].transform.GetChild(0).gameObject.SetActive(false);
             }
             else
             {
                 // chapterBooks[i].GetComponent<Image>().color = Color.black;
                 chapterBooks[i].GetComponent<Button>().interactable = false; //버튼 비활성화
+                chapterBooks[i].transform.GetChild(0).gameObject.SetActive(true);
+
             }
         }
 

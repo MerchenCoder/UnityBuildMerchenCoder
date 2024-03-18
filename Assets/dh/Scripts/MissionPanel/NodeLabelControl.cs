@@ -10,7 +10,8 @@ using Newtonsoft.Json;
 
 public class NodeLabelControl : MonoBehaviour
 {
-    public List<string> nodeArray;
+    [SerializeField]
+    private string[] nodeArray;
     public GameObject nodeLabelPrefab;
     private string colorFileName = "NodeColor.json";
 
@@ -43,6 +44,8 @@ public class NodeLabelControl : MonoBehaviour
     //mission panel은 GameManager에 설정된 문제 데이터를 읽어와 info를 setting 해야 한다.
     void Start()
     {
+        nodeArray = NodeGameManager.Instance.missionData.nodeLabels;
+
         //GameManager에서 문제에서 사용하는 노드 정보를 가져오는 로직으로 수정해야 함.
         //현재는 임시로 nodeArray에 데이터 삽입.
         foreach (string node in nodeArray)
