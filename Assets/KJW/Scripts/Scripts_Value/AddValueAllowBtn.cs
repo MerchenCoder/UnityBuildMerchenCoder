@@ -13,8 +13,9 @@ public class AddValueAllowBtn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(valueManager == null)
-            valueManager = GameObject.Find("ValueManager").gameObject.GetComponent<ValueManager>();
+        if (valueManager == null)
+            //valueManager = GameObject.Find("ValueManager").gameObject.GetComponent<ValueManager>();
+            valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>();
     }
 
     public void AddValue()
