@@ -29,7 +29,7 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
         if (!dataInPort.IsConnected)
         {
             Debug.Log("값 설정하기 노드 연결안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
 
             yield return null;
         }
@@ -38,7 +38,7 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
             if (dropdown.value <= 1)
             {
                 Debug.Log("값 설정하기 노드 변수 설정 안됨");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "value");
             }
             else
             {
@@ -64,7 +64,7 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
                 else
                 {
                     Debug.Log(gameObject.name + " 변수 태그 세팅 안됨");
-                    NodeManager.Instance.SetCompileError(true);
+                    NodeManager.Instance.SetCompileError(true, "개발 오류!!! 태그 설정 안됨");
                 }
                 GetComponent<NodeData>().ErrorFlag = false;
             }

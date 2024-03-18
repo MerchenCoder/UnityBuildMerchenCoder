@@ -38,10 +38,11 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
 
     IEnumerator INode.Execute()
     {
+        isBreaking = false;
         if (!dataInPort.IsConnected)
         {
             Debug.Log("While 반복문 노드 반복횟수 연결 안됨");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "port");
 
             yield return null;
         }
@@ -49,6 +50,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
         {
             yield return dataInPort.connectedPort.SendData();
             loopCondition = dataInPort.InputValueBool;
+            Debug.Log(loopCondition);
         }
         //if (dataInPort.connectedPort.transform.parent.GetComponent<GetValueNode>() != null)
         //{
@@ -72,14 +74,14 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
             else
             {
                 Debug.Log("For 반복문 노드 반복내용 연결 안됨");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "flow");
 
                 yield return null;
             }
             if (currentNode.CompareTag("endNode"))
             {
                 Debug.Log("For 반복문 노드 끝 노드에 연결됨");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "flow");
                 isBreaking = true;
                 break;
             }
@@ -105,7 +107,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
                 if (currentNode.CompareTag("endNode"))
                 {
                     Debug.Log("For 반복문 노드 끝 노드에 연결됨");
-                    NodeManager.Instance.SetCompileError(true);
+                    NodeManager.Instance.SetCompileError(true, "flow");
                     isBreaking = true;
                     break;
                 }
