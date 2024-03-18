@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
         isMovingLeft = false;
     }
 
-    public void MoveRightDown() 
+    public void MoveRightDown()
     {
         animator.SetBool("isWalking", true);
         isMovingRight = true;
@@ -53,7 +53,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if(isMovingLeft)
+        if (isMovingLeft)
         {
             spriteRenderer.flipX = false;
             moveVelocity = new Vector3(-1f, 0, 0);
