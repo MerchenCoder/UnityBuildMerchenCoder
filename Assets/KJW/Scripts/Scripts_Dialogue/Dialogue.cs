@@ -53,19 +53,32 @@ public class Dialogue : MonoBehaviour
     {
         int i;
         int j = 0;
-        for(i = 0; i<dialogueContainer.dialogueList.Length; i++)
+        for (i = 0; i < dialogueContainer.dialogueList.Length; i++)
         {
             if (dialogueContainer.dialogueList[i].diaID == targetDiaID)
             {
                 break;
             }
         }
-        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID) j++;
+        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
+        {
+            // OutOfIndex 방지
+            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            {
+                j++;
+            }
+            else break;
+        }
+            
         thisIdDialogues = new EachDialogue[j];
         for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
         {
-            thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-            thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", Resources.Load<Speaker>("Speaker/Player").speaker_name);
+            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            {
+                thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
+                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", Resources.Load<Speaker>("Speaker/Player").speaker_name);
+            }
+            else break;
         }
     }
 
