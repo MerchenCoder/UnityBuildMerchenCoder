@@ -19,7 +19,8 @@ public class SetValueNode : MonoBehaviour, INode, IFollowFlow
         nameManager = this.GetComponent<NodeNameManager>();
         nameManager.NodeName = "SetValueNode";
         nodeData = GetComponent<NodeData>();
-        valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
+        // valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
+        valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>();
         dropdown = transform.GetChild(0).GetComponent<TMP_Dropdown>();
         dataInPort = inPort.GetComponent<DataInPort>();
     }
