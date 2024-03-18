@@ -14,9 +14,9 @@ public class ControlNodeMenu : MonoBehaviour
     void Start()
     {
         PanelTabBar = transform.GetChild(9).gameObject;
-        if (NodeGameManager.Instance.missionData.hasNodeLimit)
+        if (GameManager.Instance.missionData.hasNodeLimit)
         {
-            ControlNodeTabBar(NodeGameManager.Instance.missionData.nodeOpenIndex);
+            ControlNodeTabBar(GameManager.Instance.missionData.nodeOpenIndex);
         }
 
     }

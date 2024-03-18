@@ -16,7 +16,7 @@ public class TestManager : MonoBehaviour
     [Serializable]
     public struct TestCaseData
     {
-        public bool hasTestCase;
+        public bool hasTestCaseInput;
         public List<InputInfo> inputInfo;
 
         public struct InputInfo
@@ -25,7 +25,7 @@ public class TestManager : MonoBehaviour
             public string type;
         }
         public int testCaseLength;
-        public Dictionary<string, TestCase> testCaseInput;
+        public Dictionary<string, TestCase> testCase;
 
         //일단 input output 모두 문자열로 받아오기
         public struct TestCase
@@ -113,9 +113,10 @@ public class TestManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        TestCaseDataFileName = "TestCase" + GameManager.Instance.missionData.missionCode + ".json";
 
         //Json 파일 경로
-        string jsonFilePath = Application.dataPath + "/Data/" + TestCaseDataFileName;
+        string jsonFilePath = Application.dataPath + "/Data/TestCase/" + TestCaseDataFileName;
 
         if (File.Exists(jsonFilePath))
         {
@@ -142,7 +143,7 @@ public class TestManager : MonoBehaviour
 
         //functionManager = FindObjectOfType<FunctionManager>();
 
-        mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
         nodeMenu = mainCanvas.transform.GetChild(1);
         input_NodeMenuSpawnPoint = nodeMenu.GetChild(0).GetChild(0);
         action_NodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
@@ -167,7 +168,7 @@ public class TestManager : MonoBehaviour
 
         //-----------입력 변수 노드 처리---------//
         //테스트 케이스에 입력 변수가 있다면 입력 변수 노드를 노드 메뉴에 삽입해 준다.
-        if (testCaseData.hasTestCase)
+        if (testCaseData.hasTestCaseInput)
         {
             for (int i = 0; i < testCaseData.inputInfo.Count; i++)
             {
@@ -184,7 +185,7 @@ public class TestManager : MonoBehaviour
         }
 
         //------------액션 노드 처리 ---------------//
-        string[] actionNodeArray = NodeGameManager.Instance.missionData.actionNodes;
+        string[] actionNodeArray = GameManager.Instance.missionData.actionNodes;
         //문제에서 사용되는 액션 노드가 있다면 액션 노드 버튼을 생성하고, 액션 노드 프리팹을 찾아서 연결해준다.
         if (actionNodeArray.Length != 0)
         {
@@ -204,7 +205,7 @@ public class TestManager : MonoBehaviour
 
 
         //리워드 처리
-        rewardTxt.text = NodeGameManager.Instance.missionData.reward.ToString();
+        rewardTxt.text = GameManager.Instance.missionData.reward.ToString();
 
     }
 
@@ -263,7 +264,7 @@ public class TestManager : MonoBehaviour
 
     public void SettingCurrentCase(int currentCount)
     {
-        TestCaseData.TestCase testCase = testCaseData.testCaseInput[currentCount.ToString()];
+        TestCaseData.TestCase testCase = testCaseData.testCase[currentCount.ToString()];
         currentInput = testCase.input;
         currentOutput = testCase.output;
 

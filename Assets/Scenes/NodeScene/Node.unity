@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 210292056}
   - component: {fileID: 210292055}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -601,7 +601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0020141602
+      value: 0.0067749023
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -787,10 +787,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 286323480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afcb514b601714c999c252db4014c13e, type: 3}
+  m_Script: {fileID: 11500000, guid: 56aa85c6772df9143be2a442e6601845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataFileName: MissionInfoTest.json
+  Gem_Num: 0
+  dataFileName: 
+  missionData:
+    missionCode: 
+    missionTitle: 
+    actionNodes: []
+    missionInfo: 
+    nodeLabels: []
+    reward: 0
+    hasNodeLimit: 0
+    nodeOpenIndex: 0
 --- !u!114 &417055000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6500049427021526424, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
@@ -1092,11 +1102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f638abba4bd4245925e197bbd7f0ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestCaseDataFileName: test2.json
+  TestCaseDataFileName: 
   inputNodeBtn_int: {fileID: 1795064445583212456, guid: 3d7b0453e149249c79d4d146a908af31, type: 3}
   inputNodeBtn_bool: {fileID: 1925645553976278560, guid: 2d7a0c4d0181e4655b3caea95c31dc0b, type: 3}
   inputNodeBtn_string: {fileID: 3228209295439692543, guid: 0512b84d3ca874665bbae731530ac7a1, type: 3}
-  actionNodeBtn: {fileID: 0}
+  actionNodeBtn: {fileID: 8926905929988791763, guid: 7aac8d3a2dfaf4231b6b89d152e187d7, type: 3}
   currentInput: []
   currentOutput: []
   playerOutput: []
@@ -4104,7 +4114,8 @@ PrefabInstance:
       propertyPath: nodeArray.Array.size
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4101271140815023435, guid: b8a7171d0d7874ebe95454cb773d30bb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

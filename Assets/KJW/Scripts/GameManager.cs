@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.IO;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (null == Instance)
+        if (Instance == null)
         {
             Instance = this;
 
@@ -32,14 +34,14 @@ public class GameManager : MonoBehaviour
     /// <param name="num"></param>
     public bool UseGem(int num)
     {
-        if (Gem_Num - num >= 0) 
+        if (Gem_Num - num >= 0)
         {
             Gem_Num -= num;
             OnGemChanged?.Invoke(Gem_Num); // 젬 상태가 변경되었음을 알림
-            return true; 
+            return true;
         }
         else return false;
-        
+
     }
 
     /// <summary>
@@ -60,4 +62,45 @@ public class GameManager : MonoBehaviour
         Gem_Num += num;
         OnGemChanged?.Invoke(Gem_Num); // 젬 상태가 변경되었음을 알림
     }
+
+
+
+
+    //미션 정보 가져오는 부분을 위한 변수 선언 및 메서드
+    [Serializable]
+    public class MissionData
+    {
+        public string missionCode;
+        public string missionTitle;
+        public string[] actionNodes;
+        public string missionInfo;
+        public string[] nodeLabels;
+        public int reward;
+        public bool hasNodeLimit;
+        public int nodeOpenIndex;
+    }
+    public string dataFileName;
+
+
+
+    public MissionData missionData = new MissionData();
+
+    public void LoadMissionData(string missionCode)
+    {
+        dataFileName = "Mission" + missionCode + ".json";
+        string filePath = Application.dataPath + "/Data/MissionInfo/" + dataFileName;
+        if (File.Exists(filePath))
+        {
+            string jsonString = File.ReadAllText(filePath);
+            missionData = JsonUtility.FromJson<MissionData>(jsonString);
+
+            Debug.Log(dataFileName + " 데이터 불러오기 완료");
+        }
+        else
+        {
+            Debug.Log("can't find file");
+        }
+
+    }
+
 }

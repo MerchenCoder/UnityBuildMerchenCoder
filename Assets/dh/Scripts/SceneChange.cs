@@ -27,8 +27,8 @@ public class SceneChange : MonoBehaviour
 
     //홈으로 씬 전환
     public void ChangetoHome()
-    { 
-        if(SceneManager.GetActiveScene().name == "Chapter")
+    {
+        if (SceneManager.GetActiveScene().name == "Chapter")
             SceneManager.LoadScene("Home");
         else // 플레이씬의 경우 페이드아웃 - 페이드인
         {
@@ -72,11 +72,30 @@ public class SceneChange : MonoBehaviour
 
     IEnumerator ChangeSceneDelay(string SceneName)
     {
-        fadePanel.FadeOut();
-        yield return new WaitForSeconds(1f); // Wait Fading Time
-        SceneManager.LoadScene(SceneName);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneName);
+        asyncLoad.allowSceneActivation = false;
+
+
+
+        //SceneManager.LoadScene(SceneName);
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f)
+            {
+                Debug.Log("어두워지기");
+                fadePanel.FadeOut();
+                yield return new WaitForSeconds(1f); // Wait Fading Time
+                Debug.Log("씬 체인지");
+                asyncLoad.allowSceneActivation = true;
+                break;
+
+            }
+        }
+        yield return new WaitForSeconds(0.3f);
         fadePanel.FadeIn();
-        yield return null;
+        // Debug.Log("fade in");
+        // fadePanel.FadeIn();
+        //yield return null;
     }
 
 }
