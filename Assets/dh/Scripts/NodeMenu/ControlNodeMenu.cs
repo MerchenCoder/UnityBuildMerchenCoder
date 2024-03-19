@@ -16,7 +16,7 @@ public class ControlNodeMenu : MonoBehaviour
         PanelTabBar = transform.GetChild(9).gameObject;
         if (GameManager.Instance.missionData.hasNodeLimit)
         {
-            ControlNodeTabBar(GameManager.Instance.missionData.nodeOpenIndex);
+            ControlNodeTabBar(GameManager.Instance.missionData.isTabOpenList);
         }
 
     }
@@ -27,13 +27,13 @@ public class ControlNodeMenu : MonoBehaviour
 
     }
 
-    public void ControlNodeTabBar(int index)
+    public void ControlNodeTabBar(bool[] isTabOpenList)
     {
-        Debug.Log(index.ToString() + "까지만 오픈");
         Transform PanelTabBarContent = PanelTabBar.transform.GetChild(0);
-        for (int i = index + 1; i < PanelTabBarContent.childCount; i++)
+        for (int i = 0; i < isTabOpenList.Length; i++)
         {
-            PanelTabBarContent.GetChild(i).gameObject.SetActive(false);
+            Debug.Log("인덱스" + i.ToString() + "는" + isTabOpenList[i].ToString());
+            PanelTabBarContent.GetChild(i).gameObject.SetActive(isTabOpenList[i]);
         }
 
     }

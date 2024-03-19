@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         public string[] nodeLabels;
         public int reward;
         public bool hasNodeLimit;
-        public int nodeOpenIndex;
+        public bool[] isTabOpenList;
     }
     public string dataFileName;
 
