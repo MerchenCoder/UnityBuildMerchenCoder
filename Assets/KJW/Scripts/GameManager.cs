@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// 젬 사용하기
     /// </summary>
@@ -103,4 +102,22 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
+    // 플레이 진행상황 정보 저장
+    public void SavePlayProgress(string playPointName, bool isClear)
+    {
+        if (TryGetComponent<PlayData>(out PlayData playData))
+            playData.SavePlayPoint(playPointName, isClear);
+        else Debug.Log("Play Data is null");
+    }
+
+
+    // 플레이 진행상황 정보 불러오기
+    public bool CheckPlayProgress(string playPointName)
+    {
+        if (TryGetComponent<PlayData>(out PlayData playData))
+            return playData.CheckPlayPoint(playPointName);
+        else return false;
+    }
 }

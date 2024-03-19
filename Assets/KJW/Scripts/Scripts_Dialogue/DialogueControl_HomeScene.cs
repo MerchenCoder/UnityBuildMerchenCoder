@@ -15,11 +15,12 @@ public class DialogueControl_HomeScene : MonoBehaviour
     void Start()
     {
         // Check First Play
+        if (GameManager.Instance.CheckPlayProgress("FirstStart") == true)
         {
             isFirstDiaEnd = false;
             playCanvas.SetActive(false);
             messagePanel.SetActive(false);
-            if(dialogueSystem != null)
+            if (dialogueSystem != null)
             {
                 // 다이얼로그 종료 이벤트에 대한 리스너 등록
                 dialogueSystem.OnEndDialogue += PlayNextFlow;

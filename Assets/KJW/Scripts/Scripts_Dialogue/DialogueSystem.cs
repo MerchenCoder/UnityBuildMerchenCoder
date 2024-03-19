@@ -59,7 +59,7 @@ public class DialogueSystem : MonoBehaviour
     {
         diaIndex = 0;
         diaListIndex++;
-        dialogues[diaListIndex-1].gameObject.SetActive(false);
+        //dialogues[diaListIndex-1].gameObject.SetActive(false);
         //left_buttons.gameObject.SetActive(false);
         etc.SetActive(true);
         Speak(nowDialogueList[diaIndex].GetSpeaker(), nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].GetFace());
@@ -145,11 +145,12 @@ public class DialogueSystem : MonoBehaviour
         left_Panel.gameObject.SetActive(false);
         right_Panel.gameObject.SetActive(false);
         etc.SetActive(false);
-        if(TryGetComponent<DiaEndInteraction>(out DiaEndInteraction diaEndInteraction))
+        if(dialogues[diaListIndex - 1].TryGetComponent<DiaEndInteraction>(out DiaEndInteraction diaEndInteraction))
         {
-            dialogues[diaListIndex - 1].GetComponent<DiaEndInteraction>().EndDialogueInteraction();
+            diaEndInteraction.EndDialogueInteraction();
         }
         OnEndDialogue?.Invoke();
+        dialogues[diaListIndex - 1].gameObject.SetActive(false);
     }
 
     IEnumerator ShowText()
