@@ -129,7 +129,6 @@ public class PlayData : MonoBehaviour
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                Debug.Log(playPointName);
                 if (i == nowPlayPointIndex)
                 {
                     Debug.Log(playData.playPoints[i].playInfo);
@@ -155,15 +154,20 @@ public class PlayData : MonoBehaviour
         // JSON 데이터를 역직렬화
         playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
-        for (int i = 0; i < playData.playPoints.Count; i++)
+        for (int i = 1; i < playData.playPoints.Count; i++)
         {
-            playData.playPoints[i].isClear = true;
+            playData.playPoints[i-1].isClear = true;
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                nowPlayPointIndex = i;
-                nowInfoText = playData.playPoints[i].playPointName;
                 break;
             }
         }
+
+        // JSON 데이터를 문자열로 직렬화
+        jsonData = JsonUtility.ToJson(playData);
+        // 파일에 JSON 데이터 쓰기
+        File.WriteAllText(filePath, jsonData);
+        Debug.Log(playPointName + " 저장 완료");
+        LoadPlayData();
     }
 }
