@@ -18,7 +18,7 @@ public class Dialogue : MonoBehaviour
         public string face;
         [TextArea()] public string dialogueText;
         public Speaker GetSpeaker() {
-            // 문자열을 Speaker 객체로 매핑
+            // Speaker Info Load
             return Resources.Load<Speaker>("Speaker/" + speaker);
         }
         public Face GetFace()
@@ -48,7 +48,7 @@ public class Dialogue : MonoBehaviour
     }
 
 
-    // 대화 ID에 해당하는 대화를 찾는 함수
+    // Need check in Inspector
     private void FindDialogueByID(int targetDiaID)
     {
         int i;

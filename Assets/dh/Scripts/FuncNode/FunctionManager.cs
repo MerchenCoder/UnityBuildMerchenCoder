@@ -107,6 +107,7 @@ public class FunctionManager : MonoBehaviour
 
     //for create canvas instance
     public GameObject canvasFuncMakePrefab;
+    public GameObject canvasFuncMakeInstance;
     public Transform spawnPoint;
 
 
@@ -121,7 +122,6 @@ public class FunctionManager : MonoBehaviour
     public List<FuncNode> myfuncNodes = new List<FuncNode>();
 
 
-    // Start is called before the first frame update
 
     private void Awake()
     {
@@ -134,6 +134,10 @@ public class FunctionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+        canvasFuncMakeInstance = Instantiate(canvasFuncMakePrefab);
+        canvasFuncMakeInstance.SetActive(false);
     }
 
     //-----씬이 언로드될 때 싱글톤 파괴-----//
@@ -151,7 +155,9 @@ public class FunctionManager : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
         Debug.Log("FucntionManager 싱글톤 객체 파괴");
+        Instance = null; // Instance 변수를 초기화하여 새로운 싱글톤 객체 생성을 허용
         Destroy(gameObject);
+
     }
 
     //-------------------------------//
@@ -399,7 +405,8 @@ public class FunctionManager : MonoBehaviour
     public void CreateFunctionMakeCanvas()
     {
         //캔버스 프리팹 생성
-        GameObject canvasPrefabInstance = Instantiate(canvasFuncMakePrefab);
+        GameObject canvasPrefabInstance = Instantiate(canvasFuncMakeInstance);
+        canvasPrefabInstance.SetActive(true);
 
         //캔버스 렌더링 모드 설정(UI 카메라로 변경)
         Canvas canvas = canvasPrefabInstance.GetComponent<Canvas>();

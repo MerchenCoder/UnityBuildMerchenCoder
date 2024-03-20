@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static Dialogue;
 
@@ -38,6 +39,9 @@ public class DialogueSystem : MonoBehaviour
     private Text typingText;
     public float typingSpeed = 0.05f;
     public AudioSource audioSource;
+
+    // 다이얼로그 종료 감지를 위한 이벤트
+    public event UnityAction OnEndDialogue;
 
     void Start()
     {
@@ -141,7 +145,11 @@ public class DialogueSystem : MonoBehaviour
         left_Panel.gameObject.SetActive(false);
         right_Panel.gameObject.SetActive(false);
         etc.SetActive(false);
-        dialogues[diaListIndex - 1].GetComponent<DiaEndInteraction>().EndDialogueInteraction();
+        if(TryGetComponent<DiaEndInteraction>(out DiaEndInteraction diaEndInteraction))
+        {
+            dialogues[diaListIndex - 1].GetComponent<DiaEndInteraction>().EndDialogueInteraction();
+        }
+        OnEndDialogue?.Invoke();
     }
 
     IEnumerator ShowText()
@@ -162,7 +170,7 @@ public class DialogueSystem : MonoBehaviour
             {
                 audioSource.PlayOneShot(audioSource.clip);
             }
-            yield return new WaitForSeconds(typingSpeed);
+            yield return new WaitForSecondsRealtime(typingSpeed);
             if(currentText == fullText) isDoneTyping = true;
         }
         yield return null;

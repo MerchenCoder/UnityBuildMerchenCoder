@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     // 젬 상태 변화를 알리기 위한 이벤트
     public event UnityAction<int> OnGemChanged;
 
-
     private void Awake()
     {
         if (null == Instance)

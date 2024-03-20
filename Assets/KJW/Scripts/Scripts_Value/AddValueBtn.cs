@@ -17,7 +17,7 @@ public class AddValueBtn : MonoBehaviour
     private void Start()
     {
         valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
-        valueNameSettingUI = GameObject.Find("ValueUI").transform.GetChild(0).gameObject;
+        valueNameSettingUI = GetComponentInParent<Canvas>().transform.Find("ValueUI").transform.GetChild(0).gameObject;
         inputField = valueNameSettingUI.transform.GetChild(1).GetComponent<TMP_InputField>();
         valueNameSettingUI.SetActive(false);
         dropdown = GetComponent<TMP_Dropdown>();
@@ -26,13 +26,13 @@ public class AddValueBtn : MonoBehaviour
 
     public void OnChangeValue()
     {
-        if(dropdown.value == 0)
+        if (dropdown.value == 0)
         {
             // null select
             // if connected with node in this state -> ??? 
             nodeData.ErrorFlag = true;
         }
-        else if(dropdown.value == 1 && transform.parent.GetComponent<NodeNameManager>().NodeName == "SetValueNode")
+        else if (dropdown.value == 1 && transform.parent.GetComponent<NodeNameManager>().NodeName == "SetValueNode")
         {
             // add value
             SetValueName();

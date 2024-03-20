@@ -7,6 +7,9 @@ public class ReturnNodeBtn : MonoBehaviour
 {
     public GameObject returnNodePrefab;
     private Transform spawnPoint;
+    RectTransform canvasRect;
+    float centerXInCanvas;
+
     Button btn;
 
     private void Start()
@@ -15,6 +18,8 @@ public class ReturnNodeBtn : MonoBehaviour
         btn.onClick.AddListener(MakeInstance);
 
         spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform;
+        canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+        centerXInCanvas = canvasRect.rect.width / 2;
     }
 
     //returnNode 정보
@@ -33,6 +38,11 @@ public class ReturnNodeBtn : MonoBehaviour
         returnNodeInstance.GetComponent<NodeNameManager>().NodeName = "ReturnNode";
         returnNodeInstance.GetComponent<ReturnNode>().SetReturnNode(returnType);
         returnNodeInstance.transform.SetParent(spawnPoint, false); // 부모를 spawnPoint로 설정하고, worldPositionStays를 false로 설정하여 로컬 좌표로 배치
-        returnNodeInstance.transform.localPosition = Vector3.zero; // 로컬 좌표의 원점에 배치
+
+
+        //scroll rect 이동을 반영해 canvas 중간 배치
+        Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+        float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
+        returnNodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
     }
 }
