@@ -44,15 +44,18 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
     {
         trueConntected = trueOutportObject.GetComponent<FlowoutPort>().IsConnected;
         falseConnected = falseOutportObject.GetComponent<FlowoutPort>().IsConnected;
+
         if (!trueConntected || !falseConnected)
         {
+            //Debug.Log("====!trueConntected || !falseConnected=====");
             Debug.Log("Outport는 모두 연결되어야 합니다!");
             NodeManager.Instance.SetCompileError(true);
 
-            yield return null;
+            yield break;
         }
         else
         {
+            //Debug.Log("====trueConntected && falseConnected=====");
             if (!dataInPort1.IsConnected)
             {
                 Debug.Log("Data 노드 연결 안됨");
@@ -63,7 +66,7 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
             {
                 Debug.Log("Data 노드 연결 됨");
                 yield return dataInPort1.connectedPort.GetComponent<DataOutPort>().SendData();
-                NextFlow();
+                //NextFlow();
             }
             GetComponent<NodeData>().ErrorFlag = false;
         }
@@ -75,6 +78,7 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
 
     public FlowoutPort NextFlow()
     {
+        //Debug.Log("This is NextFlow");
         n1 = dataInPort1.InputValueBool;
         if (n1 == true)
         {
