@@ -233,7 +233,9 @@ public class TestManager : MonoBehaviour
             Debug.Log((i + 1).ToString() + "번째 테스트 케이스 통과");
         }
         yield return new WaitForSeconds(1.5f);
+        UpdateMissonState();
         success.SetActive(true);
+
         Debug.Log("모든 테스트 케이스를 통과하였습니다.");
         Debug.Log("채점종료");
 
@@ -303,10 +305,16 @@ public class TestManager : MonoBehaviour
 
     }
 
+    //맞았으면 clear여부 업데이트 & 저장
+    public void UpdateMissonState()
+    {
+        //"-"로 split
+        string[] chapter_mission = GameManager.Instance.missionData.missionCode.Split("-");
+        DataManager.Instance.UpdateMissionState(int.Parse(chapter_mission[0]), int.Parse(chapter_mission[1]), true);
+    }
 
 
 
-    //맞았으면 json에 clear여부를 저장하든지.. 추후에 로직 추가 
 
 
     //실패 -> 다시하기

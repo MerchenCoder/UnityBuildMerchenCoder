@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
         public int reward;
         public bool hasNodeLimit;
         public bool[] isTabOpenList;
+
+        public bool isClear = false;
     }
     public string dataFileName;
 
@@ -92,12 +94,11 @@ public class GameManager : MonoBehaviour
         {
             string jsonString = File.ReadAllText(filePath);
             missionData = JsonUtility.FromJson<MissionData>(jsonString);
-
             Debug.Log(dataFileName + " 데이터 불러오기 완료");
         }
         else
         {
-            Debug.Log("can't find file");
+            Debug.Log("미션 정보 파일을 찾을 수 없습니다.");
         }
 
     }
