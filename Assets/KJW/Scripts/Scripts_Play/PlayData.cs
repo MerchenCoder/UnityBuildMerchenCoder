@@ -66,7 +66,7 @@ public class PlayData : MonoBehaviour
                 if (!playData.playPoints[i].isClear)
                 {
                     nowPlayPointIndex = i;
-                    nowInfoText = playData.playPoints[i].playPointName;
+                    nowInfoText = playData.playPoints[i].playInfo;
                     break;
                 }
             }
@@ -119,25 +119,44 @@ public class PlayData : MonoBehaviour
     }
 
     /// <summary>
-    /// 플레이 포인트 isClear 확인
+    /// 현재 플레이 포인트 확인
     /// </summary>
     /// <param name="playPointName"></param>
-    /// <param name="isClear"></param>
     public bool CheckPlayPoint(string playPointName)
     {
         for (int i = 0; i < playData.playPoints.Count; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if (i == nowPlayPointIndex)
+                if (i+1 == nowPlayPointIndex)
                 {
-                    Debug.Log(playData.playPoints[i].playInfo);
                     return true;
                 }
             }
         }
         return false;
     }
+
+    /// <summary>
+    /// 지나간 플레이 포인트 확인
+    /// </summary>
+    /// <param name="playPointName"></param>
+    public bool CheckClearPlayPoint(string playPointName)
+    {
+        for (int i = 0; i < playData.playPoints.Count; i++)
+        {
+            if (playData.playPoints[i].playPointName == playPointName)
+            {
+                if (playData.playPoints[i].isClear)
+                {
+                    Debug.Log(playData.playPoints[i].playPointName + " is Clear");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     /// <summary>
     /// 디버그용 플레이 포인트 지정하기
@@ -154,13 +173,14 @@ public class PlayData : MonoBehaviour
         // JSON 데이터를 역직렬화
         playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
-        for (int i = 1; i < playData.playPoints.Count; i++)
+        for (int i = 0; i < playData.playPoints.Count; i++)
         {
-            playData.playPoints[i-1].isClear = true;
             if (playData.playPoints[i].playPointName == playPointName)
             {
+                playData.playPoints[i].isClear = true;
                 break;
             }
+            else playData.playPoints[i].isClear = true;
         }
 
         // JSON 데이터를 문자열로 직렬화

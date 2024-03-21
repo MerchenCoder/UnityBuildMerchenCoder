@@ -244,7 +244,6 @@ Transform:
   - {fileID: 222591495}
   - {fileID: 498840895}
   - {fileID: 1618843292}
-  - {fileID: 917474472}
   - {fileID: 1304811369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -264,6 +263,10 @@ PrefabInstance:
       propertyPath: quizInfoPanel
       value: 
       objectReference: {fileID: 1158930036}
+    - target: {fileID: 4923695112522250038, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
+      propertyPath: AfterMissionDialogue
+      value: 
+      objectReference: {fileID: 1310028647}
     - target: {fileID: 7116383971978642432, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_Name
       value: quiz5_Farming_Btn
@@ -409,6 +412,10 @@ PrefabInstance:
       propertyPath: quizInfoPanel
       value: 
       objectReference: {fileID: 1158930036}
+    - target: {fileID: 4923695112522250038, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
+      propertyPath: AfterMissionDialogue
+      value: 
+      objectReference: {fileID: 1171884527}
     - target: {fileID: 7116383971978642432, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_Name
       value: quiz3_Give_Btn
@@ -1424,6 +1431,11 @@ PrefabInstance:
 --- !u!224 &313627220 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 677011951523544893, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+  m_PrefabInstance: {fileID: 313627219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &313627221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
   m_PrefabInstance: {fileID: 313627219}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &321042884
@@ -2570,6 +2582,10 @@ PrefabInstance:
       propertyPath: quizInfoPanel
       value: 
       objectReference: {fileID: 1158930036}
+    - target: {fileID: 4923695112522250038, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
+      propertyPath: AfterMissionDialogue
+      value: 
+      objectReference: {fileID: 313627221}
     - target: {fileID: 7116383971978642432, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_Name
       value: quiz4_Farming_Btn
@@ -2992,6 +3008,10 @@ PrefabInstance:
       propertyPath: quizInfoPanel
       value: 
       objectReference: {fileID: 1158930036}
+    - target: {fileID: 5525409097856973665, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
+      propertyPath: AfterMissionDialogue
+      value: 
+      objectReference: {fileID: 631142680}
     - target: {fileID: 7653921812947716183, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_Name
       value: quiz2_Give_Btn
@@ -4079,83 +4099,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871266436}
   m_CullTransparentMesh: 1
---- !u!1 &917474471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 917474472}
-  - component: {fileID: 917474473}
-  m_Layer: 0
-  m_Name: Wall (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &917474472
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 917474471}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.93, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 13.5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 54675409}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &917474473
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 917474471}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &920332891
 GameObject:
   m_ObjectHideFlags: 0
@@ -5735,6 +5678,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 677011951523544893, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
   m_PrefabInstance: {fileID: 1171884525}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1171884527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+  m_PrefabInstance: {fileID: 1171884525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1215106651
 GameObject:
   m_ObjectHideFlags: 0
@@ -6120,6 +6068,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+--- !u!1 &1310028647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+  m_PrefabInstance: {fileID: 1310028646}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1356720791
 GameObject:
   m_ObjectHideFlags: 0
@@ -6737,7 +6690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1618843292
 Transform:
   m_ObjectHideFlags: 0
@@ -8164,6 +8117,10 @@ PrefabInstance:
       propertyPath: quizInfoPanel
       value: 
       objectReference: {fileID: 1158930036}
+    - target: {fileID: 5525409097856973665, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
+      propertyPath: AfterMissionDialogue
+      value: 
+      objectReference: {fileID: 3110982316642990073}
     - target: {fileID: 7653921812947716183, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_Name
       value: quiz1_Print_Btn
@@ -8215,6 +8172,11 @@ MonoBehaviour:
 --- !u!1 &3110982316642990072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7653921812947716183, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
+  m_PrefabInstance: {fileID: 3110982316642990070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3110982316642990073 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 535262110581539775, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
   m_PrefabInstance: {fileID: 3110982316642990070}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3110982316642990074

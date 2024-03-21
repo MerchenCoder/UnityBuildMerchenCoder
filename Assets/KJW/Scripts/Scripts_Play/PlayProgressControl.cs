@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class PlayProgressControl : MonoBehaviour
 {
-    [SerializeField] string activePlayPoint;
-
-    private void Awake()
-    {
-        gameObject.SetActive(true);
-    }
+    public string activePlayPoint;
 
     void Start()
     {
