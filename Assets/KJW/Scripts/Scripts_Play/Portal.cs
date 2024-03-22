@@ -11,4 +11,9 @@ public class Portal : MonoBehaviour
     {
         SceneChange.Instance.ChangeToThisScene(NextSceneStr);
     }
+
+    public void RequestMoveScene()
+    {
+        SceneChange.Instance.ChangeToThisScene(NextSceneStr);
+    }
 }

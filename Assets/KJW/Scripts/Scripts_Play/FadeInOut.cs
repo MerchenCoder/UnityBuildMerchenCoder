@@ -11,8 +11,6 @@ public class FadeInOut : MonoBehaviour
 
     private void Start()
     {
-        Panel.raycastTarget = true;
-        FadeIn();
     }
 
     public void FadeOut()
