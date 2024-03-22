@@ -19,6 +19,8 @@ public class GameLoadingScript : MonoBehaviour
     public IEnumerator Loading()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+        DataManager.Instance.LoadGameData();
+        Debug.Log(DataManager.Instance.gameStateData.ch1MissionClear[0]);
         asyncLoad.allowSceneActivation = false;
 
         //isDone 은 asyncLoad.progress의 연산이 완료되었는지 확인한다.

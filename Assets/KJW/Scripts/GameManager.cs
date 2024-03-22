@@ -4,15 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
 using System;
+using Newtonsoft.Json;
 
 public class GameManager : MonoBehaviour
 {
+
+    //싱글톤//
     public static GameManager Instance = null;
-    public int Gem_Num;
-
-    // 젬 상태 변화를 알리기 위한 이벤트
-    public event UnityAction<int> OnGemChanged;
-
     private void Awake()
     {
         if (Instance == null)
@@ -27,19 +25,114 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        LoadPlayerData();
+    }
+
+
+    //플레이어 데이터 - gem, position//
+
+
+    //json 데이터를 담을 class 선언
+    [Serializable]
+    public class PlayerData
+    {
+        public int gem;
+        public Dictionary<string, playerPosition> playLog;
+        public struct playerPosition
+        {
+            public float x;
+            public float y;
+            public float z;
+        }
+    }
+    public PlayerData playerData = new PlayerData();
+
+    //playerData 파일 이름(초기화용, 사용자 저장용)
+    private string playerDataFileName_Init = "PlayerData.json";
+    private string playerDataFileName = "myPlayerData.json";
+
+
+    //playerData 초기화
+    public void InitializePlayerData()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data", playerDataFileName_Init);
+        if (File.Exists(filePath))
+        {
+            string jsonString = File.ReadAllText(filePath);
+
+            //객체 역직렬화 직접 불가 -> 라이브러리 사용
+            // playerData = JsonUtility.FromJson<PlayerData>(jsonString);
+            playerData = JsonConvert.DeserializeObject<PlayerData>(jsonString);
+            Debug.Log(playerDataFileName_Init + " 데이터 불러오기 완료");
+            SavePlayerData();
+        }
+        else
+        {
+            Debug.Log("초기화 게임 파일인 PlayerData.json을 찾을 수 없습니다.");
+        }
+    }
+
+    //playerData 가져오기
+    public void LoadPlayerData()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "Data", playerDataFileName);
+        if (File.Exists(filePath))
+        {
+            string jsonString = File.ReadAllText(filePath);
+            // playerData = JsonUtility.FromJson<PlayerData>(jsonString);
+            playerData = JsonConvert.DeserializeObject<PlayerData>(jsonString);
+            Debug.Log($"{playerDataFileName} 데이터 불러오기 완료");
+        }
+        else
+        {
+            Debug.Log("PlayerData 초기 셋팅 필요");
+            InitializePlayerData();
+        }
+
+
+    }
+
+
+    //playerData 저장
+    public void SavePlayerData()
+    {
+        // string ToJsonData = JsonUtility.ToJson(playerData, true);
+        string ToJsonData = JsonConvert.SerializeObject(playerData);
+        string filePath = Path.Combine(Application.persistentDataPath, "Data", playerDataFileName);
+        File.WriteAllText(filePath, ToJsonData);
+        Debug.Log($"{playerDataFileName} 저장 완료");
+
+    }
+
+
+    // 젬 상태 변화를 알리기 위한 이벤트
+    public event UnityAction<int> OnGemChanged;
+
+
+
     /// <summary>
     /// 젬 사용하기
     /// </summary>
     /// <param name="num"></param>
     public bool UseGem(int num)
     {
-        if (Gem_Num - num >= 0)
+        if (playerData.gem - num >= 0)
         {
-            Gem_Num -= num;
-            OnGemChanged?.Invoke(Gem_Num); // 젬 상태가 변경되었음을 알림
+            playerData.gem -= num;
+            OnGemChanged?.Invoke(playerData.gem); // 젬 상태가 변경되었음을 알림
+
+
+            //변경된 잼 정보를 로컬에 저장
+            SavePlayerData();
             return true;
         }
-        else return false;
+        else
+        {
+            Debug.Log("Gem 부족");
+            return false;
+        }
 
     }
 
@@ -49,7 +142,7 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     public int GetNowGem()
     {
-        return Gem_Num;
+        return playerData.gem;
     }
 
     /// <summary>
@@ -58,8 +151,11 @@ public class GameManager : MonoBehaviour
     /// <param name="num"></param>
     public void GetSomeGem(int num)
     {
-        Gem_Num += num;
-        OnGemChanged?.Invoke(Gem_Num); // 젬 상태가 변경되었음을 알림
+        playerData.gem += num;
+        OnGemChanged?.Invoke(playerData.gem); // 젬 상태가 변경되었음을 알림
+
+        //변경된 잼 정보를 로컬에 저장
+        SavePlayerData();
     }
 
 
@@ -77,6 +173,8 @@ public class GameManager : MonoBehaviour
         public int reward;
         public bool hasNodeLimit;
         public bool[] isTabOpenList;
+
+        public bool isClear = false;
     }
     public string dataFileName;
 
@@ -92,12 +190,11 @@ public class GameManager : MonoBehaviour
         {
             string jsonString = File.ReadAllText(filePath);
             missionData = JsonUtility.FromJson<MissionData>(jsonString);
-
             Debug.Log(dataFileName + " 데이터 불러오기 완료");
         }
         else
         {
-            Debug.Log("can't find file");
+            Debug.Log("미션 정보 파일을 찾을 수 없습니다.");
         }
 
     }
