@@ -83,11 +83,7 @@ public class DataManager : MonoBehaviour
 
         File.WriteAllText(filePath, ToJsonData);
 
-        print("저장 완료");
-        for (int i = 0; i < gameStateData.chapterIsUnlock.Length; i++)
-        {
-            print($"{i + 1}번 챕터 잠금 해제 여부 : " + gameStateData.chapterIsUnlock[i]);
-        }
+        print("GameStateData.json 저장 완료");
     }
 
 

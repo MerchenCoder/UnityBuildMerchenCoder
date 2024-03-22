@@ -96,10 +96,6 @@ public class SceneChange : MonoBehaviour
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneName);
         asyncLoad.allowSceneActivation = false;
-
-
-
-        //SceneManager.LoadScene(SceneName);
         while (!asyncLoad.isDone)
         {
             if (asyncLoad.progress >= 0.9f)
