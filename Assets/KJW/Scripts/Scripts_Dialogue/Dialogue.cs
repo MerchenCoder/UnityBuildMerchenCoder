@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,7 +35,10 @@ public class Dialogue : MonoBehaviour
 
     public DialogueContainer dialogueContainer;
     public EachDialogue[] thisIdDialogues;
-    public TextAsset dialogueJson;
+
+    // 파일 이름으로 경로를 통해 가져오도록 수정
+    private string dialogueJson;
+    public string dialogueFileName;
     public int dialogueID;
 
    
@@ -42,7 +46,9 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
-        string jsonString = "{ \"dialogueList\": " + dialogueJson.text + "}";
+        string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
+        dialogueJson = File.ReadAllText(jsonFilePath);
+        string jsonString = "{ \"dialogueList\": " + dialogueJson + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
         FindDialogueByID(dialogueID);
     }
