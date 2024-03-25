@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisIdDialogues: []
-  dialogueJson: {fileID: 4900000, guid: 8fa83d923e8537d4baf6d6d6d437646b, type: 3}
+  dialogueFileName: chap1_5_Dialogue
   dialogueID: 38
 --- !u!114 &91272701
 MonoBehaviour:
@@ -485,7 +485,7 @@ Transform:
   m_GameObject: {fileID: 104338965}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.75, y: 0, z: 0}
+  m_LocalPosition: {x: -9.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 13.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -533,7 +533,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisIdDialogues: []
-  dialogueJson: {fileID: 4900000, guid: 8fa83d923e8537d4baf6d6d6d437646b, type: 3}
+  dialogueFileName: chap1_5_Dialogue
   dialogueID: 37
 --- !u!320 &303008664
 PlayableDirector:
@@ -1468,6 +1468,7 @@ GameObject:
   - component: {fileID: 309316766}
   - component: {fileID: 309316765}
   - component: {fileID: 309316764}
+  - component: {fileID: 309316770}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1638,6 +1639,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &309316770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309316763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49bc306094e1d1240b77212be1f115b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448225066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2801,7 +2814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisIdDialogues: []
-  dialogueJson: {fileID: 4900000, guid: 8fa83d923e8537d4baf6d6d6d437646b, type: 3}
+  dialogueFileName: chap1_5_Dialogue
   dialogueID: 36
 --- !u!114 &1067945642
 MonoBehaviour:
@@ -2955,7 +2968,7 @@ Transform:
   m_GameObject: {fileID: 1120215886}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.9, y: 0, z: 0}
+  m_LocalPosition: {x: 19.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 13.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4852,6 +4865,10 @@ PrefabInstance:
       propertyPath: dialogueJson
       value: 
       objectReference: {fileID: 4900000, guid: 8fa83d923e8537d4baf6d6d6d437646b, type: 3}
+    - target: {fileID: 1004819334524406126, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
+      propertyPath: dialogueFileName
+      value: chap1_5_Dialogue
+      objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5172,6 +5189,10 @@ PrefabInstance:
       propertyPath: dialogueJson
       value: 
       objectReference: {fileID: 4900000, guid: 8fa83d923e8537d4baf6d6d6d437646b, type: 3}
+    - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: dialogueFileName
+      value: chap1_5_Dialogue
+      objectReference: {fileID: 0}
     - target: {fileID: 5558622094539228544, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: nextFlow
       value: 

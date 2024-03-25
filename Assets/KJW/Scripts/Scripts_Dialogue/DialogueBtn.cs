@@ -7,16 +7,10 @@ public class DialogueBtn : MonoBehaviour
     Dialogue dialogue;
     bool canTouch;
 
-    private void Awake()
-    {
-        gameObject.SetActive(true);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         dialogue = GetComponent<Dialogue>();
-        if (this.CompareTag("AfterQuizDia")) gameObject.SetActive(false);
     }
 
     public void DialogueBtnDown()

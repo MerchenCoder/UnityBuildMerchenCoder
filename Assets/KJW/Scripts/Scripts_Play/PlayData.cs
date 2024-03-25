@@ -128,7 +128,7 @@ public class PlayData : MonoBehaviour
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if (i+1 == nowPlayPointIndex)
+                if (i == nowPlayPointIndex)
                 {
                     return true;
                 }

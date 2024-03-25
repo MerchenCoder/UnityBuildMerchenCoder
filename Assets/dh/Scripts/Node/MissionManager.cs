@@ -11,7 +11,7 @@ public class MissionManager : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject title;
-    public string mode = "main";
+    //public string mode = "main";
     GameObject rewards;
     GameObject info;
     void Start()
@@ -46,16 +46,23 @@ public class MissionManager : MonoBehaviour
     }
 
 
-    public void SceneChangeToNode()
+    public void SceneChangeToNode(string mode)
     {
 
         if (mode == "main")
         {
+            Debug.Log("모드 = 메인");
+            SceneChange.Instance.ChangeToThisScene("Node");
+        }
+        else if (mode == "review")
+        {
+            Debug.Log("모드 == 복습하기");
             SceneChange.Instance.ChangeToThisScene("Node");
         }
         else
         {
-            Debug.Log("mode가 main이 아닙니다. = 스토리 진행 중이 아닙니다.");
+            Debug.Log("튜토리얼");
+            //튜토리얼 부분으로 이동할 코드 작성
         }
     }
 }
