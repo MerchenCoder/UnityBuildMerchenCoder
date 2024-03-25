@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -14,17 +13,15 @@ public class PlayerMove : MonoBehaviour
     [NonSerialized] public bool isMovingLeft;
     [NonSerialized] public bool isMovingRight;
 
+    
+
     private void Start()
     {
         isMovingLeft = false;
         isMovingRight = false;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // 이전 씬에 따른 플레이어 위치 조정
-        if (SceneChange.Instance.beforeScene == "1_2_town" && SceneManager.GetActiveScene().name == "1_1_farmer") { this.transform.localPosition = new Vector3(48.1f, -1.015f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
-        else if (SceneChange.Instance.beforeScene == "1_3_castle" && SceneManager.GetActiveScene().name == "1_2_town") { this.transform.localPosition = new Vector3(48.6f,-1.015f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
-        else if (SceneChange.Instance.beforeScene == "1_4_forest" && SceneManager.GetActiveScene().name == "1_3_castle") { this.transform.localPosition = new Vector3(26.84f, -1.015f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        
     }
 
     public void MoveLeftDown()

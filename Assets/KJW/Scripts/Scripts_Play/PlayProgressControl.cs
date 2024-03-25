@@ -8,11 +8,14 @@ public class PlayProgressControl : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.Instance.CheckPlayProgress(activePlayPoint))
+        if (!GameManager.Instance.CheckPlayProgress(activePlayPoint))
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
+            if (TryGetComponent<QuizActive>(out QuizActive qa))
+            {
+                qa.AfterMissionDialogue.SetActive(false);
+            }
         }
-        else gameObject.SetActive(false);
     }
 
 }
