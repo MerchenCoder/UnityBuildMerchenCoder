@@ -58,6 +58,9 @@ public class NodeLabelControl : MonoBehaviour
         GetColorData();
         nodeArray = GameManager.Instance.missionData.nodeLabels;
 
+        //초기화
+
+
         //GameManager에서 문제에서 사용하는 노드 정보를 가져오는 로직으로 수정해야 함.
         //현재는 임시로 nodeArray에 데이터 삽입.
         foreach (string node in nodeArray)

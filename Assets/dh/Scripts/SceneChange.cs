@@ -100,13 +100,13 @@ public class SceneChange : MonoBehaviour
         {
             if (asyncLoad.progress >= 0.9f)
             {
-                fadePanel.FadeOut();
-                yield return new WaitForSeconds(1f); // Wait Fading Time
-                asyncLoad.allowSceneActivation = true;
                 break;
 
             }
         }
+        fadePanel.FadeOut();
+        yield return new WaitForSeconds(1f); // Wait Fading Time
+        asyncLoad.allowSceneActivation = true;
         yield return new WaitForSeconds(0.3f);
         fadePanel.FadeIn();
     }
