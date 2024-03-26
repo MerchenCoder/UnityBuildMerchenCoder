@@ -61,7 +61,7 @@ public class PlayData : MonoBehaviour
             playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
             // 현재 진행상황 로드
-            for(int i=0; i<playData.playPoints.Count; i++)
+            for (int i = 0; i < playData.playPoints.Count; i++)
             {
                 if (!playData.playPoints[i].isClear)
                 {
@@ -79,6 +79,11 @@ public class PlayData : MonoBehaviour
                 // 파일이 존재하면 JSON 데이터 읽기
                 string jsonData = File.ReadAllText(initFilePath);
 
+                //폴더 생성
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
                 // 파일에 JSON 데이터 쓰기
                 File.WriteAllText(filePath, jsonData);
 
@@ -102,7 +107,7 @@ public class PlayData : MonoBehaviour
     /// <param name="isClear"></param>
     public void SavePlayPoint(string playPointName, bool isClear)
     {
-        for(int i=0; i< playData.playPoints.Count; i++)
+        for (int i = 0; i < playData.playPoints.Count; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
@@ -111,7 +116,7 @@ public class PlayData : MonoBehaviour
                 string jsonData = JsonUtility.ToJson(playData);
                 // 파일에 JSON 데이터 쓰기
                 File.WriteAllText(filePath, jsonData);
-                Debug.Log( playPointName +" 저장 완료");
+                Debug.Log(playPointName + " 저장 완료");
                 LoadPlayData();
                 break;
             }

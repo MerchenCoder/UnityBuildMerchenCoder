@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [Serializable]
     public class PlayerData
     {
+        public string name;
         public int gem;
         public Dictionary<string, playerPosition> playLog;
         public struct playerPosition
@@ -66,6 +67,14 @@ public class GameManager : MonoBehaviour
             // playerData = JsonUtility.FromJson<PlayerData>(jsonString);
             playerData = JsonConvert.DeserializeObject<PlayerData>(jsonString);
             Debug.Log(playerDataFileName_Init + " 데이터 불러오기 완료");
+
+            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "Data")))
+            {
+                Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "Data"));
+                Debug.Log("폴더 생성");
+
+            }
+
             SavePlayerData();
         }
         else

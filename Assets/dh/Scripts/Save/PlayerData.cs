@@ -7,6 +7,7 @@ using System;
 [Serializable]
 public class PlayerData
 {
+    public string name = "플레이어";
     public int playerGem = 0;
     public Dictionary<string, playerPosition> playLog;
 
