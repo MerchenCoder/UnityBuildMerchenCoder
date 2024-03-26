@@ -10,7 +10,7 @@ public class MissionManager : MonoBehaviour
     private string missionInfo;
     // Start is called before the first frame update
 
-    public GameObject title;
+    GameObject title;
     //public string mode = "main";
     GameObject rewards;
     GameObject info;
@@ -20,8 +20,12 @@ public class MissionManager : MonoBehaviour
 
     }
 
+
+
     public void MissionInfoSetting()
     {
+
+
         title = transform.GetChild(0).GetChild(0).gameObject;
         rewards = transform.GetChild(0).GetChild(3).gameObject;
         info = transform.GetComponentInChildren<NodeLabelControl>(true).transform.parent.GetChild(0).gameObject;

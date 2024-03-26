@@ -54,6 +54,9 @@ public class NodeLabelControl : MonoBehaviour
     //mission panel은 GameManager에 설정된 문제 데이터를 읽어와 info를 setting 해야 한다.
     public void NodeLabelSetting()
     {
+        //기존 노드 라벨 삭제
+        DestoryAllChild();
+
 
         GetColorData();
         nodeArray = GameManager.Instance.missionData.nodeLabels;
@@ -100,5 +103,13 @@ public class NodeLabelControl : MonoBehaviour
         }
     }
 
+
+    private void DestoryAllChild()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 
 }

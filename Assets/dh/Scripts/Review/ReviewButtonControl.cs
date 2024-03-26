@@ -8,7 +8,6 @@ public class ReviewButtonControl : MonoBehaviour
     int idx = 0;
     private void Start()
     {
-
         SetCh1ButtonUnlock(0);
         Debug.Log(idx);
         SetCh2ButtonUnlock(idx);
@@ -19,10 +18,12 @@ public class ReviewButtonControl : MonoBehaviour
     public void SetCh1ButtonUnlock(int childStartIndex)
     {
         idx = childStartIndex;
+        Debug.Log(DataManager.Instance.gameStateData.ch1MissionClear[0]);
         for (int i = 0; i < DataManager.Instance.gameStateData.ch1MissionClear.Length; i++)
         {
             if (DataManager.Instance.gameStateData.ch1MissionClear[i] == true)
             {
+                Debug.Log("clear");
                 transform.GetChild(idx).GetComponent<Button>().interactable = true;
             }
             idx++;

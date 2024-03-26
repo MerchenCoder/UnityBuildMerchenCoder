@@ -27,6 +27,10 @@ public class DataManager : MonoBehaviour
 
         }
     }
+    private void Awake()
+    {
+        LoadGameData();
+    }
 
     //게임 데이터 파일 이름 설정
     string GameDataFileName = "GameStatusData.json";

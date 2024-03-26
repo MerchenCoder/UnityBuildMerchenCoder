@@ -217,4 +217,11 @@ public class GameManager : MonoBehaviour
             return playData.CheckPlayPoint(playPointName);
         else return false;
     }
+
+
+    public void changeReward(int newReward)
+    {
+        Debug.Log($"복습하기 모드. 보상 변경 : {newReward}");
+        missionData.reward = newReward;
+    }
 }
