@@ -12,6 +12,8 @@ public class RunErrorMsg : MonoBehaviour
     // Start is called before the first frame update
 
 
+
+
     public void SetStateRun()
     {
         State.text = "실행 중";
@@ -68,6 +70,7 @@ public class RunErrorMsg : MonoBehaviour
     void Start()
     {
         SetStateRun();
+        ErrorMsgBox = transform.parent.GetChild(1).GetChild(0).gameObject;
         ErrorMsgBox.SetActive(false);
 
     }

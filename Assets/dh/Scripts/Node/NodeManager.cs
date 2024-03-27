@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class NodeManager : MonoBehaviour
 {
@@ -29,8 +30,10 @@ public class NodeManager : MonoBehaviour
     private GameObject startNode;
     private GameObject currentNode;
     private FlowoutPort currentFlowoutPort;
-    private GameObject resultCanvas;
+    [SerializeField]
+    public GameObject resultCanvas;
 
+    public ResultCanvasManager resultCanvasManager;
 
     //private Coroutine executeCoroutine;
 
@@ -92,11 +95,11 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private async void Start()
     {
-        resultCanvas = GameObject.FindGameObjectWithTag("ResultCanvas");
-        resultCanvas.SetActive(false);
+        resultCanvasManager.SetResultCanvas();
     }
+
     private void OnEnable()
     {
         SceneManager.sceneUnloaded += OnSceneUnloaded;
@@ -242,6 +245,19 @@ public class NodeManager : MonoBehaviour
             }
         }
         //Debug.Log("Run Complete");
+
+        bool result = TestManager.Instance.CheckAnswer();
+        if (result)
+        {
+            print("정답 -> 성공 애니메이션 실행");
+            yield return resultCanvas.GetComponent<ControlAnimation>().Success();
+        }
+        else
+        {
+            print("오답 -> 실패 애니메이션 실행");
+            yield return resultCanvas.GetComponent<ControlAnimation>().Fail();
+        }
         resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
     }
+
 }

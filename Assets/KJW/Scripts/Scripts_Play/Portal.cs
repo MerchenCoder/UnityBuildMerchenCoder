@@ -6,8 +6,12 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] string NextSceneStr;
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        SceneChange.Instance.ChangeToThisScene(NextSceneStr);
+    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void RequestMoveScene()
     {
         SceneChange.Instance.ChangeToThisScene(NextSceneStr);
     }

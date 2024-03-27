@@ -8,5 +8,7 @@ public class Speaker : ScriptableObject
 {
     public bool isPlayer;
     public string speaker_name;
-    public Sprite[] standing_sprites;
+    [Header("Normal, Smile, Sad, Cry, Angry, Surprise ")]
+    public Sprite[] standing_sprites = new Sprite[6];
+
 }

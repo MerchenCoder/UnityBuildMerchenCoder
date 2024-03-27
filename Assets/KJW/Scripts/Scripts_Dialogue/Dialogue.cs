@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,7 +35,10 @@ public class Dialogue : MonoBehaviour
 
     public DialogueContainer dialogueContainer;
     public EachDialogue[] thisIdDialogues;
-    public TextAsset dialogueJson;
+
+    // 파일 이름으로 경로를 통해 가져오도록 수정
+    private string dialogueJson;
+    public string dialogueFileName;
     public int dialogueID;
 
    
@@ -42,7 +46,9 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
-        string jsonString = "{ \"dialogueList\": " + dialogueJson.text + "}";
+        string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
+        dialogueJson = File.ReadAllText(jsonFilePath);
+        string jsonString = "{ \"dialogueList\": " + dialogueJson + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
         FindDialogueByID(dialogueID);
     }
@@ -53,19 +59,32 @@ public class Dialogue : MonoBehaviour
     {
         int i;
         int j = 0;
-        for(i = 0; i<dialogueContainer.dialogueList.Length; i++)
+        for (i = 0; i < dialogueContainer.dialogueList.Length; i++)
         {
             if (dialogueContainer.dialogueList[i].diaID == targetDiaID)
             {
                 break;
             }
         }
-        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID) j++;
+        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
+        {
+            // OutOfIndex 방지
+            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            {
+                j++;
+            }
+            else break;
+        }
+            
         thisIdDialogues = new EachDialogue[j];
         for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
         {
-            thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-            thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", Resources.Load<Speaker>("Speaker/Player").speaker_name);
+            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            {
+                thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
+                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
+            }
+            else break;
         }
     }
 

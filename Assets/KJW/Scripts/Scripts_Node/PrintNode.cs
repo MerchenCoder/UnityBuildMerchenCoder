@@ -86,15 +86,14 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 // //Canvas_Result가 Acitve 된 후에 할당해야 함.
                 // //result panel의 player는 항상 첫번째 자식이어야 함!!
                 player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
-                playerChatBubble = player.transform.GetChild(1).gameObject;
-                playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>(true).text = stringData;
-                playerChatBubble.SetActive(true);
-                // Invoke("DisableChatBubbleAfterTime", 2f);
-                yield return new WaitForSeconds(printDuration);
-                Debug.Log("말풍선 안보이게하기");
-                playerChatBubble.SetActive(false);
-
-                Debug.Log("asdfafaf");
+                playerChatBubble = GameObject.FindWithTag("ResultPanel_Bubble").transform.GetChild(0).gameObject;
+                yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk(stringData);
+                // playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>(true).text = stringData;
+                // playerChatBubble.SetActive(true);
+                // // Invoke("DisableChatBubbleAfterTime", 2f);
+                // yield return new WaitForSeconds(printDuration);
+                // Debug.Log("말풍선 안보이게하기");
+                // playerChatBubble.SetActive(false);
 
             }
             //출력 배열에 반영

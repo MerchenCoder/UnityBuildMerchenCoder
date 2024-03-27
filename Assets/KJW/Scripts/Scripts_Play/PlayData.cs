@@ -6,28 +6,9 @@ using static SaveItem;
 
 public class PlayData : MonoBehaviour
 {
-    public static PlayData Instance = null;
-
     // 씬에서 사용할 알림 Text
     public string nowInfoText;
     public int nowPlayPointIndex;
-
-    /// <summary>
-    /// 싱글톤
-    /// </summary>
-    private void Awake()
-    {
-        if (null == Instance)
-        {
-            Instance = this;
-
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
 
     // 저장될 폴더 경로
     private string folderPath;
@@ -54,20 +35,19 @@ public class PlayData : MonoBehaviour
 
     public SavePlayData playData;
 
-    private void Start()
+    private void Awake()
     {
         // 초기화
         playData = new SavePlayData();
 
-        initFolderPath = Application.streamingAssetsPath + "/Data";
-        initFilePath = Path.Combine(initFolderPath, "initPlayData.json");
+        initFolderPath = "Assets/Data";
+        initFilePath = Path.Combine(initFolderPath, "PlayProgressForInit.json");
 
         folderPath = Application.persistentDataPath + "/Data";
         filePath = Path.Combine(folderPath, "myPlayData.json");
 
         LoadPlayData();
     }
-
 
     private void LoadPlayData()
     {
@@ -81,12 +61,12 @@ public class PlayData : MonoBehaviour
             playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
             // 현재 진행상황 로드
-            for(int i=0; i<playData.playPoints.Count; i++)
+            for (int i = 0; i < playData.playPoints.Count; i++)
             {
-                if (!playData.playPoints[i].isClear)
+                if (!playData.playPoints[i].isClear && i != 0)
                 {
-                    nowPlayPointIndex = i;
-                    nowInfoText = playData.playPoints[i].playPointName;
+                    nowPlayPointIndex = i-1;
+                    nowInfoText = playData.playPoints[i].playInfo;
                     break;
                 }
             }
@@ -98,6 +78,14 @@ public class PlayData : MonoBehaviour
             {
                 // 파일이 존재하면 JSON 데이터 읽기
                 string jsonData = File.ReadAllText(initFilePath);
+
+                //폴더 생성
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                // 파일에 JSON 데이터 쓰기
+                File.WriteAllText(filePath, jsonData);
 
                 // JSON 데이터를 역직렬화
                 playData = JsonUtility.FromJson<SavePlayData>(jsonData);
@@ -119,7 +107,7 @@ public class PlayData : MonoBehaviour
     /// <param name="isClear"></param>
     public void SavePlayPoint(string playPointName, bool isClear)
     {
-        for(int i=0; i< playData.playPoints.Count; i++)
+        for (int i = 0; i < playData.playPoints.Count; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
@@ -128,9 +116,83 @@ public class PlayData : MonoBehaviour
                 string jsonData = JsonUtility.ToJson(playData);
                 // 파일에 JSON 데이터 쓰기
                 File.WriteAllText(filePath, jsonData);
+                Debug.Log(playPointName + " 저장 완료");
                 LoadPlayData();
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// 현재 플레이 포인트 확인
+    /// </summary>
+    /// <param name="playPointName"></param>
+    public bool CheckPlayPoint(string playPointName)
+    {
+        for (int i = 0; i < playData.playPoints.Count; i++)
+        {
+            if (playData.playPoints[i].playPointName == playPointName)
+            {
+                if (i == nowPlayPointIndex)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 지나간 플레이 포인트 확인
+    /// </summary>
+    /// <param name="playPointName"></param>
+    public bool CheckClearPlayPoint(string playPointName)
+    {
+        for (int i = 0; i < playData.playPoints.Count; i++)
+        {
+            if (playData.playPoints[i].playPointName == playPointName)
+            {
+                if (playData.playPoints[i].isClear)
+                {
+                    Debug.Log(playData.playPoints[i].playPointName + " is Clear");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    /// <summary>
+    /// 디버그용 플레이 포인트 지정하기
+    /// </summary>
+    /// <param name="playPointName"></param>
+    public void SetPlayPoint(string playPointName)
+    {
+        // 파일이 존재하면 JSON 데이터 읽기
+        string jsonData = File.ReadAllText(initFilePath);
+
+        // 파일에 JSON 데이터 쓰기
+        File.WriteAllText(filePath, jsonData);
+
+        // JSON 데이터를 역직렬화
+        playData = JsonUtility.FromJson<SavePlayData>(jsonData);
+
+        for (int i = 0; i < playData.playPoints.Count; i++)
+        {
+            if (playData.playPoints[i].playPointName == playPointName)
+            {
+                playData.playPoints[i].isClear = true;
+                break;
+            }
+            else playData.playPoints[i].isClear = true;
+        }
+
+        // JSON 데이터를 문자열로 직렬화
+        jsonData = JsonUtility.ToJson(playData);
+        // 파일에 JSON 데이터 쓰기
+        File.WriteAllText(filePath, jsonData);
+        Debug.Log(playPointName + " 저장 완료");
+        LoadPlayData();
     }
 }

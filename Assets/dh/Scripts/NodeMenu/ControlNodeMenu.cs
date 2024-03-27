@@ -5,18 +5,15 @@ using UnityEngine;
 public class ControlNodeMenu : MonoBehaviour
 {
     GameObject PanelTabBar;
-    GameObject StartEndPanel;
-    GameObject ActionPanel;
-    GameObject FuncPanel;
 
 
     // Start is called before the first frame update
     void Start()
     {
         PanelTabBar = transform.GetChild(9).gameObject;
-        if (NodeGameManager.Instance.missionData.hasNodeLimit)
+        if (GameManager.Instance.missionData.hasNodeLimit)
         {
-            ControlNodeTabBar(NodeGameManager.Instance.missionData.nodeOpenIndex);
+            ControlNodeTabBar(GameManager.Instance.missionData.isTabOpenList);
         }
 
     }
@@ -27,14 +24,19 @@ public class ControlNodeMenu : MonoBehaviour
 
     }
 
-    public void ControlNodeTabBar(int index)
+    public void ControlNodeTabBar(bool[] isTabOpenList)
     {
-        Debug.Log(index.ToString() + "까지만 오픈");
         Transform PanelTabBarContent = PanelTabBar.transform.GetChild(0);
-        for (int i = index + 1; i < PanelTabBarContent.childCount; i++)
+        for (int i = 0; i < isTabOpenList.Length; i++)
         {
-            PanelTabBarContent.GetChild(i).gameObject.SetActive(false);
+            Debug.Log("인덱스" + i.ToString() + "는" + isTabOpenList[i].ToString());
+            PanelTabBarContent.GetChild(i).gameObject.SetActive(isTabOpenList[i]);
         }
 
     }
+
+    // public void AddNodeBtn(GameObject nodeBtn, int tabIdx)
+    // {
+    //     nodeBtn.transform.SetParent(transform.GetChild(tabIdx).GetChild(0), false);
+    // }
 }

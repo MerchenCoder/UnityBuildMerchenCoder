@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4484883488721120755}
   - component: {fileID: 3639896381506336416}
+  - component: {fileID: 537588315396665371}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,3 +46,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gem_Num: 0
+  dataFileName: 
+  missionData:
+    missionCode: 
+    missionTitle: 
+    actionNodes: []
+    missionInfo: 
+    nodeLabels: []
+    reward: 0
+    hasNodeLimit: 0
+    nodeOpenIndex: 0
+--- !u!114 &537588315396665371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007524592600752038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55024fc5caab8e5459f20c383c459d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nowInfoText: 
+  nowPlayPointIndex: 0
+  playData:
+    playPoints: []

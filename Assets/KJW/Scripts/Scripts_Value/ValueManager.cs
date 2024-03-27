@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class IntValue
 {
     public string valueName;
@@ -13,6 +14,7 @@ public class IntValue
     public bool isInit;
 }
 
+[System.Serializable]
 public class BoolValue
 {
     public string valueName;
@@ -20,6 +22,7 @@ public class BoolValue
     public bool isInit;
 }
 
+[System.Serializable]
 public class StrValue
 {
     public string valueName;

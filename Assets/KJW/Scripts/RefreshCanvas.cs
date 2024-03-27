@@ -33,13 +33,23 @@ public class RefreshCanvas : MonoBehaviour
             script.StopAllCoroutines();
         }
         LoadOriginPosition();
-        playerChatBubble.GetComponentInChildren<TextMeshProUGUI>().text = null;
-        Debug.Log("말풍선 초기화, 비활성화");
-        playerChatBubble.SetActive(false);
+
+        ResetChatBubble();
 
         //에러 메시지 박스 초기화
         GetComponent<RunErrorMsg>().InActiveErrorMsg();
 
         this.gameObject.SetActive(false);
+    }
+
+    public void ResetChatBubble()
+    {
+        GameObject canvas = transform.parent.GetChild(2).gameObject;
+        foreach (Transform child in canvas.transform)
+        {
+            child.GetComponentInChildren<TextMeshProUGUI>(true).text = null;
+            Debug.Log("말풍선 초기화, 비활성화");
+            child.gameObject.SetActive(false);
+        }
     }
 }
