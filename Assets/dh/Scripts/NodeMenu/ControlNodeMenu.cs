@@ -5,9 +5,6 @@ using UnityEngine;
 public class ControlNodeMenu : MonoBehaviour
 {
     GameObject PanelTabBar;
-    GameObject StartEndPanel;
-    GameObject ActionPanel;
-    GameObject FuncPanel;
 
 
     // Start is called before the first frame update
@@ -37,4 +34,9 @@ public class ControlNodeMenu : MonoBehaviour
         }
 
     }
+
+    // public void AddNodeBtn(GameObject nodeBtn, int tabIdx)
+    // {
+    //     nodeBtn.transform.SetParent(transform.GetChild(tabIdx).GetChild(0), false);
+    // }
 }

@@ -45,7 +45,7 @@ public class TestManager : MonoBehaviour
     public GameObject inputNodeBtn_string;
 
     //액션 노드 버튼 프리팹
-    public GameObject actionNodeBtn;
+    public GameObject[] actionNodeBtn;
 
 
     //입력 변수 버튼 삽입을 위한 요소
@@ -191,15 +191,18 @@ public class TestManager : MonoBehaviour
         {
             foreach (string actionNode in actionNodeArray)
             {
-                string[] actionNodeName = actionNode.Split("/");
-                GameObject newActionNodeBtn1 = Instantiate(actionNodeBtn);
-                newActionNodeBtn1.GetComponentInChildren<TextMeshProUGUI>().text = actionNodeName[1];
-                newActionNodeBtn1.GetComponent<NodeMenuBtn>().nodePrefab = Resources.Load<GameObject>("Prefabs/Node/Action/" + actionNodeName[0]);
+                //액션노드프리팹이름/액션노드한글이름/액션노드타입번호
+                string[] actionNodeInfo = actionNode.Split("/");
+
+                GameObject newActionNodeBtn1 = Instantiate(actionNodeBtn[int.Parse(actionNodeInfo[2]) - 1]);
+                newActionNodeBtn1.GetComponentInChildren<TextMeshProUGUI>().text = actionNodeInfo[1];
+                newActionNodeBtn1.GetComponent<NodeMenuBtn>().nodePrefab = Resources.Load<GameObject>("Prefabs/Node/Action/" + actionNodeInfo[0]);
 
                 GameObject newActionNodeBtn2 = Instantiate(newActionNodeBtn1);
 
                 newActionNodeBtn1.transform.SetParent(action_NodeMenuSpawnPoint, false);
                 newActionNodeBtn2.transform.SetParent(action_funcMenuSpawnPoint, false);
+
             }
         }
 

@@ -634,7 +634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00048828125
+      value: 0.008666992
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -823,12 +823,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56aa85c6772df9143be2a442e6601845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Gem_Num: 0
+  playerData:
+    name: 
+    gem: 0
   dataFileName: 
   missionData:
     missionCode: 1-1
     missionTitle: 
-    actionNodes: []
+    actionNodes:
+    - "Node_Action_Feed/\uBA39\uC774 \uC8FC\uAE30/2"
+    - "Node_Action_Feed/\uBA39\uC774 \uC8FC\uAE30/1"
     missionInfo: 
     nodeLabels: []
     reward: 0
@@ -1151,7 +1155,9 @@ MonoBehaviour:
   inputNodeBtn_int: {fileID: 1795064445583212456, guid: 3d7b0453e149249c79d4d146a908af31, type: 3}
   inputNodeBtn_bool: {fileID: 1925645553976278560, guid: 2d7a0c4d0181e4655b3caea95c31dc0b, type: 3}
   inputNodeBtn_string: {fileID: 3228209295439692543, guid: 0512b84d3ca874665bbae731530ac7a1, type: 3}
-  actionNodeBtn: {fileID: 8926905929988791763, guid: 7aac8d3a2dfaf4231b6b89d152e187d7, type: 3}
+  actionNodeBtn:
+  - {fileID: 8926905929988791763, guid: 7aac8d3a2dfaf4231b6b89d152e187d7, type: 3}
+  - {fileID: 8926905929988791763, guid: f600a5b837c53436aac1033efb528a72, type: 3}
   currentInput: []
   currentOutput: []
   playerOutput: []
