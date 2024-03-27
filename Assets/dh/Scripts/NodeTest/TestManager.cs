@@ -193,7 +193,6 @@ public class TestManager : MonoBehaviour
         {
             if (i <= 1)
             {
-                print(input_NodeMenuSpawnPoint.GetChild(i).name);
                 continue;
             }
             Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
@@ -242,7 +241,7 @@ public class TestManager : MonoBehaviour
             {
                 continue;
             }
-            Destroy(action_NodeMenuSpawnPoint.GetChild(i).gameObject);
+            Destroy(action_funcMenuSpawnPoint.GetChild(i).gameObject);
         }
         string[] actionNodeArray = GameManager.Instance.missionData.actionNodes;
         //문제에서 사용되는 액션 노드가 있다면 액션 노드 버튼을 생성하고, 액션 노드 프리팹을 찾아서 연결해준다.

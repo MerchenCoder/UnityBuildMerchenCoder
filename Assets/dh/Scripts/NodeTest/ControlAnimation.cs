@@ -21,7 +21,12 @@ public class ControlAnimation : MonoBehaviour
     public IEnumerator Success()
     {
         if (result_anim == null)
+        {
+            Debug.Log("null break");
             yield break;
+
+        }
+
         result_anim.SetInteger("Control", 10);
         yield return new WaitForSeconds(2.5f);
         result_anim.SetInteger("Control", 0);
@@ -31,7 +36,11 @@ public class ControlAnimation : MonoBehaviour
     public IEnumerator Fail()
     {
         if (result_anim == null)
+        {
+            Debug.Log("null break");
             yield break;
+        }
+
         result_anim.SetInteger("Control", -10);
         yield return new WaitForSeconds(1.5f);
         result_anim.SetInteger("Control", 0);

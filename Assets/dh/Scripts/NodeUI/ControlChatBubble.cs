@@ -10,6 +10,7 @@ public class ControlChatBubble : MonoBehaviour
     void Start()
     {
         SetSpritePosition();
+        transform.position = Camera.main.WorldToScreenPoint(spritePosition.transform.position + new Vector3(3f, 2f, 0));
     }
 
     // Update is called once per frame
