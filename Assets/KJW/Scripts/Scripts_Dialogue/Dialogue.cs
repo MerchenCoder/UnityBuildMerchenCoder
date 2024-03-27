@@ -82,7 +82,7 @@ public class Dialogue : MonoBehaviour
             if (i + j + 1 < dialogueContainer.dialogueList.Length)
             {
                 thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", Resources.Load<Speaker>("Speaker/Player").speaker_name);
+                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
             }
             else break;
         }
