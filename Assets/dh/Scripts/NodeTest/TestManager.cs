@@ -113,33 +113,9 @@ public class TestManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        TestCaseDataFileName = "TestCase" + GameManager.Instance.missionData.missionCode + ".json";
 
-        //Json 파일 경로
-        string jsonFilePath = Application.dataPath + "/Data/TestCase/" + TestCaseDataFileName;
-
-        if (File.Exists(jsonFilePath))
-        {
-            //Json 파일을 문자열로 읽어오기
-            string jsonString = File.ReadAllText(jsonFilePath);
-            // JSON 문자열을 UnityTestCase 구조체로 역직렬화
-            // testCaseData = JsonUtility.FromJson<TestCaseData>(jsonString);
-
-
-            //Unity의 JsonUtility 클래스는 배열과 객체(즉, 리스트와 딕셔너리)를 직접적으로 역직렬화할 수 없습니다
-            // JSON 파서 라이브러리를 사용하여 직접 파싱하는 것이 필요. JSON 파서 라이브러리 중 하나인 Newtonsoft.Json을 사용하면 간단하게 이 문제를 해결할 수 있습니다. 
-            testCaseData = JsonConvert.DeserializeObject<TestCaseData>(jsonString);
-
-            Debug.Log("테스트 케이스 데이터 불러오기 완료");
-
-            SettingCurrentCase(1);
-            Debug.Log("현재 케이스 입력/출력 배열 셋팅 완료");
-        }
-        else
-        {
-            Debug.Log("Can't Find Test Case Data");
-        }
-
+        //테스트 데이터 가져오기
+        GetTestData();
 
         //functionManager = FindObjectOfType<FunctionManager>();
 
@@ -167,6 +143,69 @@ public class TestManager : MonoBehaviour
         // Debug.Log(nodeMenuSpawnPoint);
 
         //-----------입력 변수 노드 처리---------//
+        PutInputNodeBtn();
+
+        //------------액션 노드 처리 ---------------//
+        PutActionNodeBtn();
+
+
+        //리워드 처리
+        rewardTxt.text = GameManager.Instance.missionData.reward.ToString();
+
+    }
+
+
+    private void GetTestData()
+    {
+        TestCaseDataFileName = "TestCase" + GameManager.Instance.missionData.missionCode + ".json";
+
+        //Json 파일 경로
+        string jsonFilePath = Application.dataPath + "/Data/TestCase/" + TestCaseDataFileName;
+
+        if (File.Exists(jsonFilePath))
+        {
+            //Json 파일을 문자열로 읽어오기
+            string jsonString = File.ReadAllText(jsonFilePath);
+            // JSON 문자열을 UnityTestCase 구조체로 역직렬화
+            // testCaseData = JsonUtility.FromJson<TestCaseData>(jsonString);
+
+
+            //Unity의 JsonUtility 클래스는 배열과 객체(즉, 리스트와 딕셔너리)를 직접적으로 역직렬화할 수 없습니다
+            // JSON 파서 라이브러리를 사용하여 직접 파싱하는 것이 필요. JSON 파서 라이브러리 중 하나인 Newtonsoft.Json을 사용하면 간단하게 이 문제를 해결할 수 있습니다. 
+            testCaseData = JsonConvert.DeserializeObject<TestCaseData>(jsonString);
+
+            Debug.Log("테스트 케이스 데이터 불러오기 완료");
+
+            SettingCurrentCase(1);
+            Debug.Log("현재 케이스 입력/출력 배열 셋팅 완료");
+        }
+        else
+        {
+            Debug.Log("Can't Find Test Case Data");
+        }
+
+    }
+
+    private void PutInputNodeBtn()
+    {
+        //노드 메뉴 패널 초기화
+        for (int i = 0; i < input_NodeMenuSpawnPoint.childCount; i++)
+        {
+            if (i <= 1)
+            {
+                continue;
+            }
+            Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
+        }
+        //함수노드 메뉴 패널 초기화
+        for (int i = 0; i < input_funcMenuSpawnPoint.childCount; i++)
+        {
+            if (i <= 1)
+            {
+                continue;
+            }
+            Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
+        }
         //테스트 케이스에 입력 변수가 있다면 입력 변수 노드를 노드 메뉴에 삽입해 준다.
         if (testCaseData.hasTestCaseInput)
         {
@@ -183,8 +222,27 @@ public class TestManager : MonoBehaviour
 
             }
         }
-
-        //------------액션 노드 처리 ---------------//
+    }
+    private void PutActionNodeBtn()
+    {
+        //노드 메뉴 패널 초기화
+        for (int i = 0; i < action_NodeMenuSpawnPoint.childCount; i++)
+        {
+            if (i == 0)
+            {
+                continue;
+            }
+            Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
+        }
+        //함수노드 메뉴 패널 초기화
+        for (int i = 0; i < action_funcMenuSpawnPoint.childCount; i++)
+        {
+            if (i == 0)
+            {
+                continue;
+            }
+            Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
+        }
         string[] actionNodeArray = GameManager.Instance.missionData.actionNodes;
         //문제에서 사용되는 액션 노드가 있다면 액션 노드 버튼을 생성하고, 액션 노드 프리팹을 찾아서 연결해준다.
         if (actionNodeArray.Length != 0)
@@ -205,12 +263,17 @@ public class TestManager : MonoBehaviour
 
             }
         }
+    }
 
-
-        //리워드 처리
+    public void RestTestCase()
+    {
+        GetTestData();
+        PutInputNodeBtn();
+        PutActionNodeBtn();
         rewardTxt.text = GameManager.Instance.missionData.reward.ToString();
 
     }
+
 
     //제출시 채점 실행
     public IEnumerator Test()
