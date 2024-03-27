@@ -63,9 +63,9 @@ public class PlayData : MonoBehaviour
             // 현재 진행상황 로드
             for (int i = 0; i < playData.playPoints.Count; i++)
             {
-                if (!playData.playPoints[i].isClear)
+                if (!playData.playPoints[i].isClear && i != 0)
                 {
-                    nowPlayPointIndex = i;
+                    nowPlayPointIndex = i-1;
                     nowInfoText = playData.playPoints[i].playInfo;
                     break;
                 }
@@ -133,7 +133,7 @@ public class PlayData : MonoBehaviour
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if (i == nowPlayPointIndex - 1)
+                if (i == nowPlayPointIndex)
                 {
                     return true;
                 }

@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //플레이어 데이터 - gem, position//
+    //플레이어 데이터 - name, gem, position//
 
 
     //json 데이터를 담을 class 선언
@@ -92,6 +92,10 @@ public class GameManager : MonoBehaviour
             string jsonString = File.ReadAllText(filePath);
             // playerData = JsonUtility.FromJson<PlayerData>(jsonString);
             playerData = JsonConvert.DeserializeObject<PlayerData>(jsonString);
+
+            // jiwoo add
+            PlayerPrefs.SetString("player_name", playerData.name);
+
             Debug.Log($"{playerDataFileName} 데이터 불러오기 완료");
         }
         else

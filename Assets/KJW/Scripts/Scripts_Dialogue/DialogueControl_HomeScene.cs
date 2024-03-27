@@ -10,6 +10,8 @@ public class DialogueControl_HomeScene : MonoBehaviour
     [SerializeField] Dialogue dialogue1;
     [SerializeField] Dialogue dialogue2;
 
+    public GameObject setNamePanel;
+
     bool isFirstDiaEnd;
 
     void Start()
@@ -20,18 +22,24 @@ public class DialogueControl_HomeScene : MonoBehaviour
             isFirstDiaEnd = false;
             playCanvas.SetActive(false);
             messagePanel.SetActive(false);
+            setNamePanel.SetActive(true);
             if (dialogueSystem != null)
             {
                 // 다이얼로그 종료 이벤트에 대한 리스너 등록
                 dialogueSystem.OnEndDialogue += PlayNextFlow;
                 // Play First Dialogue
-                Invoke("StartFirstDialogue", 1f);
+                // Invoke("StartFirstDialogue", 1f);
             }
+        }
+        else
+        {
+            setNamePanel.SetActive(false);
         }
     }
 
     public void StartFirstDialogue()
     {
+        setNamePanel.SetActive(false);
         dialogue1.DialogueStart();
     }
 

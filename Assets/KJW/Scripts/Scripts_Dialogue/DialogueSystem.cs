@@ -122,7 +122,8 @@ public class DialogueSystem : MonoBehaviour
     {
         right_Panel.SetActive(false);
         left_Panel.SetActive(true);
-        left_name_text.text = speaker.speaker_name;
+        // player name set
+        left_name_text.text = PlayerPrefs.GetString("player_name");
         typingText = dialogue_text_L;
         StartCoroutine(ShowText());
         left_standing_image.sprite = speaker.standing_sprites[(int)face];
