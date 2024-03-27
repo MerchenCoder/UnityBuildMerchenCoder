@@ -36,8 +36,5 @@ public class ChapterManager : MonoBehaviour
 
             }
         }
-
     }
-
-
 }

@@ -37,34 +37,6 @@ public class SceneChange : MonoBehaviour
         }
     }
 
-    // 페이드 추가를 위한 딜레이용 함수
-    // public void ChangeToHomeSceneDelay()
-    // {
-
-    //     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
-    //     asyncLoad.allowSceneActivation = false;
-
-    //     while (!asyncLoad.isDone)
-    //     {
-    //         if (asyncLoad.progress >= 0.9f)
-    //         {
-    //             fadePanel.FadeOut();
-    //             StartCoroutine()
-    //             yield return new WaitForSeconds(1f); // Wait Fading Time
-    //             asyncLoad.allowSceneActivation = true;
-    //             break;
-
-    //         }
-    //     }
-    //     if (beforeScene != "Chapter")
-    //     {
-
-    //         fadePanel.FadeIn();
-    //     }
-    //     yield return new WaitForSeconds(0.3f);
-
-    // }
-
     //챕터 선택 씬으로 전환
     public void ChangetoChapter()
     {
@@ -75,7 +47,14 @@ public class SceneChange : MonoBehaviour
     //챕터별 스테이지 씬으로 전환
     public void ChangetoCh1Stage()
     {
-        SceneManager.LoadSceneAsync("Ch1Stage");
+        if(GameManager.Instance.gameObject.TryGetComponent<PlayData>(out PlayData playData))
+        {
+            if (playData.nowPlayPointIndex <= 10) ChangeToThisScene("1_1_farmer");
+            else if (playData.nowPlayPointIndex <= 24) ChangeToThisScene("1_2_town");
+            else if (playData.nowPlayPointIndex <= 31) ChangeToThisScene("1_3_castle");
+            else if (playData.nowPlayPointIndex <= 35) ChangeToThisScene("1_4_forest");
+        }
+        //SceneManager.LoadSceneAsync("Ch1Stage");
     }
     public void ChangetoCh2Stage()
     {
