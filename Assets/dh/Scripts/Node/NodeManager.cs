@@ -246,7 +246,17 @@ public class NodeManager : MonoBehaviour
         }
         //Debug.Log("Run Complete");
 
-
+        bool result = TestManager.Instance.CheckAnswer();
+        if (result)
+        {
+            print("정답 -> 성공 애니메이션 실행");
+            yield return resultCanvas.GetComponent<ControlAnimation>().Success();
+        }
+        else
+        {
+            print("오답 -> 실패 애니메이션 실행");
+            yield return resultCanvas.GetComponent<ControlAnimation>().Fail();
+        }
         resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
     }
 
