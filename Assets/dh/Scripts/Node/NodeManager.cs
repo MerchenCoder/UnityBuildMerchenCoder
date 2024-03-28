@@ -34,6 +34,7 @@ public class NodeManager : MonoBehaviour
     public GameObject resultCanvas;
 
     public ResultCanvasManager resultCanvasManager;
+    public GameObject npc_chatBubble;
 
     //private Coroutine executeCoroutine;
 
@@ -205,8 +206,6 @@ public class NodeManager : MonoBehaviour
             // 코루틴 실행 메서드
 
             // executeCoroutine = StartCoroutine(ExcuteNode());
-
-
         }
         catch (NullReferenceException e)
         {
@@ -214,6 +213,25 @@ public class NodeManager : MonoBehaviour
             SetCompileError(true, "startNode");
             Debug.LogError(e.StackTrace);
         }
+
+
+        if (mode == "run" && TestManager.Instance.testCaseData.hasTestCaseInput)
+        {
+            //Input 있는 경우 말하기
+            string inputs = "";
+            for (int i = 0; i < TestManager.Instance.currentInput.Count; i++)
+            {
+                inputs += TestManager.Instance.currentInput[i];
+                if (i != TestManager.Instance.currentInput.Count - 1)
+                    inputs += ", ";
+            }
+
+            npc_chatBubble.GetComponentInChildren<TMPro.TMP_Text>().text = inputs;
+            npc_chatBubble.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            npc_chatBubble.SetActive(false);
+        }
+
         yield return StartCoroutine(ExcuteNode()); //ExcuteNode 코루틴 호출 후 끝날때까지 기다림.
     }
 
@@ -246,16 +264,19 @@ public class NodeManager : MonoBehaviour
         }
         //Debug.Log("Run Complete");
 
-        bool result = TestManager.Instance.CheckAnswer();
-        if (result)
+        if (mode == "run")
         {
-            print("정답 -> 성공 애니메이션 실행");
-            yield return resultCanvas.GetComponent<ControlAnimation>().Success();
-        }
-        else
-        {
-            print("오답 -> 실패 애니메이션 실행");
-            yield return resultCanvas.GetComponent<ControlAnimation>().Fail();
+            bool result = TestManager.Instance.CheckAnswer();
+            if (result)
+            {
+                print("정답 -> 성공 애니메이션 실행");
+                yield return resultCanvas.GetComponent<ControlAnimation>().Success();
+            }
+            else
+            {
+                print("오답 -> 실패 애니메이션 실행");
+                yield return resultCanvas.GetComponent<ControlAnimation>().Fail();
+            }
         }
         resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
     }

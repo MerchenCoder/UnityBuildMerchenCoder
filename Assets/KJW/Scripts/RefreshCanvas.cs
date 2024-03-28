@@ -8,12 +8,18 @@ using TMPro;
 public class RefreshCanvas : MonoBehaviour
 {
     public GameObject player;
+    Animator animator;
     public Vector3 originVecor3;
 
     public GameObject playerChatBubble;
     private void Start()
     {
-        if (player != null) originVecor3 = player.transform.localPosition;
+        player = gameObject.transform.Find("Result_img").GetChild(0).gameObject;
+        if (player != null)
+        {
+            originVecor3 = player.transform.localPosition;
+            animator = player.GetComponentInChildren<Animator>(true);
+        }
     }
 
     private void LoadOriginPosition()
@@ -39,9 +45,59 @@ public class RefreshCanvas : MonoBehaviour
         //에러 메시지 박스 초기화
         GetComponent<RunErrorMsg>().InActiveErrorMsg();
 
+
+        //애니메이션 중지
+        //action 애니메이션
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            Debug.Log("Parameter Name: " + parameter.name + ", Type: " + parameter.type);
+
+            // 파라미터의 타입에 따라 값을 가져올 수 있음
+            if (parameter.type == AnimatorControllerParameterType.Bool)
+            {
+                print(parameter.name);
+                animator.SetBool(parameter.name, false);
+            }
+            else if (parameter.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat(parameter.name, 0);
+            }
+            else if (parameter.type == AnimatorControllerParameterType.Int)
+            {
+                animator.SetInteger(parameter.name, 0);
+            }
+        }
+        //action 애니메이션 말풍선 끄기
+        Transform result_img = transform.GetChild(2);
+        foreach (Transform character in result_img)
+        {
+            OffActionBubble(character);
+        }
+
+        //결과 애니메이션
+        if (GetComponent<ControlAnimation>().result_anim != null)
+        {
+            GetComponent<ControlAnimation>().result_anim.SetInteger("Control", 0);
+        }
+
         this.gameObject.SetActive(false);
     }
 
+    public void OffActionBubble(Transform character)
+    {
+        print(character.name);
+        if (character.childCount == 0 || character.GetChild(0).childCount == 0)
+        {
+            Debug.Log("don't have action bubble");
+        }
+        else
+        {
+            foreach (Transform bubble in character.GetChild(0))
+            {
+                bubble.gameObject.SetActive(false);
+            }
+        }
+    }
     public void ResetChatBubble()
     {
         GameObject canvas = transform.parent.GetChild(2).gameObject;
