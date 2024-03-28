@@ -217,10 +217,12 @@ public class NodeManager : MonoBehaviour
 
         if (mode == "run" && TestManager.Instance.testCaseData.hasTestCaseInput)
         {
+
             //Input 있는 경우 말하기
             string inputs = "";
             for (int i = 0; i < TestManager.Instance.currentInput.Count; i++)
             {
+                inputs += TestManager.Instance.testCaseData.inputInfo[i].name + " : ";
                 inputs += TestManager.Instance.currentInput[i];
                 if (i != TestManager.Instance.currentInput.Count - 1)
                     inputs += ", ";
@@ -228,7 +230,7 @@ public class NodeManager : MonoBehaviour
 
             npc_chatBubble.GetComponentInChildren<TMPro.TMP_Text>().text = inputs;
             npc_chatBubble.SetActive(true);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
             npc_chatBubble.SetActive(false);
         }
 

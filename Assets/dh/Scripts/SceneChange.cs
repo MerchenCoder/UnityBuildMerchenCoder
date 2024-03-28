@@ -47,14 +47,15 @@ public class SceneChange : MonoBehaviour
     //챕터별 스테이지 씬으로 전환
     public void ChangetoCh1Stage()
     {
-        if(GameManager.Instance.gameObject.TryGetComponent<PlayData>(out PlayData playData))
-        {
-            if (playData.nowPlayPointIndex <= 10) ChangeToThisScene("1_1_farmer");
-            else if (playData.nowPlayPointIndex <= 24) ChangeToThisScene("1_2_town");
-            else if (playData.nowPlayPointIndex <= 31) ChangeToThisScene("1_3_castle");
-            else if (playData.nowPlayPointIndex <= 35) ChangeToThisScene("1_4_forest");
-        }
-        //SceneManager.LoadSceneAsync("Ch1Stage");
+        // if(GameManager.Instance.gameObject.TryGetComponent<PlayData>(out PlayData playData))
+        // {
+        //     if (playData.nowPlayPointIndex <= 10) ChangeToThisScene("1_1_farmer");
+        //     else if (playData.nowPlayPointIndex <= 24) ChangeToThisScene("1_2_town");
+        //     else if (playData.nowPlayPointIndex <= 31) ChangeToThisScene("1_3_castle");
+        //     else if (playData.nowPlayPointIndex <= 35) ChangeToThisScene("1_4_forest");
+        // }
+        // //SceneManager.LoadSceneAsync("Ch1Stage");
+        ChangeToThisScene(GameManager.Instance.playerData.chapterCurrentScene[0]);
     }
     public void ChangetoCh2Stage()
     {

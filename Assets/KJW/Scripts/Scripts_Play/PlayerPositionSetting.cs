@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class PlayerPositionSetting : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerPositionSetting : MonoBehaviour
 
     void Start()
     {
+
         nowPlayerPosition = new GameManager.PlayerData.playerPosition();
         thisSceneName = SceneManager.GetActiveScene().name;
 
@@ -30,6 +32,11 @@ public class PlayerPositionSetting : MonoBehaviour
     }
     private void OnDisable()
     {
+        //마지막 플레이 씬 기록
+        string chapter = thisSceneName.Substring(0, 1);
+        GameManager.Instance.playerData.chapterCurrentScene[int.Parse(chapter) - 1] = thisSceneName;
+
+        //포지션 기록
         nowPlayerPosition.x = transform.localPosition.x;
         nowPlayerPosition.y = transform.localPosition.y;
         nowPlayerPosition.z = transform.localPosition.z;
@@ -37,4 +44,5 @@ public class PlayerPositionSetting : MonoBehaviour
         GameManager.Instance.playerData.playLog[thisSceneName] = nowPlayerPosition;
         GameManager.Instance.SavePlayerData();
     }
+
 }

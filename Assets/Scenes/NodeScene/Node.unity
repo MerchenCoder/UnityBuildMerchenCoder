@@ -634,7 +634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.003540039
+      value: -0.0010986328
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -830,6 +830,7 @@ MonoBehaviour:
   playerData:
     name: 
     gem: 0
+    chapterCurrentScene: []
   dataFileName: 
   missionData:
     missionCode: 
@@ -3473,6 +3474,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -75
       objectReference: {fileID: 0}
+    - target: {fileID: 744887937435850343, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1101466044646431825, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3579,7 +3584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2324175746649619122, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 2983856462361106796, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_Camera
@@ -3781,6 +3786,10 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8776410376030722764, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8949885013442718828, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3896,7 +3905,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 1-5
+          m_StringArgument: 1-6
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1846388357}

@@ -30,6 +30,7 @@ public class ControlChatBubble : MonoBehaviour
         else if (name[0] == "Npc" || name[0] == "npc" || name[0] == "NPC")
         {
             spritePosition = GameObject.FindGameObjectWithTag("NPC");
+            print(spritePosition.name);
         }
         else
         {
