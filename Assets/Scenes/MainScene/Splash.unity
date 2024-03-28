@@ -1379,12 +1379,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9f0ac5d426241b4a840f824f40a182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginPanel: {fileID: 700728428}
+  loginPanel: {fileID: 5917807071602887220}
   login_txtId: {fileID: 5917807072143076492}
   login_txtPwd: {fileID: 228709302}
   alertPanel: {fileID: 1187374732}
   btnSignin: {fileID: 5917807072868800251}
-  signupPanel: {fileID: 700728428}
+  signupPanel: {fileID: 723132660}
   signup_txtId: {fileID: 1839862596}
   signup_txtName: {fileID: 1229226380}
   signup_txtPwd: {fileID: 556265272}
@@ -4089,6 +4089,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5917807071602887222}
         m_TargetAssemblyTypeName: CloseButton, Assembly-CSharp
         m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 831621159}
+        m_TargetAssemblyTypeName: Sign, Assembly-CSharp
+        m_MethodName: ResetData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

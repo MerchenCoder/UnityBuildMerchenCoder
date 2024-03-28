@@ -71,7 +71,7 @@ public class Sign : MonoBehaviour
 
     private string id;
     private string password;
-    private string name;
+    private string uname;
 
     private void Awake()
     {
@@ -100,6 +100,7 @@ public class Sign : MonoBehaviour
                    if (success)
                    {
                        loginPanel.SetActive(false);
+                       loginPanel.transform.parent.gameObject.SetActive(false);
                        //성공시 gameloading
                        GetComponentInParent<StartGame>().GameLoading();
                    }
@@ -121,7 +122,7 @@ public class Sign : MonoBehaviour
            else
            {
                id = signup_txtId.text;
-               name = signup_txtName.text;
+               uname = signup_txtName.text;
                password = signup_txtPwd.text;
 
                SignUp((success) =>
@@ -131,6 +132,7 @@ public class Sign : MonoBehaviour
                        alertMessage.text = "회원가입이 성공적으로 완료되었습니다.";
                        ResetData();
                        signupPanel.SetActive(false);
+                       signupPanel.transform.parent.gameObject.SetActive(false);
                        StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                    }
                });
@@ -147,7 +149,7 @@ public class Sign : MonoBehaviour
         reqSignup.cmd = 1200;
         reqSignup.id = id;
         reqSignup.password = password;
-        reqSignup.name = name;
+        reqSignup.name = uname;
 
         //데이터 직렬화
         var json = JsonConvert.SerializeObject(reqSignup);
@@ -216,10 +218,18 @@ public class Sign : MonoBehaviour
                 else if (responseResult.errorno == 404)
                 {
 
-                    Debug.Log("아이디 혹은 비밀번호 오류");
-                    alertMessage.text = "아이디 혹은 비밀번호가 일치하지 않습니다.";
+                    Debug.Log("아이디 존재하지 않음");
+                    alertMessage.text = "아이디가 존재하지 않습니다. 다시 확인해주세요.";
                     StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                     onComplete(false);
+                }
+                else if (responseResult.errorno == 401)
+                {
+                    Debug.Log("비밀번호 오류");
+                    alertMessage.text = "비밀번호가 일치하지 않습니다.";
+                    StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
+                    onComplete(false);
+
                 }
                 else
                 {
@@ -304,10 +314,12 @@ public class Sign : MonoBehaviour
         signup_txtId.text = "";
         signup_txtName.text = "";
         signup_txtPwd.text = "";
+        login_txtId.text = "";
+        login_txtPwd.text = "";
 
         id = "";
         password = "";
-        name = "";
+        uname = "";
 
     }
 }
