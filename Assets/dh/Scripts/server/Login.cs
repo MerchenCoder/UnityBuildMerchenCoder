@@ -21,10 +21,12 @@ public class packet
 public class res_sign : packet
 {
     public int errorno;
+    public string user_id;
+    public string user_name;
 }
 
 //로그인 시 전송하는 객체
-//pcket 구조체 상속
+//packet 구조체 상속
 public class req_sign : packet
 {
     public string id; //id
@@ -46,11 +48,12 @@ public class req_sign : packet
 
 public class Login : MonoBehaviour
 {
-    public TMP_InputField txtId;
-    public TMP_InputField txtPassword;
-    public GameObject successLoginPanel;
+    public GameObject loginPanel;
+    public InputField txtId;
+    public InputField txtPassword;
+    // public GameObject successLoginPanel;
     public GameObject alertPanel;
-    public Text alertMessage;
+    private TMP_Text alertMessage;
 
     public Button btnSignin;
 
@@ -60,19 +63,19 @@ public class Login : MonoBehaviour
 
     private void Awake()
     {
-        successLoginPanel.SetActive(false);
         alertPanel.SetActive(false);
-        alertMessage = alertPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>();
+        alertMessage = alertPanel.GetComponentInChildren<TMP_Text>(true);
     }
     void Start()
     {
         // 버튼 이벤트 등록
         btnSignin.onClick.AddListener(() =>
        {
+           //아이디나 비밀번호를 입력하지 않았을 때
            if (string.IsNullOrEmpty(txtId.text) || string.IsNullOrEmpty(txtPassword.text))
            {
-               Debug.Log("ID와 비밀번호를 입력해주세요.");
-               alertMessage.text = "ID와 비밀번호를 입력해주세요.";
+               Debug.Log("아이디와 비밀번호를 입력해주세요.");
+               alertMessage.text = "아이디와 비밀번호를 입력해주세요.";
                alertOn(1.5f);
            }
            else
@@ -87,8 +90,9 @@ public class Login : MonoBehaviour
                {
                    if (success)
                    {
-                       successLoginPanel.SetActive(true);
-                       Invoke("ChangeSceneToHome", 1.5f);
+                       loginPanel.SetActive(false);
+                       //성공시 gameloading
+                       GetComponentInParent<StartGame>().GameLoading();
                    }
                    else
                    {
@@ -101,18 +105,23 @@ public class Login : MonoBehaviour
        });
     }
 
-    private void SignIn(System.Action<bool> onComplete)
+    //요청 보내는 Post 호출 & 응답 처리
+    private void SignIn(System.Action<bool> onComplete) //인자로 콜백 함수 'onComplete'를 받음. (delegate)
     {
+        //request packet (객체 생성 & 요청에 필요한 데이터 설정)
         req_sign reqSignin = new req_sign();
         reqSignin.cmd = 1100;
         reqSignin.id = id;
         reqSignin.password = password;
 
+        //json 형식으로 직렬화된 요청 데이터를 생성
         var json = JsonConvert.SerializeObject(reqSignin);
 
+        //서버에 POST 요청 보내기
+        //요청 완료되면 콜백 함수 'result' 실행
         StartCoroutine(Post("api/signin", json, (result) =>
         {
-            // 응답 
+            // 응답데이터 역직렬화
             res_sign responseResult = JsonConvert.DeserializeObject<res_sign>(result);
             Debug.Log(responseResult);
             Debug.LogFormat("<color=red>{0}</color>", responseResult.cmd);
@@ -124,14 +133,27 @@ public class Login : MonoBehaviour
             }
             else if (responseResult.errorno == 9001)
             {
-                Debug.Log("회원등록이 되지 않은 아이디입니다.");
+                Debug.Log("아이디 혹은 비밀번호 오류");
                 onComplete(false);
+            }
+            else
+            {
+                Debug.Log("서버/데이터베이스/쿼리 오류");
+                alertMessage.text = "로그인 중에 오류가 발생했습니다.\n나중에 다시 시도해 주세요.";
+                alertOn(1.5f);
             }
         }));
     }
 
-    private string serverPath = "http://13.125.154.109";
 
+
+    //server
+    //private string serverPath = "http://13.125.154.109";
+    private string serverPath = "http://localhost:3000";
+
+
+
+    //post 요청 메소드
     private IEnumerator Post(string uri, string data, Action<string> onResponse)
     {
         var url = string.Format("{0}/{1}", this.serverPath, uri);
@@ -139,14 +161,12 @@ public class Login : MonoBehaviour
         Debug.Log(data);
 
         var req = new UnityWebRequest(url, "POST");
-        byte[] body = Encoding.UTF8.GetBytes(data);
-        Debug.Log(body);
+        byte[] body = Encoding.UTF8.GetBytes(data); //encoding
+        req.uploadHandler = new UploadHandlerRaw(body); //웹 요청으로 전송할 데이터 처리. 웹 요청의 본문(body)을 설정하고 웹 서버에 전송할 데이터를 지정
+        req.downloadHandler = new DownloadHandlerBuffer(); //수신된 응답 데이터를 처리. 서버에서 받아온 응답 데이터를 처리하고 필요에 따라 저장하거나 분석합니다(단수 버퍼 저장이 대다수)
+        req.SetRequestHeader("Content-Type", "application/json"); //header setting
 
-        req.uploadHandler = new UploadHandlerRaw(body);
-        req.downloadHandler = new DownloadHandlerBuffer();
-        req.SetRequestHeader("Content-Type", "application/json");
-
-        yield return req.SendWebRequest();
+        yield return req.SendWebRequest(); //요청보내고 응답 기다리기
 
         onResponse(req.downloadHandler.text);
     }
@@ -158,17 +178,10 @@ public class Login : MonoBehaviour
     {
         alertPanel.SetActive(true);
         Invoke("alertOff", second);
-
     }
     private void alertOff()
     {
         alertPanel.SetActive(false);
-    }
-
-
-    private void ChangeSceneToHome()
-    {
-        SceneChange.Instance.ChangetoHome();
     }
 }
 

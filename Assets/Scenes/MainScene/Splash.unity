@@ -206,14 +206,14 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 228709303}
   m_TextComponent: {fileID: 1683006328}
   m_Placeholder: {fileID: 1505062945}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 20
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -285,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &339099939
 RectTransform:
   m_ObjectHideFlags: 0
@@ -773,12 +773,12 @@ GameObject:
   - component: {fileID: 700728431}
   - component: {fileID: 700728430}
   m_Layer: 5
-  m_Name: SignInPanel
+  m_Name: Signin_up_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700728429
 RectTransform:
   m_ObjectHideFlags: 0
@@ -849,6 +849,7 @@ GameObject:
   - component: {fileID: 831621157}
   - component: {fileID: 831621156}
   - component: {fileID: 831621158}
+  - component: {fileID: 831621159}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -930,7 +931,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c844ae78fd07149d591079d74d69a9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loading: {fileID: 1355136366}
   startButtons: {fileID: 339099938}
+--- !u!114 &831621159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831621154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9f0ac5d426241b4a840f824f40a182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loginPanel: {fileID: 700728428}
+  txtId: {fileID: 5917807072143076492}
+  txtPassword: {fileID: 228709302}
+  alertPanel: {fileID: 1187374732}
+  btnSignin: {fileID: 5917807072868800251}
 --- !u!1 &1049005916
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1049005917
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1199,6 +1218,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187374732}
   m_CullTransparentMesh: 1
+--- !u!1 &1355136366 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1807552982228533921, guid: 7d8c67d48397d42a7808763d47ea996d, type: 3}
+  m_PrefabInstance: {fileID: 1446117436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1393993082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1756,7 +1780,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 50
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -2007,7 +2031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5917807071602887221
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2084,14 +2108,14 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5917807072143076493}
   m_TextComponent: {fileID: 5917807073688798871}
   m_Placeholder: {fileID: 5917807072181846604}
-  m_ContentType: 0
+  m_ContentType: 4
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 3
+  m_CharacterLimit: 20
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -3253,10 +3277,10 @@ RectTransform:
   - {fileID: 6166626451517358320}
   m_Father: {fileID: 339099939}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 287.00006, y: -125.00006}
+  m_SizeDelta: {x: 574, y: 250.00015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6166626451080194890
 MonoBehaviour:
@@ -3582,6 +3606,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 5917807071602887220}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &6528177028589063867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3627,10 +3663,10 @@ RectTransform:
   - {fileID: 6528177027913903071}
   m_Father: {fileID: 339099939}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 287.00006, y: -395.00024}
+  m_SizeDelta: {x: 574, y: 250.00015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6528177028589063869
 MonoBehaviour:

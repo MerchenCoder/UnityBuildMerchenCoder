@@ -29,7 +29,8 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        LoadGameData();
+        //서버 연결 하면서 주석 처리. 필요할때만 load할꺼임
+        //LoadGameData();
     }
     //불러오기
     public void LoadGameData()

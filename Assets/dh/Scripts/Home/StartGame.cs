@@ -6,21 +6,26 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour, IPointerClickHandler
 {
     private GameObject startInfoText;
-    private GameObject loading;
+    public GameObject loading;
     public GameObject startButtons;
     // Start is called before the first frame update
     void Start()
     {
         startInfoText = transform.GetChild(0).gameObject;
-        loading = transform.GetChild(1).gameObject;
     }
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("패널 클릭");
         startInfoText.SetActive(false);
         startButtons.SetActive(true);
-        //loading.SetActive(true);
-        //StartCoroutine(loading.GetComponent<GameLoadingScript>().Loading());
+
+
+    }
+    public void GameLoading()
+    {
+        startButtons.SetActive(false);
+        loading.SetActive(true);
+        StartCoroutine(loading.GetComponent<GameLoadingScript>().Loading());
 
     }
 }
