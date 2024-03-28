@@ -7,6 +7,7 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
 {
     private GameObject startInfoText;
     private GameObject loading;
+    public GameObject startButtons;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +18,9 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("패널 클릭");
         startInfoText.SetActive(false);
-        loading.SetActive(true);
-        StartCoroutine(loading.GetComponent<GameLoadingScript>().Loading());
+        startButtons.SetActive(true);
+        //loading.SetActive(true);
+        //StartCoroutine(loading.GetComponent<GameLoadingScript>().Loading());
 
     }
 }
