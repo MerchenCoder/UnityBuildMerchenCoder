@@ -5,12 +5,15 @@ using UnityEngine.Events;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     //싱글톤//
     public static GameManager Instance = null;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -27,8 +30,20 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //서버 연결 하면서 주석 처리. 필요할때만 load할꺼임
-        //LoadPlayerData();
+        if (SceneManager.GetActiveScene().name != "Splash")
+        {
+            LoadPlayerData();
+        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Home 씬이 로드되고 플레이어 데이터가 로드되지 않았다면 플레이어 데이터 로드
+        if (scene.name == "Home")
+        {
+            LoadPlayerData();
+        }
     }
 
 
@@ -57,7 +72,9 @@ public class GameManager : MonoBehaviour
     private string playerDataFileName = "myPlayerData.json";
 
 
-    //playerData 초기화
+    /// <summary>
+    /// playerData 초기화
+    /// </summary>
     public void InitializePlayerData()
     {
         string filePath = Path.Combine(Application.dataPath, "Data", playerDataFileName_Init);
@@ -102,7 +119,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("PlayerData 초기 셋팅 필요");
+            Debug.Log("저장된 PlayerData 없음");
             InitializePlayerData();
         }
 
@@ -118,6 +135,8 @@ public class GameManager : MonoBehaviour
         string filePath = Path.Combine(Application.persistentDataPath, "Data", playerDataFileName);
         File.WriteAllText(filePath, ToJsonData);
         Debug.Log($"{playerDataFileName} 저장 완료");
+
+        DataManager.Instance.GetComponent<Save>().SavePlayerData();
 
     }
 
@@ -220,7 +239,10 @@ public class GameManager : MonoBehaviour
     public void SavePlayProgress(string playPointName, bool isClear)
     {
         if (TryGetComponent<PlayData>(out PlayData playData))
+        {
+
             playData.SavePlayPoint(playPointName, isClear);
+        }
         else Debug.Log("Play Data is null");
     }
 

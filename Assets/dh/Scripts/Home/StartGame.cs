@@ -16,20 +16,24 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("패널 클릭");
-        startInfoText.SetActive(false);
-
-        if (PlayerPrefs.HasKey("autoLogin") && PlayerPrefs.GetInt("autoLogin") == 1)
+        if (startInfoText.activeSelf == true)
         {
-            print("자동 로그인합니다.");
-            GetComponent<Sign>().Login(PlayerPrefs.GetString("userId"), PlayerPrefs.GetString("userPwd"));
+            Debug.Log("패널 클릭");
+            startInfoText.SetActive(false);
 
+            if (PlayerPrefs.HasKey("autoLogin") && PlayerPrefs.GetInt("autoLogin") == 1)
+            {
+                print("자동 로그인합니다.");
+                GetComponent<Sign>().Login(PlayerPrefs.GetString("userId"), PlayerPrefs.GetString("userPwd"));
+
+            }
+            else
+            {
+                startButtons.SetActive(true);
+                testButton.SetActive(false);
+            }
         }
-        else
-        {
-            startButtons.SetActive(true);
-            testButton.SetActive(false);
-        }
+
 
 
 

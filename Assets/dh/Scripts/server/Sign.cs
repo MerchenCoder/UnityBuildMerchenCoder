@@ -120,6 +120,25 @@ public class Sign : MonoBehaviour
                    if (success)
                    {
                        alertMessage.text = "회원가입이 성공적으로 완료되었습니다.";
+                       PlayerPrefs.DeleteAll();
+
+                       //json 파일 다 삭제
+                       if (Directory.Exists(Application.persistentDataPath))
+                       {
+                           string[] files = Directory.GetFiles(Application.persistentDataPath, "*.*", SearchOption.AllDirectories);
+                           // 모든 파일 삭제
+                           foreach (string filePath in files)
+                           {
+                               File.Delete(filePath);
+                               Debug.Log("로컬에 존재하는 json파일 삭제");
+                           }
+
+                       }
+                       else
+                       {
+                           Debug.LogWarning("폴더가 존재하지 않습니다.");
+                       }
+
                        ResetData();
                        signupPanel.SetActive(false);
                        signupPanel.transform.parent.gameObject.SetActive(false);
@@ -145,8 +164,15 @@ public class Sign : MonoBehaviour
         var json = JsonConvert.SerializeObject(reqSignup);
         //서버에 POST 요청 보내기
         //요청 완료되면 콜백 함수 'result' 실행
-        StartCoroutine(Post("api/signup", json, (result) =>
+        StartCoroutine(NetworkManager.Post("user/signup", json, (result) =>
         {
+            if (result == "server error")
+            {
+                Debug.LogError("서버 응답 오류가 발생했습니다.");
+                alertMessage.text = "서버 응답 오류가 발생했습니다.";
+                StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
+                return;
+            }
             //응답 역직렬화
             res_join responseResult = JsonConvert.DeserializeObject<res_join>(result);
             Debug.Log(responseResult);
@@ -191,10 +217,17 @@ public class Sign : MonoBehaviour
 
         //서버에 POST 요청 보내기
         //요청 완료되면 콜백 함수 'result' 실행
-        StartCoroutine(Post("api/signin", json, (result) =>
+        StartCoroutine(NetworkManager.Post("user/signin", json, (result) =>
         {
             if (result != null)
             {
+                if (result == "server error")
+                {
+                    Debug.LogError("서버 응답 오류가 발생했습니다.");
+                    alertMessage.text = "서버 응답 오류가 발생했습니다.";
+                    StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
+                    return;
+                }
                 // 응답데이터 역직렬화
                 res_login responseResult = JsonConvert.DeserializeObject<res_login>(result);
                 Debug.LogFormat("<color=red>{0}</color>", responseResult.cmd);
@@ -229,64 +262,14 @@ public class Sign : MonoBehaviour
                     onComplete(false);
 
                 }
-
             }
         }));
     }
 
 
 
-    //server
-    //private string serverPath = "http://13.125.154.109";
-    private string serverPath = "http://localhost:3000";
 
 
-
-    //post 요청 메소드
-    private IEnumerator Post(string uri, string data, Action<string> onResponse)
-    {
-        var url = string.Format("{0}/{1}", this.serverPath, uri);
-        // Debug.Log(url);
-        // Debug.Log(data);
-
-        var req = new UnityWebRequest(url, "POST");
-        byte[] body = Encoding.UTF8.GetBytes(data); //encoding
-        req.uploadHandler = new UploadHandlerRaw(body); //웹 요청으로 전송할 데이터 처리. 웹 요청의 본문(body)을 설정하고 웹 서버에 전송할 데이터를 지정
-        req.downloadHandler = new DownloadHandlerBuffer(); //수신된 응답 데이터를 처리. 서버에서 받아온 응답 데이터를 처리하고 필요에 따라 저장하거나 분석합니다(단수 버퍼 저장이 대다수)
-        req.SetRequestHeader("Content-Type", "application/json"); //header setting
-
-        yield return req.SendWebRequest(); //요청보내고 응답 기다리기
-                                           // if (req.result == UnityWebRequest.Result.ConnectionError || req.result == UnityWebRequest.Result.ProtocolError)
-                                           // {
-                                           //     Debug.LogError(req.error);
-                                           // }
-                                           // else
-                                           // {
-        Debug.Log("Response Code: " + req.responseCode);
-
-        if (req.responseCode == 200)
-        {
-            // 성공적인 응답을 받았을 때 처리
-            onResponse(req.downloadHandler.text);
-        }
-        else if (req.responseCode >= 400 && req.responseCode < 500)
-        {
-            // 클라이언트 오류 처리
-            onResponse(req.downloadHandler.text);
-        }
-        else if (req.responseCode >= 500 && req.responseCode < 600)
-        {
-            // 서버 오류 처리
-
-            Debug.LogError("서버 응답 오류가 발생했습니다." + req.responseCode);
-            alertMessage.text = "서버 응답 오류가 발생했습니다.";
-            StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
-
-        }
-        // }
-
-
-    }
 
 
     private IEnumerator ShowAlertPanel(float delay)

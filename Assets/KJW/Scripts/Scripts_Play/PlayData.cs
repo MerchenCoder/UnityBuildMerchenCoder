@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static SaveItem;
 
 public class PlayData : MonoBehaviour
@@ -46,7 +47,11 @@ public class PlayData : MonoBehaviour
         folderPath = Application.persistentDataPath + "/Data";
         filePath = Path.Combine(folderPath, "myPlayData.json");
 
-        LoadPlayData();
+        if (SceneManager.GetActiveScene().name != "Splash")
+        {
+            LoadPlayData();
+        }
+
     }
 
     private void LoadPlayData()
@@ -92,6 +97,9 @@ public class PlayData : MonoBehaviour
 
                 nowPlayPointIndex = 0;
                 nowInfoText = playData.playPoints[0].playPointName;
+
+                DataManager.Instance.GetComponent<Save>().SavePlayData();
+
             }
             else
             {
@@ -193,6 +201,8 @@ public class PlayData : MonoBehaviour
         // 파일에 JSON 데이터 쓰기
         File.WriteAllText(filePath, jsonData);
         Debug.Log(playPointName + " 저장 완료");
+        DataManager.Instance.GetComponent<Save>().SavePlayData();
+
         LoadPlayData();
     }
 }

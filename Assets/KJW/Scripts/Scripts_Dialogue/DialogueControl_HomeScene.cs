@@ -20,6 +20,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("==============");
         if (dialogueSystem != null)
         {
             // 다이얼로그 종료 이벤트에 대한 리스너 등록
@@ -29,13 +30,14 @@ public class DialogueControl_HomeScene : MonoBehaviour
         // Check First Play
         if (GameManager.Instance.CheckPlayProgress("FirstStart") == true)
         {
+            Debug.Log("**************");
             isFirstDiaEnd = false;
             isChap1_5_DiaEnd = true;
             playCanvas.SetActive(false);
             setNamePanel.SetActive(true);
-            
+
         }
-        else if(GameManager.Instance.CheckPlayProgress("Chap1Clear") == true)
+        else if (GameManager.Instance.CheckPlayProgress("Chap1Clear") == true)
         {
             isFirstDiaEnd = true;
             isChap1_5_DiaEnd = false;

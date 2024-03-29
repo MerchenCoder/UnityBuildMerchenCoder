@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
@@ -29,13 +29,25 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        //서버 연결 하면서 주석 처리. 필요할때만 load할꺼임
-        //LoadGameData();
+        if (SceneManager.GetActiveScene().name != "Splash")
+        {
+            LoadGameStatusData();
+        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Home 씬이 로드되고 플레이어 데이터가 로드되지 않았다면 플레이어 데이터 로드
+        if (scene.name == "Home")
+        {
+            LoadGameStatusData();
+        }
     }
     //불러오기
-    public void LoadGameData()
+    public void LoadGameStatusData()
     {
-        Debug.Log("DataManager LoadGameData : GameStatusData.json");
+        Debug.Log("DataManager LoadGameStatusData");
         // Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
         string filePath = Path.Combine(Application.persistentDataPath, GameDataFileName); //배포시 사용하는 파일 경로
 
@@ -49,32 +61,31 @@ public class DataManager : MonoBehaviour
         else
         {
             // 파일이 없을 경우 초기값 설정 후 저장
-            //InitializeGameData();
-            SaveGameData();
+            Debug.Log("로컬에 저장된 GameStatusData 데이터 없음");
+            InitializeGameStatusData();
         }
 
     }
 
 
-    // 초기값 설정(사용 안해도 되도록 수정)
-    private void InitializeGameData()
+
+
+    // 초기값 설정
+    public void InitializeGameStatusData()
     {
         //초기 데이터 가져오기
-        Debug.Log("챕터/미션 상태 데이터 초기화");
+        Debug.Log("DataManager - 챕터/미션 상태 데이터 초기화");
+        string filePath = Path.Combine(Application.persistentDataPath, GameDataFileName); //배포시 사용하는 파일 경로
 
-        // chapterIsUnlock의 첫 인덱스는 true, 나머지는 false
-        gameStateData.chapterIsUnlock[0] = true;
-        for (int i = 1; i < gameStateData.chapterIsUnlock.Length; i++)
-        {
-            gameStateData.chapterIsUnlock[i] = false;
-        }
+        SaveGameStatusData();
+
     }
 
 
 
 
     //저장하기
-    public void SaveGameData()
+    public void SaveGameStatusData()
     {
         string ToJsonData = JsonUtility.ToJson(gameStateData, true);
         string filePath = Application.persistentDataPath + "/" + GameDataFileName;
@@ -82,6 +93,8 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(filePath, ToJsonData);
 
         print("GameStateData.json 저장 완료");
+
+        DataManager.Instance.GetComponent<Save>().SaveGameStatusData();
     }
 
 
@@ -91,7 +104,7 @@ public class DataManager : MonoBehaviour
         gameStateData.chapterIsUnlock[chapter - 1] = state;
         Debug.Log($"chapter{chapter} isUnlock : {state}");
 
-        SaveGameData();
+        SaveGameStatusData();
 
     }
 
@@ -112,15 +125,15 @@ public class DataManager : MonoBehaviour
         {
             Debug.Log("There is no chapter data in this game");
         }
-        SaveGameData();
+        SaveGameStatusData();
 
     }
 
 
-    private void OnApplicationQuit()
-    {
-        SaveGameData();
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     SaveGameData();
+    // }
 
 
 

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 public class GameLoadingScript : MonoBehaviour
 {
     public float loadValue;
     public Text loadText;
     public Slider loadingProgress;
+    string[] files;
 
 
     // Start is called before the first frame update
@@ -18,10 +20,32 @@ public class GameLoadingScript : MonoBehaviour
 
     public IEnumerator Loading()
     {
+        //파일 로드부터
+        // files = Directory.GetFiles(Application.persistentDataPath, "*.json", SearchOption.AllDirectories);
+        // if (files.Length == 0)
+        // {
+        //     Debug.Log("파일없음");
+        //     //로컬에 초기화 파일 생성
+        //     DataManager.Instance.InitializeGameStatusData();
+        //     GameManager.Instance.InitializePlayerData();
+        //     //서버로 저장
+        //     DataManager.Instance.GetComponent<Save>().SavePlayerData();
+        //     DataManager.Instance.GetComponent<Save>().SaveGameStatusData();
+        // }
+        // else
+        // {
+        //     Debug.Log("파일 있음");
+        //     Debug.Log(files[0]);
+        //     //서버로부터 데이터 로드...
+        //     DataManager.Instance.LoadGameStatusData();
+        //     GameManager.Instance.LoadPlayerData();
+        //     // Debug.Log(DataManager.Instance.gameStateData.ch1MissionClear[0]);
+
+        // }
+        // loadValue = 50;
+        // loadingProgress.value = loadValue;
+        // loadText.text = loadValue.ToString();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
-        DataManager.Instance.LoadGameData();
-        GameManager.Instance.LoadPlayerData();
-        // Debug.Log(DataManager.Instance.gameStateData.ch1MissionClear[0]);
         asyncLoad.allowSceneActivation = false;
 
         //isDone 은 asyncLoad.progress의 연산이 완료되었는지 확인한다.
