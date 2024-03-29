@@ -50,11 +50,12 @@ public class PlayData : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "Splash")
         {
             LoadPlayData();
+
         }
 
     }
 
-    private void LoadPlayData()
+    public void LoadPlayData()
     {
         // 파일이 존재하는지 확인
         if (File.Exists(filePath))
@@ -68,7 +69,7 @@ public class PlayData : MonoBehaviour
             // 현재 진행상황 로드
             for (int i = 0; i < playData.playPoints.Count; i++)
             {
-                if (!playData.playPoints[i].isClear && i != 0)
+                if (!playData.playPoints[i].isClear)
                 {
                     nowPlayPointIndex = i;
                     nowInfoText = playData.playPoints[i].playInfo;
@@ -129,6 +130,7 @@ public class PlayData : MonoBehaviour
                 break;
             }
         }
+        DataManager.Instance.GetComponent<Save>().SavePlayData();
     }
 
     /// <summary>
@@ -137,10 +139,13 @@ public class PlayData : MonoBehaviour
     /// <param name="playPointName"></param>
     public bool CheckPlayPoint(string playPointName)
     {
+
         for (int i = 0; i < playData.playPoints.Count; i++)
         {
+
             if (playData.playPoints[i].playPointName == playPointName)
             {
+
                 if (i == nowPlayPointIndex)
                 {
                     return true;

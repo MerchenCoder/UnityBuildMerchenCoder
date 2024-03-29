@@ -20,34 +20,30 @@ public class GameLoadingScript : MonoBehaviour
 
     public IEnumerator Loading()
     {
-        //파일 로드부터
-        // files = Directory.GetFiles(Application.persistentDataPath, "*.json", SearchOption.AllDirectories);
-        // if (files.Length == 0)
-        // {
-        //     Debug.Log("파일없음");
-        //     //로컬에 초기화 파일 생성
-        //     DataManager.Instance.InitializeGameStatusData();
-        //     GameManager.Instance.InitializePlayerData();
-        //     //서버로 저장
-        //     DataManager.Instance.GetComponent<Save>().SavePlayerData();
-        //     DataManager.Instance.GetComponent<Save>().SaveGameStatusData();
-        // }
-        // else
-        // {
-        //     Debug.Log("파일 있음");
-        //     Debug.Log(files[0]);
-        //     //서버로부터 데이터 로드...
-        //     DataManager.Instance.LoadGameStatusData();
-        //     GameManager.Instance.LoadPlayerData();
-        //     // Debug.Log(DataManager.Instance.gameStateData.ch1MissionClear[0]);
+        DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
+        {
+            if (success)
+            {
+                DataManager.Instance.LoadGameStatusData();
+                GameManager.Instance.LoadPlayerData();
+                GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
+            }
+            else
+            {
+                Debug.LogError("데이터 로드 실패. 실행 중지합니다.");
+                UnityEditor.EditorApplication.isPlaying = false;
 
-        // }
-        // loadValue = 50;
-        // loadingProgress.value = loadValue;
-        // loadText.text = loadValue.ToString();
+            }
+        });
+
+        loadValue = 50;
+        loadingProgress.value = loadValue;
+        loadText.text = loadValue.ToString();
+        print($"loadValue : {loadValue}");
+
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
         asyncLoad.allowSceneActivation = false;
-
         //isDone 은 asyncLoad.progress의 연산이 완료되었는지 확인한다.
         //allowSceneActivation을 true로 하면 씬 로드가 완료되면 바로 씬 전환이 되지만,
         //allowSceneActivation을 false로 하면 씬 로드 progress가 0.9에서 중지된다.
@@ -57,7 +53,7 @@ public class GameLoadingScript : MonoBehaviour
         {
             //Debug.Log(asyncLoad.progress);
 
-            loadValue = Mathf.Round(asyncLoad.progress * 100 * 100) / 100;
+            loadValue = Mathf.Round(asyncLoad.progress * 50 * 100) / 100 + 50;
             loadingProgress.value = loadValue;
             loadText.text = loadValue.ToString();
 

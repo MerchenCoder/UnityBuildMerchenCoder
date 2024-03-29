@@ -34,21 +34,12 @@ public class GameManager : MonoBehaviour
         {
             LoadPlayerData();
         }
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
-    }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Home 씬이 로드되고 플레이어 데이터가 로드되지 않았다면 플레이어 데이터 로드
-        if (scene.name == "Home")
-        {
-            LoadPlayerData();
-        }
+
     }
 
 
     //플레이어 데이터 - name, gem, position//
-
 
     //json 데이터를 담을 class 선언
     [Serializable]
@@ -252,7 +243,12 @@ public class GameManager : MonoBehaviour
     {
         if (TryGetComponent<PlayData>(out PlayData playData))
             return playData.CheckPlayPoint(playPointName);
-        else return false;
+        else
+        {
+            Debug.Log(playData);
+            return false;
+        }
+
     }
 
 

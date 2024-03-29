@@ -33,17 +33,9 @@ public class DataManager : MonoBehaviour
         {
             LoadGameStatusData();
         }
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Home 씬이 로드되고 플레이어 데이터가 로드되지 않았다면 플레이어 데이터 로드
-        if (scene.name == "Home")
-        {
-            LoadGameStatusData();
-        }
-    }
+
     //불러오기
     public void LoadGameStatusData()
     {

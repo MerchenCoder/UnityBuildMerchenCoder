@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
-using System.Text;
-using UnityEngine.Networking;
 using Newtonsoft.Json;
 
 
@@ -145,7 +143,7 @@ public class Save : MonoBehaviour
                 return;
             }
             //응답 역직렬화
-            Debug.Log("서버 응답: " + result);
+            // Debug.Log("서버 응답: " + result);
             res_save responseResult = JsonConvert.DeserializeObject<res_save>(result);
             //Debug.Log(responseResult);
             Debug.LogFormat("<color=blue>{0}</color>", responseResult.cmd);
