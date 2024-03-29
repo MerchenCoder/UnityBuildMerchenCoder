@@ -8,6 +8,7 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
     private GameObject startInfoText;
     public GameObject loading;
     public GameObject startButtons;
+    public GameObject testButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,19 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("패널 클릭");
         startInfoText.SetActive(false);
-        startButtons.SetActive(true);
+
+        if (PlayerPrefs.HasKey("autoLogin") && PlayerPrefs.GetInt("autoLogin") == 1)
+        {
+            print("자동 로그인합니다.");
+            GetComponent<Sign>().Login(PlayerPrefs.GetString("userId"), PlayerPrefs.GetString("userPwd"));
+
+        }
+        else
+        {
+            startButtons.SetActive(true);
+            testButton.SetActive(false);
+        }
+
 
 
     }

@@ -31,6 +31,7 @@ public class req_login : packet
 {
     public string id; //id
     public string password; // password
+
 }
 
 //회원가입 시 응답 객체
@@ -57,6 +58,7 @@ public class Sign : MonoBehaviour
     // public GameObject successLoginPanel;
     public GameObject alertPanel;
     private TMP_Text alertMessage;
+    public Toggle autoLoginToggle;
 
     public Button btnSignin;
 
@@ -92,20 +94,8 @@ public class Sign : MonoBehaviour
            }
            else
            {
-               id = login_txtId.text;
-               password = login_txtPwd.text;
 
-               SignIn((success) =>
-               {
-                   if (success)
-                   {
-                       loginPanel.SetActive(false);
-                       loginPanel.transform.parent.gameObject.SetActive(false);
-                       //성공시 gameloading
-                       GetComponentInParent<StartGame>().GameLoading();
-                   }
-
-               });
+               Login(login_txtId.text, login_txtPwd.text);
            }
        });
 
@@ -207,7 +197,6 @@ public class Sign : MonoBehaviour
             {
                 // 응답데이터 역직렬화
                 res_login responseResult = JsonConvert.DeserializeObject<res_login>(result);
-                Debug.Log(responseResult);
                 Debug.LogFormat("<color=red>{0}</color>", responseResult.cmd);
                 //cmd에 따른 처리
                 if (responseResult.errorno == 0)
@@ -257,8 +246,8 @@ public class Sign : MonoBehaviour
     private IEnumerator Post(string uri, string data, Action<string> onResponse)
     {
         var url = string.Format("{0}/{1}", this.serverPath, uri);
-        Debug.Log(url);
-        Debug.Log(data);
+        // Debug.Log(url);
+        // Debug.Log(data);
 
         var req = new UnityWebRequest(url, "POST");
         byte[] body = Encoding.UTF8.GetBytes(data); //encoding
@@ -322,6 +311,68 @@ public class Sign : MonoBehaviour
         uname = "";
 
     }
+
+
+
+    public void Logout()
+    {
+        int autoLoginSetting;
+        if (PlayerPrefs.HasKey("autoLogin"))
+        {
+
+            autoLoginSetting = PlayerPrefs.GetInt("autoLogin");
+        }
+        else
+        {
+            Debug.LogError("auto login key 없음");
+            return;
+        }
+        if (autoLoginSetting == 1)
+        {
+            PlayerPrefs.SetInt("autoLogin", 0);
+            print("자동로그인 해제");
+        }
+    }
+
+
+    public void Login(string uid, string upwd)
+    {
+        id = uid;
+        password = upwd;
+        SignIn((success) =>
+               {
+                   if (success)
+                   {
+
+                       if (autoLoginToggle.isOn)
+                       {
+                           if (!PlayerPrefs.HasKey("autoLogin") || PlayerPrefs.GetInt("autoLogin") == 0)
+                           {
+                               PlayerPrefs.SetInt("autoLogin", 1);
+                               PlayerPrefs.SetString("userId", id);
+                               PlayerPrefs.SetString("userPwd", password);
+                               Debug.Log("data save for auto login");
+                           }
+                           //로그인 한 id만 저장
+                           PlayerPrefs.SetString("userId", id);
+                       }
+                       else
+                       {
+                           //로그인 한 id만 저장
+                           PlayerPrefs.SetString("userId", id);
+                       }
+
+                       Debug.Log($"현재 사용자 : {PlayerPrefs.GetString("userId")}");
+
+                       loginPanel.SetActive(false);
+                       loginPanel.transform.parent.gameObject.SetActive(false);
+                       //성공시 gameloading
+                       GetComponentInParent<StartGame>().GameLoading();
+                   }
+
+               });
+    }
+
 }
 
 

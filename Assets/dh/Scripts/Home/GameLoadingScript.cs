@@ -31,7 +31,7 @@ public class GameLoadingScript : MonoBehaviour
         //이 경우 allowSceneActivation true로 만들 수 있는 방법을 추가해 주어야한다.
         while (!asyncLoad.isDone)
         {
-            Debug.Log(asyncLoad.progress);
+            //Debug.Log(asyncLoad.progress);
 
             loadValue = Mathf.Round(asyncLoad.progress * 100 * 100) / 100;
             loadingProgress.value = loadValue;
@@ -39,12 +39,13 @@ public class GameLoadingScript : MonoBehaviour
 
             if (asyncLoad.progress >= 0.9f)
             {
-                Debug.Log("씬 준비 완료. 잠시 대기");
-                yield return new WaitForSeconds(1.5f);
-                asyncLoad.allowSceneActivation = true;
 
-
+                break;
             }
+            Debug.Log("씬 준비 완료. 잠시 대기");
+            yield return new WaitForSeconds(1.5f);
+            asyncLoad.allowSceneActivation = true;
+
         }
         // while (loadingProgress.value < 100f)
         // {
