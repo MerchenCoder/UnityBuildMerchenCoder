@@ -27,20 +27,22 @@ public class DialogueControl_HomeScene : MonoBehaviour
         }
 
         // Check First Play
-        if (GameManager.Instance.CheckPlayProgress("FirstStart") == true)
+        if (GameManager.Instance.CheckPlayProgress("FirstStart"))
         {
+            Debug.Log("FirstStart");
             isFirstDiaEnd = false;
             isChap1_5_DiaEnd = true;
             playCanvas.SetActive(false);
             setNamePanel.SetActive(true);
             
         }
-        else if(GameManager.Instance.CheckPlayProgress("Chap1Clear") == true)
+        else if(GameManager.Instance.CheckPlayProgress("Chap1Clear"))
         {
+            Debug.Log("Chap1Clear");
             isFirstDiaEnd = true;
             isChap1_5_DiaEnd = false;
             setNamePanel.SetActive(false);
-            chap_1_5_Dialogue1.DialogueStart();
+            Invoke("StartChap1ClearDialogue", 0.5f);
         }
         else
         {
@@ -57,6 +59,11 @@ public class DialogueControl_HomeScene : MonoBehaviour
     {
         setNamePanel.SetActive(false);
         firstDialogue1.DialogueStart();
+    }
+
+    public void StartChap1ClearDialogue()
+    {
+        chap_1_5_Dialogue1.DialogueStart();
     }
 
 
@@ -93,10 +100,11 @@ public class DialogueControl_HomeScene : MonoBehaviour
     {
         // message alarm SFX will be added
         yield return new WaitForSeconds(1f);
+        playCanvas.SetActive(false);
         messagePanel2.SetActive(true);
         yield return new WaitForSeconds(5f);
         chap_1_5_Dialogue2.DialogueStart();
-        isChap1_5_DiaEnd = true;
+        isChap1_5_DiaEnd = true;        
         // chap2 open
         DataManager.Instance.UpdateChapterState(2, true);
         yield return null;

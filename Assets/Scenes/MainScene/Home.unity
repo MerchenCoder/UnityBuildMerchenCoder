@@ -2056,8 +2056,8 @@ MonoBehaviour:
   quizActive: {fileID: 0}
   isConnectedWithNextFlow: 0
   nextFlow: {fileID: 0}
-  isConnectedWithSave: 0
-  playPoint: 
+  isConnectedWithSave: 1
+  playPoint: Chap2Start
 --- !u!114 &242107797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4382,7 +4382,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 622213123}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1062255662372122153, guid: 27825d02b64f2aa46af8a59df65422d3, type: 3}
       propertyPath: m_Pivot.x
@@ -4518,11 +4518,6 @@ MonoBehaviour:
   chap_1_5_Dialogue1: {fileID: 625088531}
   chap_1_5_Dialogue2: {fileID: 242107797}
   setNamePanel: {fileID: 738488475}
---- !u!224 &619806534 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1062255662372122153, guid: 27825d02b64f2aa46af8a59df65422d3, type: 3}
-  m_PrefabInstance: {fileID: 619806531}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &619806535 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6362758678890980054, guid: 27825d02b64f2aa46af8a59df65422d3, type: 3}
@@ -4635,7 +4630,6 @@ Transform:
   - {fileID: 16208980}
   - {fileID: 625088530}
   - {fileID: 242107795}
-  - {fileID: 619806534}
   - {fileID: 653421889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24229,4 +24223,5 @@ SceneRoots:
   - {fileID: 681901888}
   - {fileID: 160454567}
   - {fileID: 685270887}
+  - {fileID: 619806531}
   - {fileID: 622213123}

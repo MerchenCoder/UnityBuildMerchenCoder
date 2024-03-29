@@ -138,6 +138,8 @@ public class DialogueSystem : MonoBehaviour
         typingText = dialogue_text_R;
         StartCoroutine(ShowText());
         right_standing_image.sprite = speaker.standing_sprites[(int)face];
+        if (right_standing_image.sprite == null) right_standing_image.enabled = false;
+        else right_standing_image.enabled = true;
         right_standing_image.SetNativeSize();
     }
 

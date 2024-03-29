@@ -41,9 +41,7 @@ public class Dialogue : MonoBehaviour
     public string dialogueFileName;
     public int dialogueID;
 
-   
-
-    void Start()
+    private void Start()
     {
         dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
         string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
@@ -91,6 +89,10 @@ public class Dialogue : MonoBehaviour
     // Dialogue
     public void DialogueStart()
     {
+        if(dialogueSystem == null)
+        {
+            dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
+        }
         dialogueSystem.nowDialogueList = thisIdDialogues;
         dialogueSystem.dialogues.Add(gameObject);
         dialogueSystem.StartSpeak();
