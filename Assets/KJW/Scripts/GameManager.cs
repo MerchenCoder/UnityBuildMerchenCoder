@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void InitializePlayerData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data", playerDataFileName_Init);
+        string filePath = Path.Combine(Application.persistentDataPath, "Data", playerDataFileName_Init);
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);
@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour
     public void LoadMissionData(string missionCode)
     {
         dataFileName = "Mission" + missionCode + ".json";
-        string filePath = Application.dataPath + "/Data/MissionInfo/" + dataFileName;
+        string filePath = Path.Combine(Application.persistentDataPath, "static", "MissionInfo", dataFileName);
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);

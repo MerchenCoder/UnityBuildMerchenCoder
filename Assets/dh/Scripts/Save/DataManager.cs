@@ -41,7 +41,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Log("DataManager LoadGameStatusData");
         // Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
-        string filePath = Path.Combine(Application.persistentDataPath, GameDataFileName); //배포시 사용하는 파일 경로
+        string filePath = Path.Combine(Application.persistentDataPath, "Data", GameDataFileName); //배포시 사용하는 파일 경로
 
         if (File.Exists(filePath)) //저장된 게임이 있다면
         {
@@ -67,8 +67,6 @@ public class DataManager : MonoBehaviour
     {
         //초기 데이터 가져오기
         Debug.Log("DataManager - 챕터/미션 상태 데이터 초기화");
-        string filePath = Path.Combine(Application.persistentDataPath, GameDataFileName); //배포시 사용하는 파일 경로
-
         SaveGameStatusData();
 
     }
@@ -80,7 +78,7 @@ public class DataManager : MonoBehaviour
     public void SaveGameStatusData()
     {
         string ToJsonData = JsonUtility.ToJson(gameStateData, true);
-        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
+        string filePath = Path.Combine(Application.persistentDataPath, "Data", GameDataFileName);
 
         File.WriteAllText(filePath, ToJsonData);
 

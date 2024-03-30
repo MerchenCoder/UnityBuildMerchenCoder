@@ -96,7 +96,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    private async void Start()
+    private void Start()
     {
         resultCanvasManager.SetResultCanvas();
     }
