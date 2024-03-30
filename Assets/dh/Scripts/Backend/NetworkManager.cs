@@ -62,6 +62,10 @@ public class NetworkManager : MonoBehaviour
             onResponse("server error");
 
         }
+        else if (req.responseCode == 0)
+        {
+            Debug.Log("서버 연결 실패");
+        }
 
 
 

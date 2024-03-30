@@ -122,10 +122,10 @@ public class Sign : MonoBehaviour
                        alertMessage.text = "회원가입이 성공적으로 완료되었습니다.";
                        PlayerPrefs.DeleteAll();
 
-                       //json 파일 다 삭제
-                       if (Directory.Exists(Application.persistentDataPath))
+                       //로컬 라이브러리 > Data 폴더 내 json 파일 다 삭제(플레이 기록 관련 파일)
+                       if (Directory.Exists(Path.Combine(Application.persistentDataPath, "Data")))
                        {
-                           string[] files = Directory.GetFiles(Application.persistentDataPath, "*.*", SearchOption.AllDirectories);
+                           string[] files = Directory.GetFiles(Path.Combine(Application.persistentDataPath, "Data"), "*.*", SearchOption.AllDirectories);
                            // 모든 파일 삭제
                            foreach (string filePath in files)
                            {
