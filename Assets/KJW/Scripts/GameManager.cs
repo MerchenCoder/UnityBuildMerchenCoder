@@ -176,7 +176,6 @@ public class GameManager : MonoBehaviour
     /// <param name="num"></param>
     public void GetSomeGem(int num)
     {
-        Debug.Log("GetSomeGem");
         playerData.gem += num;
         OnGemChanged?.Invoke(playerData.gem); // 젬 상태가 변경되었음을 알림
 

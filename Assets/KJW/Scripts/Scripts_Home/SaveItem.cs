@@ -164,7 +164,7 @@ public class SaveItem : MonoBehaviour
         File.WriteAllText(filePath, jsonData);
 
 
-        DataManager.Instance.GetComponent<Save>().SavePlayData(); //서버에 저장
+        DataManager.Instance.GetComponent<Save>().SaveItemList(); //서버에 저장
 
     }
 
@@ -183,7 +183,7 @@ public class SaveItem : MonoBehaviour
         // 파일에 JSON 데이터 쓰기
         File.WriteAllText(filePath, jsonData);
 
-        DataManager.Instance.GetComponent<Save>().SavePlayData(); //서버에 저장
+        DataManager.Instance.GetComponent<Save>().SaveItemList(); //서버에 저장
 
     }
 }

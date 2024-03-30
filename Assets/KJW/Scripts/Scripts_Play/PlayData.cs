@@ -42,7 +42,7 @@ public class PlayData : MonoBehaviour
         playData = new SavePlayData();
 
         //initFolderPath = "Assets/Data";
-        initFilePath = Application.persistentDataPath + "/static";
+        initFolderPath = Application.persistentDataPath + "/static";
         initFilePath = Path.Combine(initFolderPath, "PlayProgressForInit.json");
 
         folderPath = Application.persistentDataPath + "/Data";
