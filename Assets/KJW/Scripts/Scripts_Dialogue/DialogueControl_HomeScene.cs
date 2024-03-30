@@ -20,7 +20,6 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(GameManager.Instance.CheckPlayProgress("FirstStart"));
         if (dialogueSystem != null)
         {
             // 다이얼로그 종료 이벤트에 대한 리스너 등록

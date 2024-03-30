@@ -160,7 +160,7 @@ public class TestManager : MonoBehaviour
         TestCaseDataFileName = "TestCase" + GameManager.Instance.missionData.missionCode + ".json";
 
         //Json 파일 경로
-        string jsonFilePath = Application.dataPath + "/Data/TestCase/" + TestCaseDataFileName;
+        string jsonFilePath = Path.Combine(Application.persistentDataPath, "static", "TestCase", TestCaseDataFileName);
 
         if (File.Exists(jsonFilePath))
         {
