@@ -6,32 +6,20 @@ using System.IO;
 
 public class DataManager : MonoBehaviour
 {
-    static GameObject container;
+    public static DataManager Instance = null;
 
-
-    //---싱글톤 선언----//
-    static DataManager instance;
-    public static DataManager Instance
-    {
-        get
-        {
-            if (!instance)
-            {
-                container = new GameObject();
-                container.name = "DataManager";
-                instance = container.AddComponent(typeof(DataManager)) as DataManager;
-                DontDestroyOnLoad(container);
-
-            }
-            return instance;
-
-        }
-    }
     private void Awake()
     {
-        LoadGameData();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
-
     //게임 데이터 파일 이름 설정
     string GameDataFileName = "GameStatusData.json";
 
@@ -39,10 +27,15 @@ public class DataManager : MonoBehaviour
     public GameData gameStateData = new GameData();
 
 
+    private void Start()
+    {
+        LoadGameData();
+    }
     //불러오기
     public void LoadGameData()
     {
-        Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
+        Debug.Log("DataManager LoadGameData : GameStatusData.json");
+        // Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
         string filePath = Path.Combine(Application.persistentDataPath, GameDataFileName); //배포시 사용하는 파일 경로
 
         if (File.Exists(filePath)) //저장된 게임이 있다면

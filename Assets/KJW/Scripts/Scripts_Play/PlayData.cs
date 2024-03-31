@@ -65,7 +65,7 @@ public class PlayData : MonoBehaviour
             {
                 if (!playData.playPoints[i].isClear && i != 0)
                 {
-                    nowPlayPointIndex = i-1;
+                    nowPlayPointIndex = i;
                     nowInfoText = playData.playPoints[i].playInfo;
                     break;
                 }
@@ -133,7 +133,7 @@ public class PlayData : MonoBehaviour
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if (i == nowPlayPointIndex)
+                if (i == nowPlayPointIndex-1)
                 {
                     return true;
                 }

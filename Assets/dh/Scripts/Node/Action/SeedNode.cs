@@ -19,11 +19,27 @@ public class SeedNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
+        if (NodeManager.Instance.Mode != "run")
+        {
+            TestManager.Instance.playerOutput.Add(outputStr);
+            yield break;
+        }
+
         if (player == null)
         {
             player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
             playerActionBubble = player.transform.GetChild(0).GetChild(0).gameObject;
             feedAnim = player.GetComponentInChildren<Animator>(true);
+        }
+
+        Vector2 anchoredPosition = player.GetComponent<RectTransform>().anchoredPosition;
+        //Vector2 originPosition = anchoredPosition;
+        if (anchoredPosition.x < -185 || anchoredPosition.x > 451)
+        {
+            int randomNumber = Random.Range(-185 / 30, 451 / 30) * 30;
+            anchoredPosition.x = randomNumber;
+            player.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
+
         }
 
 
@@ -40,9 +56,9 @@ public class SeedNode : MonoBehaviour, INode, IFollowFlow
             yield return new WaitForSeconds(1f);
 
             //플레이어 위치 변경//
-            // -185부터 451까지의 값 중에서 최소 10씩 간격이 나는 난수를 뽑음
+            // -185부터 451까지의 값 중에서 최소 30씩 간격이 나는 난수를 뽑음
             int randomNumber = Random.Range(-185 / 30, 451 / 30) * 30;
-            Vector2 anchoredPosition = player.GetComponent<RectTransform>().anchoredPosition;
+            anchoredPosition = player.GetComponent<RectTransform>().anchoredPosition;
             anchoredPosition.x = randomNumber;
             player.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
         }

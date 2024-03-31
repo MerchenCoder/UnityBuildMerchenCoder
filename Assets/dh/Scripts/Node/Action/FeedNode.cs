@@ -19,6 +19,12 @@ public class FeedNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
+        if (NodeManager.Instance.Mode != "run")
+        {
+            TestManager.Instance.playerOutput.Add(outputStr);
+            yield break;
+        }
+
         if (player == null)
         {
             player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
