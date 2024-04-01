@@ -119,7 +119,7 @@ public class FullLoad : MonoBehaviour
         reqS3Load.cmd = 4000;
 
         var json = JsonConvert.SerializeObject(reqS3Load);
-        StartCoroutine(NetworkManager.Get("/download", json, (result) =>
+        StartCoroutine(NetworkManager.Get("download", json, (result) =>
         {
             if (result == "server error")
             {
@@ -145,7 +145,7 @@ public class FullLoad : MonoBehaviour
                 }
                 for (int i = 0; i < responseResult.fileData.Length; i++)
                 {
-                    File.WriteAllText(responseResult.fileData[i].path, responseResult.fileData[i].data);
+                    File.WriteAllText(Path.Combine(folderPath, responseResult.fileData[i].path), responseResult.fileData[i].data);
                 }
 
                 Debug.Log("s3 버킷의 모든 파일을 가져와 로컬에 저장하였습니다.");

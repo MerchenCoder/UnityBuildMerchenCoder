@@ -17,8 +17,17 @@ public class GameLoadingScript : MonoBehaviour
         loadValue = 0.0f;
     }
 
+
+    void UpdateProgress(float value)
+    {
+        loadValue = value;
+        loadingProgress.value = loadValue;
+        loadText.text = loadValue.ToString();
+        print($"loadValue : {loadValue}");
+    }
     public IEnumerator Loading()
     {
+
         DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
         {
             if (success)
@@ -26,6 +35,34 @@ public class GameLoadingScript : MonoBehaviour
                 DataManager.Instance.LoadGameStatusData();
                 GameManager.Instance.LoadPlayerData();
                 GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
+                UpdateProgress(30);
+
+                if (Directory.Exists(Path.Combine(Application.persistentDataPath, "static")))
+                {
+                    Debug.Log("이미 로컬에 s3에서 가져온 정적파일 존재");
+                    UpdateProgress(50);
+                    StartCoroutine(AsycLoadHomeScene());
+                }
+                else
+                {
+                    DataManager.Instance.GetComponent<FullLoad>().LoadFromS3((success) =>
+                {
+
+                    if (success)
+                    {
+
+                        UpdateProgress(50);
+                        StartCoroutine(AsycLoadHomeScene());
+
+                    }
+                    else
+                    {
+                        Debug.LogError("s3 버킷에서 데이터 로드 실패. 실행을 중지합니다.");
+                        UnityEditor.EditorApplication.isPlaying = false;
+                    }
+                });
+                }
+
             }
             else
             {
@@ -33,14 +70,14 @@ public class GameLoadingScript : MonoBehaviour
                 UnityEditor.EditorApplication.isPlaying = false;
 
             }
+
         });
+        yield return null;
 
-        loadValue = 50;
-        loadingProgress.value = loadValue;
-        loadText.text = loadValue.ToString();
-        print($"loadValue : {loadValue}");
+    }
 
-
+    IEnumerator AsycLoadHomeScene()
+    {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
         asyncLoad.allowSceneActivation = false;
         //isDone 은 asyncLoad.progress의 연산이 완료되었는지 확인한다.
@@ -52,7 +89,7 @@ public class GameLoadingScript : MonoBehaviour
         {
             //Debug.Log(asyncLoad.progress);
 
-            loadValue = Mathf.Round(asyncLoad.progress * 50 * 100) / 100 + 50;
+            UpdateProgress(Mathf.Round(asyncLoad.progress * 50 * 100) / 100 + 50);
             loadingProgress.value = loadValue;
             loadText.text = loadValue.ToString();
 
@@ -66,17 +103,6 @@ public class GameLoadingScript : MonoBehaviour
             asyncLoad.allowSceneActivation = true;
 
         }
-        // while (loadingProgress.value < 100f)
-        // {
-        //     loadValue += 0.5f;
-
-        //     loadingProgress.value = loadValue;
-        //     loadText.text = loadValue.ToString();
-        //     if (loadingProgress.value == 100f)
-        //     {
-        //         StopCoroutine(Loading());
-        //     }
-        //     yield return null;
-        // }
+        yield return null; // 추가
     }
 }
