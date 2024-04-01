@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void InitializePlayerData()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "Data", playerDataFileName_Init);
+        string filePath = Path.Combine(Application.persistentDataPath, "static", playerDataFileName_Init);
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);
@@ -257,4 +257,5 @@ public class GameManager : MonoBehaviour
         Debug.Log($"복습하기 모드. 보상 변경 : {newReward}");
         missionData.reward = newReward;
     }
+
 }

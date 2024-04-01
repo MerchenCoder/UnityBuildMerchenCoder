@@ -9,7 +9,6 @@ public class GameLoadingScript : MonoBehaviour
     public float loadValue;
     public Text loadText;
     public Slider loadingProgress;
-    string[] files;
 
 
     // Start is called before the first frame update

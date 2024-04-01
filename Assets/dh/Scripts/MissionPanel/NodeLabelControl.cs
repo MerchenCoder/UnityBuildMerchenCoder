@@ -90,7 +90,7 @@ public class NodeLabelControl : MonoBehaviour
     private void GetColorData()
     {
         //Json 파일 가져와서 구조체로 역직렬화 (라이브러리 사용)
-        string jsonFilePath = Path.Combine(Application.persistentDataPath + "static" + colorFileName);
+        string jsonFilePath = Path.Combine(Application.persistentDataPath, "static", colorFileName);
         if (File.Exists(jsonFilePath))
         {
             string jsonString = File.ReadAllText(jsonFilePath); //json파일 문자열로 읽어오기

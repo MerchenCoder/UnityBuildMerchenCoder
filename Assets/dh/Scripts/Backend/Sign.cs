@@ -136,7 +136,7 @@ public class Sign : MonoBehaviour
                        }
                        else
                        {
-                           Debug.LogWarning("폴더가 존재하지 않습니다.");
+                           Debug.Log("폴더가 존재하지 않습니다.");
                        }
 
                        ResetData();
@@ -299,22 +299,7 @@ public class Sign : MonoBehaviour
 
     public void Logout()
     {
-        int autoLoginSetting;
-        if (PlayerPrefs.HasKey("autoLogin"))
-        {
-
-            autoLoginSetting = PlayerPrefs.GetInt("autoLogin");
-        }
-        else
-        {
-            Debug.LogError("auto login key 없음");
-            return;
-        }
-        if (autoLoginSetting == 1)
-        {
-            PlayerPrefs.SetInt("autoLogin", 0);
-            print("자동로그인 해제");
-        }
+        PlayerPrefs.DeleteAll();
     }
 
 

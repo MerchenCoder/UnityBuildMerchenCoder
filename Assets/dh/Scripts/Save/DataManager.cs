@@ -78,7 +78,13 @@ public class DataManager : MonoBehaviour
     public void SaveGameStatusData()
     {
         string ToJsonData = JsonUtility.ToJson(gameStateData, true);
-        string filePath = Path.Combine(Application.persistentDataPath, "Data", GameDataFileName);
+        string folderPath = Path.Combine(Application.persistentDataPath, "Data");
+        string filePath = Path.Combine(folderPath, GameDataFileName);
+
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
 
         File.WriteAllText(filePath, ToJsonData);
 
@@ -122,7 +128,7 @@ public class DataManager : MonoBehaviour
 
     // private void OnApplicationQuit()
     // {
-    //     SaveGameData();
+    //     SaveGameStatusData();
     // }
 
 

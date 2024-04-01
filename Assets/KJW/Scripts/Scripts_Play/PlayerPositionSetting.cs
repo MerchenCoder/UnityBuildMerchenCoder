@@ -32,17 +32,21 @@ public class PlayerPositionSetting : MonoBehaviour
     }
     private void OnDisable()
     {
-        //마지막 플레이 씬 기록
-        string chapter = thisSceneName.Substring(0, 1);
-        GameManager.Instance.playerData.chapterCurrentScene[int.Parse(chapter) - 1] = thisSceneName;
+        if (!GameManager.Instance)
+        {
+            //마지막 플레이 씬 기록
+            string chapter = thisSceneName.Substring(0, 1);
+            GameManager.Instance.playerData.chapterCurrentScene[int.Parse(chapter) - 1] = thisSceneName;
 
-        //포지션 기록
-        nowPlayerPosition.x = transform.localPosition.x;
-        nowPlayerPosition.y = transform.localPosition.y;
-        nowPlayerPosition.z = transform.localPosition.z;
+            //포지션 기록
+            nowPlayerPosition.x = transform.localPosition.x;
+            nowPlayerPosition.y = transform.localPosition.y;
+            nowPlayerPosition.z = transform.localPosition.z;
 
-        GameManager.Instance.playerData.playLog[thisSceneName] = nowPlayerPosition;
-        GameManager.Instance.SavePlayerData();
+            GameManager.Instance.playerData.playLog[thisSceneName] = nowPlayerPosition;
+            GameManager.Instance.SavePlayerData();
+        }
+
     }
 
 }

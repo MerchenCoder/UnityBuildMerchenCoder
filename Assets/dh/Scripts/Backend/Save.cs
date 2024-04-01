@@ -25,7 +25,7 @@ public class Save : MonoBehaviour
 
     private void Start()
     {
-        folderPath = Application.persistentDataPath;
+        folderPath = Path.Combine(Application.persistentDataPath, "Data");
     }
 
 
@@ -35,7 +35,7 @@ public class Save : MonoBehaviour
     public void SavePlayData()
     {
         tableName = "play_data_table";
-        filePath = Path.Combine(folderPath, "Data", "myPlayData.json");
+        filePath = Path.Combine(folderPath, "myPlayData.json");
         jsonData = File.ReadAllText(filePath);
         SaveToDB((success) =>
 {
@@ -58,7 +58,7 @@ public class Save : MonoBehaviour
     public void SavePlayerData()
     {
         tableName = "player_data_table";
-        filePath = Path.Combine(folderPath, "Data", "myPlayerData.json");
+        filePath = Path.Combine(folderPath, "myPlayerData.json");
         jsonData = File.ReadAllText(filePath);
         SaveToDB((success) =>
         {
@@ -79,7 +79,7 @@ public class Save : MonoBehaviour
     public void SaveItemList()
     {
         tableName = "item_list_table";
-        filePath = Path.Combine(folderPath, "Data", "myItemList.json");
+        filePath = Path.Combine(folderPath, "myItemList.json");
         jsonData = File.ReadAllText(filePath);
         SaveToDB((success) =>
 {
@@ -161,11 +161,6 @@ public class Save : MonoBehaviour
 
             }
         }));
-
-
-
-
-
 
     }
 
