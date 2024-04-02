@@ -7,44 +7,39 @@ using UnityEngine;
 
 public class DialogueForTuto : MonoBehaviour
 {
-    [NonSerialized] public DialogueSystem dialogueSystem;
-    public enum Face { Normal, Smile, Sad, Cry, Angry, Surprise }
+    [NonSerialized] public DialogueSystemForTuto dialogueSystem;
 
     [Serializable]
-    public class EachDialogue
+    public class EachDialogueTuto
     {
-        public int diaID;
+        public string diaID;
         public int index;
-        public string speaker;
-        public string face;
+        public string infoTabName; // 대화하면서 펼쳐둘 InfoBook tab 이름
         [TextArea()] public string dialogueText;
-        public Speaker GetSpeaker() {
-            // Speaker Info Load
-            return Resources.Load<Speaker>("Speaker/" + speaker);
-        }
-        public Face GetFace()
-        {
-            return (Face)System.Enum.Parse(typeof(Face), face);
-        }
     }
 
     public class DialogueContainer
     {
-        public EachDialogue[] dialogueList;
+        public EachDialogueTuto[] dialogueList;
     }
 
     public DialogueContainer dialogueContainer;
-    public EachDialogue[] thisIdDialogues;
+    public EachDialogueTuto[] thisIdDialogues;
 
     // 파일 이름으로 경로를 통해 가져오도록 수정
     private string dialogueJson;
     public string dialogueFileName;
-    public int dialogueID;
+    private string dialogueID;
+
+    // 미션 번호와 튜토리얼 ID가 일치할 때만 대화 불러오기
+    bool existDia = false;
 
     private void Start()
     {
-        dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
+        dialogueID = GameManager.Instance.missionData.missionCode;
+        dialogueSystem = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();
         string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
+        //string jsonFilePath = Application.persistentDataPath + "/static/Dialogue/" + dialogueFileName + ".json";
         dialogueJson = File.ReadAllText(jsonFilePath);
         string jsonString = "{ \"dialogueList\": " + dialogueJson + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
@@ -53,7 +48,7 @@ public class DialogueForTuto : MonoBehaviour
 
 
     // Need check in Inspector
-    private void FindDialogueByID(int targetDiaID)
+    private void FindDialogueByID(string targetDiaID)
     {
         int i;
         int j = 0;
@@ -61,29 +56,35 @@ public class DialogueForTuto : MonoBehaviour
         {
             if (dialogueContainer.dialogueList[i].diaID == targetDiaID)
             {
+                existDia = true;
                 break;
             }
         }
-        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
+        if (existDia)
         {
-            // OutOfIndex 방지
-            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
             {
-                j++;
+                // OutOfIndex 방지
+                if (i + j + 1 < dialogueContainer.dialogueList.Length)
+                {
+                    j++;
+                }
+                else break;
             }
-            else break;
-        }
-            
-        thisIdDialogues = new EachDialogue[j];
-        for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
-        {
-            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            thisIdDialogues = new EachDialogueTuto[j];
+            for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
             {
-                thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
+                if (i + j + 1 < dialogueContainer.dialogueList.Length)
+                {
+                    thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
+                    thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
+                }
+                else break;
             }
-            else break;
+            // 다이얼로그 실행
+            DialogueStart();
         }
+        else transform.parent.GetComponent<Canvas>().sortingOrder = 1;
     }
 
     // Dialogue
@@ -91,13 +92,11 @@ public class DialogueForTuto : MonoBehaviour
     {
         if(dialogueSystem == null)
         {
-            dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
+            dialogueSystem = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();
         }
-        //dialogueSystem.nowDialogueList = thisIdDialogues;
         dialogueSystem.dialogues.Add(gameObject);
+        dialogueSystem.nowDialogueList = thisIdDialogues;
         dialogueSystem.StartSpeak();
     }
-
-    
 }
 
