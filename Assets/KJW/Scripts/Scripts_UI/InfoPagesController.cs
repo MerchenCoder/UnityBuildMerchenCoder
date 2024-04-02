@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class InfoPagesController : MonoBehaviour
 {
-    void Start()
-    {
-        SetActiveFalseAllPages();
-        InfoTabButtonOnClick("InfoTabBtn_Node");
-    }
-
     private void SetActiveFalseAllPages()
     {
         for (int i = 1; i < transform.childCount; i++)
