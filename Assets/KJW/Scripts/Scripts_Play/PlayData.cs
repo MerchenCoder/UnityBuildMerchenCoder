@@ -90,7 +90,7 @@ public class PlayData : MonoBehaviour
                 // JSON 데이터를 역직렬화
                 playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
-                nowPlayPointIndex = 0;
+                nowPlayPointIndex = 1;
                 nowInfoText = playData.playPoints[0].playPointName;
             }
             else

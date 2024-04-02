@@ -34,7 +34,6 @@ public class DialogueControl_HomeScene : MonoBehaviour
             isChap1_5_DiaEnd = true;
             playCanvas.SetActive(false);
             setNamePanel.SetActive(true);
-            
         }
         else if(GameManager.Instance.CheckPlayProgress("Chap1Clear"))
         {
@@ -60,6 +59,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
         setNamePanel.SetActive(false);
         firstDialogue1.DialogueStart();
     }
+
 
     public void StartChap1ClearDialogue()
     {

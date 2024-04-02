@@ -11,8 +11,8 @@ public class SetName : MonoBehaviour
     public void SetButtonDown()
     {
         GameManager.Instance.playerData.name = inputField.text;
+        PlayerPrefs.SetString("player_name", inputField.text);
         GameManager.Instance.SavePlayerData();
-        GameManager.Instance.LoadPlayerData();
 
         // Check First Play
         if (GameManager.Instance.CheckPlayProgress("FirstStart") == true)

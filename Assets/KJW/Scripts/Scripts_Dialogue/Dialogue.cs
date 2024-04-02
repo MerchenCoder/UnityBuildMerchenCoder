@@ -53,7 +53,7 @@ public class Dialogue : MonoBehaviour
 
 
     // Need check in Inspector
-    private void FindDialogueByID(int targetDiaID)
+    public void FindDialogueByID(int targetDiaID)
     {
         int i;
         int j = 0;
@@ -80,7 +80,6 @@ public class Dialogue : MonoBehaviour
             if (i + j + 1 < dialogueContainer.dialogueList.Length)
             {
                 thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
             }
             else break;
         }
@@ -89,6 +88,12 @@ public class Dialogue : MonoBehaviour
     // Dialogue
     public void DialogueStart()
     {
+        // 플레이어 이름 갈아끼기를 실행 시점으로 옮김
+        for(int i=0; i< thisIdDialogues.Length; i++)
+        {
+            thisIdDialogues[i].dialogueText = thisIdDialogues[i].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
+        }
+
         if(dialogueSystem == null)
         {
             dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
@@ -97,7 +102,5 @@ public class Dialogue : MonoBehaviour
         dialogueSystem.dialogues.Add(gameObject);
         dialogueSystem.StartSpeak();
     }
-
-    
 }
 
