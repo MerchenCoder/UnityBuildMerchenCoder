@@ -25,6 +25,8 @@ public class ItemGetButton : MonoBehaviour
        else
         {
             // 돈 없음
+            int i = transform.parent.parent.parent.parent.childCount;
+            transform.parent.parent.parent.parent.GetChild(i - 1).gameObject.SetActive(true);
         }
         // 구매한 아이템 저장
         if(saveItem == null)
