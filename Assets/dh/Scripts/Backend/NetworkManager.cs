@@ -25,8 +25,8 @@ public class NetworkManager : MonoBehaviour
     }
 
     //server
-    //private string serverPath = "http://13.125.154.109";
-    public static string serverPath = "http://localhost:3000";
+    private static string serverPath = "http://43.201.83.152";
+    //public static string serverPath = "http://localhost:3000";
 
 
     //post 요청 메소드
