@@ -73,7 +73,6 @@ public class NodeManager : MonoBehaviour
 
         Debug.Log("모든 코루틴 중단");
         StopAllCoroutines();
-
         resultCanvas.GetComponent<RunErrorMsg>().SetStateStop();
         resultCanvas.GetComponent<RunErrorMsg>().ActiveErrorMsg(error);
 

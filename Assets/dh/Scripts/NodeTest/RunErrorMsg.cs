@@ -13,7 +13,6 @@ public class RunErrorMsg : MonoBehaviour
 
 
 
-
     public void SetStateRun()
     {
         State.text = "실행 중";
@@ -62,8 +61,16 @@ public class RunErrorMsg : MonoBehaviour
         {
             errorMsg = error;
         }
+        if (ErrorMsgBox == null)
+        {
+            ErrorMsgBox = transform.parent.GetChild(1).GetChild(0).gameObject;
+        }
         ErrorMsgBox.GetComponentInChildren<TextMeshProUGUI>(true).text = errorMsg;
         ErrorMsgBox.SetActive(true);
+        if (NodeManager.Instance.Mode == "submit")
+        {
+            Invoke("DisableOnSubmitMode", 1.5f);
+        }
 
     }
     public void InActiveErrorMsg()
@@ -76,12 +83,18 @@ public class RunErrorMsg : MonoBehaviour
         SetStateRun();
         ErrorMsgBox = transform.parent.GetChild(1).GetChild(0).gameObject;
         ErrorMsgBox.SetActive(false);
-
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+    private void DisableOnSubmitMode()
+    {
+        ErrorMsgBox.SetActive(false);
+        TestManager.Instance.Fail();
+
 
     }
 }

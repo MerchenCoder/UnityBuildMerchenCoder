@@ -7,6 +7,7 @@ using System;
 using TMPro;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
+using System.Threading;
 public class TestManager : MonoBehaviour
 {
     //---싱글톤 생성---//
@@ -299,12 +300,26 @@ public class TestManager : MonoBehaviour
             Debug.Log((i + 1).ToString() + "번째 테스트 케이스 통과");
         }
         yield return new WaitForSeconds(1.5f);
-        MissionClear();
-        success.SetActive(true);
+        Success();
+    }
 
+    public void Fail()
+    {
+        StopAllCoroutines();
+        bool result = CheckAnswer();
+        if (NodeManager.Instance.CompileError || !result) //컴파일 오류가 있거나 결과가 output 배열과 다른 경우
+        {
+            Debug.Log("컴파일 오류로 채점 종료"); //실패 안내 관련 로직으로 변경해야함.
+            Thread.Sleep(1500);
+            fail.gameObject.SetActive(true);
+        }
+
+    }
+    public void Success()
+    {
+        MissionClear();
         Debug.Log("모든 테스트 케이스를 통과하였습니다.");
         Debug.Log("채점종료");
-
     }
 
 
