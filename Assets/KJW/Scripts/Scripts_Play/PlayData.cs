@@ -63,7 +63,7 @@ public class PlayData : MonoBehaviour
             // 현재 진행상황 로드
             for (int i = 0; i < playData.playPoints.Count; i++)
             {
-                if (!playData.playPoints[i].isClear && i != 0)
+                if (!playData.playPoints[i+1].isClear && i != 0)
                 {
                     nowPlayPointIndex = i;
                     nowInfoText = playData.playPoints[i].playInfo;
@@ -129,20 +129,18 @@ public class PlayData : MonoBehaviour
     /// <param name="playPointName"></param>
     public bool CheckPlayPoint(string playPointName)
     {
-        for (int i = 0; i < playData.playPoints.Count; i++)
+        for (int i = 0; i < playData.playPoints.Count-1; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if(i==0 && !playData.playPoints[i].isClear)
+                if (i == 0 && !playData.playPoints[i].isClear)
                 {
                     return true;
                 }
-                else if (i >= 1)
+                else if (i+1 == playData.playPoints.Count && playData.playPoints[i].isClear) return true;
+                else if (playData.playPoints[i].isClear && !playData.playPoints[i + 1].isClear)
                 {
-                    if(playData.playPoints[i - 1].isClear && !playData.playPoints[i].isClear)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }
