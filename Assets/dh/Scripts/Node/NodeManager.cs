@@ -96,7 +96,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    private async void Start()
+    private void Start()
     {
         resultCanvasManager.SetResultCanvas();
     }
@@ -225,7 +225,7 @@ public class NodeManager : MonoBehaviour
                 inputs += TestManager.Instance.testCaseData.inputInfo[i].name + " : ";
                 inputs += TestManager.Instance.currentInput[i];
                 if (i != TestManager.Instance.currentInput.Count - 1)
-                    inputs += ", ";
+                    inputs += ",\n";
             }
 
             npc_chatBubble.GetComponentInChildren<TMPro.TMP_Text>().text = inputs;

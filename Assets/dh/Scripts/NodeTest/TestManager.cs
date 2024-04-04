@@ -195,6 +195,7 @@ public class TestManager : MonoBehaviour
             {
                 continue;
             }
+            Debug.Log(i);
             Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
         }
         //함수노드 메뉴 패널 초기화
@@ -204,7 +205,8 @@ public class TestManager : MonoBehaviour
             {
                 continue;
             }
-            Destroy(input_NodeMenuSpawnPoint.GetChild(i).gameObject);
+            Debug.Log(i);
+            Destroy(input_funcMenuSpawnPoint.GetChild(i).gameObject);
         }
         //테스트 케이스에 입력 변수가 있다면 입력 변수 노드를 노드 메뉴에 삽입해 준다.
         if (testCaseData.hasTestCaseInput)
