@@ -19,7 +19,7 @@ public class ValueNodeDropdown : MonoBehaviour
         tMP_Dropdown = GetComponent<TMPro.TMP_Dropdown>();
         //valueBtn = GameObject.Find("AddValueBtn").gameObject.GetComponent<AddValueBtn>();
         //valueManager = GameObject.Find("ValueManager").gameObject.GetComponent<ValueManager>();
-        valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>();
+        valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
 
         valueManager.OnUpdateValues += AddOption;
 
