@@ -634,7 +634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0007324219
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3152,6 +3152,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5967074634424718655, guid: b8a7171d0d7874ebe95454cb773d30bb, type: 3}
   m_PrefabInstance: {fileID: 5917819585047922693}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3738482879322481841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6025505336607162165, guid: b8a7171d0d7874ebe95454cb773d30bb, type: 3}
+  m_PrefabInstance: {fileID: 5917819585047922693}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f766aff765c34e739dc08aec4b685d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &3746971610650260484
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3913,7 +3924,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 1-7
+          m_StringArgument: 1-1
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1846388357}
@@ -3931,6 +3942,18 @@ MonoBehaviour:
       - m_Target: {fileID: 684056683}
         m_TargetAssemblyTypeName: TestManager, Assembly-CSharp
         m_MethodName: RestTestCase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3738482879322481841}
+        m_TargetAssemblyTypeName: NodeMissionBtn, Assembly-CSharp
+        m_MethodName: RestIsDone
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

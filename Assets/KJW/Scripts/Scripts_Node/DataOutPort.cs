@@ -115,7 +115,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
                     if (connectedPort != null && (connectedPort != result.gameObject))
                     {
-                        if (connectedPort.transform.parent.gameObject.name == "Node_Print")
+                        if (connectedPort.GetComponent<DataInPort>().isAllType)
                         {
                             connectedPort.tag = "data_all";
                         }
@@ -137,7 +137,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             arrowObject.SetActive(false);
             if (connectedPort != null)
             {
-                if (connectedPort.transform.parent.gameObject.CompareTag("Node_Print"))
+                if (connectedPort.GetComponent<DataInPort>().isAllType)
                 {
                     connectedPort.tag = "data_all";
                 }
@@ -156,7 +156,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         arrowObject.SetActive(false);
         if (connectedPort != null)
         {
-            if (connectedPort.transform.parent.gameObject.CompareTag("Node_Print"))
+            if (connectedPort.GetComponent<DataInPort>().isAllType)
             {
                 connectedPort.tag = "data_all";
             }

@@ -54,6 +54,10 @@ public class RunErrorMsg : MonoBehaviour
         {
             errorMsg = "값 설정하기/가져오기 노드의\n변수를 설정하지 않았습니다. \n실행이 중단되었습니다.";
         }
+        else if (error == "data type")
+        {
+            errorMsg = "자료형이 다른 데이터 간에\n연산을 수행할 수 없습니다. \n실행이 중단되었습니다.";
+        }
         else
         {
             errorMsg = error;

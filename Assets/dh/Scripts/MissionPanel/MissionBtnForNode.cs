@@ -35,4 +35,9 @@ public class NodeMissionBtn : MonoBehaviour
 
     }
 
+    public void RestIsDone()
+    {
+        isDone = false;
+    }
+
 }

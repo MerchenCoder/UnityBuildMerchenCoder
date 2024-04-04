@@ -20,7 +20,22 @@ public class DataInPort : MonoBehaviour
     private bool inputValueBool;
     private string inputValueStr;
 
+    public bool isAllType;
+
     [NonSerialized] public DataOutPort connectedPort;
+
+
+    private void Start()
+    {
+        if (this.tag == "data_all")
+        {
+            isAllType = true;
+        }
+        else
+        {
+            isAllType = false;
+        }
+    }
 
 
     public bool IsConnected

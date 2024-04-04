@@ -31,6 +31,13 @@ public class CompNode : MonoBehaviour, INode
     private int n2;
 
 
+    private bool b1;
+    private bool b2;
+
+    private string s1;
+    private string s2;
+
+
 
     void Start()
     {
@@ -58,12 +65,6 @@ public class CompNode : MonoBehaviour, INode
         bool result = false;
         switch (method)
         {
-            case 0:
-                result = input1 == input2;
-                break;
-            case 1:
-                result = input1 != input2;
-                break;
             case 2:
                 result = input1 > input2;
                 break;
@@ -82,6 +83,46 @@ public class CompNode : MonoBehaviour, INode
         return result;
     }
 
+    bool CompEqual(int method, int type)
+    {
+        bool result = false;
+        switch (method)
+        {
+            case 0:
+                if (type == 0)
+                {
+                    result = n1 == n2;
+                }
+                else if (type == 1)
+                {
+                    result = b1 == b2;
+                }
+                else
+                {
+                    result = s1.Equals(s2);
+                }
+
+                break;
+            case 1:
+                if (type == 0)
+                {
+                    result = n1 != n2;
+                }
+                else if (type == 1)
+                {
+                    result = b1 != b2;
+                }
+                else
+                {
+                    result = !s1.Equals(s2);
+                }
+                break;
+        }
+        nodeData.ErrorFlag = false;
+        return result;
+
+    }
+
     public IEnumerator Execute()
     {
         throw new NotImplementedException();
@@ -93,19 +134,59 @@ public class CompNode : MonoBehaviour, INode
         {
             Debug.Log("비교연산노드 연결 모두 안됨");
             NodeManager.Instance.SetCompileError(true, "port");
-            yield return null;
+            yield break;
 
+        }
+        else if (dataInPort1.connectedPort.tag != dataInPort2.connectedPort.tag)
+        {
+            Debug.Log("포트 간 자료형 다름");
+            NodeManager.Instance.SetCompileError(true, "data type");
+            yield break;
         }
         else
         {
+
             yield return dataInPort1.connectedPort.GetComponent<DataOutPort>().SendData();
             yield return dataInPort2.connectedPort.GetComponent<DataOutPort>().SendData();
+            if (method <= 1)
+            {
+                //같다, 같지 않다는 모든 자료형이 가능함
+                if (dataInPort1.connectedPort.CompareTag("data_int"))
+                {
+                    n1 = dataInPort1.InputValueInt;
+                    n2 = dataInPort2.InputValueInt;
+                    nodeData.SetData_Bool = CompEqual(method, 0);
 
-            n1 = dataInPort1.InputValueInt;
-            n2 = dataInPort2.InputValueInt;
-            nodeData.SetData_Bool = CompData(method, n1, n2);
-            nodeData.ErrorFlag = false;
+                }
+                else if (dataInPort1.connectedPort.CompareTag("data_bool"))
+                {
+                    b1 = dataInPort1.InputValueBool;
+                    b2 = dataInPort2.InputValueBool;
+                    nodeData.SetData_Bool = CompEqual(method, 1);
 
+
+                }
+                else if (dataInPort1.connectedPort.CompareTag("data_string"))
+                {
+                    s1 = dataInPort1.InputValueStr;
+                    s2 = dataInPort2.InputValueStr;
+                    nodeData.SetData_Bool = CompEqual(method, 2);
+
+                }
+                else
+                {
+                    Debug.Log("dataInPort tag 오류");
+                    NodeManager.Instance.SetCompileError(true, "포트 태그 오류!! 개발 오류!!");
+                }
+
+            }
+            else
+            {
+                n1 = dataInPort1.InputValueInt;
+                n2 = dataInPort2.InputValueInt;
+                nodeData.SetData_Bool = CompData(method, n1, n2);
+
+            }
 
             yield return GetComponentInChildren<DataOutPort>().SendData();
             nodeData.ErrorFlag = true;
