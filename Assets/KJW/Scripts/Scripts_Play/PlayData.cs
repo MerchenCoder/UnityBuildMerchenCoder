@@ -44,6 +44,7 @@ public class PlayData : MonoBehaviour
         initFilePath = Path.Combine(initFolderPath, "PlayProgressForInit.json");
 
         folderPath = Application.persistentDataPath + "/Data";
+        Debug.Log(folderPath);
         filePath = Path.Combine(folderPath, "myPlayData.json");
 
         LoadPlayData();
