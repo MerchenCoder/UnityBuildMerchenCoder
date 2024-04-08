@@ -7,7 +7,7 @@ public class AnnaSleep : MonoBehaviour
     // Start is called before the first frame update
     void Update()
     {
-        if (GameManager.Instance.CheckPlayProgress("Chap2Start"))
+        if (GameManager.Instance.CheckPlayProgress("Chap2Start") || GameManager.Instance.CheckPlayProgress("Mission2-1N"))
         {
             gameObject.SetActive(true);
         }
