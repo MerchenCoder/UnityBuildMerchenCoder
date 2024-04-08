@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     //화면 벽과 충돌했을 때 호출되는 함수
     void Turn()
     {
-        Debug.Log("Turn 호출");
+        // Debug.Log("Turn 호출");
         //1. 이동방향 전환
         if (nextMove != 0)
         {

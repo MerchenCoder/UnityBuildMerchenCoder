@@ -5,12 +5,15 @@ using UnityEngine.Events;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     //싱글톤//
     public static GameManager Instance = null;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -27,12 +30,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        LoadPlayerData();
+        if (SceneManager.GetActiveScene().name != "Splash")
+        {
+            LoadPlayerData();
+        }
+
+
     }
 
 
     //플레이어 데이터 - name, gem, position//
-
 
     //json 데이터를 담을 class 선언
     [Serializable]
@@ -41,6 +48,7 @@ public class GameManager : MonoBehaviour
         public string name;
         public int gem;
         public string[] chapterCurrentScene;
+        public string[] chapterCurrentMission;
         public Dictionary<string, playerPosition> playLog;
         public struct playerPosition
         {
@@ -56,10 +64,12 @@ public class GameManager : MonoBehaviour
     private string playerDataFileName = "myPlayerData.json";
 
 
-    //playerData 초기화
+    /// <summary>
+    /// playerData 초기화
+    /// </summary>
     public void InitializePlayerData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data", playerDataFileName_Init);
+        string filePath = Path.Combine(Application.persistentDataPath, "static", playerDataFileName_Init);
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);
@@ -101,7 +111,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("PlayerData 초기 셋팅 필요");
+            Debug.Log("저장된 PlayerData 없음");
             InitializePlayerData();
         }
 
@@ -117,6 +127,8 @@ public class GameManager : MonoBehaviour
         string filePath = Path.Combine(Application.persistentDataPath, "Data", playerDataFileName);
         File.WriteAllText(filePath, ToJsonData);
         Debug.Log($"{playerDataFileName} 저장 완료");
+
+        DataManager.Instance.GetComponent<Save>().SavePlayerData();
 
     }
 
@@ -199,7 +211,7 @@ public class GameManager : MonoBehaviour
     public void LoadMissionData(string missionCode)
     {
         dataFileName = "Mission" + missionCode + ".json";
-        string filePath = Application.dataPath + "/Data/MissionInfo/" + dataFileName;
+        string filePath = Path.Combine(Application.persistentDataPath, "static", "MissionInfo", dataFileName);
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);
@@ -219,7 +231,10 @@ public class GameManager : MonoBehaviour
     public void SavePlayProgress(string playPointName, bool isClear)
     {
         if (TryGetComponent<PlayData>(out PlayData playData))
+        {
+
             playData.SavePlayPoint(playPointName, isClear);
+        }
         else Debug.Log("Play Data is null");
     }
 
@@ -229,7 +244,12 @@ public class GameManager : MonoBehaviour
     {
         if (TryGetComponent<PlayData>(out PlayData playData))
             return playData.CheckPlayPoint(playPointName);
-        else return false;
+        else
+        {
+            Debug.Log(playData);
+            return false;
+        }
+
     }
 
 
@@ -238,4 +258,5 @@ public class GameManager : MonoBehaviour
         Debug.Log($"복습하기 모드. 보상 변경 : {newReward}");
         missionData.reward = newReward;
     }
+
 }
