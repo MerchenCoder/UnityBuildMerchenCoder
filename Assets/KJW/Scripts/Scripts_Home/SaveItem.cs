@@ -92,6 +92,8 @@ public class SaveItem : MonoBehaviour
             File.WriteAllText(filePath, jsonData);
 
             Debug.Log("JSON 파일이 생성되었습니다: " + filePath);
+
+            DataManager.Instance.GetComponent<Save>().SaveItemList(); //서버에 반영
         }
         LoadItemData();
     }
@@ -160,6 +162,10 @@ public class SaveItem : MonoBehaviour
         string jsonData = JsonUtility.ToJson(itemData);
         // 파일에 JSON 데이터 쓰기
         File.WriteAllText(filePath, jsonData);
+
+
+        DataManager.Instance.GetComponent<Save>().SaveItemList(); //서버에 저장
+
     }
 
     /// <summary>
@@ -176,5 +182,8 @@ public class SaveItem : MonoBehaviour
         string jsonData = JsonUtility.ToJson(itemData);
         // 파일에 JSON 데이터 쓰기
         File.WriteAllText(filePath, jsonData);
+
+        DataManager.Instance.GetComponent<Save>().SaveItemList(); //서버에 저장
+
     }
 }
