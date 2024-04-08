@@ -31,9 +31,14 @@ public class DialogueSystemForTuto : MonoBehaviour
     public float typingSpeed = 0.05f;
     public AudioSource audioSource;
 
-    void Start()
+    private void Awake()
     {
         Init();
+    }
+
+    void Start()
+    {
+        
     }
 
     private void Init()
