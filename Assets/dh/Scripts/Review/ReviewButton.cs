@@ -6,13 +6,14 @@ using TMPro;
 
 public class ReviewButton : MonoBehaviour
 {
-    GameObject missionPanel;
+    public GameObject missionPanel;
     private string missionCode;
     Button button;
     // Start is called before the first frame update
     void Start()
     {
-        missionPanel = GetComponentInParent<Canvas>().transform.GetChild(6).GetChild(1).gameObject;
+        //missionPanel 참조 Public으로 변경
+        //missionPanel = GetComponentInParent<Canvas>().transform.GetChild(6).GetChild(1).gameObject;
         missionCode = transform.GetComponentInChildren<TMP_Text>().text;
         button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
