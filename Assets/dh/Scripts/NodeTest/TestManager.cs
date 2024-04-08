@@ -317,9 +317,10 @@ public class TestManager : MonoBehaviour
     }
     public void Success()
     {
-        MissionClear();
         Debug.Log("모든 테스트 케이스를 통과하였습니다.");
         Debug.Log("채점종료");
+        MissionClear();
+        success.SetActive(true);
     }
 
 

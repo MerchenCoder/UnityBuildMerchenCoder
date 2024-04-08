@@ -86,6 +86,7 @@ public class QuizActive : MonoBehaviour
         if (currentChapter <= 2 && currentChapter > 0)
         {
             GameManager.Instance.playerData.chapterCurrentMission[currentChapter - 1] = missionCode;
+            Debug.Log("현재 미션 코드 저장함");
         }
         else
         {

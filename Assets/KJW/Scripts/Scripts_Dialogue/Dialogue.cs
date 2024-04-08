@@ -18,7 +18,8 @@ public class Dialogue : MonoBehaviour
         public string speaker;
         public string face;
         [TextArea()] public string dialogueText;
-        public Speaker GetSpeaker() {
+        public Speaker GetSpeaker()
+        {
             // Speaker Info Load
             return Resources.Load<Speaker>("Speaker/" + speaker);
         }
@@ -28,6 +29,7 @@ public class Dialogue : MonoBehaviour
         }
     }
 
+    [Serializable]
     public class DialogueContainer
     {
         public EachDialogue[] dialogueList;
@@ -65,6 +67,7 @@ public class Dialogue : MonoBehaviour
                 break;
             }
         }
+        Debug.Log($"{this.gameObject.name} : {dialogueContainer.dialogueList.Length}");
         while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
         {
             // OutOfIndex 방지
@@ -74,7 +77,7 @@ public class Dialogue : MonoBehaviour
             }
             else break;
         }
-            
+
         thisIdDialogues = new EachDialogue[j];
         for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
         {
@@ -90,12 +93,12 @@ public class Dialogue : MonoBehaviour
     public void DialogueStart()
     {
         // 플레이어 이름 갈아끼기를 실행 시점으로 옮김
-        for(int i=0; i< thisIdDialogues.Length; i++)
+        for (int i = 0; i < thisIdDialogues.Length; i++)
         {
             thisIdDialogues[i].dialogueText = thisIdDialogues[i].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
         }
 
-        if(dialogueSystem == null)
+        if (dialogueSystem == null)
         {
             dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
         }
