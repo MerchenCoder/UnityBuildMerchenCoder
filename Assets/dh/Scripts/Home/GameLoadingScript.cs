@@ -27,7 +27,28 @@ public class GameLoadingScript : MonoBehaviour
     }
     public IEnumerator Loading()
     {
+        if (Directory.Exists(Path.Combine(Application.persistentDataPath, "static")))
+        {
+            Debug.Log("이미 로컬에 s3에서 가져온 정적파일 존재");
+            UpdateProgress(30);
+        }
+        else
+        {
+            DataManager.Instance.GetComponent<FullLoad>().LoadFromS3((success) =>
+        {
+            if (success)
+            {
 
+                UpdateProgress(30);
+            }
+            else
+            {
+                Debug.LogError("s3 버킷에서 데이터 로드 실패. 실행을 중지합니다.");
+                // UnityEditor.EditorApplication.isPlaying = false;
+                return;
+            }
+        });
+        }
         DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
         {
             if (success)
@@ -35,43 +56,17 @@ public class GameLoadingScript : MonoBehaviour
                 DataManager.Instance.LoadGameStatusData();
                 GameManager.Instance.LoadPlayerData();
                 GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
-                UpdateProgress(30);
-
-                if (Directory.Exists(Path.Combine(Application.persistentDataPath, "static")))
-                {
-                    Debug.Log("이미 로컬에 s3에서 가져온 정적파일 존재");
-                    UpdateProgress(50);
-                    StartCoroutine(AsycLoadHomeScene());
-                }
-                else
-                {
-                    DataManager.Instance.GetComponent<FullLoad>().LoadFromS3((success) =>
-                {
-
-                    if (success)
-                    {
-
-                        UpdateProgress(50);
-                        StartCoroutine(AsycLoadHomeScene());
-
-                    }
-                    else
-                    {
-                        Debug.LogError("s3 버킷에서 데이터 로드 실패. 실행을 중지합니다.");
-                        UnityEditor.EditorApplication.isPlaying = false;
-                    }
-                });
-                }
-
+                UpdateProgress(50);
             }
             else
             {
                 Debug.LogError("데이터 로드 실패. 실행 중지합니다.");
-                UnityEditor.EditorApplication.isPlaying = false;
+                //UnityEditor.EditorApplication.isPlaying = false;
+                return;
 
             }
-
         });
+        StartCoroutine(AsycLoadHomeScene());
         yield return null;
 
     }

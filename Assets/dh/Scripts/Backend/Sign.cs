@@ -314,20 +314,25 @@ public class Sign : MonoBehaviour
 
                        if (autoLoginToggle.isOn)
                        {
-                           if (!PlayerPrefs.HasKey("autoLogin") || PlayerPrefs.GetInt("autoLogin") == 0)
-                           {
-                               PlayerPrefs.SetInt("autoLogin", 1);
-                               PlayerPrefs.SetString("userId", id);
-                               PlayerPrefs.SetString("userPwd", password);
-                               Debug.Log("data save for auto login");
-                           }
-                           //로그인 한 id만 저장
+                           //    if (!PlayerPrefs.HasKey("autoLogin") || PlayerPrefs.GetInt("autoLogin") == 0)
+                           //    {
+                           PlayerPrefs.SetInt("autoLogin", 1);
                            PlayerPrefs.SetString("userId", id);
+                           PlayerPrefs.SetString("userPwd", password);
+                           Debug.Log("data save for auto login");
+                           //    }
+                           //    else
+                           //    {
+                           //로그인 한 id만 저장
+                           //        PlayerPrefs.SetString("userId", id);
+                           //    }
+
                        }
                        else
                        {
-                           //로그인 한 id만 저장
+                           PlayerPrefs.SetInt("autoLogin", 0);
                            PlayerPrefs.SetString("userId", id);
+                           PlayerPrefs.SetString("userPwd", password);
                        }
 
                        Debug.Log($"현재 사용자 : {PlayerPrefs.GetString("userId")}");

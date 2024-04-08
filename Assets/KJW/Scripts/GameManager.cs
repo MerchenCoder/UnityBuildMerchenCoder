@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         public string name;
         public int gem;
         public string[] chapterCurrentScene;
+        public string[] chapterCurrentMission;
         public Dictionary<string, playerPosition> playLog;
         public struct playerPosition
         {

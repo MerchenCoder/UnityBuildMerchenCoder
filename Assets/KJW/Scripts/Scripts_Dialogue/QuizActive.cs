@@ -80,10 +80,27 @@ public class QuizActive : MonoBehaviour
         GameManager.Instance.SavePlayerData();
     }
 
+    private void SaveCurrentMissionCode()
+    {
+        int currentChapter = int.Parse(SceneManager.GetActiveScene().name.Substring(0, 1));
+        if (currentChapter <= 2 && currentChapter > 0)
+        {
+            GameManager.Instance.playerData.chapterCurrentMission[currentChapter - 1] = missionCode;
+        }
+        else
+        {
+
+            Debug.LogWarning("currentChapter 값과 일치하는 챕터 정보가 없습니다.");
+        }
+
+    }
+
+
 
     void QuizBtnOnClick()
     {
         QuizActiveTrue();
         SavePlayerPosition();
+        SaveCurrentMissionCode();
     }
 }

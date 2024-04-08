@@ -37,4 +37,16 @@ public class ChapterManager : MonoBehaviour
             }
         }
     }
+
+
+    public void SetChapterCurrentMission(int chapterNum)
+    {
+        string currentMission = GameManager.Instance.playerData.chapterCurrentMission[chapterNum - 1];
+        if (currentMission != "" && currentMission != null)
+        {
+            Debug.Log($"진행 중인 미션 코드 {currentMission} 불러오기");
+            GameManager.Instance.LoadMissionData(currentMission);
+
+        }
+    }
 }
