@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnnaUP : MonoBehaviour
 {
-    void Start()
+    void Update()
     {
         if (GameManager.Instance.CheckPlayProgress("Chap2Start"))
         {
