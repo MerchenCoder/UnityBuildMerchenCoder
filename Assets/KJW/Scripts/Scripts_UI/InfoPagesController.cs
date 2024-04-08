@@ -12,6 +12,7 @@ public class InfoPagesController : MonoBehaviour
         }
     }
 
+
     public void InfoTabButtonOnClick(string objectName)
     {
         string[] pageName = objectName.Split('_');
@@ -28,11 +29,17 @@ public class InfoPagesController : MonoBehaviour
         string pageName = "Page_" + tabName;
         for (int i = 1; i < transform.childCount; i++)
         {
-            if(transform.GetChild(i).gameObject.name == pageName)
+            if (transform.GetChild(i).gameObject.name == pageName)
             {
                 transform.GetChild(i).gameObject.SetActive(true);
                 break;
             }
         }
     }
+
+    private void Start()
+    {
+        InfoTabButtonOnClick("InfoTabBtn_Node");
+    }
+
 }
