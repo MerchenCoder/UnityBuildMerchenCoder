@@ -12,11 +12,14 @@ public class DialogueControl_HomeScene : MonoBehaviour
     [SerializeField] Dialogue firstDialogue2;
     [SerializeField] Dialogue chap_1_5_Dialogue1;
     [SerializeField] Dialogue chap_1_5_Dialogue2;
+    [SerializeField] Dialogue chap_1_5_Dialogue3;
+    [SerializeField] Dialogue chap_2_5_Dialogue;
 
     public GameObject setNamePanel;
 
     bool isFirstDiaEnd;
     bool isChap1_5_DiaEnd;
+    bool report = false;
 
     void Start()
     {
@@ -73,7 +76,11 @@ public class DialogueControl_HomeScene : MonoBehaviour
         {
             StartCoroutine(FirstPlayFlow());
         }
-        else if (!isChap1_5_DiaEnd)
+        else if (!isChap1_5_DiaEnd && !report)
+        {
+            playCanvas.SetActive(true);
+        }
+        else if (!isChap1_5_DiaEnd && report)
         {
             StartCoroutine(Chap1_5_PlayFlow());
         }
@@ -82,6 +89,25 @@ public class DialogueControl_HomeScene : MonoBehaviour
             playCanvas.SetActive(true);
             messagePanel1.SetActive(false);
             messagePanel2.SetActive(false);
+        }
+    }
+
+    // chapter2 open
+    public  void ReportBtnClick()
+    {
+        if (GameManager.Instance.CheckPlayProgress("Chap1Clear"))
+        {
+            Debug.Log("Chap1Clear");
+            playCanvas.SetActive(false);
+            chap_1_5_Dialogue2.DialogueStart();
+            report = true;
+        }
+        else if (GameManager.Instance.CheckPlayProgress("Chap2Clear"))
+        {
+            Debug.Log("Chap2Clear");
+            playCanvas.SetActive(false);
+            StartCoroutine(Chap2_5_PlayFlow());
+            report = true;
         }
     }
 
@@ -98,15 +124,23 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     IEnumerator Chap1_5_PlayFlow()
     {
+        playCanvas.SetActive(false);
         // message alarm SFX will be added
         yield return new WaitForSeconds(1f);
-        playCanvas.SetActive(false);
         messagePanel2.SetActive(true);
         yield return new WaitForSeconds(5f);
-        chap_1_5_Dialogue2.DialogueStart();
+        chap_1_5_Dialogue3.DialogueStart();
         isChap1_5_DiaEnd = true;
         // chap2 open
         DataManager.Instance.UpdateChapterState(2, true);
+        yield return null;
+    }
+
+    // chap2 clear (chap3 is not updated)
+    IEnumerator Chap2_5_PlayFlow()
+    {
+        playCanvas.SetActive(false);
+        chap_2_5_Dialogue.DialogueStart();
         yield return null;
     }
 }
