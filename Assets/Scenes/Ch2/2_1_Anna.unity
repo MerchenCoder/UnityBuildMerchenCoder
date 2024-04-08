@@ -1770,6 +1770,7 @@ GameObject:
   - component: {fileID: 351608170}
   - component: {fileID: 351608169}
   - component: {fileID: 351608173}
+  - component: {fileID: 351608174}
   m_Layer: 6
   m_Name: Anna (1)
   m_TagString: NPC
@@ -1809,7 +1810,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06919563, y: 0.035709977}
+  m_Offset: {x: -0.06919563, y: 0.064563125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1820,7 +1821,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7425933, y: 1.5425956}
+  m_Size: {x: 0.7425933, y: 1.4848893}
   m_EdgeRadius: 0
 --- !u!50 &351608170
 Rigidbody2D:
@@ -1927,6 +1928,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2190b550324c4d07827e6edf40c6be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &351608174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351608168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 021877404ebbb44239b5e589b7f0e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &387375165
@@ -3266,6 +3279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 674885006}
   - component: {fileID: 674885005}
+  - component: {fileID: 674885007}
   m_Layer: 0
   m_Name: Wall (1)
   m_TagString: Untagged
@@ -3333,6 +3347,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &674885007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674885004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc15252204ea45da967b7b988cd9fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &693740722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3988,7 +4014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &723286459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4056,7 +4082,7 @@ Transform:
   m_GameObject: {fileID: 723286458}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 82.6, y: 0.15, z: 0}
+  m_LocalPosition: {x: 82.68, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 13.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6169,7 +6195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 727919695344122046, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: playPoint
-      value: 
+      value: Mission2-2N
       objectReference: {fileID: 0}
     - target: {fileID: 727919695344122046, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: quizActive
@@ -6181,7 +6207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 727919695344122046, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: isConnectedWithSave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 727919695344122046, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: isConnectedWithNextFlow
@@ -8003,7 +8029,7 @@ PrefabInstance:
       objectReference: {fileID: 1079069797}
     - target: {fileID: 5558622094539228544, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: playPoint
-      value: Mission2-2N
+      value: Mission2-1Y
       objectReference: {fileID: 0}
     - target: {fileID: 5558622094539228544, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: quizActive
@@ -8024,10 +8050,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1655997298}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
 --- !u!224 &1655997296 stripped
 RectTransform:
@@ -8039,19 +8062,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
   m_PrefabInstance: {fileID: 1655997295}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1655997298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1655997297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26d46c7f177ccfe40bcf16acbae85111, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activePlayPoint: Mission2-1Y
 --- !u!1 &1663931151
 GameObject:
   m_ObjectHideFlags: 0
@@ -8795,7 +8805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueID
-      value: 45
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueFileName
@@ -9166,7 +9176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d46c7f177ccfe40bcf16acbae85111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activePlayPoint: Mission2-2N
+  activePlayPoint: Mission2-1Y
 --- !u!1 &1909435795
 GameObject:
   m_ObjectHideFlags: 0

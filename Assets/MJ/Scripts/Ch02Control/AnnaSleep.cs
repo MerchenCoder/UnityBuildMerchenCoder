@@ -5,9 +5,9 @@ using UnityEngine;
 public class AnnaSleep : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        if (GameManager.Instance.CheckPlayProgress("Mission2-1N") || GameManager.Instance.CheckPlayProgress("Chap2Start"))
+        if (GameManager.Instance.CheckPlayProgress("Chap2Start"))
         {
             gameObject.SetActive(true);
         }
