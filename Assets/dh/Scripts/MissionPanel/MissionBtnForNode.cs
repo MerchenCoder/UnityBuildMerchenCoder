@@ -13,7 +13,8 @@ public class NodeMissionBtn : MonoBehaviour
 
     void Start()
     {
-        MissionInfoPanel = transform.GetChild(1).gameObject;
+        //public으로 지정하게 수정
+        // MissionInfoPanel = transform.GetChild(1).gameObject;
 
         button = GetComponent<Button>();
         button.onClick.RemoveAllListeners(); // 기존 리스너 제거
