@@ -196,10 +196,18 @@ public class PlayData : MonoBehaviour
         // JSON 데이터를 역직렬화
         playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
+        DataManager dataManager = DataManager.Instance;
+        // 챕터 언락 데이터 초기화
+        for(int i=1; i< dataManager.gameStateData.chapterIsUnlock.Length; i++)
+        {
+            dataManager.gameStateData.chapterIsUnlock[i] = false;
+        }
+
         for (int i = 0; i < playData.playPoints.Count; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
+                if (playData.playPoints[i].playPointName == "Chap2Start") dataManager.gameStateData.chapterIsUnlock[1] = true;
                 playData.playPoints[i].isClear = true;
                 break;
             }
