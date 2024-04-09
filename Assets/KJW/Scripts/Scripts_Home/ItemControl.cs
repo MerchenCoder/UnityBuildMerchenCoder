@@ -22,7 +22,15 @@ public class ItemControl : MonoBehaviour
         setButton.gameObject.SetActive(false);
 
         transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = thisItem.item_Image;
-        transform.GetChild(0).GetChild(0).GetComponent<Image>().color = _thisItem.GetComponent<SpriteRenderer>().color;
+        if (_thisItem.GetComponent<SpriteRenderer>() != null)
+        {
+            transform.GetChild(0).GetChild(0).GetComponent<Image>().color = _thisItem.GetComponent<SpriteRenderer>().color;
+        }
+        else
+        {
+            transform.GetChild(0).GetChild(0).GetComponent<Image>().color = _thisItem.transform.GetComponentInChildren<SpriteRenderer>(true).color;
+        }
+
         // transform.GetChild(0).GetChild(0).GetComponent<Image>().SetNativeSize();
         _itemNameTxt.text = thisItem.item_name;
         _itemPriceTxt.text = thisItem.price;
