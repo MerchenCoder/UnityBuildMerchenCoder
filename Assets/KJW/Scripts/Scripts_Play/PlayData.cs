@@ -145,12 +145,8 @@ public class PlayData : MonoBehaviour
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if (i == 0 && !playData.playPoints[i].isClear)
-                {
-                    return true;
-                }
-                else if (i + 1 == playData.playPoints.Count && playData.playPoints[i].isClear) return true;
-                else if (i != 0 && playData.playPoints[i].isClear && !playData.playPoints[i + 1].isClear)
+                if (i + 1 == playData.playPoints.Count && playData.playPoints[i].isClear) return true;
+                else if (playData.playPoints[i].isClear && !playData.playPoints[i + 1].isClear)
                 {
                     return true;
                 }

@@ -27,13 +27,9 @@ public class SetName : MonoBehaviour
             PlayerPrefs.SetString("player_name", inputField.text);
             GameManager.Instance.SavePlayerData();
 
-            // Check First Play
-            if (GameManager.Instance.CheckPlayProgress("FirstStart") == true)
+            if (DialogueControl_HomeScene != null)
             {
-                if (DialogueControl_HomeScene != null)
-                {
-                    DialogueControl_HomeScene.StartFirstDialogue();
-                }
+                DialogueControl_HomeScene.StartFirstDialogue();
             }
         }
     }
