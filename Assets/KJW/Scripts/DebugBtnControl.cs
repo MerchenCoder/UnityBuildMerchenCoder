@@ -29,12 +29,12 @@ public class DebugBtnControl : MonoBehaviour
         missionBefore[1] = (int.Parse(chapter_mission[1]) - 1).ToString();
 
         ResetMissionClearInfo();
-        for (int i=0; i< int.Parse(chapter_mission[0]); i++)
+        for (int i = 0; i < int.Parse(chapter_mission[0]); i++)
         {
-            for (int j=1; j<= int.Parse(chapter_mission[1]); j++)
+            for (int j = 1; j <= int.Parse(chapter_mission[1]); j++)
             {
                 //미션 state clear로 변경
-                DataManager.Instance.UpdateMissionState(i+1, j, true);
+                DataManager.Instance.UpdateMissionState(i + 1, j, true);
                 GameManager.Instance.playerData.chapterCurrentMission[i] = missionBefore[0] + "-" + missionBefore[1];
             }
         }
@@ -63,6 +63,40 @@ public class DebugBtnControl : MonoBehaviour
     }
 
     /// <summary>
+    /// 플레이어 포지션 조정
+    /// 초기화 (-7,-1.52,0)
+    /// </summary>
+    /// <param name="x">플레이어 위치 x 좌표</param>
+    /// <param name="y">플레이어 위치 y 좌표</param>
+    /// <param name="z">플레이어 위치 z 좌표</param>
+    /// 
+    public void ResetPlayerPosition(float x, float y, float z)
+    {
+        string[] sceneList = { "1_1_farmer", "1_2_town", "1_3_castle", "1_4_forest" };
+        foreach (string scene in sceneList)
+        {
+
+            GameManager.PlayerData.playerPosition nowPlayerPosition;
+            nowPlayerPosition.x = x;
+            nowPlayerPosition.y = y;
+            nowPlayerPosition.z = z;
+            GameManager.Instance.playerData.playLog[scene] = nowPlayerPosition;
+
+        }
+        GameManager.Instance.SavePlayerData();
+    }
+
+    //해리꺼 추가예정
+    // public void SetHarryPlayerPosition()
+    // {
+    //     GameManager.PlayerData.playerPosition nowPlayerPosition;
+    //     nowPlayerPosition.x = x;
+    //     nowPlayerPosition.y = y;
+    //     nowPlayerPosition.z = z;
+    //     GameManager.Instance.playerData.playLog["1_2_town"] = nowPlayerPosition;
+    // }
+
+    /// <summary>
     /// 플레이 데이터 (가구 제외) 모두 초기화
     /// </summary>
     public void ResetPlayState()
@@ -72,8 +106,10 @@ public class DebugBtnControl : MonoBehaviour
         ResetMissionClearInfo();
         SetCurrentScene("1_1_farmer");
         SetCurrentScene("2_1_Anna");
+        ResetPlayerPosition(-7f, -1.52f, 0f);
         GameManager.Instance.playerData.chapterCurrentMission[0] = "";
         GameManager.Instance.playerData.chapterCurrentMission[1] = "";
         SetMissionClearInfoBtn("1-1");
+
     }
 }

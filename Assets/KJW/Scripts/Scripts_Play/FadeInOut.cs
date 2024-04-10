@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class FadeInOut : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class FadeInOut : MonoBehaviour
     IEnumerator FadeOutFlow()
     {
         Panel.gameObject.SetActive(true);
-        Color alpha = new Color(0,0,0,0);
+        Color alpha = new Color(0, 0, 0, 0);
         time = 0f;
         while (alpha.a < 1f)
         {

@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Threading;
+using UnityEngine.EventSystems;
+
 
 public class SceneChange : MonoBehaviour
 {
+    private EventSystem eventSystem;
+
     //---싱글톤 선언----//
     public static SceneChange Instance;
     private void Awake()
@@ -74,7 +77,14 @@ public class SceneChange : MonoBehaviour
 
     IEnumerator ChangeSceneDelay(string SceneName)
     {
+        eventSystem = FindObjectOfType<EventSystem>();
+        if (eventSystem != null)
+        {
+            eventSystem.enabled = false;
+            Debug.LogFormat("<color=red>캔버스 이벤트 비활성화</color>");
+        }
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneName);
+
         asyncLoad.allowSceneActivation = false;
         while (!asyncLoad.isDone)
         {
