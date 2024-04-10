@@ -38,8 +38,8 @@ public class DialogueForTuto : MonoBehaviour
     {
         dialogueID = GameManager.Instance.missionData.missionCode;
         dialogueSystem = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();
-        string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
-        //string jsonFilePath = Application.persistentDataPath + "/static/Dialogue/" + dialogueFileName + ".json";
+        //string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
+        string jsonFilePath = Application.persistentDataPath + "/static/Dialogue/" + dialogueFileName + ".json";
         dialogueJson = File.ReadAllText(jsonFilePath);
         string jsonString = "{ \"dialogueList\": " + dialogueJson + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
@@ -90,7 +90,7 @@ public class DialogueForTuto : MonoBehaviour
     // Dialogue
     public void DialogueStart()
     {
-        if(dialogueSystem == null)
+        if (dialogueSystem == null)
         {
             dialogueSystem = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();
         }
