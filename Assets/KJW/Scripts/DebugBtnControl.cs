@@ -86,15 +86,19 @@ public class DebugBtnControl : MonoBehaviour
         GameManager.Instance.SavePlayerData();
     }
 
-    //해리꺼 추가예정
-    // public void SetHarryPlayerPosition()
-    // {
-    //     GameManager.PlayerData.playerPosition nowPlayerPosition;
-    //     nowPlayerPosition.x = x;
-    //     nowPlayerPosition.y = y;
-    //     nowPlayerPosition.z = z;
-    //     GameManager.Instance.playerData.playLog["1_2_town"] = nowPlayerPosition;
-    // }
+    /// <summary>
+    /// 해리와 만나는 포인트로 변경시 플레이어 마지막 위치 그에 맞게 셋팅
+    /// </summary>
+    public void SetHarryPlayerPosition()
+    {
+        GameManager.PlayerData.playerPosition nowPlayerPosition;
+        nowPlayerPosition.x = 31.52798f;
+        nowPlayerPosition.y = -1.015f;
+        nowPlayerPosition.z = 0f;
+        GameManager.Instance.playerData.playLog["1_2_town"] = nowPlayerPosition;
+        GameManager.Instance.SavePlayerData();
+
+    }
 
     /// <summary>
     /// 플레이 데이터 (가구 제외) 모두 초기화
