@@ -34,6 +34,10 @@ public class ReviewButtonControl : MonoBehaviour
                 Debug.Log("clear");
                 transform.GetChild(idx).GetComponent<Button>().interactable = true;
             }
+            else
+            {
+                transform.GetChild(idx).GetComponent<Button>().interactable = false;
+            }
             idx++;
         }
 
@@ -46,6 +50,11 @@ public class ReviewButtonControl : MonoBehaviour
             if (DataManager.Instance.gameStateData.ch2MissionClear[i] == true)
             {
                 transform.GetChild(idx).GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+
+                transform.GetChild(idx).GetComponent<Button>().interactable = false;
             }
             idx++;
         }
