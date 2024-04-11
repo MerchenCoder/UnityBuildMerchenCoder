@@ -13,7 +13,6 @@ public class RunErrorMsg : MonoBehaviour
 
 
 
-
     public void SetStateRun()
     {
         State.text = "실행 중";
@@ -54,12 +53,24 @@ public class RunErrorMsg : MonoBehaviour
         {
             errorMsg = "값 설정하기/가져오기 노드의\n변수를 설정하지 않았습니다. \n실행이 중단되었습니다.";
         }
+        else if (error == "data type")
+        {
+            errorMsg = "자료형이 다른 데이터 간에\n연산을 수행할 수 없습니다. \n실행이 중단되었습니다.";
+        }
         else
         {
             errorMsg = error;
         }
+        if (ErrorMsgBox == null)
+        {
+            ErrorMsgBox = transform.parent.GetChild(1).GetChild(0).gameObject;
+        }
         ErrorMsgBox.GetComponentInChildren<TextMeshProUGUI>(true).text = errorMsg;
         ErrorMsgBox.SetActive(true);
+        if (NodeManager.Instance.Mode == "submit")
+        {
+            Invoke("DisableOnSubmitMode", 1.5f);
+        }
 
     }
     public void InActiveErrorMsg()
@@ -72,12 +83,18 @@ public class RunErrorMsg : MonoBehaviour
         SetStateRun();
         ErrorMsgBox = transform.parent.GetChild(1).GetChild(0).gameObject;
         ErrorMsgBox.SetActive(false);
-
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+    private void DisableOnSubmitMode()
+    {
+        ErrorMsgBox.SetActive(false);
+        TestManager.Instance.Fail();
+
 
     }
 }

@@ -15,7 +15,7 @@ public class AddValueAllowBtn : MonoBehaviour
     {
         if (valueManager == null)
             //valueManager = GameObject.Find("ValueManager").gameObject.GetComponent<ValueManager>();
-            valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>();
+            valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
     }
 
     public void AddValue()

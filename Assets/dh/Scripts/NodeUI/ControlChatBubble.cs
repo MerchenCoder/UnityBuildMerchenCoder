@@ -7,29 +7,44 @@ public class ControlChatBubble : MonoBehaviour
     public GameObject spritePosition;
     private float printDuration = 2f;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SetSpritePosition();
-        transform.position = Camera.main.WorldToScreenPoint(spritePosition.transform.position + new Vector3(3f, 2f, 0));
+        transform.position = Camera.main.WorldToScreenPoint(spritePosition.transform.position);
     }
+    // void OnEnable()
+    // {
+    //     if (spritePosition == null)
+    //     {
+    //         SetSpritePosition();
+    //     }
+    // }
 
     // Update is called once per frame
-    void Update()
+    void OnEnable()
     {
-        transform.position = Camera.main.WorldToScreenPoint(spritePosition.transform.position + new Vector3(3f, 2f, 0));
+
+        if (spritePosition == null)
+        {
+            SetSpritePosition();
+        }
+        transform.position = Camera.main.WorldToScreenPoint(spritePosition.transform.position);
     }
 
 
     public void SetSpritePosition()
     {
+        Debug.Log(GameObject.FindGameObjectWithTag("Player").name);
         string[] name = gameObject.name.Split("_");
         if (name[0] == "player")
         {
-            spritePosition = GameObject.FindGameObjectWithTag("Player");
+
+            spritePosition = FindChildrenWithTag(GameObject.FindGameObjectWithTag("Player").transform, "bubblePosition");
+
         }
         else if (name[0] == "Npc" || name[0] == "npc" || name[0] == "NPC")
         {
-            spritePosition = GameObject.FindGameObjectWithTag("NPC");
+            spritePosition = FindChildrenWithTag(GameObject.FindGameObjectWithTag("NPC").transform, "bubblePosition");
             print(spritePosition.name);
         }
         else
@@ -38,12 +53,22 @@ public class ControlChatBubble : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    GameObject FindChildrenWithTag(Transform parent, string tag)
     {
-        if (spritePosition == null)
+        // 결과를 저장할 List
+        List<GameObject> result = new List<GameObject>();
+
+        // 모든 자식 오브젝트 탐색
+        foreach (Transform child in parent)
         {
-            SetSpritePosition();
+            // 자식 오브젝트의 태그가 원하는 태그와 일치하는지 확인
+            if (child.CompareTag(tag))
+            {
+                // 일치하는 경우 결과 List에 추가
+                return child.gameObject;
+            }
         }
+        return null;
     }
 
     public IEnumerator Talk(string str)

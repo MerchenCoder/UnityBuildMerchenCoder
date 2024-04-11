@@ -34,7 +34,7 @@ public class PlayerPositionSetting : MonoBehaviour
     {
         //마지막 플레이 씬 기록
         string chapter = thisSceneName.Substring(0, 1);
-        if(GameManager.Instance != null)
+        if (GameManager.Instance != null)
             GameManager.Instance.playerData.chapterCurrentScene[int.Parse(chapter) - 1] = thisSceneName;
 
         //포지션 기록
@@ -47,3 +47,5 @@ public class PlayerPositionSetting : MonoBehaviour
     }
 
 }
+
+

@@ -49,7 +49,7 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
         {
             //Debug.Log("====!trueConntected || !falseConnected=====");
             Debug.Log("Outport는 모두 연결되어야 합니다!");
-            NodeManager.Instance.SetCompileError(true);
+            NodeManager.Instance.SetCompileError(true, "flow");
 
             yield break;
         }
@@ -59,7 +59,7 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
             if (!dataInPort1.IsConnected)
             {
                 Debug.Log("Data 노드 연결 안됨");
-                NodeManager.Instance.SetCompileError(true);
+                NodeManager.Instance.SetCompileError(true, "flow");
                 yield return null;
             }
             else

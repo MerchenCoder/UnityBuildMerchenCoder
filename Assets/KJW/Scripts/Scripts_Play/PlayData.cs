@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static SaveItem;
 
 public class PlayData : MonoBehaviour
@@ -40,16 +41,23 @@ public class PlayData : MonoBehaviour
         // 초기화
         playData = new SavePlayData();
 
-        initFolderPath = "Assets/Data";
+        //initFolderPath = "Assets/Data";
+        initFolderPath = Application.persistentDataPath + "/static";
         initFilePath = Path.Combine(initFolderPath, "PlayProgressForInit.json");
 
         folderPath = Application.persistentDataPath + "/Data";
+        Debug.Log(folderPath);
         filePath = Path.Combine(folderPath, "myPlayData.json");
 
-        LoadPlayData();
+        if (SceneManager.GetActiveScene().name != "Splash")
+        {
+            LoadPlayData();
+
+        }
+
     }
 
-    private void LoadPlayData()
+    public void LoadPlayData()
     {
         // 파일이 존재하는지 확인
         if (File.Exists(filePath))
@@ -63,7 +71,7 @@ public class PlayData : MonoBehaviour
             // 현재 진행상황 로드
             for (int i = 0; i < playData.playPoints.Count; i++)
             {
-                if (!playData.playPoints[i].isClear && i != 0)
+                if (!playData.playPoints[i + 1].isClear && i != 0)
                 {
                     nowPlayPointIndex = i;
                     nowInfoText = playData.playPoints[i].playInfo;
@@ -92,6 +100,9 @@ public class PlayData : MonoBehaviour
 
                 nowPlayPointIndex = 0;
                 nowInfoText = playData.playPoints[0].playPointName;
+
+                DataManager.Instance.GetComponent<Save>().SavePlayData();
+
             }
             else
             {
@@ -121,6 +132,7 @@ public class PlayData : MonoBehaviour
                 break;
             }
         }
+        DataManager.Instance.GetComponent<Save>().SavePlayData();
     }
 
     /// <summary>
@@ -129,11 +141,12 @@ public class PlayData : MonoBehaviour
     /// <param name="playPointName"></param>
     public bool CheckPlayPoint(string playPointName)
     {
-        for (int i = 0; i < playData.playPoints.Count; i++)
+        for (int i = 0; i < playData.playPoints.Count - 1; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
-                if (i == nowPlayPointIndex-1)
+                if (i + 1 == playData.playPoints.Count && playData.playPoints[i].isClear) return true;
+                else if (playData.playPoints[i].isClear && !playData.playPoints[i + 1].isClear)
                 {
                     return true;
                 }
@@ -178,10 +191,18 @@ public class PlayData : MonoBehaviour
         // JSON 데이터를 역직렬화
         playData = JsonUtility.FromJson<SavePlayData>(jsonData);
 
+        DataManager dataManager = DataManager.Instance;
+        // 챕터 언락 데이터 초기화
+        for(int i=1; i< dataManager.gameStateData.chapterIsUnlock.Length; i++)
+        {
+            dataManager.gameStateData.chapterIsUnlock[i] = false;
+        }
+
         for (int i = 0; i < playData.playPoints.Count; i++)
         {
             if (playData.playPoints[i].playPointName == playPointName)
             {
+                if (playData.playPoints[i].playPointName == "Chap2Start") dataManager.gameStateData.chapterIsUnlock[1] = true;
                 playData.playPoints[i].isClear = true;
                 break;
             }
@@ -193,6 +214,8 @@ public class PlayData : MonoBehaviour
         // 파일에 JSON 데이터 쓰기
         File.WriteAllText(filePath, jsonData);
         Debug.Log(playPointName + " 저장 완료");
+        DataManager.Instance.GetComponent<Save>().SavePlayData();
+
         LoadPlayData();
     }
 }

@@ -6,18 +6,28 @@ using UnityEngine.UI;
 public class SetName : MonoBehaviour
 {
     public InputField inputField;
+    public Text infoText;
     public DialogueControl_HomeScene DialogueControl_HomeScene;
+
+    bool firstClick = true;
 
     public void SetButtonDown()
     {
-        GameManager.Instance.playerData.name = inputField.text;
-        GameManager.Instance.SavePlayerData();
-        GameManager.Instance.LoadPlayerData();
-
-        // Check First Play
-        if (GameManager.Instance.CheckPlayProgress("FirstStart") == true)
+        if(inputField.text == "")
         {
-            if(DialogueControl_HomeScene != null)
+            if (firstClick)
+            {
+                infoText.text += "이름을 입력 후 확인 버튼을 눌러주세요.";
+                firstClick = false;
+            }
+        }
+        else
+        {
+            GameManager.Instance.playerData.name = inputField.text;
+            PlayerPrefs.SetString("player_name", inputField.text);
+            GameManager.Instance.SavePlayerData();
+
+            if (DialogueControl_HomeScene != null)
             {
                 DialogueControl_HomeScene.StartFirstDialogue();
             }

@@ -18,7 +18,8 @@ public class Dialogue : MonoBehaviour
         public string speaker;
         public string face;
         [TextArea()] public string dialogueText;
-        public Speaker GetSpeaker() {
+        public Speaker GetSpeaker()
+        {
             // Speaker Info Load
             return Resources.Load<Speaker>("Speaker/" + speaker);
         }
@@ -28,6 +29,7 @@ public class Dialogue : MonoBehaviour
         }
     }
 
+    [Serializable]
     public class DialogueContainer
     {
         public EachDialogue[] dialogueList;
@@ -44,7 +46,8 @@ public class Dialogue : MonoBehaviour
     private void Start()
     {
         dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
-        string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
+        // string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
+        string jsonFilePath = Application.persistentDataPath + "/static/Dialogue/" + dialogueFileName + ".json";
         dialogueJson = File.ReadAllText(jsonFilePath);
         string jsonString = "{ \"dialogueList\": " + dialogueJson + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
@@ -53,7 +56,7 @@ public class Dialogue : MonoBehaviour
 
 
     // Need check in Inspector
-    private void FindDialogueByID(int targetDiaID)
+    public void FindDialogueByID(int targetDiaID)
     {
         int i;
         int j = 0;
@@ -64,6 +67,7 @@ public class Dialogue : MonoBehaviour
                 break;
             }
         }
+        Debug.Log($"{this.gameObject.name} : {dialogueContainer.dialogueList.Length}");
         while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
         {
             // OutOfIndex 방지
@@ -73,14 +77,13 @@ public class Dialogue : MonoBehaviour
             }
             else break;
         }
-            
+
         thisIdDialogues = new EachDialogue[j];
         for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
         {
             if (i + j + 1 < dialogueContainer.dialogueList.Length)
             {
                 thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-                thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
             }
             else break;
         }
@@ -89,7 +92,13 @@ public class Dialogue : MonoBehaviour
     // Dialogue
     public void DialogueStart()
     {
-        if(dialogueSystem == null)
+        // 플레이어 이름 갈아끼기를 실행 시점으로 옮김
+        for (int i = 0; i < thisIdDialogues.Length; i++)
+        {
+            thisIdDialogues[i].dialogueText = thisIdDialogues[i].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
+        }
+
+        if (dialogueSystem == null)
         {
             dialogueSystem = GameObject.Find("Canvas_Dialogue").GetComponent<DialogueSystem>();
         }
@@ -97,7 +106,5 @@ public class Dialogue : MonoBehaviour
         dialogueSystem.dialogues.Add(gameObject);
         dialogueSystem.StartSpeak();
     }
-
-    
 }
 

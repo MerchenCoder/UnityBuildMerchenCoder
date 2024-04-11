@@ -11,7 +11,7 @@ public class DataInPort : MonoBehaviour
 {
     //상태변화 이벤트 선언
     private bool isConnected = false;
-    private bool isError = true;
+
     // private bool getDataSignal = false;
 
 
@@ -20,7 +20,22 @@ public class DataInPort : MonoBehaviour
     private bool inputValueBool;
     private string inputValueStr;
 
+    public bool isAllType;
+
     [NonSerialized] public DataOutPort connectedPort;
+
+
+    private void Start()
+    {
+        if (this.tag == "data_all")
+        {
+            isAllType = true;
+        }
+        else
+        {
+            isAllType = false;
+        }
+    }
 
 
     public bool IsConnected
@@ -35,21 +50,6 @@ public class DataInPort : MonoBehaviour
             {
                 isConnected = value;
                 //상태 변화 이벤트 발생
-            }
-        }
-    }
-
-    public bool IsError
-    {
-        get
-        {
-            return isError;
-        }
-        set
-        {
-            if (isError != value)
-            {
-                isError = value;
             }
         }
     }

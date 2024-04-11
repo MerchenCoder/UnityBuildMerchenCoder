@@ -17,7 +17,7 @@ public class AddValueBtn : MonoBehaviour
     private void Start()
     {
         //valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
-        valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>();
+        valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
         valueNameSettingUI = GetComponentInParent<Canvas>().transform.Find("ValueUI").transform.GetChild(0).gameObject;
         Debug.Log(valueNameSettingUI);
         inputField = valueNameSettingUI.transform.GetChild(1).GetComponent<TMP_InputField>();
