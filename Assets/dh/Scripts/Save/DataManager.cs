@@ -125,6 +125,51 @@ public class DataManager : MonoBehaviour
 
     }
 
+    public void ResetMissionState()
+    {
+        for (int i = 0; i < gameStateData.ch1MissionClear.Length; i++)
+        {
+            gameStateData.ch1MissionClear[i] = false;
+        }
+        for (int i = 0; i < gameStateData.ch2MissionClear.Length; i++)
+        {
+            gameStateData.ch2MissionClear[i] = false;
+        }
+        SaveGameStatusData();
+    }
+
+    /// <summary>
+    /// missionNum으로 받은 문제 번호까지 챕터랑 미션 상태 모두 업데이트함.
+    /// 1-9부터 플레이하고 싶으면 1-8까지 모두 클리어 상태가 되어야 하므로 missionNum에 8을 넘기면 됨.
+    /// 대신 미션 초기화 코드(DataManager.Instance.ResetMissioinState())를 이전에 호출해주어야함
+    /// </summary>
+    /// <param name="chapterNum"></param>
+    /// <param name="missionNum"></param>
+    public void Debug_UpdateMissionState(int chapterNum, int missionNum)
+    {
+        if (chapterNum == 1)
+        {
+            for (int i = 0; i < missionNum; i++)
+            {
+                gameStateData.ch1MissionClear[i] = true;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < gameStateData.ch1MissionClear.Length; i++)
+            {
+                gameStateData.ch1MissionClear[i] = true;
+            }
+            for (int i = 0; i < missionNum; i++)
+            {
+                gameStateData.ch2MissionClear[i] = true;
+            }
+
+
+        }
+        SaveGameStatusData();
+    }
+
 
     // private void OnApplicationQuit()
     // {

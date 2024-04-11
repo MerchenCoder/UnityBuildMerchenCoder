@@ -23,39 +23,46 @@ public class DebugBtnControl : MonoBehaviour
     public void SetMissionClearInfoBtn(string nowMissionCode)
     {
         Debug.Log("Debug Button Click : Set Mission Clear Info to " + nowMissionCode);
-        DataManager.Instance.InitializeGameStatusData();
+        DataManager.Instance.ResetMissionState();
         //"-"로 split
         string[] chapter_mission = nowMissionCode.Split("-");
         string[] missionBefore = chapter_mission;
         missionBefore[1] = (int.Parse(chapter_mission[1]) - 1).ToString();
 
-        ResetMissionClearInfo();
-        for (int i = 0; i < int.Parse(chapter_mission[0]); i++)
+        DataManager.Instance.Debug_UpdateMissionState(int.Parse(chapter_mission[0]), int.Parse(missionBefore[1]));
+
+        if (chapter_mission[0] == "1")
         {
-            for (int j = 1; j <= int.Parse(chapter_mission[1]); j++)
-            {
-                //미션 state clear로 변경
-                DataManager.Instance.UpdateMissionState(i + 1, j, true);
-                GameManager.Instance.playerData.chapterCurrentMission[i] = missionBefore[0] + "-" + missionBefore[1];
-            }
+            GameManager.Instance.playerData.chapterCurrentMission[int.Parse(chapter_mission[0]) - 1] = missionBefore[0] + "-" + missionBefore[1];
+            GameManager.Instance.playerData.chapterCurrentMission[1] = "";
+
+        }
+        else
+        {
+            GameManager.Instance.playerData.chapterCurrentMission[0] = "1-" + (DataManager.Instance.gameStateData.chapterIsUnlock.Length + 1).ToString();
+            GameManager.Instance.playerData.chapterCurrentMission[1] = "2-" + missionBefore[1];
+
+
         }
     }
 
+
+    //반복문으로 매번 상태 변경하면 변경->저장->변경->저장.. 이 반복되는데 이 저장이 서버 저장이랑 delay 걸리는데 그 와중에 미션 상태가 계속 바뀌면서 누락되는 것도 있을 것 같아서 다 바꾸고 저장하는 걸로 변경
     /// <summary>
     /// 미션 클리어 정보 초기화
     /// </summary>
-    private void ResetMissionClearInfo()
-    {
-        DataManager dataManager = DataManager.Instance;
-        for (int i = 1; i <= dataManager.gameStateData.ch1MissionClear.Length; i++)
-        {
-            DataManager.Instance.UpdateMissionState(1, i, false);
-        }
-        for (int j = 1; j <= dataManager.gameStateData.ch2MissionClear.Length; j++)
-        {
-            DataManager.Instance.UpdateMissionState(2, j, false);
-        }
-    }
+    // private void ResetMissionClearInfo()
+    // {
+    //     DataManager dataManager = DataManager.Instance;
+    //     for (int i = 1; i <= dataManager.gameStateData.ch1MissionClear.Length; i++)
+    //     {
+    //         DataManager.Instance.UpdateMissionState(1, i, false);
+    //     }
+    //     for (int j = 1; j <= dataManager.gameStateData.ch2MissionClear.Length; j++)
+    //     {
+    //         DataManager.Instance.UpdateMissionState(2, j, false);
+    //     }
+    // }
 
     public void SetCurrentScene(string sceneName)
     {
@@ -107,15 +114,14 @@ public class DebugBtnControl : MonoBehaviour
     public void ResetPlayState()
     {
         Debug.Log("Debug Button Click : Reset");
+        DataManager.Instance.ResetMissionState();
         GameManager.Instance.gameObject.GetComponent<PlayData>().SetPlayPoint("FirstStart");
-        //ResetMissionClearInfo();
         SetCurrentScene("1_1_farmer");
         SetCurrentScene("2_1_Anna");
         ResetPlayerPosition(-7f, -1.52f, 0f);
         GameManager.Instance.playerData.chapterCurrentMission[0] = "";
         GameManager.Instance.playerData.chapterCurrentMission[1] = "";
-        SetMissionClearInfoBtn("1-1");
-
+        GameManager.Instance.SavePlayerData();
         reviewButtonControl.ResetReviewStage();
     }
 }
