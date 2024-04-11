@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DebugBtnControl : MonoBehaviour
 {
+    public ReviewButtonControl reviewButtonControl;
     public void GetGemBtn(int num)
     {
         GameManager.Instance.GetSomeGem(num);
@@ -107,7 +108,7 @@ public class DebugBtnControl : MonoBehaviour
     {
         Debug.Log("Debug Button Click : Reset");
         GameManager.Instance.gameObject.GetComponent<PlayData>().SetPlayPoint("FirstStart");
-        ResetMissionClearInfo();
+        //ResetMissionClearInfo();
         SetCurrentScene("1_1_farmer");
         SetCurrentScene("2_1_Anna");
         ResetPlayerPosition(-7f, -1.52f, 0f);
@@ -115,5 +116,6 @@ public class DebugBtnControl : MonoBehaviour
         GameManager.Instance.playerData.chapterCurrentMission[1] = "";
         SetMissionClearInfoBtn("1-1");
 
+        reviewButtonControl.ResetReviewStage();
     }
 }
