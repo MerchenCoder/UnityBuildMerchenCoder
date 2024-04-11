@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class DebugBtnControl : MonoBehaviour
 {
@@ -115,13 +116,15 @@ public class DebugBtnControl : MonoBehaviour
     {
         Debug.Log("Debug Button Click : Reset");
         DataManager.Instance.ResetMissionState();
+
+        GameManager.Instance.InitializePlayerData();
         GameManager.Instance.gameObject.GetComponent<PlayData>().SetPlayPoint("FirstStart");
-        SetCurrentScene("1_1_farmer");
-        SetCurrentScene("2_1_Anna");
-        ResetPlayerPosition(-7f, -1.52f, 0f);
-        GameManager.Instance.playerData.chapterCurrentMission[0] = "";
-        GameManager.Instance.playerData.chapterCurrentMission[1] = "";
-        GameManager.Instance.SavePlayerData();
+        // SetCurrentScene("1_1_farmer");
+        // SetCurrentScene("2_1_Anna");
+        // ResetPlayerPosition(-7f, -1.52f, 0f);
+        // GameManager.Instance.playerData.chapterCurrentMission[0] = "";
+        // GameManager.Instance.playerData.chapterCurrentMission[1] = "";
+        // GameManager.Instance.SavePlayerData();
         reviewButtonControl.ResetReviewStage();
     }
 }
