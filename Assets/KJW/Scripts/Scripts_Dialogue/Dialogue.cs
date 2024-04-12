@@ -67,7 +67,6 @@ public class Dialogue : MonoBehaviour
                 break;
             }
         }
-        Debug.Log($"{this.gameObject.name} : {dialogueContainer.dialogueList.Length}");
         while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
         {
             // OutOfIndex 방지

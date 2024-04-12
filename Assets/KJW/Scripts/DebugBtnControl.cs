@@ -24,12 +24,14 @@ public class DebugBtnControl : MonoBehaviour
     public void SetMissionClearInfoBtn(string nowMissionCode)
     {
         Debug.Log("Debug Button Click : Set Mission Clear Info to " + nowMissionCode);
-        DataManager.Instance.ResetMissionState();
+        //DataManager.Instance.ResetMissionState();
         //"-"로 split
         string[] chapter_mission = nowMissionCode.Split("-");
         string[] missionBefore = chapter_mission;
         missionBefore[1] = (int.Parse(chapter_mission[1]) - 1).ToString();
 
+
+        Debug.LogFormat("<color=yellow>{0}, {1}</color>", int.Parse(chapter_mission[0]), int.Parse(missionBefore[1]));
         DataManager.Instance.Debug_UpdateMissionState(int.Parse(chapter_mission[0]), int.Parse(missionBefore[1]));
 
         if (chapter_mission[0] == "1")
