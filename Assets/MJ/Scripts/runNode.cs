@@ -29,7 +29,7 @@ public class runNode : MonoBehaviour
         }
         else
         {
-            Debug.Log("No object found with tag 'startNode'");
+            //Debug.Log("No object found with tag 'startNode'");
             flowStartPort = null;
         }
     }
@@ -43,7 +43,7 @@ public class runNode : MonoBehaviour
         }
         else
         {
-            Debug.Log("No object found with tag 'endNode'");
+            //Debug.Log("No object found with tag 'endNode'");
             flowEndPorts = null;
         }
     }

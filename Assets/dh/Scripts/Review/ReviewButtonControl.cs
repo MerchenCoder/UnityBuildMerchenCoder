@@ -14,6 +14,14 @@ public class ReviewButtonControl : MonoBehaviour
         Debug.Log(idx);
     }
 
+    //복습하기 onclick시 호출하도록(디버그 버튼에 클릭시 데이터 변경 즉각적 반영 위함)
+    public void UpdateStageUnlock()
+    {
+        idx = 0;
+        SetCh1ButtonUnlock(0);
+        SetCh2ButtonUnlock(idx);
+    }
+
 
     public void SetCh1ButtonUnlock(int childStartIndex)
     {
@@ -25,6 +33,10 @@ public class ReviewButtonControl : MonoBehaviour
             {
                 Debug.Log("clear");
                 transform.GetChild(idx).GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                transform.GetChild(idx).GetComponent<Button>().interactable = false;
             }
             idx++;
         }
@@ -39,7 +51,20 @@ public class ReviewButtonControl : MonoBehaviour
             {
                 transform.GetChild(idx).GetComponent<Button>().interactable = true;
             }
+            else
+            {
+
+                transform.GetChild(idx).GetComponent<Button>().interactable = false;
+            }
             idx++;
+        }
+    }
+
+    public void ResetReviewStage()
+    {
+        for (int idx = 0; idx < transform.childCount; idx++)
+        {
+            transform.GetChild(idx).GetComponent<Button>().interactable = false;
         }
     }
 

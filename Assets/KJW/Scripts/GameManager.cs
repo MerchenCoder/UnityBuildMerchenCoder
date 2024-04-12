@@ -128,9 +128,11 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(filePath, ToJsonData);
         Debug.Log($"{playerDataFileName} 저장 완료");
 
-        DataManager.Instance.GetComponent<Save>().SavePlayerData();
+        if (DataManager.Instance != null)
+            DataManager.Instance.GetComponent<Save>().SavePlayerData();
 
     }
+
 
 
     // 젬 상태 변화를 알리기 위한 이벤트
@@ -243,10 +245,12 @@ public class GameManager : MonoBehaviour
     public bool CheckPlayProgress(string playPointName)
     {
         if (TryGetComponent<PlayData>(out PlayData playData))
+        {
             return playData.CheckPlayPoint(playPointName);
+        }
+
         else
         {
-            Debug.Log(playData);
             return false;
         }
 

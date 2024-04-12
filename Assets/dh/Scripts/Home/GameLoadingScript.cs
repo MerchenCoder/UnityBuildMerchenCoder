@@ -31,41 +31,59 @@ public class GameLoadingScript : MonoBehaviour
         {
             Debug.Log("이미 로컬에 s3에서 가져온 정적파일 존재");
             UpdateProgress(30);
+            DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
+            {
+                if (success)
+                {
+                    DataManager.Instance.LoadGameStatusData();
+                    GameManager.Instance.LoadPlayerData();
+                    GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
+                    UpdateProgress(50);
+                }
+                else
+                {
+                    Debug.LogError("데이터 로드 실패. 실행 중지합니다.");
+                    //UnityEditor.EditorApplication.isPlaying = false;
+                    return;
+
+                }
+            });
         }
         else
         {
             DataManager.Instance.GetComponent<FullLoad>().LoadFromS3((success) =>
-        {
-            if (success)
             {
+                if (success)
+                {
 
-                UpdateProgress(30);
-            }
-            else
-            {
-                Debug.LogError("s3 버킷에서 데이터 로드 실패. 실행을 중지합니다.");
-                // UnityEditor.EditorApplication.isPlaying = false;
-                return;
-            }
-        });
+                    UpdateProgress(30);
+                    DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
+                    {
+                        if (success)
+                        {
+                            DataManager.Instance.LoadGameStatusData();
+                            GameManager.Instance.LoadPlayerData();
+                            GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
+                            UpdateProgress(50);
+                        }
+                        else
+                        {
+                            Debug.LogError("데이터 로드 실패. 실행 중지합니다.");
+                            //UnityEditor.EditorApplication.isPlaying = false;
+                            return;
+
+                        }
+                    });
+                }
+                else
+                {
+                    Debug.LogError("s3 버킷에서 데이터 로드 실패. 실행을 중지합니다.");
+                    // UnityEditor.EditorApplication.isPlaying = false;
+                    return;
+                }
+            });
         }
-        DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
-        {
-            if (success)
-            {
-                DataManager.Instance.LoadGameStatusData();
-                GameManager.Instance.LoadPlayerData();
-                GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
-                UpdateProgress(50);
-            }
-            else
-            {
-                Debug.LogError("데이터 로드 실패. 실행 중지합니다.");
-                //UnityEditor.EditorApplication.isPlaying = false;
-                return;
 
-            }
-        });
         StartCoroutine(AsycLoadHomeScene());
         yield return null;
 

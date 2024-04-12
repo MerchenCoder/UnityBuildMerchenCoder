@@ -30,7 +30,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
         }
 
         // Check First Play
-        if (GameManager.Instance.CheckPlayProgress("FirstStart"))
+        if (!GameManager.Instance.gameObject.transform.GetComponent<PlayData>().CheckClearPlayPoint("FirstStart"))
         {
             Debug.Log("FirstStart");
             isFirstDiaEnd = false;
