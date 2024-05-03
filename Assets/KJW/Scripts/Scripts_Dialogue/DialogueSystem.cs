@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -30,6 +28,7 @@ public class DialogueSystem : MonoBehaviour
     //public Button right_buttons;
     //public Button end_button;
 
+    bool isPlayingDia;
     int diaIndex;
     int diaListIndex;
     private string fullText;
@@ -53,10 +52,21 @@ public class DialogueSystem : MonoBehaviour
         etc.SetActive(false);
         isDoneTyping = false;
         stopTyping = false;
+        isPlayingDia = false;
     }
+
+    private void Update()
+    {
+        if (UnityEngine.Input.GetMouseButtonUp(0))
+        {
+            if (isPlayingDia) NextSpeak();
+        }
+    }
+
 
     public void StartSpeak()
     {
+        isPlayingDia = true;
         diaIndex = 0;
         diaListIndex++;
         //dialogues[diaListIndex-1].gameObject.SetActive(false);
@@ -154,6 +164,7 @@ public class DialogueSystem : MonoBehaviour
         }
         OnEndDialogue?.Invoke();
         dialogues[diaListIndex - 1].gameObject.SetActive(false);
+        isPlayingDia = false;
     }
 
     IEnumerator ShowText()

@@ -21,13 +21,15 @@ public class IntNodeBtn : MonoBehaviour
 
     void UpdateValue()
     {
+        if (intValue >= 9999) intValue = 9999;
+        else if (intValue <= -9999) intValue = -9999;
         ui_text.text = intValue.ToString();
         data.SetData_Int = intValue;
     }
 
     public void ValueUpButton()
     {
-        if (intValue < 99)
+        if (intValue < 9999)
         {
             intValue++;
             UpdateValue();
@@ -36,7 +38,7 @@ public class IntNodeBtn : MonoBehaviour
 
     public void ValueDownButton()
     {
-        if (intValue > -99)
+        if (intValue > -9999)
         {
             intValue--;
             UpdateValue();
