@@ -279,7 +279,8 @@ public class NodeManager : MonoBehaviour
                 yield return resultCanvas.GetComponent<ControlAnimation>().Fail();
             }
         }
-        resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
-    }
 
+        resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
+
+    }
 }

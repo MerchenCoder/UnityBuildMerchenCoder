@@ -392,6 +392,8 @@ public class TestManager : MonoBehaviour
     {
         //"-"로 split
         string[] chapter_mission = GameManager.Instance.missionData.missionCode.Split("-");
+
+        Debug.LogFormat("클리어 문제 정보 : {0} - {1}", chapter_mission[0], chapter_mission[1]);
         //미션 state clear로 변경
         DataManager.Instance.UpdateMissionState(int.Parse(chapter_mission[0]), int.Parse(chapter_mission[1]), true);
         //보상 반영

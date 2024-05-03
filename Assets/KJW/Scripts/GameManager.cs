@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
             // jiwoo add
             PlayerPrefs.SetString("player_name", playerData.name);
 
-            Debug.Log($"{playerDataFileName} 데이터 불러오기 완료");
+            //Debug.Log($"{playerDataFileName} 데이터 불러오기 완료");
         }
         else
         {

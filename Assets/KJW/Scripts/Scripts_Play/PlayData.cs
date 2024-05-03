@@ -46,7 +46,7 @@ public class PlayData : MonoBehaviour
         initFilePath = Path.Combine(initFolderPath, "PlayProgressForInit.json");
 
         folderPath = Application.persistentDataPath + "/Data";
-        Debug.Log(folderPath);
+        //Debug.Log(folderPath);
         filePath = Path.Combine(folderPath, "myPlayData.json");
 
         if (SceneManager.GetActiveScene().name != "Splash")
@@ -193,7 +193,7 @@ public class PlayData : MonoBehaviour
 
         DataManager dataManager = DataManager.Instance;
         // 챕터 언락 데이터 초기화
-        for(int i=1; i< dataManager.gameStateData.chapterIsUnlock.Length; i++)
+        for (int i = 1; i < dataManager.gameStateData.chapterIsUnlock.Length; i++)
         {
             dataManager.gameStateData.chapterIsUnlock[i] = false;
         }
