@@ -23,6 +23,17 @@ public class PlayerPositionSetting : MonoBehaviour
         else if (SceneChange.Instance.beforeScene == "1_1_farmer" && thisSceneName == "1_2_town") { this.transform.localPosition = new Vector3(-7.86f, -1.015f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
         else if (SceneChange.Instance.beforeScene == "1_2_town" && thisSceneName == "1_3_castle") { this.transform.localPosition = new Vector3(-8.97f, -0.92f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
         else if (SceneChange.Instance.beforeScene == "1_3_castle" && thisSceneName == "1_4_forest") { this.transform.localPosition = new Vector3(-8.24f, -1.015f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
+        else if (SceneChange.Instance.beforeScene == "2_1_Anna" && thisSceneName == "2_2_Pierre") { this.transform.localPosition = new Vector3(-8.5f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
+        else if (SceneChange.Instance.beforeScene == "2_2_Pierre" && thisSceneName == "2_1_Anna") { this.transform.localPosition = new Vector3(83.5f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        else if (SceneChange.Instance.beforeScene == "2_3_Morgan" && thisSceneName == "2_2_Pierre") { this.transform.localPosition = new Vector3(63f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        else if (SceneChange.Instance.beforeScene == "2_2_Pierre" && thisSceneName == "2_3_Morgan") { this.transform.localPosition = new Vector3(-9.5f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
+        else if (SceneChange.Instance.beforeScene == "2_4_Anna2" && thisSceneName == "2_3_Morgan") { this.transform.localPosition = new Vector3(27.6f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        else if (SceneChange.Instance.beforeScene == "2_3_Morgan" && thisSceneName == "2_4_Anna2") { this.transform.localPosition = new Vector3(62.5f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        else if (SceneChange.Instance.beforeScene == "2_5_Watcher" && thisSceneName == "2_4_Anna2") { this.transform.localPosition = new Vector3(62.5f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        else if (SceneChange.Instance.beforeScene == "2_4_Anna2" && thisSceneName == "2_5_Watcher") { this.transform.localPosition = new Vector3(-7.1f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
+        else if (SceneChange.Instance.beforeScene == "2_6_Door" && thisSceneName == "2_5_Watcher") { this.transform.localPosition = new Vector3(28f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
+        else if (SceneChange.Instance.beforeScene == "2_5_Watcher" && thisSceneName == "2_6_Door") { this.transform.localPosition = new Vector3(50.9f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = true; }
+        else if (SceneChange.Instance.beforeScene == "2_6_Door" && thisSceneName == "2_7_Ending") { this.transform.localPosition = new Vector3(59.2f, -1.52f, 0); this.GetComponent<SpriteRenderer>().flipX = false; }
         else
         {
             GameManager.Instance.LoadPlayerData();
