@@ -115,7 +115,7 @@ public class DataManager : MonoBehaviour
         }
         else if (chapterNum == 2)
         {
-            //챕터2 미션 확정되면 업데이트 예정
+            gameStateData.ch2MissionClear[missionNum - 1] = state;
         }
         else
         {
