@@ -22,7 +22,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
     private GameObject player;
     private GameObject playerChatBubble;
 
-    private float printDuration = 2f;
+    // private float printDuration = 2f;
 
 
     //SettingTestCase testManager;
@@ -94,6 +94,8 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 // yield return new WaitForSeconds(printDuration);
                 // Debug.Log("말풍선 안보이게하기");
                 // playerChatBubble.SetActive(false);
+
+
 
             }
             //출력 배열에 반영
