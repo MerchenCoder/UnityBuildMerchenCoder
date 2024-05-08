@@ -8,6 +8,7 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
     //함수 만들어질때 설정되는 값
     public int funIndex;
     public string funName;
+    public bool[] hasParaArray = { false, false };
 
     private int type;
 
@@ -71,14 +72,25 @@ public class FuncNode : MonoBehaviour, INode, IFollowFlow
             }
             else
             {
-                yield return dataInPort1.connectedPort.SendData();
-                FunctionManager.Instance.myfuncCanvas[funIndex].GetComponent<ForFunctionRunData>().SetParaValue(dataInPort1, 1);
-                if (dataInPort2 != null)
+                //=======매개변수가 1개인 경우(240508 오류수정)====//
+                if (hasParaArray[0] && !hasParaArray[1])
                 {
+                    yield return dataInPort1.connectedPort.SendData();
+                    FunctionManager.Instance.myfuncCanvas[funIndex].GetComponent<ForFunctionRunData>().SetParaValue(dataInPort1, 1);
+                }
+
+                else if (!hasParaArray[0] && hasParaArray[1])
+                {
+                    yield return dataInPort1.connectedPort.SendData();
+                    FunctionManager.Instance.myfuncCanvas[funIndex].GetComponent<ForFunctionRunData>().SetParaValue(dataInPort1, 2);
+                }
+                else
+                {
+                    yield return dataInPort1.connectedPort.SendData();
+                    FunctionManager.Instance.myfuncCanvas[funIndex].GetComponent<ForFunctionRunData>().SetParaValue(dataInPort1, 1);
                     yield return dataInPort2.connectedPort.SendData();
                     FunctionManager.Instance.myfuncCanvas[funIndex].GetComponent<ForFunctionRunData>().SetParaValue(dataInPort2, 2);
                 }
-
                 Debug.Log("함수 노드에서 연결된 데이터를 받아옴");
             }
         }

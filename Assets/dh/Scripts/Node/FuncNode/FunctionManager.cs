@@ -213,7 +213,9 @@ public class FunctionManager : MonoBehaviour
         //FuncNode의 type 설정
         funcNode.Type = type;
         funcNode.funName = funcName;
-
+        //FuncNode hasparaArray 설정
+        funcNode.hasParaArray[0] = hasPara1;
+        funcNode.hasParaArray[1] = hasPara2;
         myfuncNodes.Add(funcNode);
 
         functionInstance.transform.SetParent(this.transform, false);
@@ -296,7 +298,7 @@ public class FunctionManager : MonoBehaviour
         if (type == 3 || type == 4)
         {
             DataInPort[] dataInPorts = funcNode.GetComponentsInChildren<DataInPort>();
-            Debug.Log(paraTypes[0].ToString() + " " + paraTypes[1].ToString());
+            // Debug.Log(paraTypes[0].ToString() + " " + paraTypes[1].ToString());
 
             if (dataInPorts.Length > 1)
             {
