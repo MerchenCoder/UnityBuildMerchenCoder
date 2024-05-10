@@ -94,7 +94,8 @@ public class RefreshCanvas : MonoBehaviour
         {
             foreach (Transform bubble in character.GetChild(0))
             {
-                bubble.gameObject.SetActive(false);
+                if (!bubble.CompareTag("particle"))
+                    bubble.gameObject.SetActive(false);
             }
         }
     }

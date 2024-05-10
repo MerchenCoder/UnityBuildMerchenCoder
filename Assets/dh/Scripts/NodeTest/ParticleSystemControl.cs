@@ -5,6 +5,7 @@ public class ParticleSystemControl : MonoBehaviour
 
     private ParticleSystem particle;
     public bool isPlay = false;
+    public bool hastoInActive;
     private void Awake()
     {
 
@@ -16,8 +17,10 @@ public class ParticleSystemControl : MonoBehaviour
 
         if (isPlay && !particle.isPlaying)
         {
+            Debug.Log("dafaf");
             isPlay = false;
-            transform.parent.parent.gameObject.SetActive(false);
+            if (hastoInActive)
+                transform.parent.parent.gameObject.SetActive(false);
         }
     }
 }
