@@ -10,7 +10,9 @@ public class FuncNodeBtn : MonoBehaviour
     [NonSerialized]
     public GameObject funcNode;
 
+    private GameObject spawnCanvas;
     private Transform spawnPoint;
+    private ControlNodeMenu controlNodeMenu;
     RectTransform canvasRect;
     // 캔버스 상의 가운데 위치 계산
     float centerXInCanvas;
@@ -30,9 +32,17 @@ public class FuncNodeBtn : MonoBehaviour
     {
         if (funcNode != null)
         {
-            Debug.Log("MakeInstance 함수 호출");
-            Debug.Log(transform.GetComponentInParent<Canvas>().name);
-            spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform;
+            controlNodeMenu = GetComponentInParent<ControlNodeMenu>();
+            if (controlNodeMenu.name == "NodeMenu")
+            {
+                spawnCanvas = GameObject.Find("MainCanvas").gameObject;
+            }
+            else
+            {
+                spawnCanvas = GetComponentInParent<Canvas>().gameObject;
+            }
+
+            spawnPoint = spawnCanvas.transform.GetChild(0).GetChild(0).transform; //Canvas(main) 바로 첫번째 자식인 BG 게임 오브젝트
             canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
             centerXInCanvas = canvasRect.rect.width / 2f;
             Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;

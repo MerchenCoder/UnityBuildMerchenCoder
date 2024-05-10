@@ -499,7 +499,7 @@ public class FunctionManager : MonoBehaviour
 
         //함수 노드 메뉴에 다른 함수 노드 버튼 삽입하기
         Transform newCanvasPenalFunContent = canvasPrefabInstance.transform.GetChild(2).GetChild(8).GetChild(0);
-        GameObject nodeMenuFuncPanel = GameObject.Find("MainCanvas").transform.GetChild(1).GetChild(8).GetChild(0).gameObject;
+        GameObject nodeMenuFuncPanel = GameObject.Find("Canvas_UI").transform.GetComponentInChildren<ControlNodeMenu>().transform.GetChild(8).GetChild(0).gameObject;
         int childCount = nodeMenuFuncPanel.transform.childCount;
 
         for (int i = 1; i < childCount; i++)

@@ -51,6 +51,7 @@ public class TestManager : MonoBehaviour
 
     //입력 변수 버튼 삽입을 위한 요소
     private Canvas mainCanvas;
+    private Canvas UICanvas;
     private Transform nodeMenu;
     private Transform funcNodeMenu;
     Transform input_NodeMenuSpawnPoint;
@@ -121,7 +122,8 @@ public class TestManager : MonoBehaviour
         //functionManager = FindObjectOfType<FunctionManager>();
 
         mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
-        nodeMenu = mainCanvas.transform.GetChild(1);
+        UICanvas = GameObject.Find("Canvas_UI").GetComponent<Canvas>();
+        nodeMenu = UICanvas.GetComponentInChildren<ControlNodeMenu>().transform;
         input_NodeMenuSpawnPoint = nodeMenu.GetChild(0).GetChild(0);
         action_NodeMenuSpawnPoint = nodeMenu.GetChild(1).GetChild(0);
 
