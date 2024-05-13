@@ -122,7 +122,6 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
             }
             yield return null;
         }
-
     }
 
     public IEnumerator ProcessData()

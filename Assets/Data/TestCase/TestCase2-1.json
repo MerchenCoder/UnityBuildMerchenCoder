@@ -1,11 +1,35 @@
 {
-  "hasTestCaseInput": false,
-  "inputInfo": [],
-  "testCaseLength": 1,
+  "hasTestCaseInput": true,
+  "inputInfo": [
+    {
+      "name": "가진 물 양",
+      "type": "int"
+    }
+  ],
+  "testCaseLength": 3,
   "testCase": {
     "1": {
-      "input": [],
-      "output": ["물주기"]
+      "input": ["4"],
+      "output": ["물 주기", "물 주기", "물 주기", "물 주기"]
+    },
+    "2": {
+      "input": ["0"],
+      "output": []
+    },
+    "3": {
+      "input": ["10"],
+      "output": [
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기",
+        "물 주기"
+      ]
     }
   }
 }
