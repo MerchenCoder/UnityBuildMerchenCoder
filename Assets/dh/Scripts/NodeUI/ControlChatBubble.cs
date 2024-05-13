@@ -5,7 +5,8 @@ using UnityEngine;
 public class ControlChatBubble : MonoBehaviour
 {
     public GameObject spritePosition;
-    private float printDuration = 2f;
+    private float printDuration = 1.5f;
+    private float delayTime = 0.5f;
     // Start is called before the first frame update
     void Awake()
     {
@@ -78,6 +79,7 @@ public class ControlChatBubble : MonoBehaviour
         yield return new WaitForSeconds(printDuration);
         Debug.Log("말풍선 안보이게하기");
         gameObject.SetActive(false);
+        yield return new WaitForSeconds(delayTime);
 
     }
 

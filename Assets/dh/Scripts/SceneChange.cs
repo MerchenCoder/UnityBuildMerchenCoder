@@ -62,11 +62,7 @@ public class SceneChange : MonoBehaviour
     }
     public void ChangetoCh2Stage()
     {
-        SceneManager.LoadSceneAsync("Ch2Stage");
-    }
-    public void ChangetoCh3Stage()
-    {
-        SceneManager.LoadSceneAsync("Ch3Stage");
+        ChangeToThisScene(GameManager.Instance.playerData.chapterCurrentScene[1]);
     }
 
     public void ChangeToThisScene(string SceneName)

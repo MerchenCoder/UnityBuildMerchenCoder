@@ -93,9 +93,7 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
                 break;
             }
 
-            // 조건 bool값 다시 확인
-            yield return dataInPort.connectedPort.SendData();
-            loopCondition = dataInPort.InputValueBool;
+
 
             //다음 노드 없으면 처음부터 실행
             while (currentNode.GetComponent<IFollowFlow>().NextFlow().isConnected)
@@ -120,6 +118,9 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
                 }
                 else yield return currentNode.GetComponent<INode>().Execute();
             }
+            // 조건 bool값 다시 확인
+            yield return dataInPort.connectedPort.SendData();
+            loopCondition = dataInPort.InputValueBool;
             yield return null;
         }
     }

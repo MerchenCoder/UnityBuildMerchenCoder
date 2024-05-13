@@ -1,0 +1,1 @@
+public enum MapBlockType { Block = 0, Road, Start, End }

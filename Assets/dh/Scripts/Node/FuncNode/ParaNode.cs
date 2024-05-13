@@ -75,28 +75,27 @@ public class ParaNode : MonoBehaviour, INode
             if (paraNumber == 1)
             {
 
-                this.GetComponent<NodeData>().SetData_Int = transform.parent.parent.GetComponent<ForFunctionRunData>().p1_int;
-                Debug.Log(transform.parent.parent.GetComponent<ForFunctionRunData>().p1_int);
+                this.GetComponent<NodeData>().SetData_Int = transform.GetComponentInParent<ForFunctionRunData>(true).p1_int;
             }
             else
             {
-                Debug.Log(transform.parent.parent.GetComponent<ForFunctionRunData>().p2_int);
-                GetComponent<NodeData>().SetData_Int = transform.parent.parent.GetComponent<ForFunctionRunData>().p2_int;
+
+                GetComponent<NodeData>().SetData_Int = transform.GetComponentInParent<ForFunctionRunData>(true).p2_int;
             }
         }
         else if (outPort.tag == "data_bool")
         {
             if (paraNumber == 1)
-                this.GetComponent<NodeData>().SetData_Bool = transform.parent.parent.GetComponent<ForFunctionRunData>().p1_bool;
+                this.GetComponent<NodeData>().SetData_Bool = transform.GetComponentInParent<ForFunctionRunData>(true).p1_bool;
             else
-                GetComponent<NodeData>().SetData_Bool = transform.parent.parent.GetComponent<ForFunctionRunData>().p2_bool;
+                GetComponent<NodeData>().SetData_Bool = transform.GetComponentInParent<ForFunctionRunData>(true).p2_bool;
         }
         else
         {
             if (paraNumber == 1)
-                this.GetComponent<NodeData>().SetData_string = transform.parent.parent.GetComponent<ForFunctionRunData>().p1_string;
+                this.GetComponent<NodeData>().SetData_string = transform.GetComponentInParent<ForFunctionRunData>(true).p1_string;
             else
-                GetComponent<NodeData>().SetData_string = transform.parent.parent.GetComponent<ForFunctionRunData>().p2_string;
+                GetComponent<NodeData>().SetData_string = transform.GetComponentInParent<ForFunctionRunData>(true).p2_string;
         }
 
 

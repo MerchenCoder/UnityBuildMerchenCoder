@@ -35,12 +35,4 @@ public class SceneChangeBtn : MonoBehaviour
     {
         SceneChange.Instance.ChangetoCh2Stage();
     }
-
-    /// <summary>
-    /// 챕터3 스테이지 씬으로 전환
-    /// </summary>
-    public void ChangetoCh3Stage()
-    {
-        SceneChange.Instance.ChangetoCh3Stage();
-    }
 }
