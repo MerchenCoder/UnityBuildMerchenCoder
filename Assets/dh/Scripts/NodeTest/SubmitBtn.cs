@@ -21,7 +21,20 @@ public class SubmitBtn : MonoBehaviour
 
     public void SubmitCode()
     {
-        NodeManager.Instance.ChangeMode("submit");
-        NodeManager.Instance.Run();
+        // 튜토리얼 플래그 추가 240513
+        if (FlagManager.instance != null)
+        {
+            if (FlagManager.instance.flagStr == "SubmitBtn")
+            {
+                FlagManager.instance.OffFlag();
+                NodeManager.Instance.ChangeMode("submit");
+                NodeManager.Instance.Run();
+            }
+        }
+        else
+        {
+            NodeManager.Instance.ChangeMode("submit");
+            NodeManager.Instance.Run();
+        }
     }
 }

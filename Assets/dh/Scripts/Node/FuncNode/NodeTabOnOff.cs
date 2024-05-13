@@ -32,4 +32,14 @@ public class NodeTabOnOff : MonoBehaviour
             isTabOpen = true;
         }
     }
+
+    public void NodeTabClose()
+    {
+        if (isTabOpen)
+        {
+            //닫기
+            nodeTabAni.SetBool("isOpen", false);
+            isTabOpen = false;
+        }
+    }
 }

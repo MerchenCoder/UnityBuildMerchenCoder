@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DialogueForTuto : MonoBehaviour
@@ -14,6 +13,7 @@ public class DialogueForTuto : MonoBehaviour
     {
         public string diaID;
         public int index;
+        public string interaction; // 튜토 인터렉션
         public string infoTabName; // 대화하면서 펼쳐둘 InfoBook tab 이름
         [TextArea()] public string dialogueText;
     }
@@ -36,15 +36,21 @@ public class DialogueForTuto : MonoBehaviour
 
     private void Start()
     {
+        Init();   
+    }
+
+    public void Init()
+    {
         dialogueID = GameManager.Instance.missionData.missionCode;
         dialogueSystem = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();
-        //string jsonFilePath = Application.dataPath + "/Data/Dialogue/" + dialogueFileName + ".json";
-        string jsonFilePath = Application.persistentDataPath + "/static/Dialogue/" + dialogueFileName + ".json";
+        string jsonFilePath = Application.dataPath + "/Data/" + dialogueFileName + ".json";
+        //string jsonFilePath = Application.persistentDataPath + "/static/Dialogue/" + dialogueFileName + ".json";
         dialogueJson = File.ReadAllText(jsonFilePath);
         string jsonString = "{ \"dialogueList\": " + dialogueJson + "}";
         dialogueContainer = JsonUtility.FromJson<DialogueContainer>(jsonString);
         FindDialogueByID(dialogueID);
     }
+
 
 
     // Need check in Inspector
@@ -84,12 +90,13 @@ public class DialogueForTuto : MonoBehaviour
             // 다이얼로그 실행
             DialogueStart();
         }
-        else transform.parent.GetComponent<Canvas>().sortingOrder = 1;
+        //else transform.parent.GetComponent<Canvas>().sortingOrder = 1;
     }
 
     // Dialogue
     public void DialogueStart()
     {
+        Debug.Log("대화 실행");
         if (dialogueSystem == null)
         {
             dialogueSystem = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();

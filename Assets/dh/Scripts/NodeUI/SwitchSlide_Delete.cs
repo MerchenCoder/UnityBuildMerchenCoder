@@ -115,6 +115,14 @@ public class SwitchSlide_Delete : MonoBehaviour
             StartCoroutine(SwitchCoroutineOn());
             btn1.interactable = false;
 
+            // 튜토리얼 플래그 추가 240513
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "DeleteNodeOn")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
         }
         else
         {
@@ -124,6 +132,14 @@ public class SwitchSlide_Delete : MonoBehaviour
             StartCoroutine(SwitchCoroutineOff());
             btn1.interactable = false;
 
+            // 튜토리얼 플래그 추가 240513
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "DeleteNodeOff")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
         }
     }
 

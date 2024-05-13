@@ -250,6 +250,15 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
 
             }
+
+            // 튜토리얼 플래그 추가 240513
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "MoveNode")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
         }
     }
 

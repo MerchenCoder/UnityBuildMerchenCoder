@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using static DialogueForTuto;
 
@@ -31,6 +28,11 @@ public class DialogueSystemForTuto : MonoBehaviour
     public float typingSpeed = 0.05f;
     public AudioSource audioSource;
 
+    string nowFlag;
+
+    public GameObject BGpanel;
+    public NodeTabOnOff NodeTabOnOff;
+
     private void Awake()
     {
         Init();
@@ -38,8 +40,8 @@ public class DialogueSystemForTuto : MonoBehaviour
 
     void Start()
     {
-        
     }
+
 
     private void Init()
     {
@@ -56,7 +58,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         diaIndex = 0;
         diaListIndex++;
         etc.SetActive(true);
-        Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].infoTabName);
+        Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].interaction, nowDialogueList[diaIndex].infoTabName);
     }
 
     public void NextSpeak()
@@ -76,27 +78,48 @@ public class DialogueSystemForTuto : MonoBehaviour
             else
             {
                 diaIndex++;
-                Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].infoTabName);
+                Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].interaction ,nowDialogueList[diaIndex].infoTabName);
             }
         }
     }
 
-    void Speak(string dia, string infoTabName)
+    void Speak(string dia, string interaction, string infoTabName)
     {
         isDoneTyping = false;
         stopTyping = false;
         currentText = ""; // Empty text
         fullText = dia;
-        RightSpeakerActive();
-        if (infoTabName == "" || infoTabName == null)
+        if (interaction == null || interaction == "") // 인터렉션이 없는 경우
+        {
+            if (infoTabName == "" || infoTabName == null)
+            {
+                infoPanel.SetActive(false);
+            }
+            else
+            {
+                infoPanel.SetActive(true);
+                infoPagesController.SetActiveTrueOnePage(infoTabName); // 튜토리얼 중인 페이지 펼치기
+                NodeTabOnOff.NodeTabClose();
+            }
+            RightSpeakerActive();
+            BGpanel.SetActive(true);
+        }
+        else // 인터렉션이 있는 경우
         {
             infoPanel.SetActive(false);
+            right_Panel.SetActive(false);
+            BGpanel.SetActive(false);
+            nowFlag = interaction;
+            FlagManager.instance.SetFlag(nowFlag);
+            right_Panel.SetActive(false);
         }
-        else
-        {
-            infoPanel.SetActive(true);
-            infoPagesController.SetActiveTrueOnePage(infoTabName); // 튜토리얼 중인 페이지 펼치기 
-        }
+    }
+
+    public void FlagSignal()
+    {
+        isDoneTyping = true;
+        NextSpeak();
+        nowFlag = null;
     }
 
      void RightSpeakerActive()
@@ -112,7 +135,14 @@ public class DialogueSystemForTuto : MonoBehaviour
         etc.SetActive(false);
         dialogues[diaListIndex - 1].gameObject.SetActive(false);
         infoPanel.SetActive(false);
-        GetComponent<Canvas>().sortingOrder = 1;
+
+        // 튜토리얼 플래그 추가 240513
+        if (FlagManager.instance != null)
+        {
+            FlagManager.instance = null;
+        }
+
+        //GetComponent<Canvas>().sortingOrder = 1;
     }
 
     IEnumerator ShowText()

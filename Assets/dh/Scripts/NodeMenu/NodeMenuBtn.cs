@@ -45,13 +45,22 @@ public class NodeMenuBtn : MonoBehaviour
 
     private void MakeInstance()
     {
-        if (nodePrefab != null)
+        // 튜토리얼 플래그 추가 240513
+        if (FlagManager.instance != null)
         {
-            GameObject nodeInstance = Instantiate(nodePrefab);
-            nodeInstance.transform.SetParent(spawnPoint, false);
-            Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
-            float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
-            nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+            if (FlagManager.instance.flagStr == nodePrefab.name)
+            {
+                if (nodePrefab != null)
+                {
+                    GameObject nodeInstance = Instantiate(nodePrefab);
+                    nodeInstance.transform.SetParent(spawnPoint, false);
+                    Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+                    float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
+                    nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+
+                    FlagManager.instance.OffFlag();
+                }
+            }
         }
     }
 

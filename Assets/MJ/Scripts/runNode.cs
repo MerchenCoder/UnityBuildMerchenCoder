@@ -91,6 +91,15 @@ public class runNode : MonoBehaviour
             //Debug.Log("allEndPortsConnected: " + allEndPortsConnected);
             //Debug.Log("startFlowConnected: " + startFlowConnected);
             button.interactable = true;
+
+            // 튜토리얼 플래그 추가 240513
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "RunActive")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
         }
         else
         {

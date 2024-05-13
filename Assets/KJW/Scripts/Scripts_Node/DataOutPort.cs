@@ -181,6 +181,15 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         connectedPort.GetComponent<Image>().raycastTarget = false;
 
         DrawArrow();
+
+        // 튜토리얼 플래그 추가 240513
+        if (FlagManager.instance != null)
+        {
+            if (FlagManager.instance.flagStr == "ConnectData")
+            {
+                FlagManager.instance.OffFlag();
+            }
+        }
     }
 
     public void ReconnectPort()

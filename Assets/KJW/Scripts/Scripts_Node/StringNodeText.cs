@@ -34,6 +34,15 @@ public class StringNodeText : MonoBehaviour
             dataOutPort.connectedPort.GetComponent<DataInPort>().IsConnected = true;
         }
 
+        // 튜토리얼 플래그 추가 240513
+        if (FlagManager.instance != null)
+        {
+            if (FlagManager.instance.flagStr == "PrintHello")
+            {
+                if(stringValue == "안녕하세요")
+                    FlagManager.instance.OffFlag();
+            }
+        }
     }
 
     public void ValueSet()
