@@ -29,7 +29,9 @@ public class GoForwardNode : MonoBehaviour, INode, IFollowFlow
         }
 
         PlayerControl playerControl = player.GetComponent<PlayerControl>();
-        playerControl.MoveToBlock(playerControl.forwardBlockPos);
+        yield return StartCoroutine(playerControl.MoveToBlock(playerControl.forwardBlockPos));
+
+        yield return new WaitForSeconds(0.3f);
 
     }
 

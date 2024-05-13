@@ -49,6 +49,9 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
         nodeData.ErrorFlag = false;
 
 
+        yield return new WaitForSeconds(0.3f);
+
+
     }
 
     public FlowoutPort NextFlow()
@@ -79,7 +82,7 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
     public int Explore((int x, int y) forwardBlockPos)
     {
         //map을 벗어나는 경우
-        if (forwardBlockPos.x > map.GetComponent<MapInfo>().map2DArrayRowCount || forwardBlockPos.x < 0 || forwardBlockPos.y < 0 || forwardBlockPos.y > map.GetComponent<MapInfo>().map2DArrayColumnCount)
+        if (forwardBlockPos.x >= map.GetComponent<MapInfo>().map2DArrayRowCount || forwardBlockPos.x < 0 || forwardBlockPos.y < 0 || forwardBlockPos.y >= map.GetComponent<MapInfo>().map2DArrayColumnCount)
         {
             return -1;
         }
