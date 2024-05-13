@@ -39,7 +39,7 @@ public class DataManager : MonoBehaviour
     //불러오기
     public void LoadGameStatusData()
     {
-        Debug.Log("DataManager LoadGameStatusData");
+        //Debug.Log("DataManager LoadGameStatusData");
         // Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
         string filePath = Path.Combine(Application.persistentDataPath, "Data", GameDataFileName); //배포시 사용하는 파일 경로
 
@@ -48,13 +48,13 @@ public class DataManager : MonoBehaviour
             //저장된 파일을 읽어오고 Json을 클래스 형식으로 전환해서 할당
             string FromJsonData = File.ReadAllText(filePath);
             gameStateData = JsonUtility.FromJson<GameData>(FromJsonData);
-            print("불러오기 완료");
+            // print("불러오기 완료");
         }
         else
         {
             // 파일이 없을 경우 초기값 설정 후 저장
             Debug.Log("로컬에 저장된 GameStatusData 데이터 없음");
-            InitializeGameStatusData();
+            //InitializeGameStatusData();
         }
 
     }
@@ -66,7 +66,7 @@ public class DataManager : MonoBehaviour
     public void InitializeGameStatusData()
     {
         //초기 데이터 가져오기
-        Debug.Log("DataManager - 챕터/미션 상태 데이터 초기화");
+        Debug.LogFormat("<color=red>DataManager - 챕터/미션 상태 데이터 초기화</color>");
         SaveGameStatusData();
 
     }
@@ -152,6 +152,12 @@ public class DataManager : MonoBehaviour
             for (int i = 0; i < missionNum; i++)
             {
                 gameStateData.ch1MissionClear[i] = true;
+                Debug.LogFormat("<color=green>{0} : {1}</color>", i, true);
+            }
+            for (int j = missionNum; j < gameStateData.ch1MissionClear.Length; j++)
+            {
+                gameStateData.ch1MissionClear[j] = false;
+                Debug.LogFormat("<color=green>{0} : {1}</color>", j, false);
             }
         }
         else
