@@ -48,6 +48,10 @@ public class RefreshCanvas : MonoBehaviour
 
         //애니메이션 중지
         //action 애니메이션
+        if (animator == null)
+        {
+            animator = player.GetComponent<Animator>();
+        }
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
             Debug.Log("Parameter Name: " + parameter.name + ", Type: " + parameter.type);
@@ -86,7 +90,8 @@ public class RefreshCanvas : MonoBehaviour
     public void OffActionBubble(Transform character)
     {
         print(character.name);
-        if (character.childCount == 0 || character.GetChild(0).childCount == 0)
+        if (character.tag != "NPC" || character.tag != "Player") return;
+        if (character.childCount == 0 || character.childCount == 1 && character.GetChild(0).childCount == 0)
         {
             Debug.Log("don't have action bubble");
         }
@@ -94,8 +99,12 @@ public class RefreshCanvas : MonoBehaviour
         {
             foreach (Transform bubble in character.GetChild(0))
             {
-                if (!bubble.CompareTag("particle"))
+                if (bubble.CompareTag("actionBubble"))
+                {
+                    Debug.Log(bubble.name);
                     bubble.gameObject.SetActive(false);
+                }
+
             }
         }
     }
