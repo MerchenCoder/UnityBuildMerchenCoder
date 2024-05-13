@@ -123,7 +123,6 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
             loopCondition = dataInPort.InputValueBool;
             yield return null;
         }
-
     }
 
     public IEnumerator ProcessData()
