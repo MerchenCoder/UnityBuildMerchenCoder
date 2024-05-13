@@ -32,30 +32,31 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
         if (player == null)
         {
             player = GameObject.FindWithTag("Player");
-            // 현재 플레이어의 회전 각도
-            Vector3 startAngle = player.transform.eulerAngles;
-            Vector3 endAngle;
-            if (rotateMode == RotateMode.left)
-            {
-                endAngle = startAngle + new Vector3(0, 0, 90);
-                endAngle.y = endAngle.y % 360; // Y 축 각도를 0부터 360도 사이로 제한
-
-            }
-            else
-            {
-                endAngle = startAngle - new Vector3(0, 0, 90);
-                endAngle.y = (endAngle.y + 360) % 360; // Y 축 각도를 0부터 360도 사이로 제한
-
-            }
-
-            // RotateAtoB 코루틴을 호출하고 start와 end 값을 전달
-            yield return StartCoroutine(RotateAtoB(startAngle, endAngle));
-
-
-            //잠깐 대기
-            yield return new WaitForSeconds(0.3f);
         }
+        // 현재 플레이어의 회전 각도
+        Vector3 startAngle = player.transform.eulerAngles;
+        Vector3 endAngle;
+        if (rotateMode == RotateMode.left)
+        {
+            endAngle = startAngle + new Vector3(0, 0, 90);
+            endAngle.y = endAngle.y % 360; // Y 축 각도를 0부터 360도 사이로 제한
+
+        }
+        else
+        {
+            endAngle = startAngle - new Vector3(0, 0, 90);
+            endAngle.y = (endAngle.y + 360) % 360; // Y 축 각도를 0부터 360도 사이로 제한
+
+        }
+
+        // RotateAtoB 코루틴을 호출하고 start와 end 값을 전달
+        yield return StartCoroutine(RotateAtoB(startAngle, endAngle));
+
+
+        //잠깐 대기
+        yield return new WaitForSeconds(0.3f);
     }
+
 
     public IEnumerator ProcessData()
     {
@@ -91,6 +92,7 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
         {
             player.GetComponent<PlayerControl>().CurrentType = (PlayerControl.type)((playerType - 1 + 4) % 4);
         }
+
 
     }
 }

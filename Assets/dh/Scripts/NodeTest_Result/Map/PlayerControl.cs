@@ -47,19 +47,24 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private MapInfo mapInfo;
 
 
+
+
     private void Start()
     {
         currentType = type.down;
         MoveToBlock((0, 0));
     }
 
-    private void OnEnable()
+    public void PlayerInitiate()
     {
+        transform.rotation = Quaternion.identity;
+        currentPos = (0, 0);
         if (mapInfo.transform.childCount == 0)
         {
             return;
         }
-        MoveToBlock((0, 0));
+        MoveToBlock(currentPos);
+
     }
 
 
@@ -68,10 +73,22 @@ public class PlayerControl : MonoBehaviour
 
     public void MoveToBlock((int x, int y) forwardBlockPos)
     {
+        if (forwardBlockPos.x < 0 || forwardBlockPos.x > mapInfo.map2DArrayRowCount || forwardBlockPos.y < 0 || forwardBlockPos.y > mapInfo.map2DArrayColumnCount)
+        {
+            //index - out of range or Blocked
+            Debug.Log("충돌");
+
+
+            //충돌 애니메이션
+
+
+            //transfrom.positoin 유지
+            return;
+        }
         int blockIndex = 7 * forwardBlockPos.x + forwardBlockPos.y;
         MapBlockType nextBlockType = mapInfo.transform.GetChild(blockIndex).GetComponent<MapBlock>().blockType;
 
-        if (nextBlockType == MapBlockType.Block || forwardBlockPos.x < 0 || forwardBlockPos.x > mapInfo.map2DArrayRowCount || forwardBlockPos.y < 0 || forwardBlockPos.y > mapInfo.map2DArrayColumnCount)
+        if (nextBlockType == MapBlockType.Block)
         {
             //index - out of range or Blocked
             Debug.Log("충돌");
@@ -82,6 +99,7 @@ public class PlayerControl : MonoBehaviour
 
             //transfrom.positoin 유지
         }
+
         else
         {
             Debug.Log($"{forwardBlockPos.x},{forwardBlockPos.y}로 이동");

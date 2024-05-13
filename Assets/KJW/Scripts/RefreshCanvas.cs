@@ -12,19 +12,22 @@ public class RefreshCanvas : MonoBehaviour
     public Vector3 originVecor3;
 
     public GameObject playerChatBubble;
+
+    public bool isPlayerPositionReset = true;
     private void Start()
     {
         player = gameObject.transform.Find("Result_img").GetChild(0).gameObject;
         if (player != null)
         {
-            originVecor3 = player.transform.localPosition;
+            if (isPlayerPositionReset)
+                originVecor3 = player.transform.localPosition;
             animator = player.GetComponentInChildren<Animator>(true);
         }
     }
 
     private void LoadOriginPosition()
     {
-        if (player != null)
+        if (player != null && isPlayerPositionReset)
         {
             player.transform.localPosition = originVecor3;
         }
