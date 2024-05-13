@@ -12,13 +12,19 @@ public class SoundOption : MonoBehaviour
     private AudioSource SFXSound;
     // Start is called before the first frame update
 
-    public string soundName;
+    private string soundName;
+
+    private Slider BGMSlider;
+    private Slider SFXSlider;
 
     void Start()
     {
 
         BGMObject = GameObject.Find("Audio Source_BGM");
         SFXObject = GameObject.Find("Audio Source_SFX");
+
+        BGMSlider = GameObject.Find("Slider Lightpurple").GetComponent<Slider>();
+        SFXSlider = GameObject.Find("Slider Pinkpurple").GetComponent<Slider>(); ;
 
         if (BGMObject != null)
         {
@@ -27,6 +33,10 @@ public class SoundOption : MonoBehaviour
             if (BGMSound == null)
             {
                 Debug.LogError("BGMSound 컴포넌트를 찾을 수 없습니다.");
+            }
+            else
+            {
+                BGMSlider.value = BGMSound.volume * 100;
             }
         }
         else
@@ -42,12 +52,26 @@ public class SoundOption : MonoBehaviour
             {
                 Debug.LogError("SFXSound 컴포넌트를 찾을 수 없습니다.");
             }
+            else
+            {
+                SFXSlider.value = SFXSound.volume * 100;
+            }
         }
         else
         {
             Debug.LogError("SFXObject 찾을 수 없습니다.");
         }
 
+        //Debug.Log("Object name is " + this.gameObject.name);
+
+        if (this.gameObject.name == "Slider Lightpurple")
+        {
+            soundName = "BGM";
+        }
+        else if (this.gameObject.name == "Slider Pinkpurple")
+        {
+            soundName = "SFX";
+        }
     }
 
     public void SetMusicVolume(float volume)
