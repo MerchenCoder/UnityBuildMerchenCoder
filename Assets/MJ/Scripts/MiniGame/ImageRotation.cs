@@ -21,6 +21,10 @@ public class ImageRotation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     public bool allPiecesOverlapping = false; // 모든 퍼즐 조각이 겹치는지 여부 확인
 
     private Coroutine successRoutine; // 성공 루틴
+    public AudioSource overlappingSFX;
+    public AudioClip audioClip;
+    public AudioClip successAudioClip;
+    public AudioClip rotationClip;
 
     void Start()
     {
@@ -94,6 +98,7 @@ public class ImageRotation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
                     CheckAllPiecesOverlapping();
                 }
                 isLocked = true;
+                overlappingSFX.PlayOneShot(audioClip, 1.0f);
             }
             else
             {
@@ -142,6 +147,7 @@ public class ImageRotation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
             {
                 transform.rotation = Quaternion.Euler(0, 0, i);
             }
+            overlappingSFX.PlayOneShot(rotationClip, 1.0f);
         }
     }
 
@@ -178,6 +184,7 @@ public class ImageRotation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         yield return new WaitForSeconds(3f);
 
         // 성공 패널 활성화
+        overlappingSFX.PlayOneShot(successAudioClip, 1.0f);
         successPanel.SetActive(true);
     }
 }
