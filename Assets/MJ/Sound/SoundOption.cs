@@ -26,6 +26,20 @@ public class SoundOption : MonoBehaviour
         BGMSlider = GameObject.Find("Slider Lightpurple").GetComponent<Slider>();
         SFXSlider = GameObject.Find("Slider Pinkpurple").GetComponent<Slider>(); ;
 
+        if (BGMObject != null && PlayerPrefs.HasKey("BGMVolume"))
+        {
+            BGMSound = BGMObject.GetComponent<AudioSource>();
+            BGMSound.volume = PlayerPrefs.GetFloat("BGMVolume");
+            BGMSlider.value = BGMSound.volume * 100;
+        }
+
+        if (SFXObject != null && PlayerPrefs.HasKey("SFXVolume"))
+        {
+            SFXSound = SFXObject.GetComponent<AudioSource>();
+            SFXSound.volume = PlayerPrefs.GetFloat("SFXVolume");
+            SFXSlider.value = SFXSound.volume * 100;
+        }
+
         if (BGMObject != null)
         {
             BGMSound = BGMObject.GetComponent<AudioSource>();
@@ -76,17 +90,18 @@ public class SoundOption : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        Debug.Log("Now Volume is " + volume);
+        //Debug.Log("Now Volume is " + volume);
         if (soundName == "BGM")
         {
             BGMSound.volume = 0.01f * volume;
-            Debug.Log("Now BGMVolume is " + BGMSound.volume);
+            PlayerPrefs.SetFloat("BGMVolume", BGMSound.volume);
+            //Debug.Log("Now BGMVolume is " + BGMSound.volume);
         }
         else if (soundName == "SFX")
         {
             SFXSound.volume = 0.01f * volume;
-            Debug.Log("Now SFXVolume is " + SFXSound.volume);
+            PlayerPrefs.SetFloat("SFXVolume", SFXSound.volume);
+            //Debug.Log("Now SFXVolume is " + SFXSound.volume);
         }
     }
-
 }
