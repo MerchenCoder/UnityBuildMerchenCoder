@@ -51,6 +51,7 @@ public class ForLoopNode : MonoBehaviour, INode, IFollowFlow
             yield return dataInPort.connectedPort.SendData();
             // dataInPort에서 inputValue 가져오기
             loopIndex = dataInPort.InputValueInt;
+            Debug.Log($"loopIndex : {loopIndex}");
         }
         _index = 0;
         GetComponent<NodeData>().ErrorFlag = false;

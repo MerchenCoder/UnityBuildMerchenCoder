@@ -354,8 +354,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2131039932}
-  - {fileID: 225330837}
-  - {fileID: 1950706434}
   - {fileID: 1730286749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -370,7 +368,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 210292058}
+    m_TransformParent: {fileID: 1354776142}
     m_Modifications:
     - target: {fileID: 36465376607665239, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -634,7 +632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.004272461
+      value: -0.0072021484
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -718,15 +716,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376747370763984200, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8376747370763984200, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8376747370763984200, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8376747370763984200, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1397,6 +1395,8 @@ RectTransform:
   - {fileID: 3755795216161976129}
   - {fileID: 67306934444793146}
   - {fileID: 1117104236}
+  - {fileID: 225330837}
+  - {fileID: 1950706434}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1979,12 +1979,24 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 210292058}
+    m_TransformParent: {fileID: 1354776142}
     m_Modifications:
     - target: {fileID: 609624103310222885, guid: d67bf9b56eae73e4a9bad0b832105620, type: 3}
       propertyPath: m_Name
       value: ValueUI
       objectReference: {fileID: 0}
+    - target: {fileID: 609624103310222885, guid: d67bf9b56eae73e4a9bad0b832105620, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856385461357845230, guid: d67bf9b56eae73e4a9bad0b832105620, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354637105976970235, guid: d67bf9b56eae73e4a9bad0b832105620, type: 3}
+      propertyPath: valueManager
+      value: 
+      objectReference: {fileID: 1730286748}
     - target: {fileID: 3418099322748015868, guid: d67bf9b56eae73e4a9bad0b832105620, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 9.999996
@@ -2267,7 +2279,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 0.7
+  m_ScrollSensitivity: 1
   m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -4003,6 +4015,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1597338912698986589, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1691650762194373121, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1383.1516
@@ -4099,6 +4115,10 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3691064048220657849, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3924772521487760082, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -4106,6 +4126,14 @@ PrefabInstance:
     - target: {fileID: 3924772521487760082, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_AnchorMin.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924772521487760082, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924772521487760082, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3924772521487760082, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4179,6 +4207,10 @@ PrefabInstance:
       propertyPath: m_IgnoreReversedGraphics
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5369968666175419113, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6042542734544975385, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4241,11 +4273,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7327548295627128054, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_fontSize
-      value: 40
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7327548295627128054, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_fontSizeBase
-      value: 40
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7642950173694131592, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
       propertyPath: m_Layer
@@ -4434,7 +4466,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 1-1
+          m_StringArgument: 2-13
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1846388357}

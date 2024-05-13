@@ -9,7 +9,7 @@ public class AddValueBtn : MonoBehaviour
     private ValueManager valueManager;
     private NodeData nodeData;
     public TMP_Dropdown dropdown;
-    private GameObject valueNameSettingUI;
+    private GameObject valueNameSettingUI_Parent;
     private TMPro.TMP_InputField inputField;
     // public GameObject valuePrefab;
     // private GameObject addedValue;
@@ -18,10 +18,20 @@ public class AddValueBtn : MonoBehaviour
     {
         //valueManager = GameObject.Find("ValueManager").GetComponent<ValueManager>();
         valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
-        valueNameSettingUI = GetComponentInParent<Canvas>().transform.Find("ValueUI").transform.GetChild(0).gameObject;
-        Debug.Log(valueNameSettingUI);
-        inputField = valueNameSettingUI.transform.GetChild(1).GetComponent<TMP_InputField>();
-        valueNameSettingUI.SetActive(false);
+        if (GetComponentInParent<Canvas>(true).name == "MainCanvas")
+        {
+            valueNameSettingUI_Parent = GameObject.Find("Canvas_UI").transform.Find("ValueUI").gameObject;
+        }
+        else
+        {
+            valueNameSettingUI_Parent = GetComponentInParent<Canvas>(true).transform.Find("ValueUI").gameObject;
+        }
+
+        inputField = valueNameSettingUI_Parent.transform.GetChild(1).GetChild(1).GetComponent<TMP_InputField>();
+        foreach (Transform child in valueNameSettingUI_Parent.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
         dropdown = GetComponent<TMP_Dropdown>();
         nodeData = transform.parent.GetComponent<NodeData>();
     }
@@ -79,8 +89,11 @@ public class AddValueBtn : MonoBehaviour
     public void SetValueName()
     {
         inputField.text = null;
-        valueNameSettingUI.SetActive(true);
-        valueNameSettingUI.tag = this.tag;
+        foreach (Transform child in valueNameSettingUI_Parent.transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+        valueNameSettingUI_Parent.transform.GetChild(1).tag = this.tag;
     }
 
     public bool IsInit()

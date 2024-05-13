@@ -1409,7 +1409,7 @@ Transform:
   m_GameObject: {fileID: 312134777}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -52.1, y: 0.3, z: 0}
+  m_LocalPosition: {x: -52.6, y: 0.3, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2483,7 +2483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.119995, y: 1}
+  m_AnchoredPosition: {x: 21.8, y: 0.7}
   m_SizeDelta: {x: 2100, y: 1600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &446213599
@@ -5847,7 +5847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedWithQuiz: 1
-  quizActive: {fileID: 0}
+  quizActive: {fileID: 1315407798}
   isConnectedWithNextFlow: 0
   nextFlow: {fileID: 0}
   isConnectedWithSave: 1
@@ -7049,6 +7049,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: quiz_Btn
       objectReference: {fileID: 0}
+    - target: {fileID: 7116383971978642432, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7075,11 +7079,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.5775
+      value: 0.2457
       objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.5775
+      value: 0.2457
       objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_LocalScale.x
@@ -7123,11 +7127,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 15.551798
+      value: 1.1439
       objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.26298046
+      value: 1.0317993
       objectReference: {fileID: 0}
     - target: {fileID: 9069942588313207021, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7172,6 +7176,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activePlayPoint: Mission2-1N
+--- !u!114 &1315407798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4923695112522250038, guid: 2d7977ee64cd8f84b907cee664d604d6, type: 3}
+  m_PrefabInstance: {fileID: 1315407794}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315407796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49929a04513d40943a20f52c4ccaf678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1418860735
 GameObject:
   m_ObjectHideFlags: 0
@@ -7888,6 +7903,10 @@ PrefabInstance:
     - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: m_Name
       value: dialogue_Btn_After_2_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueID
@@ -8752,7 +8771,7 @@ Transform:
   m_GameObject: {fileID: 1770739073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6791134, y: 0.5699954, z: -10}
+  m_LocalPosition: {x: -1.6794825, y: 0.5322871, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9268,9 +9287,9 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -45.351597, y: 9.350813}
       - {x: -45.528587, y: -8.17491}
-      - {x: 53.68538, y: -8.002169}
-      - {x: 53.496006, y: 9.071222}
-      - {x: 53.496002, y: 9.071222}
+      - {x: 56.444016, y: -8.353268}
+      - {x: 56.302692, y: 9.2717}
+      - {x: 56.505424, y: 9.271851}
   m_UseDelaunayMesh: 0
 --- !u!1 &1977851344
 GameObject:
@@ -9765,7 +9784,7 @@ Transform:
   m_GameObject: {fileID: 2095874918}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 87, y: -0.9, z: 0}
+  m_LocalPosition: {x: 83.1, y: -0.9, z: 0}
   m_LocalScale: {x: 2.3690112, y: 2.3690112, z: 2.3690112}
   m_ConstrainProportionsScale: 1
   m_Children:

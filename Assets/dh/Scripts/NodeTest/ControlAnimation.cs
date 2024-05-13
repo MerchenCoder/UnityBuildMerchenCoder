@@ -42,7 +42,7 @@ public class ControlAnimation : MonoBehaviour
         }
 
         result_anim.SetInteger("Control", -10);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         result_anim.SetInteger("Control", 0);
         yield return null;
     }
