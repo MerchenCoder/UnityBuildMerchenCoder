@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 3923645365548441526}
+  _gameObject: {fileID: 0}
   UnitsToMove: 0
 --- !u!1 &1628358030964159632
 GameObject:
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 4094072064163393923}
+  _gameObject: {fileID: 0}
   UnitsToMove: 0
 --- !u!1 &3776785144345581075
 GameObject:
@@ -1053,7 +1053,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1871340699739244861}
+        m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6093616849978086812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1157,7 @@ GameObject:
   - component: {fileID: 8751567600756295320}
   - component: {fileID: 1502931250375039242}
   - component: {fileID: 245126092320234323}
+  - component: {fileID: 1871340699739244861}
   m_Layer: 5
   m_Name: SettingPanel_New
   m_TagString: Untagged
@@ -1223,6 +1236,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1871340699739244861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6522530350652495915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04171b45bc929ce4f97386ab7e9f9e96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMSlider: {fileID: 5326060826902917591}
+  SFXSlider: {fileID: 2875362397063950895}
 --- !u!1 &6891139425565350364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,7 +1715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 2600203691910623997}
+  _gameObject: {fileID: 0}
   UnitsToMove: 0
 --- !u!1 &8379182244884646940
 GameObject:
@@ -1779,7 +1806,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1871340699739244861}
+        m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
+        m_MethodName: SetBGMVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8468005840900547645
 GameObject:
   m_ObjectHideFlags: 0

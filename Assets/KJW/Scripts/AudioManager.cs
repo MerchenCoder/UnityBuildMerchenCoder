@@ -10,11 +10,22 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup backgroundMusicMixerGroup; // 배경음악을 위한 Audio Mixer 그룹
     public AudioMixerGroup soundEffectMixerGroup; // 효과음을 위한 Audio Mixer 그룹
 
-    // 배경음악과 효과음을 위한 오디오 소스
-    private AudioSource backgroundMusicSource;
-    private AudioSource[] soundEffectSources;
+    public AudioSource backgroundMusicSource;
 
-    private Coroutine fadingCoroutine; // 페이드 아웃/인 코루틴을 관리하기 위한 변수
+    private float BG_Volume = 1f;
+
+    //// 싱글톤 패턴 적용
+    //public AudioManager Instance()
+    //{
+    //    if (instance == null)
+    //    {
+    //        instance = new AudioManager();
+    //        instance.backgroundMusicMixerGroup = Resources.Load("Sounds/BGM_AM") as AudioMixerGroup;
+    //        instance.soundEffectMixerGroup = Resources.Load("Sounds/SFX_AM") as AudioMixerGroup;
+    //        DontDestroyOnLoad(this);
+    //    }
+    //    return instance;
+    //}
 
     private void Awake()
     {
@@ -22,40 +33,41 @@ public class AudioManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            backgroundMusicSource = GetComponent<AudioSource>();
+            backgroundMusicSource.outputAudioMixerGroup = backgroundMusicMixerGroup;
+            DontDestroyOnLoad(this);
         }
         else
         {
             Destroy(gameObject);
             return;
         }
+    }
 
-        // 오디오 소스 초기화
-        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
-        backgroundMusicSource.outputAudioMixerGroup = backgroundMusicMixerGroup;
+    public void SetBGMVolume(float volume)
+    {
+        backgroundMusicMixerGroup.audioMixer.SetFloat("Volume", volume);
+    }
 
-        // 효과음을 위한 오디오 소스 배열 초기화
-        soundEffectSources = new AudioSource[3];
-        for (int i = 0; i < soundEffectSources.Length; i++)
-        {
-            soundEffectSources[i] = gameObject.AddComponent<AudioSource>();
-            soundEffectSources[i].outputAudioMixerGroup = soundEffectMixerGroup;
-        }
+    public void SetSFXVolume(float volume)
+    {
+        soundEffectMixerGroup.audioMixer.SetFloat("Volume", volume);
     }
 
     // 배경음악 재생
-    public void PlayBackgroundMusic(AudioClip clip, float volume, float fadeDuration = 1f)
+    public void PlayBackgroundMusic(AudioSource audioSource, float fadeDuration = 0.5f)
     {
-        if (backgroundMusicSource.clip == clip && backgroundMusicSource.isPlaying)
+        if (backgroundMusicSource.clip == audioSource.clip && backgroundMusicSource.isPlaying)
         {
             return; // 이미 같은 곡이 재생 중인 경우 무시
         }
-
-        if (fadingCoroutine != null)
+        if (backgroundMusicSource.clip == null)
         {
-            StopCoroutine(fadingCoroutine); // 현재 페이드 아웃 중인 경우 중지
+            backgroundMusicSource.clip = audioSource.clip;
+            backgroundMusicSource.Play();
+            return;
         }
-
-        fadingCoroutine = StartCoroutine(FadeOutAndIn(clip, volume, fadeDuration));
+        if (backgroundMusicSource.clip != audioSource.clip) StartCoroutine(FadeOutAndIn(audioSource.clip, BG_Volume, fadeDuration));
     }
 
     private IEnumerator FadeOutAndIn(AudioClip clip, float volume, float fadeDuration)
@@ -72,11 +84,9 @@ public class AudioManager : MonoBehaviour
         }
 
         backgroundMusicSource.Stop();
-        backgroundMusicSource.volume = startVolume;
 
         // 새로운 배경음악 재생
         backgroundMusicSource.clip = clip;
-        backgroundMusicSource.volume = 0f;
         backgroundMusicSource.Play();
 
         // 페이드 인
@@ -89,29 +99,5 @@ public class AudioManager : MonoBehaviour
         }
 
         backgroundMusicSource.volume = volume;
-    }
-
-
-    // 배경음악 정지
-    public void StopBackgroundMusic()
-    {
-        backgroundMusicSource.Stop();
-    }
-
-    // 효과음 재생
-    public void PlaySoundEffect(AudioClip clip, float volume)
-    {
-        // 효과음을 차례로 재생하며, 비어있는 AudioSource를 찾아 사용함
-        foreach (var source in soundEffectSources)
-        {
-            if (!source.isPlaying)
-            {
-                source.clip = clip;
-                source.volume = volume;
-                source.Play();
-                return;
-            }
-        }
-        Debug.LogWarning("모든 AudioSource가 사용 중입니다. 효과음을 재생할 수 없습니다.");
     }
 }
