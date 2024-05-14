@@ -27,8 +27,8 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     [SerializeField]
     private bool canDelete = false;
 
-
-
+    private RectTransform boundaryObject; // 이동 가능한 범위를 제한할 오브젝트
+    private Vector2 boundarySize; // 이동 가능한 범위 크기
 
 
 
@@ -39,7 +39,23 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         dataInPorts = GetComponentsInChildren<DataInPort>();
         flowoutPorts = GetComponentsInChildren<FlowoutPort>();
         flowinPorts = GetComponentsInChildren<FlowinPort>();
+
+        boundaryObject = GameObject.Find("ScrollContent").GetComponent<RectTransform>();
+        if (boundaryObject != null)
+        {
+            SetBoundarySize();
+        }
     }
+
+    void SetBoundarySize()
+    {
+        // boundaryObject의 RectTransform 컴포넌트를 가져와서 크기를 가져옴
+        RectTransform boundaryRectTransform = boundaryObject.GetComponent<RectTransform>();
+
+        // boundaryObject의 크기를 가져와서 이동 가능한 범위로 설정
+        boundarySize = boundaryRectTransform.rect.size / 2f;
+    }
+
 
 
     public void DeleteNode()
@@ -174,9 +190,31 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             return;
         }
 
-        //최상위 부모 움직이기
+
+
+        //05.13.수정(미진)
+        // 최상위 부모 움직이기
         Vector2 delta = eventData.delta;
-        rectTransform.anchoredPosition += delta;
+        Vector2 currentPos;
+
+        // 이동 가능한 범위 내에 있는지 확인
+        if (boundaryObject != null)
+        {
+            // 이벤트 데이터의 위치를 boundaryObject의 로컬 좌표계로 변환
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(boundaryObject, eventData.position, eventData.pressEventCamera, out currentPos);
+
+            // 이동 가능한 범위 내에서만 이동하도록 제한합니다.
+            float clampedX = Mathf.Clamp(currentPos.x, 100f, 2 * boundarySize.x);
+            float clampedY = Mathf.Clamp(currentPos.y, -boundarySize.y, boundarySize.y - 90f);
+
+            // 이동 가능한 범위 내에서 마우스 포인터 위치로 이미지의 위치를 설정합니다.
+            transform.localPosition = new Vector3(clampedX, clampedY, transform.localPosition.z);
+        }
+
+
+
+
+
 
         for (int i = 0; i < rectTransform.childCount; i++)
         {

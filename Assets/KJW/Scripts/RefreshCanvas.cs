@@ -12,19 +12,22 @@ public class RefreshCanvas : MonoBehaviour
     public Vector3 originVecor3;
 
     public GameObject playerChatBubble;
+
+    public bool isPlayerPositionReset = true;
     private void Start()
     {
         player = gameObject.transform.Find("Result_img").GetChild(0).gameObject;
         if (player != null)
         {
-            originVecor3 = player.transform.localPosition;
+            if (isPlayerPositionReset)
+                originVecor3 = player.transform.localPosition;
             animator = player.GetComponentInChildren<Animator>(true);
         }
     }
 
     private void LoadOriginPosition()
     {
-        if (player != null)
+        if (player != null && isPlayerPositionReset)
         {
             player.transform.localPosition = originVecor3;
         }
@@ -48,6 +51,10 @@ public class RefreshCanvas : MonoBehaviour
 
         //애니메이션 중지
         //action 애니메이션
+        if (animator == null)
+        {
+            animator = player.GetComponent<Animator>();
+        }
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
             Debug.Log("Parameter Name: " + parameter.name + ", Type: " + parameter.type);
@@ -86,7 +93,8 @@ public class RefreshCanvas : MonoBehaviour
     public void OffActionBubble(Transform character)
     {
         print(character.name);
-        if (character.childCount == 0 || character.GetChild(0).childCount == 0)
+        if (character.tag != "NPC" || character.tag != "Player") return;
+        if (character.childCount == 0 || character.childCount == 1 && character.GetChild(0).childCount == 0)
         {
             Debug.Log("don't have action bubble");
         }
@@ -94,8 +102,12 @@ public class RefreshCanvas : MonoBehaviour
         {
             foreach (Transform bubble in character.GetChild(0))
             {
-                if (!bubble.CompareTag("particle"))
+                if (bubble.CompareTag("actionBubble"))
+                {
+                    Debug.Log(bubble.name);
                     bubble.gameObject.SetActive(false);
+                }
+
             }
         }
     }
