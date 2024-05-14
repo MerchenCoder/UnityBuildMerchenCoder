@@ -10,11 +10,13 @@ public class Card : MonoBehaviour, IPointerClickHandler
     private Animator animator;
     private CardContainer cardContainer;
     private bool isHiding;
+    private AudioSource audioSource;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         cardContainer = transform.parent.GetComponent<CardContainer>();
+        audioSource = GetComponent<AudioSource>();
         isHiding = true;
     }
 
@@ -30,12 +32,14 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public void Show()
     {
         animator.SetTrigger("ShowCard");
+        audioSource.Play();
         isHiding = false;
     }
 
     public void Hide()
     {
         animator.SetTrigger("HideCard");
+        audioSource.Play();
         isHiding = true;
     }
 

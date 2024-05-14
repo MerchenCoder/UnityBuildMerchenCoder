@@ -17,12 +17,16 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     public GameObject setNamePanel;
 
+    public AudioSource alarm;
+
     bool isFirstDiaEnd;
     bool isChap1_5_DiaEnd;
     bool report = false;
 
     void Start()
     {
+        alarm = GetComponent<AudioSource>();
+
         if (dialogueSystem != null)
         {
             // 다이얼로그 종료 이벤트에 대한 리스너 등록
@@ -114,6 +118,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
     IEnumerator FirstPlayFlow()
     {
         // message alarm SFX will be added
+        alarm.Play();
         yield return new WaitForSeconds(1f);
         messagePanel1.SetActive(true);
         yield return new WaitForSeconds(5f);
@@ -126,6 +131,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
     {
         playCanvas.SetActive(false);
         // message alarm SFX will be added
+        alarm.Play();
         yield return new WaitForSeconds(1f);
         messagePanel2.SetActive(true);
         yield return new WaitForSeconds(5f);

@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1871340699739244861}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: SetSFXVolume
         m_Mode: 0
@@ -1157,7 +1157,6 @@ GameObject:
   - component: {fileID: 8751567600756295320}
   - component: {fileID: 1502931250375039242}
   - component: {fileID: 245126092320234323}
-  - component: {fileID: 1871340699739244861}
   m_Layer: 5
   m_Name: SettingPanel_New
   m_TagString: Untagged
@@ -1236,20 +1235,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1871340699739244861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6522530350652495915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04171b45bc929ce4f97386ab7e9f9e96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BGMSlider: {fileID: 5326060826902917591}
-  SFXSlider: {fileID: 2875362397063950895}
 --- !u!1 &6891139425565350364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1807,7 +1792,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1871340699739244861}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
         m_MethodName: SetBGMVolume
         m_Mode: 0

@@ -17,6 +17,9 @@ public class CardGameManager : MonoBehaviour
     // 카드 담을 List
     List<Transform> children;
 
+    // 사운드
+    public AudioSource startSound;
+
     private void Start()
     { 
         Init();
@@ -50,6 +53,7 @@ public class CardGameManager : MonoBehaviour
 
     public void GameStart()
     {
+        startSound.Play();
         // 카드 섞기
         StartCoroutine(ShuffleCard());
     }

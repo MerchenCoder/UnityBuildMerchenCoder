@@ -14,9 +14,12 @@ public class CardContainer : MonoBehaviour
     public bool canSelect; // 카드 선택 가능 여부
     private CardGameManager CardGameManager;
 
+    public AudioSource audioSource;
+
     void Start()
     {
         CardGameManager = transform.parent.parent.GetComponent<CardGameManager>();
+        audioSource = GetComponent<AudioSource>();
         Init();
     }
 
@@ -60,6 +63,9 @@ public class CardContainer : MonoBehaviour
             yield return new WaitForSeconds(1f);
             firstCard.ActiveFalse();
             secondCard.ActiveFalse();
+
+            yield return new WaitForSeconds(0.1f);
+            audioSource.Play();
 
             if (matchedPairs >= totalPairs)
             {

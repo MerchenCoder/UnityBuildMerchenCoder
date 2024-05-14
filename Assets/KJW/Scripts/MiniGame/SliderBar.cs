@@ -12,9 +12,12 @@ public class SliderBar : MonoBehaviour
     public bool isStarted;
     private CardGameManager cardGameManager;
 
+    public AudioSource audioSource;
+
     void Start()
     {
         isStarted = false;
+        audioSource = GetComponent<AudioSource>();
         cardGameManager = transform.parent.parent.GetComponent<CardGameManager>();
     }
 
@@ -38,6 +41,11 @@ public class SliderBar : MonoBehaviour
 
             // Slider의 값 갱신
             slider.value = Mathf.Lerp(0f, 100f, currentTime / totalTime);
+
+            if(currentTime <= 30f && !audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
 
             if (currentTime <= 0f)
             {

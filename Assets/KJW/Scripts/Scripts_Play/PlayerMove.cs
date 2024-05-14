@@ -13,7 +13,7 @@ public class PlayerMove : MonoBehaviour
     [NonSerialized] public bool isMovingLeft;
     [NonSerialized] public bool isMovingRight;
 
-    
+    private AudioSource walkSound;
 
     private void Start()
     {
@@ -21,31 +21,38 @@ public class PlayerMove : MonoBehaviour
         isMovingRight = false;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
+        walkSound = GetComponent<AudioSource>();
+
+        if (walkSound == null)
+            Debug.Log("플레이어를 Prefab으로 교체해주세요.");
     }
 
     public void MoveLeftDown()
     {
         animator.SetBool("isWalking", true);
         isMovingLeft = true;
+        walkSound.Play();
     }
 
     public void MoveLeftUp()
     {
         animator.SetBool("isWalking", false);
         isMovingLeft = false;
+        walkSound.Stop();
     }
 
     public void MoveRightDown()
     {
         animator.SetBool("isWalking", true);
         isMovingRight = true;
+        walkSound.Play();
     }
 
     public void MoveRightUp()
     {
         animator.SetBool("isWalking", false);
         isMovingRight = false;
+        walkSound.Stop();
     }
 
     private void Update()
