@@ -88,6 +88,18 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             {
                 eventTrigger.triggers.Clear();
             }
+
+
+            // 튜토리얼 플래그 추가 240513
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "DeleteNode")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
+
+
             //게임 오브젝트 파괴
             Destroy(gameObject);
         }

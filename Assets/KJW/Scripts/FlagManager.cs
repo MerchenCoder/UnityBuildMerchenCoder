@@ -30,6 +30,10 @@ public class FlagManager : MonoBehaviour
         DialogueSystemForTuto = GameObject.Find("Canvas_Tuto").GetComponent<DialogueSystemForTuto>();
     }
 
+    public void Init()
+    {
+        instance = this;
+    }
 
     public void SetFlag(string flag)
     {

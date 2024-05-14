@@ -62,6 +62,14 @@ public class NodeMenuBtn : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            GameObject nodeInstance = Instantiate(nodePrefab);
+            nodeInstance.transform.SetParent(spawnPoint, false);
+            Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+            float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
+            nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+        }
     }
 
 
