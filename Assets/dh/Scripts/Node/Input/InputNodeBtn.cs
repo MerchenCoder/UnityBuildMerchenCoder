@@ -36,16 +36,42 @@ public class InputNodeBtn : MonoBehaviour
     {
         if (nodePrefab != null)
         {
-            GameObject nodeInstance = Instantiate(nodePrefab);
+            // 튜토리얼 플래그 추가 240513
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == nodePrefab.name)
+                {
+                    if (nodePrefab != null)
+                    {
+                        GameObject nodeInstance = Instantiate(nodePrefab);
 
-            nodeInstance.GetComponent<InputNode>().inputNodeName = inputNodeName;
-            nodeInstance.GetComponentInChildren<TextMeshProUGUI>().text = inputNodeName;
-            nodeInstance.GetComponent<InputNode>().inputIndex = inputIndex;
+                        nodeInstance.GetComponent<InputNode>().inputNodeName = inputNodeName;
+                        nodeInstance.GetComponentInChildren<TextMeshProUGUI>().text = inputNodeName;
+                        nodeInstance.GetComponent<InputNode>().inputIndex = inputIndex;
 
-            nodeInstance.transform.SetParent(spawnPoint, false);
-            Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
-            float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
-            nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+                        nodeInstance.transform.SetParent(spawnPoint, false);
+                        Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+                        float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
+                        nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+
+                        FlagManager.instance.OffFlag();
+                    }
+                }
+            }
+            else
+            {
+                GameObject nodeInstance = Instantiate(nodePrefab);
+
+                nodeInstance.GetComponent<InputNode>().inputNodeName = inputNodeName;
+                nodeInstance.GetComponentInChildren<TextMeshProUGUI>().text = inputNodeName;
+                nodeInstance.GetComponent<InputNode>().inputIndex = inputIndex;
+
+                nodeInstance.transform.SetParent(spawnPoint, false);
+                Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
+                float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
+                nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+            }
+            
         }
     }
 
