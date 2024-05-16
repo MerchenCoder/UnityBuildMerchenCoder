@@ -11,7 +11,17 @@ public class ControlStartNodeBtn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        targetObject = GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).gameObject;
+        if (GetComponentInParent<Canvas>().name == "Canvas_UI")
+        {
+            targetObject = GameObject.Find("MainCanvas").transform.GetChild(0).GetChild(0).gameObject;
+
+        }
+        else
+        {
+
+            targetObject = GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).gameObject;
+        }
+
         btn = GetComponent<Button>();
         btn.interactable = true;
     }
