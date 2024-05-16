@@ -17,8 +17,20 @@ public class runNode : MonoBehaviour
     {
         InitializeFlowStartPorts();
         InitializeFlowEndPorts(); // Update에서 InitializeFlowEndPorts 호출
-        CheckExecutionAvailability();
+        if (GetComponent<RunBtn>())
+        {
+            button.interactable = CheckExecutionAvailability();
+        }
+        else
+        {
+            SubmitBtn submitBtn;
+            if (TryGetComponent<SubmitBtn>(out submitBtn))
+            {
+                button.interactable = CheckExecutionAvailability() && submitBtn.runButton.hasClicked;
+            }
+        }
     }
+
 
     private void InitializeFlowStartPorts()
     {
@@ -48,12 +60,11 @@ public class runNode : MonoBehaviour
         }
     }
 
-    private void CheckExecutionAvailability()
+    private bool CheckExecutionAvailability()
     {
         if (flowEndPorts == null || flowStartPort == null)
         {
-            button.interactable = false;
-            return;
+            return false;
         }
 
         // Check if start port is connected
@@ -90,13 +101,13 @@ public class runNode : MonoBehaviour
         {
             //Debug.Log("allEndPortsConnected: " + allEndPortsConnected);
             //Debug.Log("startFlowConnected: " + startFlowConnected);
-            button.interactable = true;
+            return true;
         }
         else
         {
             //Debug.Log("allEndPortsConnected: " + allEndPortsConnected);
             //Debug.Log("startFlowConnected: " + startFlowConnected);
-            button.interactable = false;
+            return false;
         }
     }
 }

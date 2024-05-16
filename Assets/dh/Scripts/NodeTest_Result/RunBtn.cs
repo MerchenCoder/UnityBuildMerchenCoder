@@ -7,9 +7,11 @@ public class RunBtn : MonoBehaviour
 {
 
     Button button;
+    public bool hasClicked;
     // Start is called before the first frame update
     void Start()
     {
+        hasClicked = false;
         button = GetComponent<Button>();
         button.onClick.AddListener(RunCode);
     }
@@ -22,6 +24,11 @@ public class RunBtn : MonoBehaviour
 
     public void RunCode()
     {
+        if (!hasClicked)
+        {
+            hasClicked = true;
+        }
+
         TestManager.Instance.SettingCurrentCase(1);
         NodeManager.Instance.ChangeMode("run");
         NodeManager.Instance.Run();

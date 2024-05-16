@@ -78,7 +78,7 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
                     yield return loopCurrentNode.GetComponent<INode>().Execute();
                     break;
                 }
-                //if노드 만나면 이중반복문 변수 설정
+                //if노드 만나면 inner loop 처리를 위한 변수 설정
                 else if (loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "IfNode")
                 {
                     loopCurrentNode.GetComponent<IfNode>().isInnerLoop = true;
