@@ -7,104 +7,118 @@ using UnityEngine;
 
 public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
 {
-    private int loopIndex;
-    public int _index;
+    private int loopIndex; //반복할 횟수(총 횟수)
+    public int _index;//현재 반복 인덱스
     [SerializeField] private DataInPort dataInPort;
     [SerializeField] private DataOutPort dataOutPort;
 
     //변수 선언
-    private GameObject currentNode;
-    private FlowoutPort currentFlowoutPort;
-    [NonSerialized] public bool isBreaking;
+    private GameObject loopCurrentNode;
+    private FlowoutPort loopCurrentFlowoutPort;
+    public bool isBreaking;//break 노드를 만났는지
+    public bool isExcuting; //실행중일 때만 반복문 횟수를 data로 내보낼 수 있음
 
     private void Start()
     {
         this.GetComponent<NodeNameManager>().NodeName = "ForLoopNode";
+        _index = 0;
+        isBreaking = false;
+        isExcuting = false;
+        GetComponent<NodeData>().ErrorFlag = true;
+
     }
 
     IEnumerator INode.Execute()
     {
+        //1. isBreaking(break문 실행 여부), isExcuting 초기화
         isBreaking = false;
+        isExcuting = true;
+
+        //2. DataInPort 연결여부 확인
         if (!dataInPort.IsConnected)
         {
+            //연결x
+            Debug.Log("error1");
             Debug.Log("For 반복문 노드 반복횟수 연결 안됨");
-            NodeManager.Instance.SetCompileError(true, "port");
 
-            yield return null;
+            //오류시 항상 데이터 내보내지 못하게 처리
+            isExcuting = false;
+            GetComponent<NodeData>().ErrorFlag = true;
+
+            NodeManager.Instance.SetCompileError(true, "port");
+            yield break;
         }
-        else
-        {
-            yield return dataInPort.connectedPort.SendData();
-            // dataInPort에서 inputValue 가져오기
-            loopIndex = dataInPort.InputValueInt;
-            Debug.Log($"loopIndex : {loopIndex}");
-        }
-        _index = 0;
-        GetComponent<NodeData>().ErrorFlag = false;
+
+        //3. 연결 o - DataInPort의 값을 가져와 loopIndex에 저장
+
+        yield return dataInPort.connectedPort.SendData();
+        loopIndex = dataInPort.InputValueInt;
+        Debug.Log($"loopIndex : {loopIndex}");
+
+        //4. 반복 조건 체크하기
+        //현재 반복 횟수 < 총 반봇 횟수 && isBreaking이 false인 경우 반복한다.
         for (_index = 0; _index < loopIndex && !isBreaking; ++_index)
         {
-            Debug.Log(_index + 1 + "번째 실행");
+            Debug.Log("For문 : " + (_index + 1) + "번째 실행");
+            //현재 반복횟수 갱신
             GetComponent<NodeData>().data_int = _index + 1;
-            //반복 시작 노드의 Flow outPort 찾기
-            currentFlowoutPort = this.transform.Find("loopFlow").GetComponent<FlowoutPort>();
-            //Flow loopPort로 반복내용 node 찾아서 currentNode 업데이트
-            currentNode = NextNode(currentFlowoutPort);
-            if (dataOutPort.isConnected) dataOutPort.SendData();
 
-            // 실행
-            if (currentNode != null)
-                yield return currentNode.GetComponent<INode>().Execute();
-            else
-            {
-                Debug.Log("For 반복문 노드 반복내용 연결 안됨");
-                NodeManager.Instance.SetCompileError(true, "flow");
+            //1. 반복문의 시작 노드를 찾기 위해 while 노드의 반복 flow outport를 찾는다.
+            loopCurrentFlowoutPort = this.transform.Find("loopFlow").GetComponent<FlowoutPort>();
+            //2. 반복문의 시작 노드 = flow outport에 연결된 노드
+            loopCurrentNode = LoopNextNode(loopCurrentFlowoutPort);
 
-                yield return null;
-            }
-            if (currentNode.CompareTag("endNode"))
-            {
-                Debug.Log("For 반복문 노드 끝 노드에 연결됨");
-                NodeManager.Instance.SetCompileError(true, "flow");
-                isBreaking = true;
-                break;
-            }
-            if (currentNode.CompareTag("Node_Break"))
-            {
-                currentNode.GetComponent<BreakNode>().isForLoop = true;
-                currentNode.GetComponent<BreakNode>().loopStartNode = this.gameObject;
-                isBreaking = true;
-                break;
-            }
 
-            //다음 노드 없으면 처음부터 실행
-            while (currentNode.GetComponent<IFollowFlow>().NextFlow().isConnected)
+            //loopCurrentNode가 없으면 오류 처리한다. 있으면 실행한다.
+            while (loopCurrentNode != null)
             {
-                //현재 노드의 Flow outPort 찾기
-                currentFlowoutPort = currentNode.GetComponent<IFollowFlow>().NextFlow();
-                //Flow outPort로 다음 node 찾아서 currentNode 업데이트
-                currentNode = NextNode(currentFlowoutPort);
-
-                if (currentNode.CompareTag("endNode"))
+                //end 노드 만나면 break
+                if (loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "EndNode")
                 {
-                    Debug.Log("For 반복문 노드 끝 노드에 연결됨");
-                    NodeManager.Instance.SetCompileError(true, "flow");
-                    isBreaking = true;
                     break;
                 }
-                if (currentNode.CompareTag("Node_Break"))
+                //break 만나면 break;
+                else if (loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "BreakNode")
                 {
-                    currentNode.GetComponent<BreakNode>().isForLoop = true;
-                    currentNode.GetComponent<BreakNode>().loopStartNode = this.gameObject;
-                    isBreaking = true;
+                    loopCurrentNode.GetComponent<BreakNode_New>().isForLoop = true;
+                    loopCurrentNode.GetComponent<BreakNode_New>().loopStartNode = gameObject;
+                    yield return loopCurrentNode.GetComponent<INode>().Execute();
                     break;
                 }
-                else yield return currentNode.GetComponent<INode>().Execute();
+
+                //if 노드 만나면 inner loop 처리를 위한 변수 설정
+                else if (loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "IfNode")
+                {
+                    loopCurrentNode.GetComponent<IfNode>().isInnerLoop = true;
+                    loopCurrentNode.GetComponent<IfNode>().isForLoop = true;
+                    loopCurrentNode.GetComponent<IfNode>().loopStartNode = gameObject;
+                }
+                //현재 노드를 실행한다.
+                yield return loopCurrentNode.GetComponent<INode>().Execute();
+
+                //다음 port 찾기
+                loopCurrentFlowoutPort = loopCurrentNode.GetComponent<IFollowFlow>().NextFlow();
+                //loopCurrentNode 갱신하기
+                loopCurrentNode = LoopNextNode(loopCurrentFlowoutPort);
+                if (loopCurrentNode != null) Debug.Log(loopCurrentNode.name + " - " + (_index + 1).ToString());
             }
+
+            //만약 flow outport에 연결된 노드가 없다면 && end 노드 연결이 없이 끝나면 오류 처리
+            if (loopCurrentNode == null)
+            {
+                Debug.Log("error2");
+                Debug.Log("Flow 연결에 문제가 있습니다.");
+                isExcuting = false;
+                NodeManager.Instance.SetCompileError(true, "flow");
+                yield break;
+            }
+
             yield return null;
         }
+        isExcuting = false;
     }
 
-    public GameObject NextNode(FlowoutPort flowoutPort)
+    public GameObject LoopNextNode(FlowoutPort flowoutPort)
     {
         if (flowoutPort.ConnectedPort != null)
             return flowoutPort.ConnectedPort.transform.parent.gameObject;
@@ -114,11 +128,23 @@ public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
     // 실행함수 완전히 종료 후 종료플로우 반환
     public FlowoutPort NextFlow()
     {
+
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
     }
 
     public IEnumerator ProcessData()
     {
-        throw new NotImplementedException();
+        if (isExcuting)
+        {
+            GetComponent<NodeData>().ErrorFlag = false;
+            yield return GetComponentInChildren<DataOutPort>().SendData();
+            GetComponent<NodeData>().ErrorFlag = true;
+        }
+        else
+        {
+            Debug.Log("For문 외부에서 반복횟수 가져올 수 없음");
+            NodeManager.Instance.SetCompileError(true, "반복문 외부에서 현재 반복 횟수를\n 사용할 수 없습니다.");
+            yield return null;
+        }
     }
 }

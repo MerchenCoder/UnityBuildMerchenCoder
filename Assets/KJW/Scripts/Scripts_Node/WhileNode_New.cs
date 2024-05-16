@@ -58,7 +58,7 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
 
             //1. 반복문의 시작 노드를 찾기 위해 while 노드의 반복 flow outport를 찾는다.
             //2. 반복문의 시작 노드 = flow outport에 연결된 노드
-            //만약 flow outport에 연결된 노드가 없다면 오류 처리한다.
+
             loopCurrentFlowoutPort = transform.Find("loopFlow").GetComponent<FlowoutPort>();
             loopCurrentNode = LoopNextNode(loopCurrentFlowoutPort);
 
@@ -92,10 +92,10 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
                 loopCurrentFlowoutPort = loopCurrentNode.GetComponent<IFollowFlow>().NextFlow();
                 //loopCurrentNode 갱신하기
                 loopCurrentNode = LoopNextNode(loopCurrentFlowoutPort);
-                if (loopCurrentNode != null) Debug.Log(loopCurrentNode.name + " - " + _index.ToString());
+                if (loopCurrentNode != null) Debug.Log(loopCurrentNode.name + " - " + (_index + 1).ToString());
 
             }
-            //end 노드 연결이 없이 끝나면 오류 처리
+            //만약 flow outport에 연결된 노드가 없다면 && end 노드 연결이 없이 끝나면 오류 처리
             if (loopCurrentNode == null)
             {
                 Debug.Log("error2");
