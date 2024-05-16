@@ -36,6 +36,11 @@ public class NodeManager : MonoBehaviour
     public ResultCanvasManager resultCanvasManager;
     public GameObject npc_chatBubble;
 
+    // public bool isInnerLoop = false;
+    // public GameObject loopStartNode = null;
+    // public bool isForLoop = false;
+    // public bool isWhileLoop = false;
+
     //private Coroutine executeCoroutine;
 
 
@@ -98,6 +103,10 @@ public class NodeManager : MonoBehaviour
     private void Start()
     {
         resultCanvasManager.SetResultCanvas();
+        // isInnerLoop = false;
+        // loopStartNode = null;
+        // isForLoop = false;
+        // isWhileLoop = false;
     }
 
     private void OnEnable()
@@ -181,6 +190,10 @@ public class NodeManager : MonoBehaviour
     //컴파일
     public void Run()
     {
+        // isInnerLoop = false;
+        // loopStartNode = null;
+        // isForLoop = false;
+        // isWhileLoop = false;
         SetCompileError(false, null);
         resultCanvas.GetComponent<RunErrorMsg>().SetStateRun();
         if (mode == "run")
@@ -248,6 +261,18 @@ public class NodeManager : MonoBehaviour
         {
             Debug.Log("실행 시작");
             Debug.Log("현재 실행 중 노드: " + currentNode.name);
+            // if (currentNode.GetComponent<NodeNameManager>().NodeName == "WhileLoopNode")
+            // {
+            //     isInnerLoop = true;
+            //     isWhileLoop = true;
+            //     loopStartNode = currentNode.gameObject;
+            // }
+            // else if (currentNode.GetComponent<NodeNameManager>().NodeName == "ForLoopNode")
+            // {
+            //     isInnerLoop = true;
+            //     isForLoop = true;
+            //     loopStartNode = currentNode.gameObject;
+            // }
             //현재 노드 실행 후 끝날 때까지 기다리기
             yield return currentNode.GetComponent<INode>().Execute();
             // if (compileError)

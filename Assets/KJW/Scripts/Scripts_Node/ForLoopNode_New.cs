@@ -17,12 +17,14 @@ public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
     private FlowoutPort loopCurrentFlowoutPort;
     public bool isBreaking;//break 노드를 만났는지
     public bool isExcuting; //실행중일 때만 반복문 횟수를 data로 내보낼 수 있음
+    public bool flowControlFlag;
 
     private void Start()
     {
         this.GetComponent<NodeNameManager>().NodeName = "ForLoopNode";
         _index = 0;
         isBreaking = false;
+        flowControlFlag = false;
         isExcuting = false;
         GetComponent<NodeData>().ErrorFlag = true;
 
@@ -33,6 +35,7 @@ public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
         //1. isBreaking(break문 실행 여부), isExcuting 초기화
         isBreaking = false;
         isExcuting = true;
+        flowControlFlag = false;
 
         //2. DataInPort 연결여부 확인
         if (!dataInPort.IsConnected)
@@ -89,9 +92,9 @@ public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
                 //if 노드 만나면 inner loop 처리를 위한 변수 설정
                 else if (loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "IfNode")
                 {
-                    loopCurrentNode.GetComponent<IfNode>().isInnerLoop = true;
-                    loopCurrentNode.GetComponent<IfNode>().isForLoop = true;
-                    loopCurrentNode.GetComponent<IfNode>().loopStartNode = gameObject;
+                    loopCurrentNode.GetComponent<IfNode_New>().isInnerLoop = true;
+                    loopCurrentNode.GetComponent<IfNode_New>().isForLoop = true;
+                    loopCurrentNode.GetComponent<IfNode_New>().loopStartNode = gameObject;
                 }
                 //현재 노드를 실행한다.
                 yield return loopCurrentNode.GetComponent<INode>().Execute();
@@ -106,11 +109,20 @@ public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
             //만약 flow outport에 연결된 노드가 없다면 && end 노드 연결이 없이 끝나면 오류 처리
             if (loopCurrentNode == null)
             {
-                Debug.Log("error2");
-                Debug.Log("Flow 연결에 문제가 있습니다.");
-                isExcuting = false;
-                NodeManager.Instance.SetCompileError(true, "flow");
-                yield break;
+                if (flowControlFlag)
+                {
+                    flowControlFlag = false;
+                    break;
+                }
+                else
+                {
+                    Debug.Log("error2");
+                    Debug.Log("Flow 연결에 문제가 있습니다.");
+                    isExcuting = false;
+                    NodeManager.Instance.SetCompileError(true, "flow");
+                    yield break;
+                }
+
             }
 
             yield return null;
@@ -120,6 +132,18 @@ public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
 
     public GameObject LoopNextNode(FlowoutPort flowoutPort)
     {
+        if (flowoutPort == null && loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "IfNode")
+        {
+            IfNode_New ifNode = loopCurrentNode.GetComponent<IfNode_New>();
+            if (ifNode.isBreaking)
+            {
+                flowControlFlag = true;
+                return null;
+
+
+            }
+        }
+
         if (flowoutPort.ConnectedPort != null)
             return flowoutPort.ConnectedPort.transform.parent.gameObject;
         else return null;
