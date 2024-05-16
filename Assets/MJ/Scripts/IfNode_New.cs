@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 
-public class IfNode : MonoBehaviour, INode, IFollowFlow
+public class IfNode_New : MonoBehaviour, INode, IFollowFlow
 {
     // node name
     private NodeNameManager nameManager;
@@ -30,11 +30,6 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
     [NonSerialized] public bool isBreaking;
     [SerializeField] private DataOutPort dataOutPort;
 
-    public bool isInnerLoop = false;
-    public bool isWhileLoop = false;
-    public bool isForLoop = false;
-    public GameObject loopStartNode = null;
-
     void Start()
     {
         // inPort
@@ -50,14 +45,6 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
         trueOutportObject = transform.Find("outputTrueFlow").gameObject;
         falseOutportObject = transform.Find("outputFalseFlow").gameObject;
         nextOutportObject = transform.Find("outFlow").gameObject;
-    }
-
-    //다음 노드 반환하는 메소드
-    public GameObject NextNode(FlowoutPort flowoutPort)
-    {
-        if (flowoutPort.ConnectedPort != null)
-            return flowoutPort.ConnectedPort.transform.parent.gameObject;
-        else return null;
     }
 
     IEnumerator INode.Execute()
@@ -163,14 +150,21 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
         }
     }
 
-    public IEnumerator ProcessData()
+    public GameObject NextNode(FlowoutPort flowoutPort)
     {
-        yield return null;
+        if (flowoutPort.ConnectedPort != null)
+            return flowoutPort.ConnectedPort.transform.parent.gameObject;
+        else return null;
     }
 
+    // 실행함수 완전히 종료 후 종료플로우 반환
     public FlowoutPort NextFlow()
     {
-        Debug.Log("This is NextFlow");
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+    }
+
+    public IEnumerator ProcessData()
+    {
+        throw new NotImplementedException();
     }
 }

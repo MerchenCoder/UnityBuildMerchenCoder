@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1210689558196667025}
   - component: {fileID: 1025968674273001941}
   - component: {fileID: 3877980999198967245}
-  - component: {fileID: 8603453540580133497}
   - component: {fileID: 468434959613857536}
+  - component: {fileID: 8400139025367106308}
   m_Layer: 5
   m_Name: Node_Break
   m_TagString: Node_Break
@@ -78,18 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8603453540580133497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3896780485476210607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4bb4a1f964ff3e43bf8b1a1ff33827d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &468434959613857536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +91,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDelete: 0
+--- !u!114 &8400139025367106308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896780485476210607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada07b99c5ef44a84b54ea496373cd48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loopStartNode: {fileID: 0}
+  isWhileLoop: 0
+  isForLoop: 0
 --- !u!1 &4678174129174906152
 GameObject:
   m_ObjectHideFlags: 0
