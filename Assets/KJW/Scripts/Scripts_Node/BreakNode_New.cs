@@ -39,7 +39,7 @@ public class BreakNode_New : MonoBehaviour, INode, IFollowFlow
         }
         else if (isForLoop)
         {
-            loopStartNode.GetComponent<ForLoopNode>().isBreaking = true;
+            loopStartNode.GetComponent<ForLoopNode_New>().isBreaking = true;
         }
 
         //실행 후 모든 변수값 reset
