@@ -8,6 +8,7 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
     private bool loopCondition; //조건을 만족하는지 체크
     private int _index; //반복 횟수
     [SerializeField] private DataInPort dataInPort; //조건 데이터
+    [SerializeField] private FlowoutPort flowOutPort_AfterLoop;
 
 
     //내부 반복 흐름 처리
@@ -15,11 +16,13 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
     private FlowoutPort loopCurrentFlowoutPort;
     //[NonSerialized] 
     public bool isBreaking; //break 노드를 만났는지
+    public bool flowControlFlag;
 
     private void Start()
     {
         this.GetComponent<NodeNameManager>().NodeName = "WhileLoopNode";
         isBreaking = false;
+        flowControlFlag = false;
         _index = 0;
         isBreaking = false;
     }
@@ -28,12 +31,13 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
     {
         //1. isBreaking(break문 실행 여부) 초기화
         isBreaking = false;
+        flowControlFlag = false;
 
         //2. DataInPort 연결여부 확인
         if (!dataInPort.IsConnected)
         {   //연결 x
             Debug.Log("error1");
-            Debug.Log("While 반복문 노드 반복횟수 연결 안됨");
+            Debug.Log("While 반복문 노드 조건 연결 안됨");
             NodeManager.Instance.SetCompileError(true, "port");
             yield break;
         }
@@ -81,9 +85,9 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
                 //if노드 만나면 inner loop 처리를 위한 변수 설정
                 else if (loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "IfNode")
                 {
-                    loopCurrentNode.GetComponent<IfNode>().isInnerLoop = true;
-                    loopCurrentNode.GetComponent<IfNode>().isWhileLoop = true;
-                    loopCurrentNode.GetComponent<IfNode>().loopStartNode = gameObject;
+                    loopCurrentNode.GetComponent<IfNode_New>().isInnerLoop = true;
+                    loopCurrentNode.GetComponent<IfNode_New>().isWhileLoop = true;
+                    loopCurrentNode.GetComponent<IfNode_New>().loopStartNode = gameObject;
                 }
                 //현재 노드를 실행한다.
                 yield return loopCurrentNode.GetComponent<INode>().Execute();
@@ -98,10 +102,19 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
             //만약 flow outport에 연결된 노드가 없다면 && end 노드 연결이 없이 끝나면 오류 처리
             if (loopCurrentNode == null)
             {
-                Debug.Log("error2");
-                Debug.Log("Flow 연결에 문제가 있습니다.");
-                NodeManager.Instance.SetCompileError(true, "flow");
-                yield break;
+                if (flowControlFlag)
+                {
+                    flowControlFlag = false;
+                    break;
+                }
+                else
+                {
+                    Debug.Log("error2");
+                    Debug.Log("Flow 연결에 문제가 있습니다.");
+                    NodeManager.Instance.SetCompileError(true, "flow");
+                    yield break;
+                }
+
             }
             //반복 1회 종료 후 loopCondition 갱신
             yield return dataInPort.connectedPort.SendData();
@@ -116,6 +129,18 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
     //end 만나면 -> 반복문 
     public GameObject LoopNextNode(FlowoutPort flowoutPort)
     {
+        if (flowoutPort == null && loopCurrentNode.GetComponent<NodeNameManager>().NodeName == "IfNode")
+        {
+            IfNode_New ifNode = loopCurrentNode.GetComponent<IfNode_New>();
+            if (ifNode.isBreaking)
+            {
+                flowControlFlag = true;
+                return null;
+
+
+            }
+        }
+
         if (flowoutPort.ConnectedPort != null)
             return flowoutPort.ConnectedPort.transform.parent.gameObject;
         else return null;
@@ -124,7 +149,7 @@ public class WhileNode_New : MonoBehaviour, INode, IFollowFlow
     // 실행함수 완전히 종료 후 종료플로우 반환
     public FlowoutPort NextFlow()
     {
-        return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+        return flowOutPort_AfterLoop;
     }
 
     public IEnumerator ProcessData()
