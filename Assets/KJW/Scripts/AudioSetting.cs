@@ -7,11 +7,11 @@ public class AudioSetting : MonoBehaviour
 {
     public Slider BGMSlider;
     public Slider SFXSlider;
+    public GameObject settingPanel;
 
     private void Start()
     {
-        //BGMSlider = GameObject.Find("Slider Lightpurple").GetComponent<Slider>();
-        //SFXSlider = GameObject.Find("Slider Pinkpurple").GetComponent<Slider>(); ;
+        settingPanel.SetActive(true);
 
         if (PlayerPrefs.HasKey("BGMVolume"))
         {
@@ -23,6 +23,10 @@ public class AudioSetting : MonoBehaviour
             SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
         }
         else SFXSlider.value = 50f;
+
+        SetBGMVolume(BGMSlider.value);
+        SetSFXVolume(SFXSlider.value);
+        settingPanel.SetActive(false);
     }
 
     private float SliderToDecibel(float sliderValue)
