@@ -35,4 +35,9 @@ public class SceneChangeBtn : MonoBehaviour
     {
         SceneChange.Instance.ChangetoCh2Stage();
     }
+
+    public void ChangetoGameScene()
+    {
+        SceneChange.Instance.ChangeToThisScene(SceneChange.Instance.beforeScene);
+    }
 }
