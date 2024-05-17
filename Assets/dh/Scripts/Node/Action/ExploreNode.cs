@@ -30,7 +30,7 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
     {
         if (NodeManager.Instance.Mode != "run")
         {
-            TestManager.Instance.playerOutput.Add(outputStr);
+            // TestManager.Instance.playerOutput.Add(outputStr);
             yield break;
         }
         if (map == null)

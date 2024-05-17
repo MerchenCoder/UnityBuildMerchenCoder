@@ -47,10 +47,13 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private MapInfo mapInfo;
 
 
+    private Animator playerAnim;
+
 
 
     private void Start()
     {
+        playerAnim = GetComponent<Animator>();
         currentType = type.down;
         StartCoroutine(MoveToBlock((0, 0)));
     }
@@ -97,7 +100,9 @@ public class PlayerControl : MonoBehaviour
 
 
             //충돌 애니메이션
-
+            playerAnim.SetBool("Hit", true);
+            yield return new WaitForSeconds(0.5f);
+            playerAnim.SetBool("Hit", false);
 
             //transfrom.positoin 유지
             yield return null;
