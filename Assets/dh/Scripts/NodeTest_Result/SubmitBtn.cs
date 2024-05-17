@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SubmitBtn : MonoBehaviour
 {
     Button button;
+    public RunBtn runButton;
     // Start is called before the first frame update
     void Start()
     {

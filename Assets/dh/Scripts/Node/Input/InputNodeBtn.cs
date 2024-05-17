@@ -7,8 +7,12 @@ public class InputNodeBtn : MonoBehaviour
 {
     //노드 프리랩
     public GameObject nodePrefab;
+    private GameObject spawnCanvas;
     //spawn 위치
     private Transform spawnPoint;
+    private ControlNodeMenu controlNodeMenu;
+
+
     public string inputNodeName;
     public int inputIndex;
 
@@ -21,10 +25,19 @@ public class InputNodeBtn : MonoBehaviour
     Button btn;
     void Start()
     {
+        controlNodeMenu = GetComponentInParent<ControlNodeMenu>();
+        if (controlNodeMenu.name == "NodeMenu")
+        {
+            spawnCanvas = GameObject.Find("MainCanvas").gameObject;
+        }
+        else
+        {
+            spawnCanvas = GetComponentInParent<Canvas>().gameObject;
+        }
         // scrollArea = GetComponentInParent<Canvas>().transform.GetChild(0).gameObject;
-        spawnPoint = GetComponentInParent<Canvas>().transform.GetChild(0).GetChild(0).transform; //Canvas(main) 바로 첫번째 자식인 BG 게임 오브젝트
+        spawnPoint = spawnCanvas.transform.GetChild(0).GetChild(0).transform; //Canvas(main) 바로 첫번째 자식인 BG 게임 오브젝트
         // 현재 보이는 화면 기준으로 중앙에 놓기
-        canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+        canvasRect = spawnCanvas.GetComponent<RectTransform>();
         centerXInCanvas = canvasRect.rect.width / 2f;
         // Debug.Log(centerXInCanvas);
         btn = GetComponent<Button>();

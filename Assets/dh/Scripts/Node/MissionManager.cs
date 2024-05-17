@@ -14,6 +14,8 @@ public class MissionManager : MonoBehaviour
     //public string mode = "main";
     GameObject rewards;
     GameObject info;
+    GameObject missionImage;
+
     void Start()
     {
 
@@ -29,7 +31,7 @@ public class MissionManager : MonoBehaviour
         title = transform.GetChild(0).GetChild(0).gameObject;
         rewards = transform.GetChild(0).GetChild(3).gameObject;
         info = transform.GetComponentInChildren<NodeLabelControl>(true).transform.parent.GetChild(0).gameObject;
-
+        missionImage = info.transform.parent.GetChild(1).gameObject;
 
         missionTitle = "문제 " + GameManager.Instance.missionData.missionCode + " : " + GameManager.Instance.missionData.missionTitle;
         missionInfo = GameManager.Instance.missionData.missionInfo;
@@ -38,10 +40,25 @@ public class MissionManager : MonoBehaviour
         title.GetComponent<TextMeshProUGUI>().text = missionTitle;
         rewards.transform.GetChild(2).GetComponent<Text>().text = GameManager.Instance.missionData.reward.ToString();
         info.GetComponentInChildren<TextMeshProUGUI>().text = missionInfo;
+
+
+        Image uiImage = missionImage.GetComponent<Image>();
+        if (GameManager.Instance.missionData.hasImage)
+        {
+            Sprite sprite = Resources.Load<Sprite>(GameManager.Instance.missionData.imagePath);
+            uiImage.sprite = sprite;
+            uiImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            uiImage.gameObject.SetActive(false);
+        }
+
         transform.GetComponentInChildren<NodeLabelControl>(true).NodeLabelSetting();
 
         info.transform.parent.GetComponent<VerticalLayoutGroup>().enabled = false;
         info.transform.parent.GetComponent<VerticalLayoutGroup>().enabled = true;
+
 
         // LayoutRebuilder.ForceRebuildLayoutImmediate(info.transform.parent.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());

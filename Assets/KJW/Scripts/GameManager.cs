@@ -201,6 +201,8 @@ public class GameManager : MonoBehaviour
         public int reward;
         public bool hasNodeLimit;
         public bool[] isTabOpenList;
+        public bool hasImage;
+        public string imagePath;
 
         public bool isClear = false;
     }

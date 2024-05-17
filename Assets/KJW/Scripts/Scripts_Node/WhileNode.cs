@@ -28,6 +28,8 @@ public class WhileNode : MonoBehaviour, INode, IFollowFlow
         if (flowoutPort.ConnectedPort != null)
             return flowoutPort.ConnectedPort.transform.parent.gameObject;
         else return null;
+
+
     }
 
     // 실행함수 완전히 종료 후 종료플로우
