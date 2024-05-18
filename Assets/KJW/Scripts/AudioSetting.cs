@@ -11,6 +11,8 @@ public class AudioSetting : MonoBehaviour
 
     private void Start()
     {
+
+
         settingPanel.SetActive(true);
 
         if (PlayerPrefs.HasKey("BGMVolume"))

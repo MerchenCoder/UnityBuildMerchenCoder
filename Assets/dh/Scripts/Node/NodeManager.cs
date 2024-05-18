@@ -187,6 +187,9 @@ public class NodeManager : MonoBehaviour
         }
     }
 
+    public event Action OnRunProgramCompleted;
+
+
     //컴파일
     public void Run()
     {
@@ -293,6 +296,8 @@ public class NodeManager : MonoBehaviour
                 yield break;
             }
         }
+        OnRunProgramCompleted?.Invoke();
+
         //Debug.Log("Run Complete");
 
         if (mode == "run")

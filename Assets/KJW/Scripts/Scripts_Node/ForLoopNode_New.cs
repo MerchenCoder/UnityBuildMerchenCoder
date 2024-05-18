@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class ForLoopNode_New : MonoBehaviour, INode, IFollowFlow
 {
-    private int loopIndex; //반복할 횟수(총 횟수)
+    public int loopIndex; //반복할 횟수(총 횟수)
     public int _index;//현재 반복 인덱스
     [SerializeField] private DataInPort dataInPort;
     [SerializeField] private DataOutPort dataOutPort;

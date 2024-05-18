@@ -49,6 +49,19 @@ public class PlayerControl : MonoBehaviour
 
     private Animator playerAnim;
 
+    private void Awake()
+    {
+        NodeManager.Instance.OnRunProgramCompleted += EndPosition;
+    }
+    private void OnDestroy()
+    {
+
+        if (NodeManager.Instance != null)
+        {
+            NodeManager.Instance.OnRunProgramCompleted -= EndPosition;
+        }
+    }
+
 
 
     private void Start()
@@ -152,5 +165,13 @@ public class PlayerControl : MonoBehaviour
 
         }
         Debug.Log($"forwardpos = {forwardBlockPos.x},{forwardBlockPos.y}");
+    }
+
+
+    public void EndPosition()
+    {
+        string answer = CurrentPos.x.ToString() + "," + CurrentPos.y.ToString();
+        Debug.Log("플레이어 최종 위치 결과배열에 추가 : " + answer);
+        TestManager.Instance.playerOutput.Add(answer);
     }
 }
