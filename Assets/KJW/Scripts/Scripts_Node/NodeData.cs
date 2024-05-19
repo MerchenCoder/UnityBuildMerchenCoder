@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class NodeData : MonoBehaviour
 {
-    [NonSerialized] public int data_int;
-    [NonSerialized] public string data_string;
-    [NonSerialized] public bool data_bool;
+    //[NonSerialized] 
+    public int data_int;
+    //[NonSerialized] 
+    public string data_string;
+    //[NonSerialized] 
+    public bool data_bool;
 
 
     public int SetData_Int
