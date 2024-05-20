@@ -35,7 +35,9 @@ public class FeedNode : MonoBehaviour, INode, IFollowFlow
         //실행시 처리할 로직이 있는 코루틴 호출해주면 된다.
         feedAnim.SetBool("Feed", true);
         yield return new WaitForSeconds(2f);
+        feedAnim.GetComponent<AnimationAudioControl>().StopAnimationSound();
         playerActionBubble.SetActive(false);
+
         feedAnim.SetBool("Feed", false);
         //출력 배열에 반영
         TestManager.Instance.playerOutput.Add(outputStr);
