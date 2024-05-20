@@ -91,9 +91,12 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
                 playerChatBubble = GameObject.FindWithTag("ResultPanel_Bubble").transform.GetChild(0).gameObject;
                 audioSource.clip = audioClip;
-                StartCoroutine(playChatSound(1.4f));
-                yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk(stringData);
+                audioSource.Play();
+                audioSource.loop = true;
 
+                yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk(stringData);
+                audioSource.Stop();
+                audioSource.loop = false;
                 // playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>(true).text = stringData;
                 // playerChatBubble.SetActive(true);
                 // // Invoke("DisableChatBubbleAfterTime", 2f);
@@ -112,23 +115,22 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
     }
 
-    public IEnumerator playChatSound(float seconds)
-    {
-        float time = 0;
-        float playTime = seconds;
-        if (!audioSource.isPlaying)
-        {
-            audioSource.Play();
-            audioSource.loop = true;
-        }
-        while (time < playTime)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-        audioSource.Stop();
-        audioSource.loop = false;
-    }
+    // public void playChatSound(float seconds)
+    // {
+    //     float time = 0;
+    //     float playTime = seconds;
+    //     if (!audioSource.isPlaying)
+    //     {
+    //         audioSource.Play();
+    //         audioSource.loop = true;
+    //     }
+    //     while (time < playTime)
+    //     {
+    //         time += Time.deltaTime;
+    //     }
+    //     audioSource.Stop();
+    //     audioSource.loop = false;
+    // }
 
 
     public FlowoutPort NextFlow()
