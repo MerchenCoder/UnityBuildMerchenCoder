@@ -5,6 +5,7 @@ using UnityEngine;
 public class ControlAnimation : MonoBehaviour
 {
     public Animator result_anim;
+    public AnimationAudioControl animationAudioControl;
 
     // public AudioClip successAudioClip;
     // public AudioClip failAudioClip;
@@ -13,7 +14,7 @@ public class ControlAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        animationAudioControl = result_anim.GetComponent<AnimationAudioControl>();
     }
 
     // Update is called once per frame
@@ -34,6 +35,7 @@ public class ControlAnimation : MonoBehaviour
         result_anim.SetInteger("Control", 10);
         yield return new WaitForSeconds(2.5f);
         result_anim.SetInteger("Control", 0);
+        animationAudioControl.StopAnimationSound();
         yield return null;
 
     }
@@ -48,6 +50,7 @@ public class ControlAnimation : MonoBehaviour
         result_anim.SetInteger("Control", -10);
         yield return new WaitForSeconds(2.5f);
         result_anim.SetInteger("Control", 0);
+        animationAudioControl.StopAnimationSound();
         yield return null;
     }
 }

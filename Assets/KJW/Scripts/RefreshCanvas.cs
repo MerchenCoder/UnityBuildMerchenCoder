@@ -51,7 +51,16 @@ public class RefreshCanvas : MonoBehaviour
 
     public void stopPlaying()
     {
+        if (autoAudioSetting.AudioSource.isPlaying)
+        {
+            autoAudioSetting.AudioSource.Stop();
+            Debug.Log("실행중인 모든 효과음 중단");
+        }
+        //소리설정
         autoAudioSetting.OnClickSound_Index(0);
+
+
+        //애니메이션 및 행동 말풍선 초기화
         MonoBehaviour[] allScripts = Object.FindObjectsOfType<MonoBehaviour>();
 
         foreach (MonoBehaviour script in allScripts)
@@ -71,6 +80,7 @@ public class RefreshCanvas : MonoBehaviour
         if (animator == null)
         {
             animator = player.GetComponent<Animator>();
+
         }
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
@@ -95,13 +105,17 @@ public class RefreshCanvas : MonoBehaviour
         Transform result_img = transform.GetChild(2);
         foreach (Transform character in result_img)
         {
+            Debug.Log(character.name);
             OffActionBubble(character);
         }
 
-        //결과 애니메이션
+        //결과 애니메이션 초기화
         if (GetComponent<ControlAnimation>().result_anim != null)
         {
             GetComponent<ControlAnimation>().result_anim.SetInteger("Control", 0);
+            //사운드 초기화
+            GetComponent<ControlAnimation>().animationAudioControl.StopAnimationSound();
+
         }
 
         this.gameObject.SetActive(false);
@@ -110,7 +124,7 @@ public class RefreshCanvas : MonoBehaviour
     public void OffActionBubble(Transform character)
     {
         print(character.name);
-        if (character.tag != "NPC" || character.tag != "Player") return;
+        if (character.tag != "NPC" && character.tag != "Player") return;
         if (character.childCount == 0 || character.childCount == 1 && character.GetChild(0).childCount == 0)
         {
             Debug.Log("don't have action bubble");
@@ -119,6 +133,7 @@ public class RefreshCanvas : MonoBehaviour
         {
             foreach (Transform bubble in character.GetChild(0))
             {
+                Debug.Log(bubble.name);
                 if (bubble.CompareTag("actionBubble"))
                 {
                     Debug.Log(bubble.name);
