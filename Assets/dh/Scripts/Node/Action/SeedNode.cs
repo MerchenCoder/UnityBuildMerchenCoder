@@ -53,6 +53,7 @@ public class SeedNode : MonoBehaviour, INode, IFollowFlow
             feedAnim.SetBool("Seed", false);
             //출력 배열에 반영
             TestManager.Instance.playerOutput.Add(outputStr);
+            feedAnim.GetComponent<AnimationAudioControl>().StopAnimationSound();
             yield return new WaitForSeconds(1f);
 
             //플레이어 위치 변경//
