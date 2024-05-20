@@ -13,16 +13,8 @@ public class CanClickAudio : MonoBehaviour
         button = GetComponent<Button>();
         if (audioSource == null)
         {
-            AudioManager[] audioManagers = FindObjectsOfType<AudioManager>();
-            foreach (AudioManager audioManager in audioManagers)
-            {
-                if (audioManager.GetComponent<AudioControl>())
-                {
-                    audioSource = audioManager.GetComponent<AudioSource>();
-
-                    return;
-                }
-            }
+            AudioControl audioControl = FindObjectOfType<AudioControl>();
+            audioSource = audioControl.GetComponent<AudioSource>();
         }
 
     }

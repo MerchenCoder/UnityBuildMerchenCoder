@@ -6,21 +6,15 @@ public class AutoAudioSetting : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
     [SerializeField] int audioIndex;
+    public AudioSource AudioSource => audioSource;
 
     // Start is called before the first frame update
     void Awake()
     {
-        AudioManager[] audioManagers = FindObjectsOfType<AudioManager>();
-        foreach (AudioManager audioManager in audioManagers)
-        {
-            if (audioManager.GetComponent<AudioControl>())
-            {
-                audioSource = audioManager.GetComponent<AudioSource>();
+        if (audioSource != null) return;
+        AudioControl audioControl = FindObjectOfType<AudioControl>();
 
-                return;
-            }
-        }
-        // audioSource = FindObjectOfType<AudioManager>().GetComponent<AudioSource>();
+        audioSource = audioControl.GetComponent<AudioSource>();
     }
 
     public void OnClickSound()

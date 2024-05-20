@@ -6,11 +6,11 @@ using TMPro;
 
 public class RunErrorMsg : MonoBehaviour
 {
+
     public GameObject ErrorMsgBox;
     public TextMeshProUGUI State;
 
-    // Start is called before the first frame update
-
+    [SerializeField] private RefreshCanvas refreshCanvas;
 
 
     public void SetStateRun()
@@ -22,12 +22,14 @@ public class RunErrorMsg : MonoBehaviour
 
     public void SetStateStop()
     {
+        refreshCanvas.PlayRunErrorSound();
         State.text = "실행 중단";
         State.color = Color.red;
     }
 
     public void SetStateComplete()
     {
+        refreshCanvas.PlayRunCompleteSound();
         State.text = "실행 완료";
         State.color = Color.blue;
     }
@@ -83,6 +85,7 @@ public class RunErrorMsg : MonoBehaviour
         SetStateRun();
         ErrorMsgBox = transform.parent.GetChild(1).GetChild(0).gameObject;
         ErrorMsgBox.SetActive(false);
+        refreshCanvas = GetComponent<RefreshCanvas>();
     }
 
     // Update is called once per frame

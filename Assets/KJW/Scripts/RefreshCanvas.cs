@@ -14,8 +14,14 @@ public class RefreshCanvas : MonoBehaviour
     public GameObject playerChatBubble;
 
     public bool isPlayerPositionReset = true;
+    [SerializeField]
+    private AutoAudioSetting autoAudioSetting;
     private void Start()
     {
+        if (autoAudioSetting == null)
+        {
+            autoAudioSetting = GetComponentInParent<AutoAudioSetting>(true);
+        }
         player = gameObject.transform.Find("Result_img").GetChild(0).gameObject;
         if (player != null)
         {
@@ -24,6 +30,16 @@ public class RefreshCanvas : MonoBehaviour
             animator = player.GetComponentInChildren<Animator>(true);
         }
     }
+
+    public void PlayRunErrorSound()
+    {
+        autoAudioSetting.OnClickSound_Index(10);
+    }
+    public void PlayRunCompleteSound()
+    {
+        autoAudioSetting.OnClickSound_Index(5);
+    }
+
 
     private void LoadOriginPosition()
     {
@@ -35,6 +51,7 @@ public class RefreshCanvas : MonoBehaviour
 
     public void stopPlaying()
     {
+        autoAudioSetting.OnClickSound_Index(0);
         MonoBehaviour[] allScripts = Object.FindObjectsOfType<MonoBehaviour>();
 
         foreach (MonoBehaviour script in allScripts)

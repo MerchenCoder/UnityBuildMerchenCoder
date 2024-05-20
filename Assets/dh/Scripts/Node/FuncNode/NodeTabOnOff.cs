@@ -18,7 +18,7 @@ public class NodeTabOnOff : MonoBehaviour
 
     private void Start()
     {
-        audioSource = FindObjectOfType<AudioManager>().GetComponent<AudioSource>();
+        audioSource = FindObjectOfType<AudioControl>().GetComponent<AudioSource>();
     }
 
 

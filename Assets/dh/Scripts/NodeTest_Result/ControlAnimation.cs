@@ -5,6 +5,10 @@ using UnityEngine;
 public class ControlAnimation : MonoBehaviour
 {
     public Animator result_anim;
+
+    // public AudioClip successAudioClip;
+    // public AudioClip failAudioClip;
+
     //public Animator fail_anim;
     // Start is called before the first frame update
     void Start()

@@ -6,6 +6,8 @@ using System.Threading;
 
 public class PrintNode : MonoBehaviour, INode, IFollowFlow
 {
+    public AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
     public GameObject inPort;
     private DataInPort dataInPort;
     private TMPro.TextMeshProUGUI dataUIText;
@@ -33,13 +35,14 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
         nameManager = this.GetComponent<NodeNameManager>();
         nameManager.NodeName = "PrintNode";
 
-
         dataInPort = inPort.GetComponent<DataInPort>();
         dataUIText = inPort.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
+
     }
 
     IEnumerator INode.Execute()
     {
+        audioSource = nameManager.AutoAudioSetting.AudioSource;
         if (!dataInPort.IsConnected)
         {
             Debug.Log("프린트노드 연결안됨");
@@ -87,7 +90,12 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 // //result panel의 player는 항상 첫번째 자식이어야 함!!
                 player = GameObject.FindWithTag("ResultPanel").transform.GetChild(0).gameObject;
                 playerChatBubble = GameObject.FindWithTag("ResultPanel_Bubble").transform.GetChild(0).gameObject;
+                audioSource.clip = audioClip;
+                audioSource.loop = true;
+                audioSource.Play();
                 yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk(stringData);
+                audioSource.Stop();
+                audioSource.loop = false;
                 // playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>(true).text = stringData;
                 // playerChatBubble.SetActive(true);
                 // // Invoke("DisableChatBubbleAfterTime", 2f);

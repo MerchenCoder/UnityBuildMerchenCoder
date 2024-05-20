@@ -39,7 +39,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     //소리
 
     private Canvas canvas;
-    private AutoAudioSetting autoAudioSetting;
+    public AutoAudioSetting autoAudioSetting;
     public AutoAudioSetting AutoAudioSetting => autoAudioSetting;
 
 

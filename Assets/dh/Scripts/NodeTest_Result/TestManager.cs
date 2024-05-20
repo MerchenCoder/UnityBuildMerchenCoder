@@ -316,9 +316,9 @@ public class TestManager : MonoBehaviour
         bool result = CheckAnswer();
         if (NodeManager.Instance.CompileError || !result) //컴파일 오류가 있거나 결과가 output 배열과 다른 경우
         {
-            audioControl.SoundPlayOneShot(7);
             Debug.Log("컴파일 오류로 채점 종료"); //실패 안내 관련 로직으로 변경해야함.
             Thread.Sleep(1500);
+            audioControl.SoundPlayOneShot(7);
             fail.gameObject.SetActive(true);
 
         }
