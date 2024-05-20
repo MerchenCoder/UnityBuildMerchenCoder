@@ -9,12 +9,15 @@ public class BarkNode : MonoBehaviour, INode, IFollowFlow
     private GameObject player;
     private GameObject playerActionBubble;
 
+    public AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
+
     Animator barkAnim;
     private void Start()
     {
         nodeNameManager = GetComponent<NodeNameManager>();
         nodeNameManager.NodeName = "ActionNode";
-
+        audioSource = nodeNameManager.AutoAudioSetting.AudioSource;
     }
 
     public IEnumerator Execute()
@@ -33,6 +36,7 @@ public class BarkNode : MonoBehaviour, INode, IFollowFlow
         // playerActionBubble.SetActive(true);
 
         barkAnim.SetBool("Bark", true);
+        AudioPlayOneTime();
         yield return new WaitForSeconds(2f);
         barkAnim.SetBool("Bark", false);
         //출력 배열에 반영
@@ -49,5 +53,10 @@ public class BarkNode : MonoBehaviour, INode, IFollowFlow
     public FlowoutPort NextFlow()
     {
         return this.transform.Find("outFlow").GetComponent<FlowoutPort>();
+    }
+
+    public void AudioPlayOneTime()
+    {
+        audioSource.PlayOneShot(audioClip);
     }
 }

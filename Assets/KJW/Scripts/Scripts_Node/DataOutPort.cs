@@ -22,6 +22,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
     private Camera uiCamera;
 
     private NodeData parentNode;
+    //소리
+    //private Canvas canvas;
+    private AutoAudioSetting autoAudioSetting;
 
     void Start()
     {
@@ -37,6 +40,9 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             Debug.LogError("Node 오브젝트를 찾을 수 없습니다.");
         }
         connectedPort = null;
+        //canvas = GetComponentInParent<Canvas>();
+        //autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+        autoAudioSetting = GetComponentInParent<NodeNameManager>().AutoAudioSetting;
     }
 
     //별도의 함수로 분리
@@ -181,6 +187,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         connectedPort.GetComponent<Image>().raycastTarget = false;
 
         DrawArrow();
+        autoAudioSetting.OnClickSound_Index(1);
 
         // 튜토리얼 플래그 추가 240513
         if (FlagManager.instance != null)

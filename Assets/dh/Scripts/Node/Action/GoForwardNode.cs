@@ -19,7 +19,7 @@ public class GoForwardNode : MonoBehaviour, INode, IFollowFlow
     {
         if (NodeManager.Instance.Mode != "run")
         {
-            TestManager.Instance.playerOutput.Add(outputStr);
+            // TestManager.Instance.playerOutput.Add(outputStr);
             yield break;
         }
 
@@ -29,7 +29,9 @@ public class GoForwardNode : MonoBehaviour, INode, IFollowFlow
         }
 
         PlayerControl playerControl = player.GetComponent<PlayerControl>();
-        playerControl.MoveToBlock(playerControl.forwardBlockPos);
+        yield return StartCoroutine(playerControl.MoveToBlock(playerControl.forwardBlockPos));
+
+        yield return new WaitForSeconds(0.3f);
 
     }
 

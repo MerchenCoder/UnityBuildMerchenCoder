@@ -30,6 +30,11 @@ public class IfNode : MonoBehaviour, INode, IFollowFlow
     [NonSerialized] public bool isBreaking;
     [SerializeField] private DataOutPort dataOutPort;
 
+    public bool isInnerLoop = false;
+    public bool isWhileLoop = false;
+    public bool isForLoop = false;
+    public GameObject loopStartNode = null;
+
     void Start()
     {
         // inPort

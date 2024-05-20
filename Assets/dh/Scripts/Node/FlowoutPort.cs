@@ -43,6 +43,10 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
     private Camera uiCamera;
 
+    //소리
+    //private Canvas canvas;
+    private AutoAudioSetting autoAudioSetting;
+
 
 
     void Start()
@@ -52,6 +56,10 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         // originLocalPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
         UpdatePosition();
         isConnected = false;
+
+        //canvas = GetComponentInParent<Canvas>();
+        //autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+        autoAudioSetting = GetComponentInParent<NodeNameManager>().AutoAudioSetting;
 
     }
 
@@ -183,6 +191,7 @@ public class FlowoutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         connectedPort.GetComponent<Image>().raycastTarget = false;
 
         DrawArrow();
+        autoAudioSetting.OnClickSound_Index(1);
     }
 
     public void ReconnectPort()

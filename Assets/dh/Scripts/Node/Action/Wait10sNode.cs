@@ -89,4 +89,7 @@ public class Wait10sNode : MonoBehaviour, INode, IFollowFlow
         playerActionBubble.SetActive(false);
     }
 
+
+
+
 }

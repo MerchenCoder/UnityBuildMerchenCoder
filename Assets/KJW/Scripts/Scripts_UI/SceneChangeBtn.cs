@@ -35,4 +35,12 @@ public class SceneChangeBtn : MonoBehaviour
     {
         SceneChange.Instance.ChangetoCh2Stage();
     }
+
+    public void ChangetoGameScene()
+    {
+        if (!string.IsNullOrEmpty(SceneChange.Instance.beforeScene))
+            SceneChange.Instance.ChangeToThisScene(SceneChange.Instance.beforeScene);
+        else
+            ChangetoHome();
+    }
 }

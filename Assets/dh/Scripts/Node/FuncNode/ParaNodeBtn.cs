@@ -60,8 +60,15 @@ public class ParaNodeBtn : MonoBehaviour
 
     Button btn;
     // Start is called before the first frame update
+
+    [Header("Audio")]
+    [SerializeField] private AutoAudioSetting autoAudioSetting;
+
     void Start()
     {
+        if (autoAudioSetting == null)
+            autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+
         btn = GetComponent<Button>();
         btn.onClick.AddListener(selectParaType);
 
@@ -78,8 +85,11 @@ public class ParaNodeBtn : MonoBehaviour
 
     public void selectParaType()
     {
+
         if (para1Type >= 0 && para2Type >= 0)
         {
+            autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
+
             //매개변수 2개인 경우
             selectParaNodePanel.SetActive(true);
         }
@@ -115,6 +125,8 @@ public class ParaNodeBtn : MonoBehaviour
         Vector2 anchoredPositionOfScrollRect = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
         float newPositionX = Mathf.Abs(anchoredPositionOfScrollRect.x) + centerXInCanvas;
         paraNodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+        // autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
+
     }
 
 

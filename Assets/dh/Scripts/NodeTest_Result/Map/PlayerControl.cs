@@ -47,23 +47,41 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private MapInfo mapInfo;
 
 
+    private Animator playerAnim;
+
+    private void Awake()
+    {
+        NodeManager.Instance.OnRunProgramCompleted += EndPosition;
+    }
+    private void OnDestroy()
+    {
+
+        if (NodeManager.Instance != null)
+        {
+            NodeManager.Instance.OnRunProgramCompleted -= EndPosition;
+        }
+    }
+
 
 
     private void Start()
     {
+        playerAnim = GetComponent<Animator>();
         currentType = type.down;
-        MoveToBlock((0, 0));
+        StartCoroutine(MoveToBlock((0, 0)));
     }
 
     public void PlayerInitiate()
     {
         transform.rotation = Quaternion.identity;
-        currentPos = (0, 0);
+        CurrentPos = (0, 0);
+        CurrentType = type.down;
+
         if (mapInfo.transform.childCount == 0)
         {
             return;
         }
-        MoveToBlock(currentPos);
+        StartCoroutine(MoveToBlock(CurrentPos));
 
     }
 
@@ -71,9 +89,9 @@ public class PlayerControl : MonoBehaviour
 
 
 
-    public void MoveToBlock((int x, int y) forwardBlockPos)
+    public IEnumerator MoveToBlock((int x, int y) forwardBlockPos)
     {
-        if (forwardBlockPos.x < 0 || forwardBlockPos.x > mapInfo.map2DArrayRowCount || forwardBlockPos.y < 0 || forwardBlockPos.y > mapInfo.map2DArrayColumnCount)
+        if (forwardBlockPos.x < 0 || forwardBlockPos.x >= mapInfo.map2DArrayRowCount || forwardBlockPos.y < 0 || forwardBlockPos.y >= mapInfo.map2DArrayColumnCount)
         {
             //index - out of range or Blocked
             Debug.Log("충돌");
@@ -83,7 +101,7 @@ public class PlayerControl : MonoBehaviour
 
 
             //transfrom.positoin 유지
-            return;
+            yield break;
         }
         int blockIndex = 7 * forwardBlockPos.x + forwardBlockPos.y;
         MapBlockType nextBlockType = mapInfo.transform.GetChild(blockIndex).GetComponent<MapBlock>().blockType;
@@ -95,9 +113,12 @@ public class PlayerControl : MonoBehaviour
 
 
             //충돌 애니메이션
-
+            playerAnim.SetBool("Hit", true);
+            yield return new WaitForSeconds(0.5f);
+            playerAnim.SetBool("Hit", false);
 
             //transfrom.positoin 유지
+            yield return null;
         }
 
         else
@@ -113,13 +134,15 @@ public class PlayerControl : MonoBehaviour
             transform.localPosition = Vector3.zero;
 
             //current pos 업데이트
-            currentPos = forwardBlockPos;
+            CurrentPos = forwardBlockPos;
+            yield return null;
         }
     }
 
 
     public void SetForwardBlockPos((int x, int y) currentPos)
     {
+        Debug.Log("forward pos계산 새로하기");
         switch ((int)currentType)
         {
             case 0:
@@ -139,6 +162,16 @@ public class PlayerControl : MonoBehaviour
                 Debug.LogError("ForwardBlockPos를 계산하는데 오류가 발생했습니다");
                 break;
 
+
         }
+        Debug.Log($"forwardpos = {forwardBlockPos.x},{forwardBlockPos.y}");
+    }
+
+
+    public void EndPosition()
+    {
+        string answer = CurrentPos.x.ToString() + "," + CurrentPos.y.ToString();
+        Debug.Log("플레이어 최종 위치 결과배열에 추가 : " + answer);
+        TestManager.Instance.playerOutput.Add(answer);
     }
 }

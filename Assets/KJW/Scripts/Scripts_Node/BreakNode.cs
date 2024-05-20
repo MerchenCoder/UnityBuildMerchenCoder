@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class BreakNode : MonoBehaviour, INode, IFollowFlow
 {
-    [NonSerialized] public GameObject loopStartNode;
-    [NonSerialized] public bool isWhileLoop;
-    [NonSerialized] public bool isForLoop;
+    //[NonSerialized] 
+    public GameObject loopStartNode;
+    //[NonSerialized] 
+    public bool isWhileLoop;
+    //[NonSerialized] 
+    public bool isForLoop;
 
     private void Start()
     {
@@ -21,7 +24,7 @@ public class BreakNode : MonoBehaviour, INode, IFollowFlow
         Debug.Log("break 실행");
         if (isWhileLoop)
         {
-            loopStartNode.GetComponent<WhileNode>().isBreaking = true;
+            loopStartNode.GetComponent<WhileNode_New>().isBreaking = true;
         }
         else if (isForLoop)
         {

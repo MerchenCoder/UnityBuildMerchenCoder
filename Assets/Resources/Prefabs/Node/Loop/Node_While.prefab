@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -360,8 +360,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -720,8 +720,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -863,8 +863,8 @@ GameObject:
   - component: {fileID: 2393888390909764489}
   - component: {fileID: 8943071663902558082}
   - component: {fileID: 6377081715185227109}
-  - component: {fileID: 8980761989220917619}
   - component: {fileID: 6097788905524592504}
+  - component: {fileID: 437861896862453960}
   m_Layer: 5
   m_Name: Node_While
   m_TagString: Untagged
@@ -935,19 +935,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8980761989220917619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339932368298214775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50d9dc32adc119a4098482317e06bc46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dataInPort: {fileID: 9068321456787407605}
 --- !u!114 &6097788905524592504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,3 +948,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDelete: 0
+--- !u!114 &437861896862453960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8339932368298214775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19f1fe99c3aa4a3dae2d7484e30521a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataInPort: {fileID: 9068321456787407605}
+  flowOutPort_AfterLoop: {fileID: 2145601886527648737}
+  isBreaking: 0

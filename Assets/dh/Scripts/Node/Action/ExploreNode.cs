@@ -30,7 +30,7 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
     {
         if (NodeManager.Instance.Mode != "run")
         {
-            TestManager.Instance.playerOutput.Add(outputStr);
+            // TestManager.Instance.playerOutput.Add(outputStr);
             yield break;
         }
         if (map == null)
@@ -47,6 +47,9 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
         (int x, int y) forwardBlockPos = player.GetComponent<PlayerControl>().forwardBlockPos;
         nodeData.data_int = Explore(forwardBlockPos);
         nodeData.ErrorFlag = false;
+
+
+        yield return new WaitForSeconds(0.3f);
 
 
     }
@@ -79,7 +82,7 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
     public int Explore((int x, int y) forwardBlockPos)
     {
         //map을 벗어나는 경우
-        if (forwardBlockPos.x > map.GetComponent<MapInfo>().map2DArrayRowCount || forwardBlockPos.x < 0 || forwardBlockPos.y < 0 || forwardBlockPos.y > map.GetComponent<MapInfo>().map2DArrayColumnCount)
+        if (forwardBlockPos.x >= map.GetComponent<MapInfo>().map2DArrayRowCount || forwardBlockPos.x < 0 || forwardBlockPos.y < 0 || forwardBlockPos.y >= map.GetComponent<MapInfo>().map2DArrayColumnCount)
         {
             return -1;
         }

@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AudioSetting : MonoBehaviour
 {
     public Slider BGMSlider;
     public Slider SFXSlider;
+    public GameObject settingPanel;
 
     private void Start()
     {
-        //BGMSlider = GameObject.Find("Slider Lightpurple").GetComponent<Slider>();
-        //SFXSlider = GameObject.Find("Slider Pinkpurple").GetComponent<Slider>(); ;
+        if (SceneManager.GetActiveScene().name == "Node")
+        {
+            Debug.Log("노드 씬은 설정창이 없기에 로컬에 저장된 볼륨 설정값을 그대로 가져와 적용한다.");
+            float bgmValue = PlayerPrefs.GetFloat("BGMVolume");
+            float sfxValue = PlayerPrefs.GetFloat("SFXVolume");
+            SetBGMVolume(bgmValue);
+            SetSFXVolume(sfxValue);
+            return;
+        }
+
+        settingPanel.SetActive(true);
 
         if (PlayerPrefs.HasKey("BGMVolume"))
         {
@@ -23,6 +34,10 @@ public class AudioSetting : MonoBehaviour
             SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
         }
         else SFXSlider.value = 50f;
+
+        SetBGMVolume(BGMSlider.value);
+        SetSFXVolume(SFXSlider.value);
+        settingPanel.SetActive(false);
     }
 
     private float SliderToDecibel(float sliderValue)
