@@ -14,7 +14,8 @@ public class ControlAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animationAudioControl = result_anim.GetComponent<AnimationAudioControl>();
+        if (result_anim != null)
+            animationAudioControl = result_anim.GetComponent<AnimationAudioControl>();
     }
 
     // Update is called once per frame
