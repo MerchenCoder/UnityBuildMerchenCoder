@@ -23,8 +23,14 @@ public class InputNodeBtn : MonoBehaviour
     float centerXInCanvas;
 
     Button btn;
+
+    [Header("Audio")]
+    [SerializeField] private AutoAudioSetting autoAudioSetting;
+
     void Start()
     {
+        autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+
         controlNodeMenu = GetComponentInParent<ControlNodeMenu>();
         if (controlNodeMenu.name == "NodeMenu")
         {
@@ -68,6 +74,7 @@ public class InputNodeBtn : MonoBehaviour
                         nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
 
                         FlagManager.instance.OffFlag();
+                        autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
                     }
                 }
             }
@@ -83,8 +90,9 @@ public class InputNodeBtn : MonoBehaviour
                 Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
                 float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
                 nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+                autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
             }
-            
+
         }
     }
 

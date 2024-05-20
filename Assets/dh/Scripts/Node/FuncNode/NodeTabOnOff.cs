@@ -7,6 +7,8 @@ public class NodeTabOnOff : MonoBehaviour
 {
     private Animator nodeTabAni;
     private bool isTabOpen = false;
+
+    private AudioSource audioSource;
     // Start is called before the first frame update
     void Awake()
     {
@@ -14,19 +16,29 @@ public class NodeTabOnOff : MonoBehaviour
         this.GetComponent<Button>().onClick.AddListener(NodeTabMotion);
     }
 
-
-    private void OnEnable() {
-        isTabOpen = false;
-        nodeTabAni.SetBool("isOpen",false);
+    private void Start()
+    {
+        audioSource = FindObjectOfType<AudioManager>().GetComponent<AudioSource>();
     }
 
-    public void NodeTabMotion(){
-        if(isTabOpen){
+
+    private void OnEnable()
+    {
+        isTabOpen = false;
+        nodeTabAni.SetBool("isOpen", false);
+    }
+
+    public void NodeTabMotion()
+    {
+        audioSource.GetComponent<AudioControl>().SoundPlayOneShot(0);
+        if (isTabOpen)
+        {
             //닫기
-            nodeTabAni.SetBool("isOpen",false);
+            nodeTabAni.SetBool("isOpen", false);
             isTabOpen = false;
         }
-        else {
+        else
+        {
             //열기
             nodeTabAni.SetBool("isOpen", true);
             isTabOpen = true;

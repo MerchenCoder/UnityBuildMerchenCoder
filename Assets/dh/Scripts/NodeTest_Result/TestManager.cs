@@ -78,6 +78,9 @@ public class TestManager : MonoBehaviour
     private Text rewardTxt;
     private GameObject fail;
 
+    //소리
+    [SerializeField] private AudioControl audioControl;
+
 
     //테스트 케이스 데이터를 가져온다.
     //테스트 케이스가 존재하면 리스트에 차례로 넣어준다.
@@ -293,7 +296,9 @@ public class TestManager : MonoBehaviour
             if (NodeManager.Instance.CompileError || !result) //컴파일 오류가 있거나 결과가 output 배열과 다른 경우
             {
                 Debug.Log((i + 1).ToString() + " 번째 테스트 케이스 실패. 채점 종료"); //실패 안내 관련 로직으로 변경해야함.
+
                 yield return new WaitForSeconds(1.5f);
+                audioControl.SoundPlayOneShot(7);
                 fail.gameObject.SetActive(true);
                 StopAllCoroutines();
                 yield break;
@@ -311,14 +316,17 @@ public class TestManager : MonoBehaviour
         bool result = CheckAnswer();
         if (NodeManager.Instance.CompileError || !result) //컴파일 오류가 있거나 결과가 output 배열과 다른 경우
         {
+            audioControl.SoundPlayOneShot(7);
             Debug.Log("컴파일 오류로 채점 종료"); //실패 안내 관련 로직으로 변경해야함.
             Thread.Sleep(1500);
             fail.gameObject.SetActive(true);
+
         }
 
     }
     public void Success()
     {
+        audioControl.SoundPlayOneShot(6);
         Debug.Log("모든 테스트 케이스를 통과하였습니다.");
         Debug.Log("채점종료");
         MissionClear();

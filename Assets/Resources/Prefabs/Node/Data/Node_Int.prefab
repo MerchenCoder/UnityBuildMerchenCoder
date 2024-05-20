@@ -970,6 +970,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2267606171649105003}
+        m_TargetAssemblyTypeName: NodeNameManager, Assembly-CSharp
+        m_MethodName: NodeComponentClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7507253619389521231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1115,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2267606171649105003}
+        m_TargetAssemblyTypeName: NodeNameManager, Assembly-CSharp
+        m_MethodName: NodeComponentClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7856773599493678984
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1139,7 @@ GameObject:
   - component: {fileID: 6278177986310143062}
   - component: {fileID: 6505957134773863061}
   - component: {fileID: 1576998406801064596}
+  - component: {fileID: 2020390903088413266}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -1290,3 +1315,19 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!114 &2020390903088413266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7856773599493678984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375c0304119004a4093b679aefc98be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isNode: 1
+  nodeNameManager: {fileID: 2267606171649105003}
+  autoAudioSetting: {fileID: 0}
+  index: 9

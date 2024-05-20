@@ -16,9 +16,16 @@ public class FuncNodeBtn : MonoBehaviour
     RectTransform canvasRect;
     // 캔버스 상의 가운데 위치 계산
     float centerXInCanvas;
+    [Header("Audio")]
+    [SerializeField] private AutoAudioSetting autoAudioSetting;
+
 
     private void OnEnable()
     {
+        // if (autoAudioSetting == null)
+        // {
+        //     autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+        // }
         // spawnPoint = transform.GetComponentInParent<Canvas>().transform.GetChild(0).transform;
 
         btn = GetComponent<Button>();
@@ -26,6 +33,14 @@ public class FuncNodeBtn : MonoBehaviour
         btn.onClick.AddListener(MakeInstance);
 
 
+    }
+
+    private void Start()
+    {
+        if (autoAudioSetting == null)
+        {
+            autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+        }
     }
 
     private void MakeInstance()
@@ -54,6 +69,8 @@ public class FuncNodeBtn : MonoBehaviour
             funcNodeInstance.transform.SetParent(spawnPoint, false);
             funcNodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
             funcNodeInstance.GetComponent<FuncNode>().Type = funcNode.GetComponent<FuncNode>().Type;
+            autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
+
 
         }
 

@@ -8,6 +8,7 @@ public class NodeMenuBtn : MonoBehaviour
     [Header("Prefab")]
     //노드 프리랩
     public GameObject nodePrefab;
+
     //spawn 위치
 
     private GameObject spawnCanvas;
@@ -20,8 +21,15 @@ public class NodeMenuBtn : MonoBehaviour
     float centerXInCanvas;
 
     Button btn;
+
+    [Header("Audio")]
+    [SerializeField] private AutoAudioSetting autoAudioSetting;
+
     void Start()
     {
+        autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+
+
         controlNodeMenu = GetComponentInParent<ControlNodeMenu>();
         if (controlNodeMenu.name == "NodeMenu")
         {
@@ -52,6 +60,7 @@ public class NodeMenuBtn : MonoBehaviour
             {
                 if (nodePrefab != null)
                 {
+
                     GameObject nodeInstance = Instantiate(nodePrefab);
                     nodeInstance.transform.SetParent(spawnPoint, false);
                     Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
@@ -59,6 +68,8 @@ public class NodeMenuBtn : MonoBehaviour
                     nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
 
                     FlagManager.instance.OffFlag();
+
+                    autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
                 }
             }
         }
@@ -69,6 +80,7 @@ public class NodeMenuBtn : MonoBehaviour
             Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
             float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
             nodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+            autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
         }
     }
 

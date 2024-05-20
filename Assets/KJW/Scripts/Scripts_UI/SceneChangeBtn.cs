@@ -38,6 +38,9 @@ public class SceneChangeBtn : MonoBehaviour
 
     public void ChangetoGameScene()
     {
-        SceneChange.Instance.ChangeToThisScene(SceneChange.Instance.beforeScene);
+        if (!string.IsNullOrEmpty(SceneChange.Instance.beforeScene))
+            SceneChange.Instance.ChangeToThisScene(SceneChange.Instance.beforeScene);
+        else
+            ChangetoHome();
     }
 }

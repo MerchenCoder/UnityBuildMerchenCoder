@@ -11,9 +11,16 @@ public class ReturnNodeBtn : MonoBehaviour
     float centerXInCanvas;
 
     Button btn;
+    [Header("Audio")]
+    [SerializeField] private AutoAudioSetting autoAudioSetting;
+
 
     private void Start()
     {
+        if (autoAudioSetting == null)
+        {
+            autoAudioSetting = GetComponentInParent<AutoAudioSetting>();
+        }
         btn = GetComponent<Button>();
         btn.onClick.AddListener(MakeInstance);
 
@@ -44,5 +51,7 @@ public class ReturnNodeBtn : MonoBehaviour
         Vector2 anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
         float newPositionX = Mathf.Abs(anchoredPosition.x) + centerXInCanvas;
         returnNodeInstance.transform.localPosition = new Vector3(newPositionX, 0, 0);
+        autoAudioSetting.OnClickSound_Index(0);//0520 사운드추가
+
     }
 }

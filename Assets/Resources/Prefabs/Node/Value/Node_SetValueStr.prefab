@@ -182,6 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2549242125987896261}
   - component: {fileID: 1136371985351209541}
+  - component: {fileID: 2394846042271726697}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -259,6 +260,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &2394846042271726697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148603645345436347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375c0304119004a4093b679aefc98be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isNode: 1
+  nodeNameManager: {fileID: 6968005573798402295}
+  autoAudioSetting: {fileID: 0}
+  index: 0
 --- !u!1 &1336826145777034987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,6 +1801,7 @@ GameObject:
   - component: {fileID: 1340580368051592071}
   - component: {fileID: 3214172602008054045}
   - component: {fileID: 8841669244074870887}
+  - component: {fileID: 3426117437261932236}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: data_string
@@ -1946,6 +1964,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 0}
+--- !u!114 &3426117437261932236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105246262873671120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375c0304119004a4093b679aefc98be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isNode: 1
+  nodeNameManager: {fileID: 6968005573798402295}
+  autoAudioSetting: {fileID: 0}
+  index: 0
 --- !u!1 &8238816798644747365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2068,3 +2102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e952ee1244fde3a49b3d665498cb54e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data_int: 0
+  data_string: 
+  data_bool: 0
