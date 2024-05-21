@@ -19,12 +19,14 @@ public class DialogueBtn : MonoBehaviour
     void Start()
     {
         dialogueBubbleBtn = GetComponent<Button>();
-        dialogueBubbleBtn.interactable = false;
         player = GameObject.FindWithTag("Player");
 
-        dialogueBubbleBtn.onClick.RemoveAllListeners();
-        dialogueBubbleBtn.onClick.AddListener(SavePlayerPosition);
-
+        if (dialogueBubbleBtn != null)
+        {
+            dialogueBubbleBtn.interactable = false;
+            dialogueBubbleBtn.onClick.RemoveAllListeners();
+            dialogueBubbleBtn.onClick.AddListener(SavePlayerPosition);
+        }
         dialogue = GetComponent<Dialogue>();
     }
 

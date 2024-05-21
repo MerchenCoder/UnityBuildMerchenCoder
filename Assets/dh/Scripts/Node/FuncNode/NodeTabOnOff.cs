@@ -30,7 +30,11 @@ public class NodeTabOnOff : MonoBehaviour
 
     public void NodeTabMotion()
     {
-        audioSource.GetComponent<AudioControl>().SoundPlayOneShot(0);
+        if (audioSource != null) audioSource.GetComponent<AudioControl>().SoundPlayOneShot(0);
+        else
+        {
+            GetComponent<AudioSource>().Play();
+        }
         if (isTabOpen)
         {
             //닫기
