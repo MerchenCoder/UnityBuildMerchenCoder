@@ -367,7 +367,7 @@ PlayableDirector:
   - key: {fileID: 3620159559863506267, guid: 331986404173979438236f5c999299a4, type: 2}
     value: {fileID: 2092371502}
   - key: {fileID: 4636779889954744399, guid: 331986404173979438236f5c999299a4, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 830821217}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &84248359
@@ -591,15 +591,15 @@ RectTransform:
   m_GameObject: {fileID: 86710865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 613993002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2100, y: 1600}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &86710867
 MonoBehaviour:
@@ -5190,6 +5190,11 @@ SpriteRenderer:
 --- !u!4 &830821214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3709765209367542130, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
+  m_PrefabInstance: {fileID: 759380992}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &830821217 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8244812288680481499, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
   m_PrefabInstance: {fileID: 759380992}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &856128245
