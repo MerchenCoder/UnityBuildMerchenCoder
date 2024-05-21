@@ -98,6 +98,7 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
                 yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk(stringData);
                 audioSource.Stop();
                 audioSource.loop = false;
+
                 // playerChatBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>(true).text = stringData;
                 // playerChatBubble.SetActive(true);
                 // // Invoke("DisableChatBubbleAfterTime", 2f);
