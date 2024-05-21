@@ -95,6 +95,7 @@ public class ParaNodeBtn : MonoBehaviour
         }
         else
         {
+            autoAudioSetting.OnClickSound_Index(0);
             if (para1Type >= 0)
             {
                 MakeInstance(1);
