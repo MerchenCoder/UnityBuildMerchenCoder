@@ -7,19 +7,16 @@ using System.Linq;
 public class InfoPagesController : MonoBehaviour
 {
     ToggleGroup toggleGroup;
+
     private void Awake()
     {
         toggleGroup = GetComponent<ToggleGroup>();
     }
+
     private void SetActiveFalseAllPages()
     {
         toggleGroup.SetAllTogglesOff();
-        // for (int i = 1; i < transform.childCount; i++)
-        // {
-        //    
-        // }
     }
-
 
     public void InfoTabButtonOnClick(string objectName)
     {
@@ -50,5 +47,4 @@ public class InfoPagesController : MonoBehaviour
             }
         }
     }
-
 }

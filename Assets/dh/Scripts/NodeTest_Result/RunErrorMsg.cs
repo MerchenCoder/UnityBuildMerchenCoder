@@ -32,6 +32,14 @@ public class RunErrorMsg : MonoBehaviour
         refreshCanvas.PlayRunCompleteSound();
         State.text = "실행 완료";
         State.color = Color.blue;
+
+        if (FlagManager.instance != null)
+        {
+            if (FlagManager.instance.flagStr == "RunEnd")
+            {
+                FlagManager.instance.OffFlag();
+            }
+        }
     }
 
 

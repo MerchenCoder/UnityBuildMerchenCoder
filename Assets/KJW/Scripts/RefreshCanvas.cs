@@ -65,7 +65,8 @@ public class RefreshCanvas : MonoBehaviour
 
         foreach (MonoBehaviour script in allScripts)
         {
-            script.StopAllCoroutines();
+            if(script.gameObject.name != "Canvas_Tuto")
+                script.StopAllCoroutines();
         }
         LoadOriginPosition();
 

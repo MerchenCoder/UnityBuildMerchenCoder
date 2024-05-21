@@ -101,6 +101,15 @@ public class runNode : MonoBehaviour
         {
             //Debug.Log("allEndPortsConnected: " + allEndPortsConnected);
             //Debug.Log("startFlowConnected: " + startFlowConnected);
+
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "RunActive")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
+
             return true;
         }
         else

@@ -313,16 +313,6 @@ public class NodeManager : MonoBehaviour
                 print("오답 -> 실패 애니메이션 실행");
                 yield return resultCanvas.GetComponent<ControlAnimation>().Fail();
             }
-
-            // 튜토리얼 플래그 추가 240513
-            if (FlagManager.instance != null)
-            {
-                if (FlagManager.instance.flagStr == "RunEnd")
-                {
-                    FlagManager.instance.OffFlag();
-                }
-            }
-
         }
 
         resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
