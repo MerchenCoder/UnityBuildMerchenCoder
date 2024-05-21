@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 1475264022}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 8
@@ -943,7 +943,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1475264023}
+        - m_Target: {fileID: 1475264022}
           m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
           m_MethodName: MoveLeftDown
           m_Mode: 1
@@ -959,7 +959,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1475264023}
+        - m_Target: {fileID: 1475264022}
           m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
           m_MethodName: MoveLeftUp
           m_Mode: 1
@@ -1437,7 +1437,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1475264023}
+        - m_Target: {fileID: 1475264022}
           m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
           m_MethodName: MoveRightDown
           m_Mode: 1
@@ -1453,7 +1453,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1475264023}
+        - m_Target: {fileID: 1475264022}
           m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
           m_MethodName: MoveRightUp
           m_Mode: 1
@@ -4065,12 +4065,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
---- !u!4 &1475264022 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3709765209367542130, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
-  m_PrefabInstance: {fileID: 1475264021}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1475264023 stripped
+--- !u!114 &1475264022 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2207070972205307338, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
   m_PrefabInstance: {fileID: 1475264021}

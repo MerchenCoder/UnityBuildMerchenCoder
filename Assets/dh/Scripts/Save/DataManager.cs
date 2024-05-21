@@ -39,8 +39,8 @@ public class DataManager : MonoBehaviour
     //불러오기
     public void LoadGameStatusData()
     {
-        //Debug.Log("DataManager LoadGameStatusData");
-        // Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
+        Debug.Log("DataManager LoadGameStatusData");
+        Debug.Log("챕터/미션 상태 데이터 저장 위치 : " + Application.persistentDataPath);
         string filePath = Path.Combine(Application.persistentDataPath, "Data", GameDataFileName); //배포시 사용하는 파일 경로
 
         if (File.Exists(filePath)) //저장된 게임이 있다면
@@ -54,7 +54,7 @@ public class DataManager : MonoBehaviour
         {
             // 파일이 없을 경우 초기값 설정 후 저장
             Debug.Log("로컬에 저장된 GameStatusData 데이터 없음");
-            //InitializeGameStatusData();
+            InitializeGameStatusData();
         }
 
     }

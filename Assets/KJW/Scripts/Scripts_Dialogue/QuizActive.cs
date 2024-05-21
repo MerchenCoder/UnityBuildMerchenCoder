@@ -34,19 +34,43 @@ public class QuizActive : MonoBehaviour
             if (GameManager.Instance.CheckPlayProgress(ppc.activePlayPoint))
             {
                 string[] chapter_mission = missionCode.Split("-");
-                if (DataManager.Instance.gameStateData.ch1MissionClear[int.Parse(chapter_mission[1]) - 1]) // 미션 클리어 확인
+                if(chapter_mission[0] == "1")
                 {
-                    Debug.Log("MissionClear");
-                    if (AfterMissionDialogue != null)
+                    if (DataManager.Instance.gameStateData.ch1MissionClear[int.Parse(chapter_mission[1]) - 1]) // 미션 클리어 확인
                     {
-                        AfterMissionDialogue.SetActive(true);
-                        transform.gameObject.SetActive(false);
+                        Debug.Log("MissionClear");
+                        if (AfterMissionDialogue != null)
+                        {
+                            AfterMissionDialogue.SetActive(true);
+                            transform.gameObject.SetActive(false);
+                        }
+                    }
+                    else // 미션 미클리어
+                    {
+                        if (AfterMissionDialogue != null) AfterMissionDialogue.SetActive(false);
                     }
                 }
-                else // 미션 미클리어
+                else if (chapter_mission[0] == "2")
                 {
-                    if (AfterMissionDialogue != null) AfterMissionDialogue.SetActive(false);
+                    if (DataManager.Instance.gameStateData.ch2MissionClear[int.Parse(chapter_mission[1]) - 1]) // 미션 클리어 확인
+                    {
+                        Debug.Log("MissionClear");
+                        if (AfterMissionDialogue != null)
+                        {
+                            AfterMissionDialogue.SetActive(true);
+                            transform.gameObject.SetActive(false);
+                        }
+                    }
+                    else // 미션 미클리어
+                    {
+                        if (AfterMissionDialogue != null) AfterMissionDialogue.SetActive(false);
+                    }
                 }
+                else
+                {
+                    Debug.LogError("Mission Code Error");
+                }
+                
             }
         }
     }

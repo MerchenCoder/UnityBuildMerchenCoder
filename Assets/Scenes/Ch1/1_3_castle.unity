@@ -192,7 +192,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 1454066698}
   m_Follow: {fileID: 1454066698}
   m_Lens:
     FieldOfView: 40
@@ -2779,7 +2779,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 10.065939, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2790,7 +2790,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 21.131878, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &856128245
 GameObject:
@@ -3971,7 +3971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1379477123}
   - component: {fileID: 1379477125}
-  - component: {fileID: 1379477124}
+  - component: {fileID: 1379477126}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -3994,7 +3994,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 59980907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1379477124
+--- !u!114 &1379477125
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379477122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1379477126
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4021,8 +4033,8 @@ MonoBehaviour:
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.22
-  m_SoftZoneHeight: 0.86
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -4037,18 +4049,6 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!114 &1379477125
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379477122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1392817214
 GameObject:
   m_ObjectHideFlags: 0
@@ -4967,7 +4967,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: ab9d46194080536438e56e438d550ea0, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 9d360f48a3ecc6740b86619b5a43b463, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 30147a3c43411364f91869fb7fb3891a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.441
   m_Pitch: 1
@@ -9058,7 +9058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d46c7f177ccfe40bcf16acbae85111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activePlayPoint: Mission1-12Y
+  activePlayPoint: none
 --- !u!1001 &4789093372704981999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10119,7 +10119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d46c7f177ccfe40bcf16acbae85111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activePlayPoint: Mission1-12Y
+  activePlayPoint: none
 --- !u!212 &8900421464593870993
 SpriteRenderer:
   m_ObjectHideFlags: 0
