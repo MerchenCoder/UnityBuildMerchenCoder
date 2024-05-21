@@ -12,14 +12,41 @@ public class AudioSetting : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Node")
+        //0522 도현 수정 ===========================================//
+        if (settingPanel == null)
         {
-            Debug.Log("노드 씬은 설정창이 없기에 로컬에 저장된 볼륨 설정값을 그대로 가져와 적용한다.");
-            float bgmValue = PlayerPrefs.GetFloat("BGMVolume");
-            float sfxValue = PlayerPrefs.GetFloat("SFXVolume");
-            SetBGMVolume(bgmValue);
-            SetSFXVolume(sfxValue);
-            return;
+            if (!PlayerPrefs.HasKey("BGMVolume") && !PlayerPrefs.HasKey("SFXVolume"))
+            {
+                Debug.Log("첫 시작, 설정된 볼륨 없음");
+                float bgmValue = 50f;
+                float sfxValue = 50f;
+                SetBGMVolume(bgmValue);
+                SetSFXVolume(sfxValue);
+                return;
+            }
+            else
+            {
+                if (SceneManager.GetActiveScene().name == "Node")
+                {
+                    Debug.Log("노드 씬은 설정창이 없기에 로컬에 저장된 볼륨 설정값을 그대로 가져와 적용한다.");
+                    float bgmValue = PlayerPrefs.GetFloat("BGMVolume");
+                    float sfxValue = PlayerPrefs.GetFloat("SFXVolume");
+                    SetBGMVolume(bgmValue);
+                    SetSFXVolume(sfxValue);
+                    return;
+                }
+                if (SceneManager.GetActiveScene().name == "Splash")
+                {
+                    Debug.Log("스플래시 씬은 설정창이 없기에 로컬에 저장된 볼륨 설정값을 그대로 가져와 적용한다.");
+                    float bgmValue = PlayerPrefs.GetFloat("BGMVolume");
+                    float sfxValue = PlayerPrefs.GetFloat("SFXVolume");
+                    SetBGMVolume(bgmValue);
+                    SetSFXVolume(sfxValue);
+                    return;
+
+                }
+            }
+            //===========================================================//
         }
 
         settingPanel.SetActive(true);
@@ -64,5 +91,16 @@ public class AudioSetting : MonoBehaviour
         {
             AudioManager.instance.SetSFXVolume(dB);
         }
+    }
+
+
+    //0522 도현 디버깅용 메소드 추가===========//
+    public void RemoveAudioSettingData()
+    {
+        Debug.Log("audio playerprefs 키 삭제");
+        PlayerPrefs.DeleteKey("BGMVolume");
+        PlayerPrefs.DeleteKey("SFXVolume");
+
+
     }
 }

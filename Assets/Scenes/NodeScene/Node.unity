@@ -1135,7 +1135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0029296875
+      value: -0.0061035156
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3770,6 +3770,7 @@ GameObject:
   - component: {fileID: 1386293808}
   - component: {fileID: 1386293807}
   - component: {fileID: 1386293806}
+  - component: {fileID: 1386293809}
   m_Layer: 0
   m_Name: SoundEffectAudioSource
   m_TagString: Untagged
@@ -3912,6 +3913,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1386293809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386293805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04171b45bc929ce4f97386ab7e9f9e96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMSlider: {fileID: 0}
+  SFXSlider: {fileID: 0}
+  settingPanel: {fileID: 0}
 --- !u!1 &1446419672 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 797567237971509508, guid: 8756a284c44d749ad8d82e6b9e118a50, type: 3}
