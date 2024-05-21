@@ -15,6 +15,9 @@ public class PowderNode : MonoBehaviour, INode, IFollowFlow
     private DataInPort dataInPort;
     private string stringData;
     private GameObject playerChatBubble;
+    [Header("Sound")]
+    public AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,8 @@ public class PowderNode : MonoBehaviour, INode, IFollowFlow
     }
     public IEnumerator Execute()
     {
+        if (audioSource == null)
+            audioSource = nodeNameManager.AutoAudioSetting.AudioSource;
         if (!dataInPort.IsConnected)
         {
             Debug.Log("데이터포트 연결 안됨");
@@ -49,10 +54,17 @@ public class PowderNode : MonoBehaviour, INode, IFollowFlow
                     powderAnim = player.GetComponentInChildren<Animator>(true);
                 }
 
+
+                audioSource.clip = audioClip;
+                audioSource.loop = true;
+                audioSource.Play();
                 powderAnim.SetBool("Powder", true);
                 yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk("가루 " + stringData + " 넣기");
                 TestManager.Instance.playerOutput.Add(stringData + outputStr);
+                audioSource.Stop();
+                audioSource.loop = true;
                 powderAnim.SetBool("Powder", false);
+
                 yield return new WaitForSeconds(0.5f);
 
 
