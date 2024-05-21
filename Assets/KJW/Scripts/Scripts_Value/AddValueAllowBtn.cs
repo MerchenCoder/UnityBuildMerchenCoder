@@ -50,6 +50,17 @@ public class AddValueAllowBtn : MonoBehaviour
             // 혹시 변수 블록 생성되면 쓸 코드
             ////addedValue = Instantiate(valuePrefab, transform.parent);
             ////addedValue.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inputField.text;
+            ///
+
+            // 튜토리얼 플래그 추가 240522
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "SetValuableName")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
+
         }
         else
         {
