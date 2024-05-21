@@ -14,10 +14,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        cardContainer = transform.parent.GetComponent<CardContainer>();
-        audioSource = GetComponent<AudioSource>();
-        isHiding = true;
+        Init();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -27,6 +24,15 @@ public class Card : MonoBehaviour, IPointerClickHandler
             Show();
             cardContainer.SelectCard(this);
         }
+    }
+
+    public void Init()
+    {
+        isHiding = true;
+        GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        animator = GetComponent<Animator>();
+        cardContainer = transform.parent.GetComponent<CardContainer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Show()

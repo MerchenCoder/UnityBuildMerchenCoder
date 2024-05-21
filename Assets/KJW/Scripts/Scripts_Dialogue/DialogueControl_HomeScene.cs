@@ -17,7 +17,8 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     public GameObject setNamePanel;
 
-    public AudioSource alarm;
+    private AudioSource audioSource;
+    public AudioClip alarm;
 
     bool isFirstDiaEnd;
     bool isChap1_5_DiaEnd;
@@ -25,7 +26,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     void Start()
     {
-        alarm = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 
         if (dialogueSystem != null)
         {
@@ -117,8 +118,8 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     IEnumerator FirstPlayFlow()
     {
-        // message alarm SFX will be added
-        alarm.Play();
+        // message audioSource SFX will be added
+        audioSource.PlayOneShot(alarm);
         yield return new WaitForSeconds(1f);
         messagePanel1.SetActive(true);
         yield return new WaitForSeconds(5f);
@@ -130,8 +131,8 @@ public class DialogueControl_HomeScene : MonoBehaviour
     IEnumerator Chap1_5_PlayFlow()
     {
         playCanvas.SetActive(false);
-        // message alarm SFX will be added
-        alarm.Play();
+        // message audioSource SFX will be added
+        audioSource.PlayOneShot(alarm);
         yield return new WaitForSeconds(1f);
         messagePanel2.SetActive(true);
         yield return new WaitForSeconds(5f);
