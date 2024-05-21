@@ -24,7 +24,7 @@ public class AnnaSleep : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.CheckPlayProgress("Chap2Start"))
+        if (GameManager.Instance.CheckPlayProgress("Chap2Start") || GameManager.Instance.CheckPlayProgress("Mission2-1N"))
         {
             RotateImage();
         }
