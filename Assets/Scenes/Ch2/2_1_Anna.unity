@@ -2732,6 +2732,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 677011951523544893, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
   m_PrefabInstance: {fileID: 603210985}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &615893564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6538519086352095224, guid: 11d48d74e57ad4ed299c4806a55f992d, type: 3}
+  m_PrefabInstance: {fileID: 1873795119}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &639135313
 GameObject:
   m_ObjectHideFlags: 0
@@ -3730,6 +3741,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1016945369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &725698686 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3797610567263851520, guid: 11d48d74e57ad4ed299c4806a55f992d, type: 3}
+  m_PrefabInstance: {fileID: 1873795119}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &726448221
 GameObject:
   m_ObjectHideFlags: 0
@@ -4804,6 +4826,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9086778223709405116, guid: e9b7b54ae002e416e862a6e27b297dbf, type: 3}
+      propertyPath: BGMSlider
+      value: 
+      objectReference: {fileID: 615893564}
+    - target: {fileID: 9086778223709405116, guid: e9b7b54ae002e416e862a6e27b297dbf, type: 3}
+      propertyPath: SFXSlider
+      value: 
+      objectReference: {fileID: 725698686}
+    - target: {fileID: 9086778223709405116, guid: e9b7b54ae002e416e862a6e27b297dbf, type: 3}
+      propertyPath: settingPanel
+      value: 
+      objectReference: {fileID: 1721419805}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7241,6 +7275,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: m_TagString
+      value: AfterQuizDia
+      objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueID
       value: 45
@@ -7785,13 +7823,21 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.06801224
       objectReference: {fileID: 0}
+    - target: {fileID: 1437863240389300583, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: m_Name
       value: dialogue_Btn_After_2_1
       objectReference: {fileID: 0}
     - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: m_TagString
+      value: AfterQuizDia
       objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueID
@@ -7997,6 +8043,10 @@ PrefabInstance:
     - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: m_TagString
+      value: AfterQuizDia
       objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueID
@@ -8473,6 +8523,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1721419805 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5318798055998471684, guid: 11d48d74e57ad4ed299c4806a55f992d, type: 3}
+  m_PrefabInstance: {fileID: 1873795119}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1770009415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8580,6 +8635,10 @@ PrefabInstance:
     - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635193914497269377, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
+      propertyPath: m_TagString
+      value: AfterQuizDia
       objectReference: {fileID: 0}
     - target: {fileID: 5390795144311911504, guid: 43d40fd206541bc4aae91a54b8128d9f, type: 3}
       propertyPath: dialogueID
@@ -8832,6 +8891,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7176692499451429662, guid: bb86d05ea9b75be4e8377060467cf1b1, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176692499451429662, guid: bb86d05ea9b75be4e8377060467cf1b1, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 865ade77048773249a2fa3651bb98ef0, type: 3}
@@ -9024,11 +9087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 18.16
+      value: 292.764
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 18.099
+      value: 191.579
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_LocalScale.x
@@ -9072,11 +9135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.48
+      value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.11928582
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

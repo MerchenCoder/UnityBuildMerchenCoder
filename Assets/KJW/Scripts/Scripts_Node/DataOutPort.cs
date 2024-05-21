@@ -111,32 +111,70 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
 
-        // UI ��ҿ��� �浹 ���� Ȯ��
-        foreach (RaycastResult result in results)
+        // 튜토리얼 플래그 추가 240513
+        if (FlagManager.instance != null)
         {
-            if (result.gameObject.GetComponent<BoxCollider2D>() != null)
+            if (FlagManager.instance.flagStr == "ConnectData")
             {
-                if (result.gameObject.CompareTag(this.gameObject.tag) || (result.gameObject.CompareTag("data_all")))
+                // UI ��ҿ��� �浹 ���� Ȯ��
+                foreach (RaycastResult result in results)
                 {
-
-                    if (connectedPort != null && (connectedPort != result.gameObject))
+                    if (result.gameObject.GetComponent<BoxCollider2D>() != null)
                     {
-                        if (connectedPort.GetComponent<DataInPort>().isAllType)
+                        if (result.gameObject.CompareTag(this.gameObject.tag) || (result.gameObject.CompareTag("data_all")))
                         {
-                            connectedPort.tag = "data_all";
+
+                            if (connectedPort != null && (connectedPort != result.gameObject))
+                            {
+                                if (connectedPort.GetComponent<DataInPort>().isAllType)
+                                {
+                                    connectedPort.tag = "data_all";
+                                }
+                                connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                                connectedPort = null;
+                            }
+                            connectedPort = result.gameObject;
+                            ConnectPort();
+                            isConnected = true;
+                            // SendData();
+                            connectedPort.GetComponent<DataInPort>().IsConnected = true;
+                            FlagManager.instance.OffFlag();
+                            return; //서로 다른 노드의 포트 겹쳐져있을 때 하나만 인식하도록 해야함(2/13추가)
                         }
-                        connectedPort.GetComponent<DataInPort>().IsConnected = false;
-                        connectedPort = null;
                     }
-                    connectedPort = result.gameObject;
-                    ConnectPort();
-                    isConnected = true;
-                    // SendData();
-                    connectedPort.GetComponent<DataInPort>().IsConnected = true;
-                    return; //서로 다른 노드의 포트 겹쳐져있을 때 하나만 인식하도록 해야함(2/13추가)
                 }
             }
         }
+        else
+        {
+            // UI ��ҿ��� �浹 ���� Ȯ��
+            foreach (RaycastResult result in results)
+            {
+                if (result.gameObject.GetComponent<BoxCollider2D>() != null)
+                {
+                    if (result.gameObject.CompareTag(this.gameObject.tag) || (result.gameObject.CompareTag("data_all")))
+                    {
+
+                        if (connectedPort != null && (connectedPort != result.gameObject))
+                        {
+                            if (connectedPort.GetComponent<DataInPort>().isAllType)
+                            {
+                                connectedPort.tag = "data_all";
+                            }
+                            connectedPort.GetComponent<DataInPort>().IsConnected = false;
+                            connectedPort = null;
+                        }
+                        connectedPort = result.gameObject;
+                        ConnectPort();
+                        isConnected = true;
+                        // SendData();
+                        connectedPort.GetComponent<DataInPort>().IsConnected = true;
+                        return; //서로 다른 노드의 포트 겹쳐져있을 때 하나만 인식하도록 해야함(2/13추가)
+                    }
+                }
+            }
+        }
+        
         if (!isConnected)
         {
             transform.position = originVector3;
@@ -188,15 +226,6 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
 
         DrawArrow();
         autoAudioSetting.OnClickSound_Index(1);
-
-        // 튜토리얼 플래그 추가 240513
-        if (FlagManager.instance != null)
-        {
-            if (FlagManager.instance.flagStr == "ConnectData")
-            {
-                FlagManager.instance.OffFlag();
-            }
-        }
     }
 
     public void ReconnectPort()

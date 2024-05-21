@@ -29,6 +29,7 @@ public class DialogueSystemForTuto : MonoBehaviour
     public AudioSource audioSource;
 
     string nowFlag;
+    private Canvas canvas;
 
     public GameObject BGpanel;
     public NodeTabOnOff NodeTabOnOff;
@@ -40,11 +41,13 @@ public class DialogueSystemForTuto : MonoBehaviour
 
     void Start()
     {
+        
     }
 
 
     private void Init()
     {
+        canvas = GetComponent<Canvas>();
         diaListIndex = 0;
         audioSource = GetComponent<AudioSource>();
         right_Panel.gameObject.SetActive(false);
@@ -71,6 +74,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         }
         else
         {
+            canvas.sortingOrder = 1;
             if (diaIndex >= nowDialogueList.Length - 1) // 대사 끝났을 시 대화 종료
             {
                 EndDialogue();
@@ -91,6 +95,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         fullText = dia;
         if (interaction == null || interaction == "") // 인터렉션이 없는 경우
         {
+            canvas.sortingOrder = 20;
             if (infoTabName == "" || infoTabName == null)
             {
                 infoPanel.SetActive(false);
@@ -106,20 +111,23 @@ public class DialogueSystemForTuto : MonoBehaviour
         }
         else // 인터렉션이 있는 경우
         {
+            isDoneTyping = true;
             infoPanel.SetActive(false);
             right_Panel.SetActive(false);
             BGpanel.SetActive(false);
             nowFlag = interaction;
             FlagManager.instance.SetFlag(nowFlag);
             right_Panel.SetActive(false);
+
+            Debug.Log(interaction);
         }
     }
 
     public void FlagSignal()
     {
         isDoneTyping = true;
-        NextSpeak();
         nowFlag = null;
+        NextSpeak();        
     }
 
      void RightSpeakerActive()

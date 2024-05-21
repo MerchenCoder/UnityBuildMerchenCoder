@@ -43,7 +43,7 @@ public class FlagManager : MonoBehaviour
     public void OffFlag()
     {
         Debug.Log("off flag: " + flagStr);
-        DialogueSystemForTuto.FlagSignal();
         flagStr = "";
+        DialogueSystemForTuto.FlagSignal();
     }
 }
