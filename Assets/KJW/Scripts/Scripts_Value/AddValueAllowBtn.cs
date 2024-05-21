@@ -16,6 +16,16 @@ public class AddValueAllowBtn : MonoBehaviour
         // if (valueManager == null)
         //     //valueManager = GameObject.Find("ValueManager").gameObject.GetComponent<ValueManager>();
         //     valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
+
+        if (GetComponentInParent<Canvas>(true).name == "Canvas_UI")
+        {
+            Debug.Log("a;lfjasfl;saf;lj");
+            valueManager = GameObject.Find("MainCanvas").GetComponentInChildren<ValueManager>(true);
+        }
+        else
+        {
+            valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
+        }
     }
 
     public void AddValue()
