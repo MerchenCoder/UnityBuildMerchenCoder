@@ -42,7 +42,8 @@ public class PrintNode : MonoBehaviour, INode, IFollowFlow
 
     IEnumerator INode.Execute()
     {
-        audioSource = nameManager.AutoAudioSetting.AudioSource;
+        if (audioSource == null)
+            audioSource = nameManager.AutoAudioSetting.AudioSource;
         if (!dataInPort.IsConnected)
         {
             Debug.Log("프린트노드 연결안됨");

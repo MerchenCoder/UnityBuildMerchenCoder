@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GoForwardNode : MonoBehaviour, INode, IFollowFlow
 {
+
     public string outputStr;
     private NodeNameManager nodeNameManager;
     private GameObject player;

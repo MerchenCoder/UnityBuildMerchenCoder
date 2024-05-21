@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+
+    private AnimationAudioControl animationAudioControl;
+
+
     public enum type { down = 0, left, right, up };
     [SerializeField]
     private type currentType;
@@ -68,7 +72,9 @@ public class PlayerControl : MonoBehaviour
     {
         playerAnim = GetComponent<Animator>();
         currentType = type.down;
-        StartCoroutine(MoveToBlock((0, 0)));
+        StartCoroutine(ResetMove((0, 0)));
+        animationAudioControl = GetComponent<AnimationAudioControl>();
+
     }
 
     public void PlayerInitiate()
@@ -81,24 +87,38 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(MoveToBlock(CurrentPos));
+        StartCoroutine(ResetMove(CurrentPos));
 
     }
+    public IEnumerator ResetMove((int x, int y) forwardBlockPos)
+    {
+        int blockIndex = 7 * forwardBlockPos.x + forwardBlockPos.y;
+        MapBlockType nextBlockType = mapInfo.transform.GetChild(blockIndex).GetComponent<MapBlock>().blockType;
 
+        transform.SetParent(mapInfo.transform.GetChild(blockIndex), false);
+        transform.localPosition = Vector3.zero;
 
+        //current pos 업데이트
+        CurrentPos = forwardBlockPos;
+        yield return null;
+    }
 
 
 
     public IEnumerator MoveToBlock((int x, int y) forwardBlockPos)
     {
+
         if (forwardBlockPos.x < 0 || forwardBlockPos.x >= mapInfo.map2DArrayRowCount || forwardBlockPos.y < 0 || forwardBlockPos.y >= mapInfo.map2DArrayColumnCount)
         {
             //index - out of range or Blocked
             Debug.Log("충돌");
 
-
             //충돌 애니메이션
-
+            animationAudioControl.PlayAnimationSound(1);
+            playerAnim.SetBool("Hit", true);
+            yield return new WaitForSeconds(0.5f);
+            playerAnim.SetBool("Hit", false);
+            animationAudioControl.StopAnimationSound();
 
             //transfrom.positoin 유지
             yield break;
@@ -113,9 +133,11 @@ public class PlayerControl : MonoBehaviour
 
 
             //충돌 애니메이션
+            animationAudioControl.PlayAnimationSound(1);
             playerAnim.SetBool("Hit", true);
             yield return new WaitForSeconds(0.5f);
             playerAnim.SetBool("Hit", false);
+            animationAudioControl.StopAnimationSound();
 
             //transfrom.positoin 유지
             yield return null;
@@ -123,6 +145,7 @@ public class PlayerControl : MonoBehaviour
 
         else
         {
+            animationAudioControl.PlayAnimationSound(1);
             Debug.Log($"{forwardBlockPos.x},{forwardBlockPos.y}로 이동");
             // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.position);
             // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.localPosition);
@@ -135,6 +158,8 @@ public class PlayerControl : MonoBehaviour
 
             //current pos 업데이트
             CurrentPos = forwardBlockPos;
+            yield return new WaitForSeconds(0.4f);
+            // animationAudioControl.StopAnimationSound();
             yield return null;
         }
     }
