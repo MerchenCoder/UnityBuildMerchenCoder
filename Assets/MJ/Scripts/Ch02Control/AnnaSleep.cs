@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnnaSleep : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class AnnaSleep : MonoBehaviour
 
     // 이미지가 들어 있는 객체에 대한 참조
     public GameObject imageObject;
+
+    private RectTransform imageRectTransform;
 
     void Start()
     {
@@ -20,17 +23,27 @@ public class AnnaSleep : MonoBehaviour
                 childObjects.Add(child);
             }
         }
+        if (imageObject != null)
+        {
+            imageRectTransform = imageObject.GetComponent<RectTransform>();
+        }
     }
 
     void Update()
     {
-        if (GameManager.Instance.CheckPlayProgress("Chap2Start"))
+        if (GameManager.Instance.CheckPlayProgress("Chap2Start") || !DataManager.Instance.gameStateData.ch2MissionClear[0])
         {
             RotateImage();
+            gameObject.transform.localPosition = new Vector3(12.4144f, -3.564708f, 0);
+            FlipImageY(true);
         }
         else
         {
             ResetImageRotation();
+            if(GameManager.Instance.CheckPlayProgress("Mission2-1Y"))
+                FlipImageY(true);
+            else
+                FlipImageY(false);
         }
     }
 
@@ -61,6 +74,16 @@ public class AnnaSleep : MonoBehaviour
             {
                 child.localEulerAngles = Vector3.zero;
             }
+        }
+    }
+
+    void FlipImageY(bool flip)
+    {
+        if (imageRectTransform != null)
+        {
+            Vector3 scale = imageRectTransform.localScale;
+            scale.y = flip ? -1 : 1;
+            imageRectTransform.localScale = scale;
         }
     }
 }

@@ -120,8 +120,6 @@ public class QuizActive : MonoBehaviour
 
     }
 
-
-
     void QuizBtnOnClick()
     {
         QuizActiveTrue();
