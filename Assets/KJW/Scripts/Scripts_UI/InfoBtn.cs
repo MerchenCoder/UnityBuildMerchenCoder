@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class InfoBtn : MonoBehaviour
 {
-    GameObject InfoPanel;
-
-    private void Start()
-    {
-        InfoPanel = transform.GetChild(1).gameObject;
-    }
+    [SerializeField] GameObject InfoPanel;
 
     public void InfoPanelBtnOnClick()
     {
-        InfoPanel.gameObject.SetActive(!InfoPanel.activeSelf);
+        if (InfoPanel != null)
+            InfoPanel.gameObject.SetActive(!InfoPanel.activeSelf);
+        else Debug.Log("infoPanel 설정 필요");
     }
 }
