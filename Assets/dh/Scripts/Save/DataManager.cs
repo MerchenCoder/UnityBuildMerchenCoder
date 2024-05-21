@@ -127,6 +127,9 @@ public class DataManager : MonoBehaviour
 
     public void ResetMissionState()
     {
+        gameStateData.chapterIsUnlock[0] = true;
+        gameStateData.chapterIsUnlock[1] = false;
+
         for (int i = 0; i < gameStateData.ch1MissionClear.Length; i++)
         {
             gameStateData.ch1MissionClear[i] = false;
