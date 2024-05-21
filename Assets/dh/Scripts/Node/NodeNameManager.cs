@@ -58,17 +58,18 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             autoAudioSetting = canvas.GetComponentInParent<AutoAudioSetting>();
         }
 
-        rectTransform = GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>(); //드래그할 오브젝트
         dataOutPorts = GetComponentsInChildren<DataOutPort>();
         dataInPorts = GetComponentsInChildren<DataInPort>();
         flowoutPorts = GetComponentsInChildren<FlowoutPort>();
         flowinPorts = GetComponentsInChildren<FlowinPort>();
 
+
         uiElement = GetComponent<Graphic>();
         padding = uiElement.raycastPadding;
         nodeSize = uiElement.GetComponent<RectTransform>().rect.size;
-        raycastWidth = nodeSize.x + padding.x + padding.z; //left+right;
-        raycastHeight = nodeSize.y + padding.y + padding.w; //top+bottom;
+        // raycastWidth = nodeSize.x + padding.x + padding.z; //left+right;
+        // raycastHeight = nodeSize.y + padding.y + padding.w; //top+bottom;
 
         boundaryObject = GameObject.Find("ScrollContent").GetComponent<RectTransform>();
         if (boundaryObject != null)
@@ -84,7 +85,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
         // boundaryObject의 크기를 가져와서 이동 가능한 범위로 설정
         //boundarySize = boundaryRectTransform.rect.size / 2f;
-        boundarySize = new Vector2(boundaryObject.parent.GetComponent<RectTransform>().rect.width, boundaryRectTransform.rect.height / 2f);//0520 수정
+        boundarySize = new Vector2(boundaryObject.GetComponent<RectTransform>().rect.width / 2f, boundaryRectTransform.rect.height / 2f);//0520 수정
         //boundarySize = new Vector2(boundaryRectTransform.rect.width / 2f, boundaryRectTransform.rect.height); 
         Debug.Log(boundarySize);
     }
@@ -174,6 +175,18 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
         }
 
+        // x: 왼쪽 (left) 패딩
+        // y: 위쪽 (top) 패딩
+        // z: 오른쪽 (right) 패딩
+        // w: 아래쪽 (bottom) 패딩
+
+        // Vector3 bottomLeft = new Vector3(rectTransform.anchoredPosition.x - nodeSize.x - padding.x, rect.yMin - padding.y, transform.position.z);
+        // Vector3 bottomRight = new Vector3(rect.xMax + padding.z, rect.yMin - padding.y, transform.position.z);
+        // Vector3 topLeft = new Vector3(rectTransform.anchoredPosition.x - padding.x, rect.yMax + padding.w, transform.position.z);
+        // Vector3 topRight = new Vector3(rect.xMax + padding.z, rect.yMax + padding.w, transform.position.z);
+
+        // Debug.Log($"{bottomLeft}, {bottomRight}, {topLeft}, {topRight}");
+
     }
 
 
@@ -240,20 +253,72 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         // 이동 가능한 범위 내에 있는지 확인
         if (boundaryObject != null)
         {
-            // 이벤트 데이터의 위치를 boundaryObject의 로컬 좌표계로 변환
             RectTransformUtility.ScreenPointToLocalPointInRectangle(boundaryObject, eventData.position, eventData.pressEventCamera, out currentPos);
-            //if (currentPos.x >= 2 * boundarySize.x || currentPos.x <= 100f || currentPos.y <= -boundarySize.y || currentPos.y >= boundarySize.y - 90f)
-            if (currentPos.x > boundarySize.x || currentPos.x < 0 || currentPos.y < -boundarySize.y || currentPos.y > boundarySize.y)//0520 수정
-            {
-                return;
-            }
-            // 이동 가능한 범위 내에서만 이동하도록 제한합니다.
-            // float clampedX = Mathf.Clamp(currentPos.x, 100f, 2 * boundarySize.x);
-            //float clampedY = Mathf.Clamp(currentPos.y, -boundarySize.y, boundarySize.y - 90f);
 
-            // 이동 가능한 범위 내에서 마우스 포인터 위치로 이미지의 위치를 설정합니다.
-            transform.GetComponent<RectTransform>().anchoredPosition += delta;
-            //new Vector3(clampedX, clampedY, transform.localPosition.z);
+            Rect rect = rectTransform.rect;
+            // float minX = rectTransform.anchoredPosition.x - nodeSize.x / 2 - padding.x;
+            // float maxY = rectTransform.anchoredPosition.y + nodeSize.y / 2 - padding.w;
+            // float maxX = rectTransform.anchoredPosition.x + nodeSize.x / 2 - padding.z;
+            // float minY = rectTransform.anchoredPosition.y - nodeSize.y / 2 - padding.y;
+
+            float minX = -boundarySize.x + nodeSize.x / 2 - padding.x;
+            float maxX = boundarySize.x - nodeSize.x / 2 - padding.z;
+            float minY = -boundarySize.y + nodeSize.y / 2 - padding.y;
+            float maxY = boundarySize.y - nodeSize.y / 2 - padding.w;
+            Debug.Log($"{minX}, {minY}, {maxX}, {maxY}");
+
+
+
+            Vector2 newAnchorPos = rectTransform.anchoredPosition + delta;
+
+            // float clampedX = Mathf.Clamp(newAnchorPos.x, -boundarySize.x, boundarySize.x);
+            // float clampedY = Mathf.Clamp(newAnchorPos.y, -boundarySize.y, boundarySize.y);
+            float clampedX = Mathf.Clamp(newAnchorPos.x, minX, maxX);
+            float clampedY = Mathf.Clamp(newAnchorPos.y, minY, maxY);
+
+            newAnchorPos.x = clampedX;
+            newAnchorPos.y = clampedY;
+            // bool isInsideWidth = (minX > -boundarySize.x) && (maxX < boundarySize.x);
+            // bool isInsideHeight = (minY > -boundarySize.y) && (maxY < boundarySize.y);
+            // Debug.Log($"{isInsideWidth},{isInsideHeight}");
+
+            // if (isInsideHeight && isInsideWidth)
+            // {
+            //     transform.GetComponent<RectTransform>().anchoredPosition += delta;
+            // }
+
+            rectTransform.anchoredPosition = newAnchorPos;
+
+            //기존코드 주석처리 0522=======///
+            // // 이벤트 데이터의 위치를 boundaryObject의 로컬 좌표계로 변환
+            // RectTransformUtility.ScreenPointToLocalPointInRectangle(boundaryObject, eventData.position, eventData.pressEventCamera, out currentPos);
+
+            // //if (currentPos.x >= 2 * boundarySize.x || currentPos.x <= 100f || currentPos.y <= -boundarySize.y || currentPos.y >= boundarySize.y - 90f)
+            // if (currentPos.x > boundarySize.x || currentPos.x < 0 || currentPos.y < -boundarySize.y || currentPos.y > boundarySize.y)//0520 수정
+            // {
+            //     return;
+            // }
+            // // 이동 가능한 범위 내에서만 이동하도록 제한합니다.
+            // // float clampedX = Mathf.Clamp(currentPos.x, 100f, 2 * boundarySize.x);
+            // //float clampedY = Mathf.Clamp(currentPos.y, -boundarySize.y, boundarySize.y - 90f);
+
+            // // 이동 가능한 범위 내에서 마우스 포인터 위치로 이미지의 위치를 설정합니다.
+            // transform.GetComponent<RectTransform>().anchoredPosition += delta;
+            // //new Vector3(clampedX, clampedY, transform.localPosition.z);
+            // // 이벤트 데이터의 위치를 boundaryObject의 로컬 좌표계로 변환
+            // RectTransformUtility.ScreenPointToLocalPointInRectangle(boundaryObject, eventData.position, eventData.pressEventCamera, out currentPos);
+
+            // //if (currentPos.x >= 2 * boundarySize.x || currentPos.x <= 100f || currentPos.y <= -boundarySize.y || currentPos.y >= boundarySize.y - 90f)
+            // if (currentPos.x > boundarySize.x || currentPos.x < 0 || currentPos.y < -boundarySize.y || currentPos.y > boundarySize.y)//0520 수정
+            // {
+            //     return;
+            // }
+            // // 이동 가능한 범위 내에서만 이동하도록 제한합니다.
+            // // float clampedX = Mathf.Clamp(currentPos.x, 100f, 2 * boundarySize.x);
+            // //float clampedY = Mathf.Clamp(currentPos.y, -boundarySize.y, boundarySize.y - 90f);
+
+            // // 이동 가능한 범위 내에서 마우스 포인터 위치로 이미지의 위치를 설정합니다.
+            // transform.GetComponent<RectTransform>().anchoredPosition += delta;
         }
 
 
@@ -373,12 +438,12 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         }
     }
 
-
-
     public void NodeComponentClickSound()
     {
         autoAudioSetting.OnClickSound_Index(9);
     }
+
+
 }
 
 
