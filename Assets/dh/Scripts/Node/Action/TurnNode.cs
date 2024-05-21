@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class TurnNode : MonoBehaviour, INode, IFollowFlow
 {
+    public AudioClip[] audioClip;
+    [SerializeField] private AudioSource audioSource;
+
+
     public string outputStr;
     public int direction;
     //left = -1 right = 1
@@ -23,6 +27,9 @@ public class TurnNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
+        if (audioSource == null)
+            audioSource = nodeNameManager.AutoAudioSetting.AudioSource;
+
         if (NodeManager.Instance.Mode != "run")
         {
             TestManager.Instance.playerOutput.Add(outputStr);
@@ -38,11 +45,13 @@ public class TurnNode : MonoBehaviour, INode, IFollowFlow
         }
         if (direction > 0)
         {
+            audioSource.PlayOneShot(audioClip[0]);
             playerActionBubble_left.SetActive(true);
             playerActionBubble_left.transform.GetChild(0).gameObject.SetActive(true);
         }
         else
         {
+            audioSource.PlayOneShot(audioClip[1]);
             playerActionBubble_right.SetActive(true);
             playerActionBubble_right.transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -52,6 +61,7 @@ public class TurnNode : MonoBehaviour, INode, IFollowFlow
         yield return new WaitForSeconds(1f);
         playerActionBubble_left.SetActive(false);
         playerActionBubble_right.SetActive(false);
+        audioSource.Stop();
         turnAnim.SetBool("Unlock", false);
         //출력 배열에 반영
         TestManager.Instance.playerOutput.Add(outputStr);

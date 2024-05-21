@@ -6,7 +6,7 @@ public class ControlChatBubble : MonoBehaviour
 {
     public GameObject spritePosition;
     private float printDuration = 1.5f;
-    private float delayTime = 0.5f;
+    private float delayTime = 0.3f;
     // Start is called before the first frame update
     void Awake()
     {

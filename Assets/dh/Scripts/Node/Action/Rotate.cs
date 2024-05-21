@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour, INode, IFollowFlow
 {
+    public AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
+
     public string outputStr;
     private NodeNameManager nodeNameManager;
     private GameObject player;
@@ -24,6 +27,8 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
+        if (audioSource == null)
+            audioSource = nodeNameManager.AutoAudioSetting.AudioSource;
         if (NodeManager.Instance.Mode != "run")
         {
             // TestManager.Instance.playerOutput.Add(outputStr);
@@ -49,10 +54,11 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
 
         }
 
+        audioSource.PlayOneShot(audioClip);
         // RotateAtoB 코루틴을 호출하고 start와 end 값을 전달
         yield return StartCoroutine(RotateAtoB(startAngle, endAngle));
 
-
+        audioSource.Stop();
         //잠깐 대기
         yield return new WaitForSeconds(0.3f);
     }

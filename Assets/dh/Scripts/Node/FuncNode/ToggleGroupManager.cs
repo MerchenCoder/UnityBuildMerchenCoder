@@ -16,6 +16,10 @@ public class ToggleGroupManager : MonoBehaviour
         toggleGroup = GetComponent<ToggleGroup>();
         //button.interactable = false;
     }
+    private void OnEnable()
+    {
+        button.GetComponent<FunctionMaker>().selectType = 1;
+    }
     public void OnToggleValueChagned(bool isOn)
     {
         Toggle[] toggles = toggleGroup.GetComponentsInChildren<Toggle>();
@@ -48,8 +52,11 @@ public class ToggleGroupManager : MonoBehaviour
         // toggleGroup.SetAllTogglesOff();
         //SetAllTogglesOff()가 동작을 안해서 수동으로 off... 이유는 모름...
 
-        for (int i = 1; i < toggles.Length; i++)
+        for (int i = 0; i < toggles.Length; i++)
         {
+            if (i == 0)
+                toggles[0].isOn = true;
+
             if (toggles[i].isOn) toggles[i].isOn = false;
         }
         // foreach (Toggle toggle in toggles)
