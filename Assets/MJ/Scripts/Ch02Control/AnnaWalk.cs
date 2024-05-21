@@ -11,6 +11,5 @@ public class AnnaWalk : MonoBehaviour
         {
             gameObject.transform.localPosition = new Vector3(67.05f, -1.63f, 0);
         }
-        else gameObject.transform.localPosition = new Vector3(15.2f, -1.63f, 0);
     }
 }
