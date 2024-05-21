@@ -22,14 +22,16 @@ public class RunErrorMsg : MonoBehaviour
 
     public void SetStateStop()
     {
-        refreshCanvas.PlayRunErrorSound();
+        if (NodeManager.Instance.Mode == "run")
+            refreshCanvas.PlayRunErrorSound();
         State.text = "실행 중단";
         State.color = Color.red;
     }
 
     public void SetStateComplete()
     {
-        refreshCanvas.PlayRunCompleteSound();
+        if (NodeManager.Instance.Mode == "run")
+            refreshCanvas.PlayRunCompleteSound();
         State.text = "실행 완료";
         State.color = Color.blue;
 
