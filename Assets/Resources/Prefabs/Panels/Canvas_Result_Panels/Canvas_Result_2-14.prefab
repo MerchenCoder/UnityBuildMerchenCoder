@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5937780775571546031}
   - component: {fileID: 1521651843315814110}
   - component: {fileID: 5292573224609757068}
+  - component: {fileID: 23962212975482294}
   m_Layer: 6
   m_Name: Pot
   m_TagString: Untagged
@@ -157,6 +158,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &23962212975482294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16888823900200271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23616b8c91e6e45fb95f69510b6da749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 2055071141861364074}
+  audioClips:
+  - {fileID: 8300000, guid: 282ce513f96444a02b36a4b353b74fa8, type: 3}
+  - {fileID: 8300000, guid: 9cd0c1cee8bf84600a3bd8c94ec473d5, type: 3}
 --- !u!1 &507143901960239968
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,7 +1760,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1898537438566540462, guid: d27c7c4262e314bec9564cd3b59ba73f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3310759685800739901}
+    - targetCorrespondingSourceObject: {fileID: 1898537438566540462, guid: d27c7c4262e314bec9564cd3b59ba73f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5222442407004230313}
   m_SourcePrefab: {fileID: 100100000, guid: d27c7c4262e314bec9564cd3b59ba73f, type: 3}
+--- !u!82 &2055071141861364074 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3575288324894841814, guid: d27c7c4262e314bec9564cd3b59ba73f, type: 3}
+  m_PrefabInstance: {fileID: 3249608374013708988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3981208615820275218 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1898537438566540462, guid: d27c7c4262e314bec9564cd3b59ba73f, type: 3}
@@ -1756,7 +1781,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3981208615820275218}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1110cda6ad9b4f818eb10ed201d2db4, type: 3}
   m_Name: 
@@ -1765,6 +1790,21 @@ MonoBehaviour:
   powderEffect: {fileID: 4879636465180106164}
   potionImg: {fileID: 0}
   originImg: {fileID: 0}
+--- !u!114 &5222442407004230313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3981208615820275218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23616b8c91e6e45fb95f69510b6da749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 2055071141861364074}
+  audioClips:
+  - {fileID: 8300000, guid: a1b31e33901f8c0429e7693c2d701d44, type: 3}
 --- !u!114 &8057495143227648007 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4812400479738536635, guid: d27c7c4262e314bec9564cd3b59ba73f, type: 3}

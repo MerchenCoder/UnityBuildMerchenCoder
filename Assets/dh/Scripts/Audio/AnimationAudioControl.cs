@@ -30,5 +30,10 @@ public class AnimationAudioControl : MonoBehaviour
 
     }
 
+    public void SetPlaySpeed(int pitch)
+    {
+        audioSource.pitch = pitch;
+    }
+
 
 }

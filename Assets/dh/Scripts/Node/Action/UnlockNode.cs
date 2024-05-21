@@ -16,6 +16,9 @@ public class UnlockNode : MonoBehaviour, INode, IFollowFlow
     private DataInPort dataInPort;
     private string stringData;
     private GameObject playerChatBubble;
+    [Header("Sound")]
+    public AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
 
     private void Start()
     {
@@ -29,6 +32,8 @@ public class UnlockNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
+        audioSource = nodeNameManager.AutoAudioSetting.AudioSource;
+
         if (!dataInPort.IsConnected)
         {
             Debug.Log("데이터포트 연결 안됨");
@@ -70,9 +75,11 @@ public class UnlockNode : MonoBehaviour, INode, IFollowFlow
                 }
                 foreach (char c in stringData)
                 {
+                    audioSource.PlayOneShot(audioClip);
                     unlockAnim.SetBool("Unlock", true);
                     yield return playerChatBubble.GetComponent<ControlChatBubble>().Talk(c.ToString());
                     unlockAnim.SetBool("Unlock", false);
+                    audioSource.Stop();
                     TestManager.Instance.playerOutput.Add(c.ToString());
                     yield return new WaitForSeconds(0.5f);
                 }
