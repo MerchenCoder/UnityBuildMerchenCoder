@@ -31,6 +31,7 @@ public class QuizActive : MonoBehaviour
         if (TryGetComponent<PlayProgressControl>(out PlayProgressControl ppc))
         {
             // 현재 플레이 포인트와 일치하는 문제인지 확인
+            Debug.Log("MissionClearCheck");
             if (GameManager.Instance.CheckPlayProgress(ppc.activePlayPoint))
             {
                 string[] chapter_mission = missionCode.Split("-");

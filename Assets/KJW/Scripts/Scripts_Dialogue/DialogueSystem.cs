@@ -57,7 +57,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void Update()
     {
-        if (UnityEngine.Input.GetMouseButtonUp(0))
+        if (UnityEngine.Input.GetMouseButtonDown(0))
         {
             if (isPlayingDia) NextSpeak();
         }
