@@ -18,8 +18,17 @@ public class AccountManager : MonoBehaviour
 
     public void Logout()
     {
+        //소리 데이터는 남긴다
+        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume");
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume");
+
         //자동로그인을 위해 저장했던 PlayerPrefs 데이터 삭제
         PlayerPrefs.DeleteAll();
+
+        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
+        Debug.Log("소리 제외 playerprefs 키 삭제");
+
 
         //첫 화면으로 이동
         SceneChange.Instance.ChangeToThisScene("Splash");
