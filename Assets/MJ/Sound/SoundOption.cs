@@ -24,7 +24,7 @@ public class SoundOption : MonoBehaviour
         SFXObject = GameObject.Find("Audio Source_SFX");
 
         BGMSlider = GameObject.Find("Slider Lightpurple").GetComponent<Slider>();
-        SFXSlider = GameObject.Find("Slider Pinkpurple").GetComponent<Slider>(); ;
+        SFXSlider = GameObject.Find("Slider Pinkpurple").GetComponent<Slider>();
 
         if (BGMObject != null && PlayerPrefs.HasKey("BGMVolume"))
         {
