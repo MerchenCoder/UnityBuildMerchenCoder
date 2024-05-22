@@ -67,7 +67,8 @@ public class DataManager : MonoBehaviour
     {
         //초기 데이터 가져오기
         Debug.LogFormat("<color=red>DataManager - 챕터/미션 상태 데이터 초기화</color>");
-        SaveGameStatusData();
+        ResetMissionState();
+        //SaveGameStatusData();
 
     }
 
