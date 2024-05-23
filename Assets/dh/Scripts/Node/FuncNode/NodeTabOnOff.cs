@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NodeTabOnOff : MonoBehaviour
@@ -18,7 +19,8 @@ public class NodeTabOnOff : MonoBehaviour
 
     private void Start()
     {
-        audioSource = FindObjectOfType<AudioControl>().GetComponent<AudioSource>();
+        if(SceneManager.GetActiveScene().name != "Home")
+            audioSource = FindObjectOfType<AudioControl>().GetComponent<AudioSource>();
     }
 
 

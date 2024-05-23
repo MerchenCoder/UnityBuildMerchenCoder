@@ -9,6 +9,7 @@ public class ReviewButton : MonoBehaviour
     public GameObject missionPanel;
     private string missionCode;
     Button button;
+    [SerializeField] PlayByAudioManager playByAudioManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,11 +19,13 @@ public class ReviewButton : MonoBehaviour
         button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(SetMissionDataPanel);
+
     }
 
 
     public void SetMissionDataPanel()
     {
+        playByAudioManager.PlaySFXByAudioManager(0);
         //게임 매니져 미션 정보 로드하도록 호출
         GameManager.Instance.LoadMissionData(missionCode);
         //리뷰는 보상 10으로 바꾸기

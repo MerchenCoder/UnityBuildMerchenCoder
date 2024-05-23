@@ -50,6 +50,16 @@ public class AddValueBtn : MonoBehaviour
             SetValueName();
             dropdown.SetValueWithoutNotify(0);
             nodeData.ErrorFlag = true;
+
+            // 튜토리얼 플래그 추가 240522
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "AddValuable")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
+
         }
         else if (transform.parent.GetComponent<NodeNameManager>().NodeName == "SetValueNode")
         {

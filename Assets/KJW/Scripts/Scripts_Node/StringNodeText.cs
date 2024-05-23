@@ -42,6 +42,11 @@ public class StringNodeText : MonoBehaviour
                 if(stringValue == "안녕하세요")
                     FlagManager.instance.OffFlag();
             }
+            if (FlagManager.instance.flagStr == "PrintMango")
+            {
+                if (stringValue == "망고")
+                    FlagManager.instance.OffFlag();
+            }
         }
     }
 

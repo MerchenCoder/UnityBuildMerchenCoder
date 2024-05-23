@@ -26,6 +26,7 @@ public class SliderBar : MonoBehaviour
         slider = GetComponent<Slider>();
         currentTime = totalTime;
         slider.value = 100;
+        audioSource.Stop();
     }
 
     public void GameStart()

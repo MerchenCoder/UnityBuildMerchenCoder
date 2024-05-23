@@ -18,8 +18,26 @@ public class AccountManager : MonoBehaviour
 
     public void Logout()
     {
+        //소리 데이터는 남긴다
+        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume");
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume");
+
         //자동로그인을 위해 저장했던 PlayerPrefs 데이터 삭제
         PlayerPrefs.DeleteAll();
+
+        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
+        Debug.Log("소리 제외 playerprefs 키 삭제");
+
+        string staticFolderPath = Path.Combine(Application.persistentDataPath, "static");
+        // foreach (string file in Directory.GetFiles(staticFolderPath)) //파일 탐색
+        // {
+        //     File.Delete(file); //파일 삭제
+        // }
+        Directory.Delete(staticFolderPath, true);
+        Debug.Log("로컬 내의 정적 파일을 모두 삭제하였습니다.");
+
+
 
         //첫 화면으로 이동
         SceneChange.Instance.ChangeToThisScene("Splash");
@@ -28,17 +46,27 @@ public class AccountManager : MonoBehaviour
     public void DeleteAccount()
     {
         string folderPath = Path.Combine(Application.persistentDataPath, "Data");
+        string staticFolderPath = Path.Combine(Application.persistentDataPath, "static");
         Withdrawal((success) =>
         {
             if (success)
             {
                 PlayerPrefs.DeleteAll();
-                foreach (string file in Directory.GetFiles(folderPath)) //파일 탐색
-                {
-                    File.Delete(file); //파일 삭제
-                }
-                Directory.Delete(folderPath);
+                // foreach (string file in Directory.GetFiles(folderPath)) //파일 탐색
+                // {
+                //     File.Delete(file); //파일 삭제
+                // }
+                Directory.Delete(folderPath, true);
                 Debug.Log("로컬 내의 플레이 데이터를 모두 삭제하였습니다.");
+
+
+                // foreach (string file in Directory.GetFiles(staticFolderPath)) //파일 탐색
+                // {
+                //     File.Delete(file); //파일 삭제
+                // }
+                Directory.Delete(staticFolderPath, true);
+                Debug.Log("로컬 내의 정적 파일을 모두 삭제하였습니다.");
+
 
                 SceneChange.Instance.ChangeToThisScene("Splash");
             }

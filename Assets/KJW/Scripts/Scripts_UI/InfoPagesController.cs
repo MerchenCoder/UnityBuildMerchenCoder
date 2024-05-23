@@ -30,11 +30,23 @@ public class InfoPagesController : MonoBehaviour
     /// <param name="tabName"></param>
     public void SetActiveTrueOnePage(string tabName)
     {
-        string pageName = "InfoTabToggle_" + tabName;
-        string currentInfoPange = toggleGroup.ActiveToggles().FirstOrDefault().name;
-        if (pageName.Equals(currentInfoPange))
+        if (toggleGroup == null)
         {
-            return;
+            toggleGroup = GetComponent<ToggleGroup>();
+        }
+        string pageName = "InfoTabToggle_" + tabName;
+        string currentInfoPange;
+        Debug.Log(toggleGroup);
+        Debug.Log(toggleGroup.ActiveToggles().FirstOrDefault());
+        Debug.Log(toggleGroup.ActiveToggles());
+        if (toggleGroup.ActiveToggles().FirstOrDefault() != null)
+        {
+            currentInfoPange = toggleGroup.ActiveToggles().FirstOrDefault().name;
+            if (pageName.Equals(currentInfoPange))
+            {
+                return;
+            }
+
         }
         SetActiveFalseAllPages();
         for (int i = 0; i < transform.childCount; i++)

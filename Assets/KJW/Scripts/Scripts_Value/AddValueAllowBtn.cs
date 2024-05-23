@@ -10,6 +10,15 @@ public class AddValueAllowBtn : MonoBehaviour
     public TMP_InputField inputField;
     private int type;
 
+    [SerializeField] private GameObject errorTMP;
+
+
+
+    [SerializeField] private GameObject blackBGPanel;
+    [SerializeField] private GameObject valueNameSettingUI;
+
+    private Button button;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +35,12 @@ public class AddValueAllowBtn : MonoBehaviour
         {
             valueManager = GetComponentInParent<Canvas>().GetComponentInChildren<ValueManager>(true);
         }
+
+        button = GetComponent<Button>();
+
+        button.onClick.AddListener(AddValue);
+
+        errorTMP.SetActive(false);
     }
 
     public void AddValue()
@@ -50,10 +65,28 @@ public class AddValueAllowBtn : MonoBehaviour
             // 혹시 변수 블록 생성되면 쓸 코드
             ////addedValue = Instantiate(valuePrefab, transform.parent);
             ////addedValue.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inputField.text;
+            ///
+
+            // 튜토리얼 플래그 추가 240522
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "SetValuableName")
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
+
+            errorTMP.SetActive(false);
+            blackBGPanel.SetActive(false);
+            valueNameSettingUI.SetActive(false);
+
         }
         else
         {
+            errorTMP.SetActive(true);
+
             Debug.Log("해당 변수가 이미 존재합니다"); // 추후 UI로 변경
+
         }
     }
 }

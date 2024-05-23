@@ -296,6 +296,7 @@ public class NodeManager : MonoBehaviour
                 yield break;
             }
         }
+
         OnRunProgramCompleted?.Invoke();
 
         //Debug.Log("Run Complete");

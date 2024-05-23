@@ -67,7 +67,8 @@ public class DataManager : MonoBehaviour
     {
         //초기 데이터 가져오기
         Debug.LogFormat("<color=red>DataManager - 챕터/미션 상태 데이터 초기화</color>");
-        SaveGameStatusData();
+        ResetMissionState();
+        //SaveGameStatusData();
 
     }
 
@@ -127,6 +128,9 @@ public class DataManager : MonoBehaviour
 
     public void ResetMissionState()
     {
+        gameStateData.chapterIsUnlock[0] = true;
+        gameStateData.chapterIsUnlock[1] = false;
+
         for (int i = 0; i < gameStateData.ch1MissionClear.Length; i++)
         {
             gameStateData.ch1MissionClear[i] = false;

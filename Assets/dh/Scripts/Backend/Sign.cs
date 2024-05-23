@@ -75,10 +75,16 @@ public class Sign : MonoBehaviour
     private string password;
     private string uname;
 
+
+    //소리
+    private AudioControl audioControl;
+
     private void Awake()
     {
         alertPanel.SetActive(false);
         alertMessage = alertPanel.GetComponentInChildren<TMP_Text>(true);
+
+        audioControl = FindObjectOfType<AudioControl>();
     }
     void Start()
     {
@@ -90,6 +96,7 @@ public class Sign : MonoBehaviour
            {
                Debug.Log("아이디와 비밀번호를 입력해주세요.");
                alertMessage.text = "아이디와 비밀번호를 입력해주세요.";
+               audioControl.SoundPlayOneShot(2);
                StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
            }
            else
@@ -107,6 +114,7 @@ public class Sign : MonoBehaviour
            {
                Debug.Log("아이디, 이름, 비밀번호를 모두 입력해주세요");
                alertMessage.text = "아이디, 이름, 비밀번호를 모두 입력해주세요";
+               audioControl.SoundPlayOneShot(2);
                StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
            }
            else
@@ -142,6 +150,7 @@ public class Sign : MonoBehaviour
                        ResetData();
                        signupPanel.SetActive(false);
                        signupPanel.transform.parent.gameObject.SetActive(false);
+                       audioControl.SoundPlayOneShot(1);
                        StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                    }
                });
@@ -170,6 +179,7 @@ public class Sign : MonoBehaviour
             {
                 Debug.LogError("서버 응답 오류가 발생했습니다.");
                 alertMessage.text = "서버 응답 오류가 발생했습니다.";
+                audioControl.SoundPlayOneShot(2);
                 StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                 return;
             }
@@ -188,6 +198,7 @@ public class Sign : MonoBehaviour
             {
                 Debug.Log("이미 존재하는 계정");
                 alertMessage.text = "이미 등록된 아이디입니다. 다른 아이디를 입력해주세요.";
+                audioControl.SoundPlayOneShot(2);
                 StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                 onComplete(false);
             }
@@ -195,6 +206,7 @@ public class Sign : MonoBehaviour
             {
                 Debug.Log(responseResult.errorno);
                 alertMessage.text = "클라이언트 오류";
+                audioControl.SoundPlayOneShot(2);
                 StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
 
                 onComplete(false);
@@ -225,6 +237,8 @@ public class Sign : MonoBehaviour
                 {
                     Debug.LogError("서버 응답 오류가 발생했습니다.");
                     alertMessage.text = "서버 응답 오류가 발생했습니다.";
+                    audioControl.SoundPlayOneShot(2);
+
                     StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                     return;
                 }
@@ -242,6 +256,8 @@ public class Sign : MonoBehaviour
 
                     Debug.Log("아이디 존재하지 않음");
                     alertMessage.text = "아이디가 존재하지 않습니다. 다시 확인해주세요.";
+                    audioControl.SoundPlayOneShot(2);
+
                     StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                     onComplete(false);
                 }
@@ -249,6 +265,8 @@ public class Sign : MonoBehaviour
                 {
                     Debug.Log("비밀번호 오류");
                     alertMessage.text = "비밀번호가 일치하지 않습니다.";
+                    audioControl.SoundPlayOneShot(2);
+
                     StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                     onComplete(false);
 
@@ -257,6 +275,8 @@ public class Sign : MonoBehaviour
                 {
                     Debug.Log(responseResult.errorno);
                     alertMessage.text = "클라이언트 오류";
+                    audioControl.SoundPlayOneShot(2);
+
                     StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
 
                     onComplete(false);

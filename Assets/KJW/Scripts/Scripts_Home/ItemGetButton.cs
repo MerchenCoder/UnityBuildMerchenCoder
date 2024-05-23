@@ -7,7 +7,7 @@ public class ItemGetButton : MonoBehaviour
 {
     private ItemControl itemControl;
     public SaveItem saveItem;
-    public AudioSource failAudio;
+    public PlayByAudioManager playByAudioManager;
 
     private void Awake()
     {
@@ -22,16 +22,17 @@ public class ItemGetButton : MonoBehaviour
         if (GameManager.Instance.UseGem(int.Parse(itemControl._thisItem.item.price)))
         {
             itemControl._thisItem.isBought = true;
+            playByAudioManager.PlaySFXByAudioManager(1);
         }
-       else
+        else
         {
             // 돈 없음
             int i = transform.parent.parent.parent.parent.childCount;
             transform.parent.parent.parent.parent.GetChild(i - 1).gameObject.SetActive(true);
-            if (failAudio != null) failAudio.Play();
+            playByAudioManager.PlaySFXByAudioManager(2);
         }
         // 구매한 아이템 저장
-        if(saveItem == null)
+        if (saveItem == null)
         {
             Debug.LogError("SaveItem 감지 안됨");
         }

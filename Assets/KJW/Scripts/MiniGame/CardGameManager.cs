@@ -21,17 +21,15 @@ public class CardGameManager : MonoBehaviour
     public AudioSource startSound;
 
     private void Start()
-    { 
-        Init();
-        
+    {   
         // 부모 GameObject에서 모든 자식 GameObject 가져오기
         children = new List<Transform>();
         foreach (Transform child in cardHolder.transform)
         {
             children.Add(child);
         }
-
-        GameStart();
+        //Init();
+        //GameStart();
     }
 
     private void OnEnable()
@@ -74,6 +72,14 @@ public class CardGameManager : MonoBehaviour
 
     private void ShuffleCards()
     {
+        Debug.Log("shuffle");
+
+        // 부모 GameObject에서 모든 자식 GameObject 가져오기
+        children = new List<Transform>();
+        foreach (Transform child in cardHolder.transform)
+        {
+            children.Add(child);
+        }
         // 자식 GameObject들을 무작위로 재배치
         for (int i = 0; i < children.Count; i++)
         {
@@ -97,6 +103,7 @@ public class CardGameManager : MonoBehaviour
         // 카드 보여주기 (3초)
         foreach (Transform child in children)
         {
+            child.GetComponent<Card>().Init();
             child.GetComponent<Animator>().SetTrigger("ShowCard");
         }
         yield return new WaitForSeconds(3f);

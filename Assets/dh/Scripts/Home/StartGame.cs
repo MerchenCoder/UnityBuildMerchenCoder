@@ -9,6 +9,7 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
     public GameObject loading;
     public GameObject startButtons;
     public GameObject testButton;
+    public AudioControl audioControl;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
         if (startInfoText.activeSelf == true)
         {
             Debug.Log("패널 클릭");
+            audioControl.SoundPlayOneShot(0);
             startInfoText.SetActive(false);
 
             if (PlayerPrefs.HasKey("autoLogin") && PlayerPrefs.GetInt("autoLogin") == 1)

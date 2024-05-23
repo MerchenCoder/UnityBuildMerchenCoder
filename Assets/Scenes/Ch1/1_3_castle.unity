@@ -2952,15 +2952,15 @@ RectTransform:
   m_GameObject: {fileID: 971195489}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1229436562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2100, y: 1600}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &971195491
 MonoBehaviour:
@@ -3961,6 +3961,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325029740}
   m_CullTransparentMesh: 1
+--- !u!1 &1346620660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8052631935430373997, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
+  m_PrefabInstance: {fileID: 1454066697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1379477122
 GameObject:
   m_ObjectHideFlags: 3
@@ -4453,12 +4458,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2207070972205307338, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
   m_PrefabInstance: {fileID: 1454066697}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1346620660}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4a2168f17877244c818ae856bcbbf50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1454066702 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8244812288680481499, guid: 89ca429aaa4425f47928cd095aaf04e4, type: 3}
+  m_PrefabInstance: {fileID: 1454066697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1472052022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5938,11 +5948,11 @@ PlayableDirector:
   - key: {fileID: -5313154107454871116, guid: 59dd6af96b6841b4ca29d7ae63656a7f, type: 2}
     value: {fileID: 1714403920}
   - key: {fileID: -2318074493310908571, guid: 59dd6af96b6841b4ca29d7ae63656a7f, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1454066702}
   - key: {fileID: -9070033812546529823, guid: 59dd6af96b6841b4ca29d7ae63656a7f, type: 2}
     value: {fileID: 1852174187047620847}
   - key: {fileID: 5250436853344333592, guid: 59dd6af96b6841b4ca29d7ae63656a7f, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1346620660}
   - key: {fileID: -5557752128222278167, guid: 59dd6af96b6841b4ca29d7ae63656a7f, type: 2}
     value: {fileID: 5701942999846635163}
   - key: {fileID: -8473232555583952851, guid: 59dd6af96b6841b4ca29d7ae63656a7f, type: 2}
