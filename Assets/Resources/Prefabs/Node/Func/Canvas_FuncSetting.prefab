@@ -2365,6 +2365,7 @@ GameObject:
   - component: {fileID: 4539971073706518672}
   - component: {fileID: 6240229103090123331}
   - component: {fileID: 6369776512755952137}
+  - component: {fileID: 6164574621812950421}
   m_Layer: 5
   m_Name: Option2
   m_TagString: Untagged
@@ -2469,6 +2470,20 @@ MonoBehaviour:
   nodeNameManager: {fileID: 0}
   autoAudioSetting: {fileID: 156233164439441475}
   index: 9
+--- !u!114 &6164574621812950421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384278893784118085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  UnitsToMove: 0
 --- !u!1 &2414258957235694182
 GameObject:
   m_ObjectHideFlags: 0
@@ -7659,6 +7674,7 @@ GameObject:
   - component: {fileID: 3659540656390716286}
   - component: {fileID: 8007159063235771659}
   - component: {fileID: 1494419203669616297}
+  - component: {fileID: 3362286908048470654}
   m_Layer: 5
   m_Name: Option1
   m_TagString: Untagged
@@ -7763,6 +7779,20 @@ MonoBehaviour:
   nodeNameManager: {fileID: 0}
   autoAudioSetting: {fileID: 156233164439441475}
   index: 9
+--- !u!114 &3362286908048470654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6298049139843474333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  UnitsToMove: 0
 --- !u!1 &6690947621313389419
 GameObject:
   m_ObjectHideFlags: 0
@@ -8309,6 +8339,7 @@ GameObject:
   - component: {fileID: 1876383107257284751}
   - component: {fileID: 5772673321224828062}
   - component: {fileID: 351133006579432107}
+  - component: {fileID: 5591537012547106114}
   m_Layer: 5
   m_Name: Option4
   m_TagString: Untagged
@@ -8413,6 +8444,20 @@ MonoBehaviour:
   nodeNameManager: {fileID: 0}
   autoAudioSetting: {fileID: 156233164439441475}
   index: 9
+--- !u!114 &5591537012547106114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040674157393034309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  UnitsToMove: 0
 --- !u!1 &7186349192308078162
 GameObject:
   m_ObjectHideFlags: 0
@@ -10505,6 +10550,7 @@ GameObject:
   - component: {fileID: 5378919713921273743}
   - component: {fileID: 2522391366502897719}
   - component: {fileID: 1784374367264892951}
+  - component: {fileID: 7724766389299855872}
   m_Layer: 5
   m_Name: Option3
   m_TagString: Untagged
@@ -10609,6 +10655,20 @@ MonoBehaviour:
   nodeNameManager: {fileID: 0}
   autoAudioSetting: {fileID: 156233164439441475}
   index: 9
+--- !u!114 &7724766389299855872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079024496151589355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc63684713a1ecd439b31bfb20844faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  UnitsToMove: 0
 --- !u!1 &9085194147601920235
 GameObject:
   m_ObjectHideFlags: 0
@@ -10931,7 +10991,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2534081309208149022, guid: 07557452967fa479bb9249ba85142ccb, type: 3}
       propertyPath: m_Name
-      value: OKBtn
+      value: SelectOKBtn
       objectReference: {fileID: 0}
     - target: {fileID: 2746947041271564731, guid: 07557452967fa479bb9249ba85142ccb, type: 3}
       propertyPath: m_Pivot.x
@@ -11166,7 +11226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2584806155989138830, guid: a620c49125894fb4c955272a31ec7e88, type: 3}
       propertyPath: m_Name
-      value: OKbtn
+      value: MakeOKbtn
       objectReference: {fileID: 0}
     - target: {fileID: 2584806155989138831, guid: a620c49125894fb4c955272a31ec7e88, type: 3}
       propertyPath: m_Pivot.x
