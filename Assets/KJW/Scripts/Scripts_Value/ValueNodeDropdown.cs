@@ -27,6 +27,11 @@ public class ValueNodeDropdown : MonoBehaviour
         CallValueList();
     }
 
+    private void OnDestroy()
+    {
+        valueManager.OnUpdateValues -= AddOption;
+    }
+
     private void CallValueList()
     {
         //tMP_Dropdown.options.Add(optionData_null);
