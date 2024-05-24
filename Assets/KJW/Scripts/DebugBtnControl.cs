@@ -118,7 +118,7 @@ public class DebugBtnControl : MonoBehaviour
     {
         Debug.Log("Debug Button Click : Reset");
         DataManager.Instance.ResetMissionState();
-
+        DataManager.Instance.UpdateChapterState(2, false);
         GameManager.Instance.InitializePlayerData();
         GameManager.Instance.gameObject.GetComponent<PlayData>().SetPlayPoint("FirstStart");
         // SetCurrentScene("1_1_farmer");

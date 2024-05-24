@@ -22,6 +22,7 @@ public class TextPressed : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+
         _gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, UnitsToMove);
     }
 
@@ -31,7 +32,7 @@ public class TextPressed : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (FlagManager.instance != null)
         {
             Debug.Log(gameObject.name);
-            if(FlagManager.instance.flagStr == gameObject.name)
+            if (FlagManager.instance.flagStr == gameObject.name)
             {
                 FlagManager.instance.OffFlag();
             }
