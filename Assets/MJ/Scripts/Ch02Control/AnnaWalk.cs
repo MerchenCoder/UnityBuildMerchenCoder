@@ -8,8 +8,6 @@ public class AnnaWalk : MonoBehaviour
     float targetX = 67f; // 목표 X 좌표
     float speed = 5f; // 이동 속도
 
-    public GameObject imageObject; // 이미지가 들어 있는 객체에 대한 참조
-
     void Update()
     {
         if (GameManager.Instance.CheckPlayProgress("Mission2-1Y") && !isWalking)
@@ -28,6 +26,7 @@ public class AnnaWalk : MonoBehaviour
     {
         // 목표 지점으로 이동
         float step = speed * Time.deltaTime; // 프레임 간 이동량 계산
+        transform.localEulerAngles = new Vector3(0, 180, 0);
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(targetX, -1.63f, 0), step);
 
         // 목표 위치에 도달하면 isWalking을 false로 설정

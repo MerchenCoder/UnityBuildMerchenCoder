@@ -11,7 +11,7 @@ public class AnnaSleep : MonoBehaviour
     // 이미지가 들어 있는 객체에 대한 참조
     public GameObject imageObject;
 
-    private RectTransform imageRectTransform;
+    public RectTransform imageRectTransform;
 
     void Start()
     {
@@ -26,41 +26,84 @@ public class AnnaSleep : MonoBehaviour
         if (imageObject != null)
         {
             imageRectTransform = imageObject.GetComponent<RectTransform>();
+            Debug.Log("Make ImageRectTransform Success");
         }
+        else
+            Debug.Log("Make IRT Fail");
     }
 
     void Update()
     {
         if (GameManager.Instance.CheckPlayProgress("Chap2Start") || !DataManager.Instance.gameStateData.ch2MissionClear[0])
         {
-            RotateImage();
-            gameObject.transform.localPosition = new Vector3(12.4144f, -3.564708f, 0);
+            Debug.Log("안나가 쓰러져있는 조건을 충족함");
             FlipImageY(true);
-        }
-        else
-        {
-            ResetImageRotation();
-            if(GameManager.Instance.CheckPlayProgress("Mission2-1Y"))
-                FlipImageY(true);
-            else
-                FlipImageY(false);
+            RotateImage();
+            //gameObject.transform.localPosition = new Vector3(12.4144f, -3.564708f, 0);
         }
     }
+
+    bool rotated = false; // Add this line as a class member
 
     void RotateImage()
     {
-        // AnnaSleepObject를 회전
-        if (imageObject != null)
-        {
-            transform.localEulerAngles = new Vector3(0, 0, 270);
+        Debug.Log("This is Function RotateImage");
 
-            // 하위 객체들을 역회전시켜 원래 상태로 유지
-            foreach (Transform child in childObjects)
+        if (imageObject != null && !rotated)
+        {
+            // Rotate the main object
+            imageObject.transform.localEulerAngles = new Vector3(0, 0, 270);
+            Debug.Log("Rotated imageObject to: " + imageObject.transform.localEulerAngles);
+
+            // Find the CharCanvas child object
+            Transform charCanvas = transform.Find("CharCanvas");
+
+            if (charCanvas != null)
             {
-                child.localEulerAngles = new Vector3(0, 0, -270);
+                // Find the quiz_btn child within CharCanvas
+                Transform quizBtn = charCanvas.Find("quiz_Btn");
+
+                if (quizBtn != null)
+                {
+                    // Log current position
+                    Debug.Log("Current position of quiz_Btn: " + quizBtn.localPosition);
+
+                    // Adjust position of the quiz_Btn
+                    float newPosX = (float)-77.8;
+                    float newPosY = (float)13;
+                    quizBtn.localPosition = new Vector3(newPosX, newPosY, quizBtn.localPosition.z);
+
+                    // Log new position
+                    Debug.Log("New position of quiz_Btn: " + quizBtn.localPosition);
+
+                    // Adjust rotation of the quiz_Btn
+                    quizBtn.localEulerAngles = new Vector3(180, 0, -270);
+                    Debug.Log("Adjusted rotation for quiz_Btn to: " + quizBtn.localEulerAngles);
+
+                    // Set the flag to true to prevent further adjustments
+                    rotated = true;
+                }
+                else
+                {
+                    Debug.LogError("quiz_btn not found under CharCanvas.");
+                }
+            }
+            else
+            {
+                Debug.LogError("CharCanvas not found.");
             }
         }
+        else if (imageObject == null)
+        {
+            Debug.LogError("imageObject is null");
+        }
+        else if (rotated)
+        {
+            Debug.LogWarning("Rotation already adjusted, skipping further adjustments.");
+        }
     }
+
+
 
     void ResetImageRotation()
     {
@@ -79,11 +122,15 @@ public class AnnaSleep : MonoBehaviour
 
     void FlipImageY(bool flip)
     {
-        if (imageRectTransform != null)
-        {
-            Vector3 scale = imageRectTransform.localScale;
-            scale.y = flip ? -1 : 1;
-            imageRectTransform.localScale = scale;
-        }
+        Debug.Log("This is Function FlipImageY");
+        float scale = imageRectTransform.eulerAngles.y;
+        scale = flip ? 180 : 0;
+        Debug.Log("SCale is " + scale);
+        // Get the current rotation and modify the y-axis rotation
+        Vector3 currentRotation = imageRectTransform.eulerAngles;
+        currentRotation.y = scale;
+
+        // Apply the new rotation
+        imageRectTransform.eulerAngles = currentRotation;
     }
 }
