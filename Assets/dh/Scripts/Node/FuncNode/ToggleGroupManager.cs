@@ -7,7 +7,8 @@ public class ToggleGroupManager : MonoBehaviour
 {
     private ToggleGroup toggleGroup;
     public Button button;
-    // Start is called before the first frame update
+
+    private int flagOption = 0;
 
     // private Toggle
 
@@ -19,30 +20,55 @@ public class ToggleGroupManager : MonoBehaviour
     private void OnEnable()
     {
         button.GetComponent<FunctionMaker>().selectType = 1;
+        if (FlagManager.instance != null) button.interactable = false;
     }
     public void OnToggleValueChagned(bool isOn)
     {
-        Toggle[] toggles = toggleGroup.GetComponentsInChildren<Toggle>();
-        int selectedToggleCount = 1;
-        foreach (Toggle toggle in toggles)
+        if (isOn)
         {
-            if (toggle.isOn)
+            Toggle[] toggles = toggleGroup.GetComponentsInChildren<Toggle>();
+            int selectedToggleCount = 1;
+            foreach (Toggle toggle in toggles)
             {
-                break; // 하나라도 선택되었다면 반복문 종료
+                if (toggle.isOn)
+                {
+                    break; // 하나라도 선택되었다면 반복문 종료
+                }
+                else
+                {
+                    selectedToggleCount++;
+                }
+
+            }
+
+            // 선택된 Toggle이 있으면 버튼 활성화, 그렇지 않으면 비활성화
+            // 튜토리얼 플래그 추가 240528
+            if (FlagManager.instance != null)
+            {
+                Debug.Log(gameObject.name);
+                if (FlagManager.instance.flagStr == "SelectOption" + selectedToggleCount.ToString())
+                {
+                    if (flagOption == 0) FlagManager.instance.OffFlag();
+                    flagOption = selectedToggleCount;
+                    FlagManager.instance.flagStr = "SelectOKBtn";
+                    button.interactable = selectedToggleCount >= 1 && selectedToggleCount <= 4;
+                    button.GetComponent<FunctionMaker>().selectType = selectedToggleCount;
+                    Debug.Log("Type: " + button.GetComponent<FunctionMaker>().selectType);
+                }
+                else if (FlagManager.instance.flagStr == "SelectOKBtn")
+                {
+                    FlagManager.instance.flagStr = "SelectOption" + flagOption.ToString();
+                    OnToggleValueChagned(true);
+                }
+                else button.interactable = false;
             }
             else
             {
-                selectedToggleCount++;
-
+                button.interactable = selectedToggleCount >= 1 && selectedToggleCount <= 4;
+                button.GetComponent<FunctionMaker>().selectType = selectedToggleCount;
+                Debug.Log("Type: " + button.GetComponent<FunctionMaker>().selectType);
             }
-
         }
-
-        // 선택된 Toggle이 있으면 버튼 활성화, 그렇지 않으면 비활성화
-        button.interactable = selectedToggleCount >= 1 && selectedToggleCount <= 4;
-        button.GetComponent<FunctionMaker>().selectType = selectedToggleCount;
-        Debug.Log("Type: " + button.GetComponent<FunctionMaker>().selectType);
-
     }
 
     //close button 눌렀을 때 모달 창 reset

@@ -106,6 +106,15 @@ public class ParaNodeBtn : MonoBehaviour
             }
         }
 
+        // 튜토리얼 플래그 추가 240525
+        if (FlagManager.instance != null)
+        {
+            if (FlagManager.instance.flagStr == "Node_Para")
+            {
+                FlagManager.instance.OffFlag();
+            }
+        }
+
     }
 
     public void MakeInstance(int paraNum)
