@@ -107,11 +107,16 @@ public class PlayerControl : MonoBehaviour
 
     public IEnumerator MoveToBlock((int x, int y) forwardBlockPos)
     {
+        bool isRunMode = NodeManager.Instance.Mode == "run" ? true : false;
 
         if (forwardBlockPos.x < 0 || forwardBlockPos.x >= mapInfo.map2DArrayRowCount || forwardBlockPos.y < 0 || forwardBlockPos.y >= mapInfo.map2DArrayColumnCount)
         {
             //index - out of range or Blocked
             Debug.Log("충돌");
+            if (!isRunMode)
+            {
+                yield break;
+            }
 
             //충돌 애니메이션
             animationAudioControl.PlayAnimationSound(1);
@@ -131,38 +136,57 @@ public class PlayerControl : MonoBehaviour
             //index - out of range or Blocked
             Debug.Log("충돌");
 
+            if (!isRunMode)
+            {
+                yield break;
+            }
+            else
+            {
+                //충돌 애니메이션
+                animationAudioControl.PlayAnimationSound(1);
+                playerAnim.SetBool("Hit", true);
+                yield return new WaitForSeconds(0.5f);
+                playerAnim.SetBool("Hit", false);
+                animationAudioControl.StopAnimationSound();
 
-            //충돌 애니메이션
-            animationAudioControl.PlayAnimationSound(1);
-            playerAnim.SetBool("Hit", true);
-            yield return new WaitForSeconds(0.5f);
-            playerAnim.SetBool("Hit", false);
-            animationAudioControl.StopAnimationSound();
+                //transfrom.positoin 유지
+                yield return null;
+            }
 
-            //transfrom.positoin 유지
-            yield return null;
+
+
         }
 
         else
         {
-            animationAudioControl.PlayAnimationSound(4);
-            Debug.Log($"{forwardBlockPos.x},{forwardBlockPos.y}로 이동");
-            // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.position);
-            // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.localPosition);
-            // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.localToWorldMatrix);
 
-            //transform.position = mapInfo.transform.GetChild(blockIndex).transform.position;
-            // Debug.Log(transform.position);
-            transform.SetParent(mapInfo.transform.GetChild(blockIndex), false);
-            transform.localPosition = Vector3.zero;
+            if (!isRunMode)
+            {
+                Debug.Log($"{forwardBlockPos.x},{forwardBlockPos.y}로 이동");
+                transform.SetParent(mapInfo.transform.GetChild(blockIndex), false);
+                transform.localPosition = Vector3.zero;
+                CurrentPos = forwardBlockPos;
+                yield return null;
 
-            //current pos 업데이트
-            CurrentPos = forwardBlockPos;
-            yield return new WaitForSeconds(0.4f);
-            animationAudioControl.StopAnimationSound();
 
-            // animationAudioControl.StopAnimationSound();
-            yield return null;
+            }
+            else
+            {
+                animationAudioControl.PlayAnimationSound(4);
+                Debug.Log($"{forwardBlockPos.x},{forwardBlockPos.y}로 이동");
+                transform.SetParent(mapInfo.transform.GetChild(blockIndex), false);
+                transform.localPosition = Vector3.zero;
+
+                //current pos 업데이트
+                CurrentPos = forwardBlockPos;
+                yield return new WaitForSeconds(0.4f);
+                animationAudioControl.StopAnimationSound();
+
+                // animationAudioControl.StopAnimationSound();
+                yield return null;
+            }
+
+
         }
     }
 

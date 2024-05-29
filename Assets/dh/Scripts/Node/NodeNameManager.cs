@@ -256,7 +256,6 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             RectTransformUtility.ScreenPointToLocalPointInRectangle(boundaryObject, eventData.position, eventData.pressEventCamera, out currentPos);
 
             Rect rect = rectTransform.rect;
-            Debug.Log(rect);
             // float minX = rectTransform.anchoredPosition.x - nodeSize.x / 2 - padding.x;
             // float maxY = rectTransform.anchoredPosition.y + nodeSize.y / 2 - padding.w;
             // float maxX = rectTransform.anchoredPosition.x + nodeSize.x / 2 - padding.z;
@@ -266,10 +265,6 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             float maxX = boundarySize.x - nodeSize.x / 2 - padding.z;
             float minY = -boundarySize.y + nodeSize.y / 2 - padding.y;
             float maxY = boundarySize.y - nodeSize.y / 2 - padding.w;
-
-            Debug.LogFormat("<color=green>{0}, {1}</color>", nodeSize.x, nodeSize.y);
-            Debug.LogFormat("<color=blue>{0}, {1}, {2}, {3}</color>", padding.x, padding.y, padding.z, padding.w);
-            Debug.LogFormat("<color=red>{0}, {1}, {2}, {3}</color>", minX, minY, maxX, maxY);
 
 
 
@@ -290,7 +285,6 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             // {
             //     transform.GetComponent<RectTransform>().anchoredPosition += delta;
             // }
-            Debug.LogFormat("<color=yellow>{0}</color>", newAnchorPos);
             rectTransform.anchoredPosition = newAnchorPos;
 
             //기존코드 주석처리 0522=======///
