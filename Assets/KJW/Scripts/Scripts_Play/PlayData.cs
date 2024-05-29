@@ -71,6 +71,7 @@ public class PlayData : MonoBehaviour
             // 현재 진행상황 로드
             for (int i = 0; i < playData.playPoints.Count; i++)
             {
+                if(playData.playPoints[playData.playPoints.Count-1].isClear == true) break;
                 if (!playData.playPoints[i + 1].isClear && i != 0)
                 {
                     nowPlayPointIndex = i;

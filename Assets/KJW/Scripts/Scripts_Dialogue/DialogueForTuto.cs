@@ -68,22 +68,22 @@ public class DialogueForTuto : MonoBehaviour
         }
         if (existDia)
         {
-            while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
+            while (i + j + 1 < dialogueContainer.dialogueList.Length)
             {
                 // OutOfIndex 방지
-                if (i + j + 1 < dialogueContainer.dialogueList.Length)
+                if (dialogueContainer.dialogueList[i + j + 1].diaID == targetDiaID)
                 {
                     j++;
                 }
                 else break;
             }
-            thisIdDialogues = new EachDialogueTuto[j];
-            for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
+            thisIdDialogues = new EachDialogueTuto[j+1];
+            for (int k = 0; k <= j; k++)
             {
-                if (i + j + 1 < dialogueContainer.dialogueList.Length)
+                if (i + k < dialogueContainer.dialogueList.Length)
                 {
-                    thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
-                    thisIdDialogues[j].dialogueText = thisIdDialogues[j].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
+                    thisIdDialogues[k] = dialogueContainer.dialogueList[k + i];
+                    thisIdDialogues[k].dialogueText = thisIdDialogues[k].dialogueText.Replace("{}", PlayerPrefs.GetString("player_name"));
                 }
                 else break;
             }

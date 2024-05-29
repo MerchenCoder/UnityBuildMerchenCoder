@@ -67,22 +67,21 @@ public class Dialogue : MonoBehaviour
                 break;
             }
         }
-        while (dialogueContainer.dialogueList[i + j].diaID == targetDiaID)
+        while (i + j + 1 < dialogueContainer.dialogueList.Length)
         {
             // OutOfIndex 방지
-            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            if (dialogueContainer.dialogueList[i + j + 1].diaID == targetDiaID)
             {
                 j++;
             }
             else break;
         }
-
-        thisIdDialogues = new EachDialogue[j];
-        for (j = 0; dialogueContainer.dialogueList[i + j].diaID == targetDiaID; j++)
+        thisIdDialogues = new EachDialogue[j+1];
+        for (int k = 0; k<=j; k++)
         {
-            if (i + j + 1 < dialogueContainer.dialogueList.Length)
+            if (i + k < dialogueContainer.dialogueList.Length)
             {
-                thisIdDialogues[j] = dialogueContainer.dialogueList[j + i];
+                thisIdDialogues[k] = dialogueContainer.dialogueList[k + i];
             }
             else break;
         }
