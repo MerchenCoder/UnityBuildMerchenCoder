@@ -8,7 +8,8 @@ public class Portal : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        SceneChange.Instance.ChangeToThisScene(NextSceneStr);
+        if(collision.gameObject.name == "Player")
+            SceneChange.Instance.ChangeToThisScene(NextSceneStr);
     }
 
     public void RequestMoveScene()
