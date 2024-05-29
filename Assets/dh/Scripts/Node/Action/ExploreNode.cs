@@ -8,10 +8,12 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
     public string outputStr;
     private NodeNameManager nodeNameManager;
     private GameObject player;
+    private PlayerControl playerControl;
 
 
     private GameObject map;
-
+    private MapInfo mapInfo;
+    private Transform parentObjectForSearching;
 
     [Header("Data")]
     private NodeData nodeData;
@@ -28,25 +30,33 @@ public class ExploreNode : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
-        if (NodeManager.Instance.Mode != "run")
-        {
-            // TestManager.Instance.playerOutput.Add(outputStr);
-            yield break;
-        }
-        if (map == null)
-        {
-            map = GameObject.FindWithTag("map");
-        }
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player");
 
+        if (parentObjectForSearching == null)
+        {
+            parentObjectForSearching = GameObject.FindWithTag("ResultPanel_Bubble").transform.parent.GetChild(0);
+        }
+        if (playerControl == null)
+        {
+            playerControl = parentObjectForSearching.GetComponentInChildren<PlayerControl>(true);
+            player = playerControl.gameObject;
+        }
+        if (mapInfo == null)
+        {
+            mapInfo = parentObjectForSearching.GetComponentInChildren<MapInfo>(true);
+            map = mapInfo.gameObject;
         }
 
         //전방의 block 탐색
         (int x, int y) forwardBlockPos = player.GetComponent<PlayerControl>().forwardBlockPos;
         nodeData.data_int = Explore(forwardBlockPos);
         nodeData.ErrorFlag = false;
+
+
+        if (NodeManager.Instance.Mode != "run")
+        {
+            yield break;
+        }
+
 
 
         yield return new WaitForSeconds(0.3f);
