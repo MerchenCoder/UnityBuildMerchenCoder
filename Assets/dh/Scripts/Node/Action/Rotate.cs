@@ -53,11 +53,12 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
             endAngle.y = (endAngle.y + 360) % 360; // Y 축 각도를 0부터 360도 사이로 제한
 
         }
+        yield return new WaitForSeconds(0.2f);
 
         audioSource.PlayOneShot(audioClip);
         // RotateAtoB 코루틴을 호출하고 start와 end 값을 전달
-        yield return StartCoroutine(RotateAtoB(startAngle, endAngle));
-
+        yield return RotateAtoB(startAngle, endAngle);
+        Debug.Log("aaaaa");
         audioSource.Stop();
         //잠깐 대기
         yield return new WaitForSeconds(0.3f);
@@ -98,7 +99,6 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
         {
             player.GetComponent<PlayerControl>().CurrentType = (PlayerControl.type)((playerType - 1 + 4) % 4);
         }
-
 
     }
 }

@@ -145,7 +145,7 @@ public class PlayerControl : MonoBehaviour
 
         else
         {
-            animationAudioControl.PlayAnimationSound(1);
+            animationAudioControl.PlayAnimationSound(4);
             Debug.Log($"{forwardBlockPos.x},{forwardBlockPos.y}로 이동");
             // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.position);
             // Debug.Log(mapInfo.transform.GetChild(blockIndex).transform.localPosition);
@@ -159,6 +159,8 @@ public class PlayerControl : MonoBehaviour
             //current pos 업데이트
             CurrentPos = forwardBlockPos;
             yield return new WaitForSeconds(0.4f);
+            animationAudioControl.StopAnimationSound();
+
             // animationAudioControl.StopAnimationSound();
             yield return null;
         }
