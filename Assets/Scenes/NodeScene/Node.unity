@@ -1122,7 +1122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00390625
+      value: 0.0036621094
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2983,6 +2983,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2076090061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 644376368324414808, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
+  m_PrefabInstance: {fileID: 6990669063838476658}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2076090067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076090061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc515ea4b5bc24741a0a7f251e9edc66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultCanvas: {fileID: 0}
+  stopButton: {fileID: 0}
 --- !u!114 &2087166933 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5151304449989601302, guid: 084fee8c841e544478f81cd3866a722f, type: 3}
@@ -8136,23 +8155,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8919820509982025972, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8919820509982025972, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2076090067}
     - target: {fileID: 8919820509982025972, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8919820509982025972, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SoundPlayOneShot
+      value: RefreshResultCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 8919820509982025972, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: AudioControl, Assembly-CSharp
+      value: EditAfterSubmit, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8919820509982025972, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -8166,6 +8185,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7711742635903933162, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6990669063838476660}
+    - targetCorrespondingSourceObject: {fileID: 644376368324414808, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2076090067}
   m_SourcePrefab: {fileID: 100100000, guid: 647daa97dce9243eab0f7241b1f9b9b9, type: 3}
 --- !u!1 &6990669063838476659 stripped
 GameObject:

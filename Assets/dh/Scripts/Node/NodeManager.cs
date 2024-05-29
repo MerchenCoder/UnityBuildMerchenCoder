@@ -319,4 +319,19 @@ public class NodeManager : MonoBehaviour
         resultCanvas.GetComponent<RunErrorMsg>().SetStateComplete();
 
     }
+
+    /// <summary>
+    /// 비활성화 상태와 무관하게 코루팅르 실행하기 위해 
+    /// 별도의 매니저 객체인 NodeManager에서 코루틴을 대신 실행하도록 함
+    /// </summary>
+    /// <param name="coroutine"></param> <summary>
+    /// 
+    /// </summary>
+    /// <param name="coroutine"></param>
+    public void RunCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
+    }
+
+
 }

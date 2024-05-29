@@ -87,8 +87,7 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(ResetMove(CurrentPos));
-
+        NodeManager.Instance.RunCoroutine(ResetMove(CurrentPos));
     }
     public IEnumerator ResetMove((int x, int y) forwardBlockPos)
     {
