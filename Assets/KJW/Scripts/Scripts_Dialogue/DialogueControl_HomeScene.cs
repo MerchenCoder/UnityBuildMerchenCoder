@@ -13,7 +13,8 @@ public class DialogueControl_HomeScene : MonoBehaviour
     [SerializeField] Dialogue chap_1_5_Dialogue1;
     [SerializeField] Dialogue chap_1_5_Dialogue2;
     [SerializeField] Dialogue chap_1_5_Dialogue3;
-    [SerializeField] Dialogue chap_2_5_Dialogue;
+    [SerializeField] Dialogue chap_2_5_Dialogue1;
+    [SerializeField] Dialogue chap_2_5_Dialogue2;
 
     public GameObject setNamePanel;
 
@@ -22,6 +23,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
 
     bool isFirstDiaEnd;
     bool isChap1_5_DiaEnd;
+    bool isChap2_5_DiaEnd;
     bool report = false;
 
     void Start()
@@ -40,6 +42,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
             Debug.Log("FirstStart");
             isFirstDiaEnd = false;
             isChap1_5_DiaEnd = true;
+            isChap2_5_DiaEnd = false;
             playCanvas.SetActive(false);
             setNamePanel.SetActive(true);
         }
@@ -48,8 +51,18 @@ public class DialogueControl_HomeScene : MonoBehaviour
             Debug.Log("Chap1Clear");
             isFirstDiaEnd = true;
             isChap1_5_DiaEnd = false;
+            isChap2_5_DiaEnd = false;
             setNamePanel.SetActive(false);
             Invoke("StartChap1ClearDialogue", 0.5f);
+        }
+        else if (GameManager.Instance.CheckPlayProgress("Chap2Ending"))
+        {
+            Debug.Log("Chap2Clear");
+            isFirstDiaEnd = true;
+            isChap1_5_DiaEnd = true;
+            isChap2_5_DiaEnd = false;
+            setNamePanel.SetActive(false);
+            Invoke("StartChap2ClearDialogue", 0.5f);
         }
         else
         {
@@ -74,6 +87,10 @@ public class DialogueControl_HomeScene : MonoBehaviour
         chap_1_5_Dialogue1.DialogueStart();
     }
 
+    public void StartChap2ClearDialogue()
+    {
+        chap_2_5_Dialogue1.DialogueStart();
+    }
 
     private void PlayNextFlow()
     {
@@ -88,6 +105,14 @@ public class DialogueControl_HomeScene : MonoBehaviour
         else if (!isChap1_5_DiaEnd && report)
         {
             StartCoroutine(Chap1_5_PlayFlow());
+        }
+        else if (!isChap2_5_DiaEnd && !report)
+        {
+            playCanvas.SetActive(true);
+        }
+        else if (!isChap2_5_DiaEnd && report)
+        {
+            StartCoroutine(Chap2_5_PlayFlow());
         }
         else
         {
@@ -107,7 +132,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
             chap_1_5_Dialogue2.DialogueStart();
             report = true;
         }
-        else if (GameManager.Instance.CheckPlayProgress("Chap2Clear"))
+        else if (GameManager.Instance.CheckPlayProgress("Chap2Ending"))
         {
             Debug.Log("Chap2Clear");
             playCanvas.SetActive(false);
@@ -147,7 +172,8 @@ public class DialogueControl_HomeScene : MonoBehaviour
     IEnumerator Chap2_5_PlayFlow()
     {
         playCanvas.SetActive(false);
-        chap_2_5_Dialogue.DialogueStart();
+        chap_2_5_Dialogue2.DialogueStart();
+        isChap2_5_DiaEnd = true;
         yield return null;
     }
 }

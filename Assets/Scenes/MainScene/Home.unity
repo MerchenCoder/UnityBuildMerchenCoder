@@ -2426,6 +2426,74 @@ Transform:
   - {fileID: 2085255807}
   m_Father: {fileID: 160454567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &227417286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 227417287}
+  - component: {fileID: 227417289}
+  - component: {fileID: 227417288}
+  m_Layer: 0
+  m_Name: Chap2.5Dialogue1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &227417287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227417286}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 37.728767, y: 2.0343716, z: 0.16725394}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622213123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &227417288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227417286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca84cc4229397bc44b03c461a46fa146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isConnectedWithQuiz: 0
+  quizActive: {fileID: 0}
+  isConnectedWithNextFlow: 0
+  nextFlow: {fileID: 0}
+  isConnectedWithSave: 0
+  playPoint: 
+--- !u!114 &227417289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227417286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6b256299f135e438eabf15d129947a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueContainer:
+    dialogueList: []
+  thisIdDialogues: []
+  dialogueFileName: chap1_Home_Dialogue
+  dialogueID: 5
 --- !u!1 &234294333
 GameObject:
   m_ObjectHideFlags: 0
@@ -5868,7 +5936,8 @@ MonoBehaviour:
   chap_1_5_Dialogue1: {fileID: 625088531}
   chap_1_5_Dialogue2: {fileID: 242107797}
   chap_1_5_Dialogue3: {fileID: 551265872}
-  chap_2_5_Dialogue: {fileID: 0}
+  chap_2_5_Dialogue1: {fileID: 227417289}
+  chap_2_5_Dialogue2: {fileID: 996279609}
   setNamePanel: {fileID: 738488475}
   alarm: {fileID: 8300000, guid: 775697712f0819c4b90980af525c19fb, type: 3}
 --- !u!114 &619806535 stripped
@@ -5984,6 +6053,8 @@ Transform:
   - {fileID: 625088530}
   - {fileID: 242107795}
   - {fileID: 551265870}
+  - {fileID: 227417287}
+  - {fileID: 996279611}
   - {fileID: 653421889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10159,6 +10230,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: ffd64e92726626b4caca75aa9f163d98, type: 2}
   isBought: 0
+--- !u!1 &996279608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996279611}
+  - component: {fileID: 996279609}
+  - component: {fileID: 996279610}
+  m_Layer: 0
+  m_Name: Chap2.5Dialogue2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &996279609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996279608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6b256299f135e438eabf15d129947a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueContainer:
+    dialogueList: []
+  thisIdDialogues: []
+  dialogueFileName: chap1_Home_Dialogue
+  dialogueID: 6
+--- !u!114 &996279610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996279608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca84cc4229397bc44b03c461a46fa146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isConnectedWithQuiz: 0
+  quizActive: {fileID: 0}
+  isConnectedWithNextFlow: 0
+  nextFlow: {fileID: 0}
+  isConnectedWithSave: 1
+  playPoint: Chap2Clear
+--- !u!4 &996279611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996279608}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 37.728767, y: 2.0343716, z: 0.16725394}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622213123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006481513
 GameObject:
   m_ObjectHideFlags: 0
