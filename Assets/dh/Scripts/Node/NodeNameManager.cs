@@ -265,7 +265,6 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             float maxX = boundarySize.x - nodeSize.x / 2 - padding.z;
             float minY = -boundarySize.y + nodeSize.y / 2 - padding.y;
             float maxY = boundarySize.y - nodeSize.y / 2 - padding.w;
-            Debug.Log($"{minX}, {minY}, {maxX}, {maxY}");
 
 
 
@@ -286,7 +285,6 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             // {
             //     transform.GetComponent<RectTransform>().anchoredPosition += delta;
             // }
-
             rectTransform.anchoredPosition = newAnchorPos;
 
             //기존코드 주석처리 0522=======///

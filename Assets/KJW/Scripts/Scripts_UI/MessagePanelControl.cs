@@ -20,7 +20,7 @@ public class MessagePanelControl : MonoBehaviour
         else if (DataManager.Instance.gameStateData.chapterIsUnlock[1] && !GameManager.Instance.CheckPlayProgress("Chap2Clear"))
         {
             panels[1].SetActive(true);
-            if (GameManager.Instance.CheckPlayProgress("Chap2Clear")) reportButtons[1].interactable = true;
+            if (GameManager.Instance.CheckPlayProgress("Chap2Ending")) reportButtons[1].interactable = true;
         }
         // 챕터 3 대기중
         else if (GameManager.Instance.CheckPlayProgress("Chap2Clear"))

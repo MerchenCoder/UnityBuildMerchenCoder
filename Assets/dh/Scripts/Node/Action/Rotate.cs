@@ -10,6 +10,8 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
     public string outputStr;
     private NodeNameManager nodeNameManager;
     private GameObject player;
+    private PlayerControl playerControl;
+
     // private GameObject playerActionBubble;
 
 
@@ -27,17 +29,17 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
 
     public IEnumerator Execute()
     {
+
         if (audioSource == null)
             audioSource = nodeNameManager.AutoAudioSetting.AudioSource;
-        if (NodeManager.Instance.Mode != "run")
+
+        if (playerControl == null)
         {
-            // TestManager.Instance.playerOutput.Add(outputStr);
-            yield break;
+            playerControl = GameObject.FindWithTag("ResultPanel_Bubble").transform.parent.GetChild(0).GetComponentInChildren<PlayerControl>(true);
+            player = playerControl.gameObject;
         }
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player");
-        }
+
+
         // 현재 플레이어의 회전 각도
         Vector3 startAngle = player.transform.eulerAngles;
         Vector3 endAngle;
@@ -53,13 +55,31 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
             endAngle.y = (endAngle.y + 360) % 360; // Y 축 각도를 0부터 360도 사이로 제한
 
         }
+
+
+
+
+
+
+        if (NodeManager.Instance.Mode != "run")
+        {
+            //제출 모드
+            yield return RotateAtoB(startAngle, endAngle);
+            yield break;
+        }
+
+
+
+
+
+
         yield return new WaitForSeconds(0.2f);
 
         audioSource.PlayOneShot(audioClip);
         // RotateAtoB 코루틴을 호출하고 start와 end 값을 전달
-        yield return RotateAtoB(startAngle, endAngle);
-        Debug.Log("aaaaa");
+        yield return RotateAtoB(startAngle, endAngle, 0.5f);
         audioSource.Stop();
+
         //잠깐 대기
         yield return new WaitForSeconds(0.3f);
     }
@@ -76,10 +96,9 @@ public class Rotate : MonoBehaviour, INode, IFollowFlow
     }
 
 
-    private IEnumerator RotateAtoB(Vector3 start, Vector3 end)
+    private IEnumerator RotateAtoB(Vector3 start, Vector3 end, float rotateTime = 0)
     {
         float percent = 0;
-        float rotateTime = 0.5f;
 
         while (percent < 1)
         {

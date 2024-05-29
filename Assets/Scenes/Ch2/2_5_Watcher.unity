@@ -3045,7 +3045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d46c7f177ccfe40bcf16acbae85111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activePlayPoint: 2-13Y
+  activePlayPoint: Mission2-13Y
 --- !u!114 &930812192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3063,7 +3063,7 @@ MonoBehaviour:
   isConnectedWithNextFlow: 0
   nextFlow: {fileID: 0}
   isConnectedWithSave: 1
-  playPoint: 2-14N
+  playPoint: Mission2-14N
 --- !u!114 &930812193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4434,6 +4434,7 @@ GameObject:
   - component: {fileID: 1577534319}
   - component: {fileID: 1577534318}
   - component: {fileID: 1577534317}
+  - component: {fileID: 1577534321}
   m_Layer: 6
   m_Name: Watcher
   m_TagString: NPC
@@ -4565,22 +4566,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &1577534320
-Transform:
+--- !u!224 &1577534320
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577534316}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.5, y: -1.27, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.27, y: 0.27, z: 0.27}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1982808576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 18.5, y: -1.27}
+  m_SizeDelta: {x: 10.59, y: 17.25}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1577534321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577534316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b0716abc3a741469cf95fcfa07e5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageObject: {fileID: 1577534316}
+  imageRectTransform: {fileID: 1577534320}
 --- !u!1 &1669033797
 GameObject:
   m_ObjectHideFlags: 0
@@ -5195,7 +5214,7 @@ Transform:
   m_GameObject: {fileID: 1770739073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.45385122, y: 0.5313505, z: -10}
+  m_LocalPosition: {x: -1.679482, y: 0.5313505, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6794,7 +6813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.22
+      value: -0.22000027
       objectReference: {fileID: 0}
     - target: {fileID: 2778099553804300467, guid: 5369839493ca4d846b3c2e676ea08286, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6884,7 +6903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d46c7f177ccfe40bcf16acbae85111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activePlayPoint: 2-14N
+  activePlayPoint: Mission2-14N
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6896,7 +6915,6 @@ SceneRoots:
   - {fileID: 1543405611}
   - {fileID: 1783275820}
   - {fileID: 746940440}
-  - {fileID: 1577534320}
   - {fileID: 242520942}
   - {fileID: 1401720839}
   - {fileID: 1484458522}
@@ -6905,3 +6923,4 @@ SceneRoots:
   - {fileID: 1496322203}
   - {fileID: 869199762}
   - {fileID: 1426198102}
+  - {fileID: 1577534320}
