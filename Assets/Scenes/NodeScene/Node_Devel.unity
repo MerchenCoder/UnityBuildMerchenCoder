@@ -1118,7 +1118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.002319336
+      value: 0.005493164
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNode: 0
   nodeNameManager: {fileID: 0}
-  autoAudioSetting: {fileID: 1242110255691200478}
+  autoAudioSetting: {fileID: 0}
   index: 0
 --- !u!1 &684056681
 GameObject:
@@ -1754,11 +1754,12 @@ MonoBehaviour:
   actionNodeBtn:
   - {fileID: 8926905929988791763, guid: 7aac8d3a2dfaf4231b6b89d152e187d7, type: 3}
   - {fileID: 8926905929988791763, guid: f600a5b837c53436aac1033efb528a72, type: 3}
+  - {fileID: 8926905929988791763, guid: dd26e1a2b874c41e8b7afbe4e84776d4, type: 3}
   currentInput: []
   currentOutput: []
   playerOutput: []
   SubmitResultCanvas: {fileID: 9210380762261326536}
-  audioControl: {fileID: 1386293806}
+  audioControl: {fileID: 0}
 --- !u!1 &1022878607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1101466044646431825, guid: e1bac646199b749d783f2047f2579ca6, type: 3}
@@ -3678,17 +3679,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5463897479599188610, guid: b1eaedcff374d41c5b139958b7c43d02, type: 3}
   m_PrefabInstance: {fileID: 6552585164105358687}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1242110255691200478 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 156233164439441475, guid: b1eaedcff374d41c5b139958b7c43d02, type: 3}
-  m_PrefabInstance: {fileID: 6552585164105358687}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242110255691200477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba9b3a0d45cf54d509e2b9d876c00f7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1245442577718723382
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,7 +5512,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 2-10
+          m_StringArgument: 2-14
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1846388357}
@@ -8502,7 +8492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900b10678046541078b78d55de5dd4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runButton: {fileID: 598414331}
+  runButton: {fileID: 0}
 --- !u!224 &8486045427911881084
 RectTransform:
   m_ObjectHideFlags: 0
