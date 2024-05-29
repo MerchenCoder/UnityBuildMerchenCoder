@@ -8,6 +8,7 @@ using System.Text;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 #region 패킷 클래스 정의
 public class packet
@@ -260,6 +261,11 @@ public class Sign : MonoBehaviour
 
                     StartCoroutine(ShowAlertPanel(1.5f)); // ShowAlertPanel 코루틴 실행
                     onComplete(false);
+                    if (PlayerPrefs.HasKey("autoLogin") && PlayerPrefs.GetInt("autoLogin") == 1)
+                    {
+                        StartCoroutine(WaitAndReloadScene()); // 잠시 기다린 후 씬을 다시 로드하는 코루틴 실행
+                    }
+
                 }
                 else if (responseResult.errorno == 401)
                 {
@@ -288,6 +294,12 @@ public class Sign : MonoBehaviour
 
 
 
+    private IEnumerator WaitAndReloadScene()
+    {
+        yield return new WaitForSeconds(1.5f); // 1.5초 동안 기다림
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
 
 
