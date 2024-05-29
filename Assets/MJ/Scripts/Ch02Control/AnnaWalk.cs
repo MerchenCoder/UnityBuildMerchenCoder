@@ -19,6 +19,7 @@ public class AnnaWalk : MonoBehaviour
         }
         else
         {
+            afterDialogue.SetActive(false);
             isWalking = false;
         }
 
