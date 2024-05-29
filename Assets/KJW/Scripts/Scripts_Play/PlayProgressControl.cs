@@ -13,7 +13,8 @@ public class PlayProgressControl : MonoBehaviour
             gameObject.SetActive(false);
             if (TryGetComponent<QuizActive>(out QuizActive qa))
             {
-                qa.AfterMissionDialogue.SetActive(false);
+                if(qa.AfterMissionDialogue != null)
+                    qa.AfterMissionDialogue.SetActive(false);
             }
         }
     }
