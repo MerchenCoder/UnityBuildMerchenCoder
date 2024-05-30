@@ -20716,6 +20716,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4995445557346047551, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
   m_PrefabInstance: {fileID: 3213309713660498741}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2017543486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7776506540667959416, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
+  m_PrefabInstance: {fileID: 3213309713660498741}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017543483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15860555df245c449e6b1feef9dc3dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2023059915
 GameObject:
   m_ObjectHideFlags: 0
@@ -25432,20 +25443,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7475505313314325508, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475505313314325508, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7475505313314325508, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1553318556}
+      objectReference: {fileID: 2017543486}
     - target: {fileID: 7475505313314325508, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: PlaySFXByAudioManager
+      value: Close
       objectReference: {fileID: 0}
     - target: {fileID: 7475505313314325508, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayByAudioManager, Assembly-CSharp
+      value: CloseButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7475505313314325508, guid: c67717f36f020484fae64b85e5ea3e32, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument

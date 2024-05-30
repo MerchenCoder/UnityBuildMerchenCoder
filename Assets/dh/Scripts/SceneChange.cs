@@ -93,7 +93,7 @@ public class SceneChange : MonoBehaviour
         fadePanel.FadeOut();
         yield return new WaitForSeconds(1f); // Wait Fading Time
         asyncLoad.allowSceneActivation = true;
-        yield return new WaitForSeconds(0.3f);
+        // yield return new WaitForSeconds(0.1f);
         fadePanel.FadeIn();
     }
 }
