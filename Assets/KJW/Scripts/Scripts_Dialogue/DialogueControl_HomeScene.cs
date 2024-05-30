@@ -42,7 +42,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
             Debug.Log("FirstStart");
             isFirstDiaEnd = false;
             isChap1_5_DiaEnd = true;
-            isChap2_5_DiaEnd = false;
+            isChap2_5_DiaEnd = true;
             playCanvas.SetActive(false);
             setNamePanel.SetActive(true);
         }
@@ -51,7 +51,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
             Debug.Log("Chap1Clear");
             isFirstDiaEnd = true;
             isChap1_5_DiaEnd = false;
-            isChap2_5_DiaEnd = false;
+            isChap2_5_DiaEnd = true;
             setNamePanel.SetActive(false);
             Invoke("StartChap1ClearDialogue", 0.5f);
         }
