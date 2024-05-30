@@ -148,6 +148,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
         yield return new WaitForSeconds(1f);
         messagePanel1.SetActive(true);
         yield return new WaitForSeconds(5f);
+        messagePanel1.SetActive(false);
         firstDialogue2.DialogueStart();
         isFirstDiaEnd = true;
         yield return null;
@@ -161,6 +162,7 @@ public class DialogueControl_HomeScene : MonoBehaviour
         yield return new WaitForSeconds(1f);
         messagePanel2.SetActive(true);
         yield return new WaitForSeconds(5f);
+        messagePanel2.SetActive(false);
         chap_1_5_Dialogue3.DialogueStart();
         isChap1_5_DiaEnd = true;
         // chap2 open
