@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using static DialogueForTuto;
 
 public class DialogueSystemForTuto : MonoBehaviour
@@ -17,6 +18,7 @@ public class DialogueSystemForTuto : MonoBehaviour
     public List<GameObject> dialogues;
     public InfoPagesController infoPagesController;
     [NonSerialized] public EachDialogueTuto[] nowDialogueList;
+    public GameObject messagePanel;
 
     int diaIndex;
     int diaListIndex;
@@ -61,7 +63,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         diaIndex = 0;
         diaListIndex++;
         etc.SetActive(true);
-        Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].interaction, nowDialogueList[diaIndex].infoTabName);
+        Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].interaction, nowDialogueList[diaIndex].infoTabName, nowDialogueList[diaIndex].message);
     }
 
     public void NextSpeak()
@@ -82,12 +84,12 @@ public class DialogueSystemForTuto : MonoBehaviour
             else
             {
                 diaIndex++;
-                Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].interaction ,nowDialogueList[diaIndex].infoTabName);
+                Speak(nowDialogueList[diaIndex].dialogueText, nowDialogueList[diaIndex].interaction ,nowDialogueList[diaIndex].infoTabName, nowDialogueList[diaIndex].message);
             }
         }
     }
 
-    void Speak(string dia, string interaction, string infoTabName)
+    void Speak(string dia, string interaction, string infoTabName, string message)
     {
         isDoneTyping = false;
         stopTyping = false;
@@ -96,6 +98,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         if (interaction == null || interaction == "") // 인터렉션이 없는 경우
         {
             canvas.sortingOrder = 20;
+            messagePanel.SetActive(false);
             if (infoTabName == "" || infoTabName == null)
             {
                 infoPanel.SetActive(false);
@@ -115,6 +118,8 @@ public class DialogueSystemForTuto : MonoBehaviour
             infoPanel.SetActive(false);
             right_Panel.SetActive(false);
             BGpanel.SetActive(false);
+            messagePanel.SetActive(true);
+            messagePanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = message;
             nowFlag = interaction;
             FlagManager.instance.SetFlag(nowFlag);
             right_Panel.SetActive(false);

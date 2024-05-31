@@ -12,10 +12,11 @@ public class DialogueForTuto : MonoBehaviour
     public class EachDialogueTuto
     {
         public string diaID;
-        public int index;
+        //public int index;
         public string interaction; // 튜토 인터렉션
         public string infoTabName; // 대화하면서 펼쳐둘 InfoBook tab 이름
         [TextArea()] public string dialogueText;
+        public string message;
     }
 
     public class DialogueContainer
