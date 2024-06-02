@@ -19,20 +19,15 @@ public class FlowinPort : MonoBehaviour
             if (isConnected != value)
             {
                 isConnected = value;
+                FlowConnectFlag();
             }
         }
     }
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void FlowConnectFlag()
     {
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

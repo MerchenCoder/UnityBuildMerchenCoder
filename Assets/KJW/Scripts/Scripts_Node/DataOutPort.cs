@@ -114,7 +114,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
         // 튜토리얼 플래그 추가 240513
         if (FlagManager.instance != null)
         {
-            if (FlagManager.instance.flagStr == "ConnectData")
+            if (FlagManager.instance.flagStr == "ConnectData" || FlagManager.instance.flagStr == "ConnectData_SetVariable")//값 가져오기 플래그 추가
             {
                 // UI ��ҿ��� �浹 ���� Ȯ��
                 foreach (RaycastResult result in results)
@@ -174,7 +174,7 @@ public class DataOutPort : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
                 }
             }
         }
-        
+
         if (!isConnected)
         {
             transform.position = originVector3;

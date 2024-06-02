@@ -18,7 +18,7 @@ public class StringNodeText : MonoBehaviour
         data = GetComponent<NodeData>();
         dataOutPort = this.transform.GetChild(0).GetComponent<DataOutPort>();
         UpdateValue();
-        if(inputField == null)
+        if (inputField == null)
         {
             inputField = this.transform.GetChild(1).GetComponent<TMP_InputField>();
         }
@@ -39,12 +39,12 @@ public class StringNodeText : MonoBehaviour
         {
             if (FlagManager.instance.flagStr == "PrintHello")
             {
-                if(stringValue == "안녕하세요")
+                if (stringValue == "안녕하세요")
                     FlagManager.instance.OffFlag();
             }
             if (FlagManager.instance.flagStr == "PrintMango")
             {
-                if (stringValue == "망고")
+                if (stringValue == "망고망고")
                     FlagManager.instance.OffFlag();
             }
         }
