@@ -9,12 +9,11 @@ public class AnnaWalk : MonoBehaviour
     float targetX = 67f; // 목표 X 좌표
     float speed = 5f; // 이동 속도
     public GameObject afterDialogue;
-
     void Update()
     {
         if (GameManager.Instance.CheckPlayProgress("Mission2-1Y") && !isWalking)
         {
-            // 조건이 충족되고 현재 움직이고 있지 않은 상태일 때
+            afterDialogue.SetActive(false);
             isWalking = true; // 움직이는 중임을 표시
         }
         else
@@ -40,7 +39,7 @@ public class AnnaWalk : MonoBehaviour
         if (Mathf.Approximately(transform.localPosition.x, targetX))
         {
             isWalking = false;
-            this.transform.localPosition = new Vector3(targetX, -1.72f,0f);
+            this.transform.localPosition = new Vector3(targetX, -1.72f, 0f);
             transform.localEulerAngles = new Vector3(0, 0, 0);
             afterDialogue.SetActive(true);
         }

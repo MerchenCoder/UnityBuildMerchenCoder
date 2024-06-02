@@ -19,14 +19,20 @@ public class QuizActive : MonoBehaviour
 
     public GameObject AfterMissionDialogue;
 
+
+    //0603 : 말풍선 가이드 화살표 추가
+    private GuideArrowEffect guideArrow;
+
+
     // 문제 맞추고 돌아왔을 때 다음 대화 활성화
     private void Start()
     {
         quizBubbleBtn = GetComponent<Button>();
         player = GameObject.FindWithTag("Player");
-
+        guideArrow = GetComponentInChildren<GuideArrowEffect>();
         quizBubbleBtn.onClick.RemoveAllListeners();
         quizBubbleBtn.onClick.AddListener(QuizBtnOnClick);
+
 
         if (TryGetComponent<PlayProgressControl>(out PlayProgressControl ppc))
         {
@@ -35,7 +41,7 @@ public class QuizActive : MonoBehaviour
             if (GameManager.Instance.CheckPlayProgress(ppc.activePlayPoint))
             {
                 string[] chapter_mission = missionCode.Split("-");
-                if(chapter_mission[0] == "1")
+                if (chapter_mission[0] == "1")
                 {
                     if (DataManager.Instance.gameStateData.ch1MissionClear[int.Parse(chapter_mission[1]) - 1]) // 미션 클리어 확인
                     {
@@ -71,7 +77,7 @@ public class QuizActive : MonoBehaviour
                 {
                     Debug.LogError("Mission Code Error");
                 }
-                
+
             }
         }
     }
@@ -123,8 +129,11 @@ public class QuizActive : MonoBehaviour
 
     void QuizBtnOnClick()
     {
+        guideArrow.IsClicked = true;
         QuizActiveTrue();
         SavePlayerPosition();
         SaveCurrentMissionCode();
     }
+
+
 }

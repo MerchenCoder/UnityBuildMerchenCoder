@@ -27,7 +27,8 @@ public class FlowinPort : MonoBehaviour
 
     public void FlowConnectFlag()
     {
-
+        // string 
+        // if(isConnected && FlagManager.instance.flagStr)
     }
 
 }

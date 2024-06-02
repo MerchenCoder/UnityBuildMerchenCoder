@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class DialogueBtn : MonoBehaviour
 {
-
     //플레이어 위치 저장을 위한 변수//
     Button dialogueBubbleBtn;
     GameObject player;
@@ -15,11 +14,20 @@ public class DialogueBtn : MonoBehaviour
 
     Dialogue dialogue;
 
+
+    //0603 : 말풍선 가이드 화살표 추가
+    private GuideArrowEffect guideArrow;
+
     // Start is called before the first frame update
     void Start()
     {
         dialogueBubbleBtn = GetComponent<Button>();
         player = GameObject.FindWithTag("Player");
+        if (transform.childCount > 0)
+        {
+            transform.GetChild(0).TryGetComponent<GuideArrowEffect>(out guideArrow); //0603
+        }
+
 
         if (dialogueBubbleBtn != null)
         {
@@ -30,8 +38,14 @@ public class DialogueBtn : MonoBehaviour
         dialogue = GetComponent<Dialogue>();
     }
 
+
+
     public void DialogueBtnDown()
     {
+        guideArrow.IsClicked = true;
+        if (guideArrow != null)
+            guideArrow.gameObject.SetActive(false);
+
         dialogue.DialogueStart();
     }
 
