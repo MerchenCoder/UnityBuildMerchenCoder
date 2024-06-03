@@ -16,7 +16,7 @@ public class FlowinPort : MonoBehaviour
         }
         set
         {
-            FlowConnectFlag();
+            FlowConnectFlag(value);
             if (isConnected != value)
             {
                 isConnected = value;
@@ -26,7 +26,7 @@ public class FlowinPort : MonoBehaviour
     }
 
 
-    public void FlowConnectFlag()
+    public void FlowConnectFlag(bool isConnected)
     {
         string nodeName;
         if (isConnected && FlagManager.instance != null)
