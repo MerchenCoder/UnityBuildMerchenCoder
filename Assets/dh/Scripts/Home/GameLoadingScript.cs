@@ -18,19 +18,32 @@ public class GameLoadingScript : MonoBehaviour
     }
 
 
-    void UpdateProgress(float value)
+    IEnumerator UpdateProgress(float value, float time = 0.01f)
     {
-        loadValue = value;
-        loadingProgress.value = loadValue;
-        loadText.text = loadValue.ToString();
-        print($"loadValue : {loadValue}");
+        float elaspedTime = 0f;
+        float startValue = loadingProgress.value;
+        float targetValue = value;
+
+        while (elaspedTime < time)
+        {
+            elaspedTime += Time.deltaTime;
+            loadingProgress.value = Mathf.Lerp(startValue, targetValue, elaspedTime / time);
+            loadText.text = loadValue.ToString();
+            yield return null;
+        }
+
+        // 정확하게 목표값에 도달
+        loadingProgress.value = targetValue;
+        loadText.text = targetValue.ToString();
+        print($"loadValue : {targetValue}");
+
     }
     public IEnumerator Loading()
     {
         if (Directory.Exists(Path.Combine(Application.persistentDataPath, "static")))
         {
             Debug.Log("이미 로컬에 s3에서 가져온 정적파일 존재");
-            UpdateProgress(30);
+            StartCoroutine(UpdateProgress(30, 0.4f));
             DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
             {
                 if (success)
@@ -38,7 +51,7 @@ public class GameLoadingScript : MonoBehaviour
                     DataManager.Instance.LoadGameStatusData();
                     GameManager.Instance.LoadPlayerData();
                     GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
-                    UpdateProgress(50);
+                    UpdateProgress(50, 0.4f);
                     StartCoroutine(AsycLoadHomeScene());
                 }
                 else
@@ -57,7 +70,7 @@ public class GameLoadingScript : MonoBehaviour
                 if (success)
                 {
 
-                    UpdateProgress(30);
+                    StartCoroutine(UpdateProgress(30, 0.4f));
                     DataManager.Instance.GetComponent<FullLoad>().LoadAllData((success) =>
                     {
                         if (success)
@@ -65,7 +78,7 @@ public class GameLoadingScript : MonoBehaviour
                             DataManager.Instance.LoadGameStatusData();
                             GameManager.Instance.LoadPlayerData();
                             GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
-                            UpdateProgress(50);
+                            UpdateProgress(50, 0.4f);
                             StartCoroutine(AsycLoadHomeScene());
                         }
                         else
@@ -101,19 +114,21 @@ public class GameLoadingScript : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             //Debug.Log(asyncLoad.progress);
-
-            UpdateProgress(Mathf.Round(asyncLoad.progress * 50 * 100) / 100 + 50);
-            loadingProgress.value = loadValue;
-            loadText.text = loadValue.ToString();
-
-            if (asyncLoad.progress >= 0.9f)
+            if (asyncLoad.progress < 0.9f)
             {
-
-                break;
+                Debug.Log("adsfafasfafaf");
+                float targetValue = Mathf.Round(asyncLoad.progress * 50 * 100) / 100 + 50;
+                Debug.Log(targetValue);
+                StartCoroutine(UpdateProgress(targetValue));
             }
-            Debug.Log("씬 준비 완료. 잠시 대기");
-            yield return new WaitForSeconds(1.5f);
-            asyncLoad.allowSceneActivation = true;
+            else
+            {
+                StartCoroutine(UpdateProgress(100, 0.5f));
+                Debug.Log("씬 준비 완료. 잠시 대기");
+                yield return new WaitForSeconds(1.5f);
+                asyncLoad.allowSceneActivation = true;
+            }
+
 
         }
         yield return null; // 추가
