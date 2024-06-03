@@ -36,21 +36,26 @@ public class DialogueSystemForTuto : MonoBehaviour
     public GameObject BGpanel;
     public NodeTabOnOff NodeTabOnOff;
 
+    bool isPlayingDia;
+
     private void Awake()
     {
         Init();
     }
 
-    void Start()
+    private void Update()
     {
-        
+        if (UnityEngine.Input.GetMouseButtonDown(0))
+        {
+            if (isPlayingDia) NextSpeak();
+        }
     }
-
 
     private void Init()
     {
         canvas = GetComponent<Canvas>();
         diaListIndex = 0;
+        isPlayingDia = false;
         audioSource = GetComponent<AudioSource>();
         right_Panel.gameObject.SetActive(false);
         etc.SetActive(false);
@@ -60,6 +65,7 @@ public class DialogueSystemForTuto : MonoBehaviour
 
     public void StartSpeak()
     {
+        isPlayingDia = true;
         diaIndex = 0;
         diaListIndex++;
         etc.SetActive(true);
@@ -154,7 +160,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         {
             FlagManager.instance = null;
         }
-
+        isPlayingDia = false;
         //GetComponent<Canvas>().sortingOrder = 1;
     }
 
