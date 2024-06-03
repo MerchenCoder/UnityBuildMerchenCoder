@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ImageRotation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -33,6 +34,14 @@ public class ImageRotation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
             SetBoundarySize();
         }
         //Debug.Log("z is " + transform.rotation.eulerAngles.z);
+    }
+
+    void Update()
+    {
+        if (isLocked)
+        {
+            this.gameObject.GetComponent<Button>().interactable = false;
+        }
     }
 
     void SetBoundarySize()
