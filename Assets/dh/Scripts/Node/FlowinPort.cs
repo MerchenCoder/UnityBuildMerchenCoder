@@ -16,10 +16,11 @@ public class FlowinPort : MonoBehaviour
         }
         set
         {
+            FlowConnectFlag();
             if (isConnected != value)
             {
                 isConnected = value;
-                FlowConnectFlag();
+
             }
         }
     }

@@ -1257,7 +1257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476511309843767316, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0072021484
+      value: 0.00048828125
       objectReference: {fileID: 0}
     - target: {fileID: 7514470363145403374, guid: 32c91cc7a05d64b5fb5563158726af04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2391,6 +2391,7 @@ MonoBehaviour:
   - {fileID: 8926905929988791763, guid: 7aac8d3a2dfaf4231b6b89d152e187d7, type: 3}
   - {fileID: 8926905929988791763, guid: f600a5b837c53436aac1033efb528a72, type: 3}
   - {fileID: 8926905929988791763, guid: dd26e1a2b874c41e8b7afbe4e84776d4, type: 3}
+  - {fileID: 8926905929988791763, guid: 733d987e46fae4e8b9b9ba0326a9b149, type: 3}
   currentInput: []
   currentOutput: []
   playerOutput: []
@@ -6948,6 +6949,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7461326959844047114}
+        m_TargetAssemblyTypeName: NodeMissionBtn, Assembly-CSharp
+        m_MethodName: RestIsDone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &4243452585563120938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9807,6 +9820,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7461326959844047114 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7730595858166463865, guid: a3474fc216f974787835723a695329a4, type: 3}
+  m_PrefabInstance: {fileID: 2457454499910037546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f766aff765c34e739dc08aec4b685d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &7471358434451920503
