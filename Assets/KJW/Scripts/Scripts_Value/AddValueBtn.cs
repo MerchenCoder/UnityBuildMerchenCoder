@@ -76,6 +76,15 @@ public class AddValueBtn : MonoBehaviour
             {
                 nodeData.data_string = valueManager.stringValues[dropdown.value - 2].valueOfValue;
             }
+
+            //0603 tuto flag 추가
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr.Equals("SelectVariable_SetVari_암구호") && dropdown.options[dropdown.value].text.Equals("암구호"))
+                {
+                    FlagManager.instance.OffFlag();
+                }
+            }
         }
         else
         {
@@ -91,6 +100,14 @@ public class AddValueBtn : MonoBehaviour
             else if (CompareTag("data_string"))
             {
                 nodeData.data_string = valueManager.stringValues[dropdown.value - 1].valueOfValue;
+            }
+            //0603 tuto flag 추가
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr.Equals("SelectVariable_GetVari_암구호") && dropdown.options[dropdown.value].text.Equals("암구호"))
+                {
+                    FlagManager.instance.OffFlag();
+                }
             }
         }
     }

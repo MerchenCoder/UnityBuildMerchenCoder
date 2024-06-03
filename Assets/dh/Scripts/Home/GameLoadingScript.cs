@@ -39,6 +39,7 @@ public class GameLoadingScript : MonoBehaviour
                     GameManager.Instance.LoadPlayerData();
                     GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
                     UpdateProgress(50);
+                    StartCoroutine(AsycLoadHomeScene());
                 }
                 else
                 {
@@ -65,6 +66,7 @@ public class GameLoadingScript : MonoBehaviour
                             GameManager.Instance.LoadPlayerData();
                             GameManager.Instance.GetComponent<PlayData>().LoadPlayData();
                             UpdateProgress(50);
+                            StartCoroutine(AsycLoadHomeScene());
                         }
                         else
                         {
@@ -83,8 +85,6 @@ public class GameLoadingScript : MonoBehaviour
                 }
             });
         }
-
-        StartCoroutine(AsycLoadHomeScene());
         yield return null;
 
     }

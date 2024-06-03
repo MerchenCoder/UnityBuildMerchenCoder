@@ -27,8 +27,16 @@ public class FlowinPort : MonoBehaviour
 
     public void FlowConnectFlag()
     {
-        // string 
-        // if(isConnected && FlagManager.instance.flagStr)
+        string nodeName;
+        if (isConnected && FlagManager.instance != null)
+        {
+            nodeName = connectedPort.GetComponentInParent<NodeNameManager>().NodeName;
+            if (GetComponentInParent<NodeNameManager>().NodeName == "PrintNode" && nodeName.Equals("SetValueNode") && FlagManager.instance.flagStr.Equals("ConnectFlow_SetValueNode"))
+            {
+                FlagManager.instance.OffFlag();
+            }
+        }
+
     }
 
 }

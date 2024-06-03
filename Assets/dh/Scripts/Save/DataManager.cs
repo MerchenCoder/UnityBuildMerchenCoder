@@ -163,6 +163,10 @@ public class DataManager : MonoBehaviour
                 gameStateData.ch1MissionClear[j] = false;
                 Debug.LogFormat("<color=green>{0} : {1}</color>", j, false);
             }
+            for (int k = 0; k < gameStateData.ch2MissionClear.Length; k++)
+            {
+                gameStateData.ch2MissionClear[k] = false;
+            }
         }
         else
         {

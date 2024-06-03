@@ -109,6 +109,22 @@ public class runNode : MonoBehaviour
                     FlagManager.instance.OffFlag();
                 }
             }
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr == "RuncActive_Variable")
+                {
+                    bool startNodeFlowCheck = flowStartPort.GetComponentInChildren<FlowoutPort>().ConnectedPort.GetComponentInParent<NodeNameManager>().NodeName == "SetValueNode";
+                    bool endNodeFlowCheck = flowEndPorts[0].GetComponentInChildren<FlowinPort>().connectedPort.GetComponentInParent<NodeNameManager>().NodeName == "PrintNode";
+                    if (startNodeFlowCheck && endNodeFlowCheck)
+                    {
+                        FlagManager.instance.OffFlag();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
 
             return true;
         }

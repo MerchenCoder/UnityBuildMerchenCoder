@@ -11,6 +11,7 @@ public class AddValueAllowBtn : MonoBehaviour
     private int type;
 
     [SerializeField] private GameObject errorTMP;
+    private string originErrorMsg;
 
 
 
@@ -60,6 +61,18 @@ public class AddValueAllowBtn : MonoBehaviour
 
         if (!valueManager.isExistValue(inputField.text.Trim()))
         {
+            //0603 암구호 변수 튜토를 위해 오류 메세지 설정
+            if (FlagManager.instance != null)
+            {
+                if (FlagManager.instance.flagStr.Equals("SetValuableName_암구호") && !inputField.text.Trim().Equals("암구호"))
+                {
+                    originErrorMsg = errorTMP.GetComponent<TMP_Text>().text;
+                    errorTMP.GetComponent<TMP_Text>().text = "변수 이름을 '암구호'로 해주세요.";
+                    errorTMP.SetActive(true);
+                    return;
+                }
+            }
+
             valueManager.AddValue(type, inputField.text.Trim());
 
             // 혹시 변수 블록 생성되면 쓸 코드
@@ -74,8 +87,14 @@ public class AddValueAllowBtn : MonoBehaviour
                 {
                     FlagManager.instance.OffFlag();
                 }
-            }
+                //0603 암구호 변수 플래그 추가
+                else if (FlagManager.instance.flagStr.Equals("SetValuableName_암구호"))
+                {
+                    FlagManager.instance.OffFlag();
+                }
 
+            }
+            errorTMP.GetComponent<TMP_Text>().text = originErrorMsg;
             errorTMP.SetActive(false);
             blackBGPanel.SetActive(false);
             valueNameSettingUI.SetActive(false);
@@ -83,6 +102,11 @@ public class AddValueAllowBtn : MonoBehaviour
         }
         else
         {
+            if (errorTMP.GetComponent<TMP_Text>().text.StartsWith("변수 이름을"))
+            {
+                errorTMP.GetComponent<TMP_Text>().text = originErrorMsg;
+
+            }
             errorTMP.SetActive(true);
 
             Debug.Log("해당 변수가 이미 존재합니다"); // 추후 UI로 변경
