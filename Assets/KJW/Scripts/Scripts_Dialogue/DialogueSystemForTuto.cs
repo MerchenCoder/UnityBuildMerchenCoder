@@ -103,6 +103,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         fullText = dia;
         if (interaction == null || interaction == "") // 인터렉션이 없는 경우
         {
+            isPlayingDia = true;
             canvas.sortingOrder = 20;
             messagePanel.SetActive(false);
             if (infoTabName == "" || infoTabName == null)
@@ -120,6 +121,7 @@ public class DialogueSystemForTuto : MonoBehaviour
         }
         else // 인터렉션이 있는 경우
         {
+            isPlayingDia = false;
             isDoneTyping = true;
             infoPanel.SetActive(false);
             right_Panel.SetActive(false);
