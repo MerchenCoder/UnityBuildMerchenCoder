@@ -25,3 +25,8 @@
 - 김미진(1976046) 팀장
 - 이도현(1876263) 팀원
 - 김지우(2026007) 팀원
+
+
+<p>데모 영상</p>
+
+[![메르헨 코더 데모 영상](http://img.youtube.com/vi/zndDqZjxdq4/0.jpg)](https://youtu.be/zndDqZjxdq4)
