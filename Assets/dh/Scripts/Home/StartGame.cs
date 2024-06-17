@@ -9,6 +9,7 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
     public GameObject loading;
     public GameObject startButtons;
     public GameObject testButton;
+    public GameObject copyrightButton;
     public AudioControl audioControl;
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class StartGame : MonoBehaviour, IPointerClickHandler
             else
             {
                 startButtons.SetActive(true);
+                copyrightButton.SetActive(true);
                 testButton.SetActive(false);
             }
         }

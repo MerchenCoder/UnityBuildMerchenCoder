@@ -87,7 +87,7 @@ public class NodeNameManager : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         //boundarySize = boundaryRectTransform.rect.size / 2f;
         boundarySize = new Vector2(boundaryObject.GetComponent<RectTransform>().rect.width / 2f, boundaryRectTransform.rect.height / 2f);//0520 수정
         //boundarySize = new Vector2(boundaryRectTransform.rect.width / 2f, boundaryRectTransform.rect.height); 
-        Debug.Log(boundarySize);
+        // Debug.Log(boundarySize);
     }
 
 
