@@ -11,22 +11,18 @@ public class AnnaWalk : MonoBehaviour
     float speed = 10f; // 이동 속도
     public GameObject afterDialogue;
 
-    void Update()
+    private void Start()
     {
-        if (!GameManager.Instance.CheckPlayProgress("Mission2-1-1") && !isWalking)
+        if (GameManager.Instance.CheckPlayProgress("Mission2-1-1") && !isWalking)
         {
             afterDialogue.SetActive(false);
             isWalking = true; // 움직이는 중임을 표시
-            //Debug.Log("조건 충족 걷기 시작");
         }
-        else if(GameManager.Instance.CheckPlayProgress("Mission2-1-1"))
-        {
-            isWalking = false;
-            this.transform.localPosition = new Vector3(targetX, -1.72f, 0f);
-            this.transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
+    }
 
-        if (isWalking)
+    void Update()
+    {
+        if (GameManager.Instance.CheckPlayProgress("Mission2-1-1") && isWalking)
         {
             Walking();
             //Debug.Log("걷는 중");
