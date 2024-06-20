@@ -17,6 +17,14 @@ public class ItemGetButton : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (itemControl._thisItem.isBought)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     public void GetButton()
     {
         if (GameManager.Instance.UseGem(int.Parse(itemControl._thisItem.item.price)))

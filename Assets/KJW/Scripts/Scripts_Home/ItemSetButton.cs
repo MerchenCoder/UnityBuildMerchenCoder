@@ -22,9 +22,16 @@ public class ItemSetButton : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (itemControl._thisItem.isBought)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
     public void SetButton()
     {
-        itemControl._thisItem.gameObject.SetActive(true);
         itemControl._thisItem.ItemSet();
         saveItem.SaveItemDataSet(type, index);
     }

@@ -9,7 +9,7 @@ public class SaveItem : MonoBehaviour
 {
     static int TYPE_NUM = 11;
     List<List<GameObject>> gameObjects;
-    List<List<ThisItem>> itemList;
+    [SerializeField] List<List<ThisItem>> itemList;
 
     // 저장될 폴더 경로
     private string folderPath;
@@ -28,7 +28,7 @@ public class SaveItem : MonoBehaviour
             boughtItems = new List<string>();
         }
     }
-    private SaveItemData itemData;
+    public SaveItemData itemData;
 
 
     private void Start()
@@ -176,7 +176,7 @@ public class SaveItem : MonoBehaviour
     public void SaveItemDataSet(int type, int index)
     {
         itemData.myItem[type] = index;
-        SettingItem(itemData);
+        //SettingItem(itemData);
 
         // JSON 데이터를 문자열로 직렬화
         string jsonData = JsonUtility.ToJson(itemData);

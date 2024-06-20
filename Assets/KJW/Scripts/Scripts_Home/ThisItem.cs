@@ -5,23 +5,30 @@ using UnityEngine;
 public class ThisItem : MonoBehaviour
 {
     public Item item;
-    public bool isBought; 
+    public bool isBought;
+    //List<string> items = new List<string>();
 
     void Start()
     {
-        // 추후 구매 정보 세이브 불러오기 추가
+        //isBought = false;
+        //LoadItemList();
     }
+
+    //void LoadItemList()
+    //{
+    //    items = transform.parent.parent.GetComponent<SaveItem>().itemData.boughtItems;
+
+    //    for(int i=0; i<items.Count; i++)
+    //    {
+    //        if(item.item_name == items[i])
+    //        {
+    //            isBought = true;
+    //        }
+    //    }
+    //}
 
     public void ItemSet()
     {
-        int size = transform.parent.childCount;
-        // Off others
-        for(int i = 0; i < size; i++)
-        {
-            if(transform.parent.GetChild(i).gameObject != gameObject)
-            {
-                transform.parent.GetChild(i).gameObject.SetActive(false);
-            }
-        }
+        transform.parent.GetComponent<ItemTypeControl>().SetOffChildren(gameObject);
     }
 }

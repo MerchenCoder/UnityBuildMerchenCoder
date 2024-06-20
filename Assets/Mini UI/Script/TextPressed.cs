@@ -23,7 +23,7 @@ public class TextPressed : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
 
-        _gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, UnitsToMove);
+        _gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(vector2.x, UnitsToMove);
     }
 
     public void OnPointerUp(PointerEventData eventData)
